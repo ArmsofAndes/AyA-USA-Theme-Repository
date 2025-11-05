@@ -1,0 +1,398 @@
+<div class="slider-with-text-section ">
+  <div class="slider-with-text-wrapper {% if section.settings.reverse_layout %}reverse{% endif %}">
+    
+    <!-- Slider de imágenes -->
+    <div class="slider-with-text-slider" style="width: 100%;height: auto;">
+     <div class="slider-track" id="slider-track-{{ section.id }}">
+  {% for block in section.blocks %}
+    {% if block.type == 'image' and block.settings.image != blank %}
+  <div class="slider-item">
+    <img src="{{ block.settings.image | img_url: '800x' }}" alt="Slide {{ forloop.index }}" loading="lazy">
+    
+    {% if block.settings.caption_text != blank %}
+      <div class="slider-caption" style="
+        color: {{ block.settings.caption_color }};
+        font-weight: {{ block.settings.caption_weight }};
+        font-size: {{ block.settings.caption_size }}rem;
+        margin-top: 0.5rem;
+        text-align: center;">
+        {{ block.settings.caption_text }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+  {% endfor %}
+</div>
+<button class="slider-nav prev" aria-label="Anterior">&#10094;</button>
+<button class="slider-nav next" aria-label="Siguiente">&#10095;</button>
+
+    </div>
+
+    <!-- Contenido de texto -->
+    <div class="slider-with-text-content">
+      {% if section.settings.heading != blank %}
+        <h2 style="
+          color: {{ section.settings.heading_color }};
+          font-weight: {{ section.settings.heading_weight }};
+          font-size: {{ section.settings.heading_size }}rem;">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+        <div class="rte" style="
+          color: {{ section.settings.text_color }};
+          font-weight: {{ section.settings.text_weight }};
+          font-size: {{ section.settings.text_size }}rem;">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+      {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="slider-button" style="
+          background-color: {{ section.settings.button_background }};
+          color: {{ section.settings.button_color }};
+          font-weight: {{ section.settings.button_weight }};
+          font-size: {{ section.settings.button_size }}rem;">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+    
+  </div>
+</div>
+
+<style>
+.slider-with-text-section {
+  height: auto;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding:4% 8%;
+}
+
+.slider-with-text-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;height: 100%;
+}
+
+.slider-with-text-wrapper.reverse {
+  flex-direction: row-reverse;
+}
+
+.slider-with-text-slider {
+  flex: 1;
+  min-width: 20rem;
+  overflow: hidden;
+  position: relative;height: 100%;
+}
+
+.slider-track {
+  display: flex;
+  gap: 0;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  animation: autoScroll 10s linear infinite;
+}
+
+  .slider-track {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.slider-track::-webkit-scrollbar {
+  display: none; 
+}
+.slider-item {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+.slider-item img {
+  width: 100%;
+  height: auto; max-height: 500px;
+  object-fit: contain;
+  
+  display:block; max-height: 100%;
+}
+
+.slider-with-text-content {
+  flex: 1;height: 100%;
+  min-width: 20rem;
+}
+
+.slider-button {
+  margin-top: 1.5rem;
+  /*padding: 0.8rem 1.5rem;*/
+  text-decoration: underline;
+  display: inline-block;
+  border-radius: 0.4rem;
+}
+  
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.4); 
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s;
+}
+
+.slider-nav:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.slider-nav.prev {
+  left: 1rem;
+}
+
+.slider-nav.next {
+  right: 1rem;
+}
+
+
+.slider-with-text-slider {
+  position: relative;
+}
+  .slider-caption {
+  text-align:left!important;
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+ .slider-with-text-wrapper,
+  .slider-with-text-wrapper.reverse {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .slider-with-text-content {
+    width: 100%;
+     padding-bottom: 1.5rem;
+    text-align: left;
+    margin: 0 auto;
+  }
+  .rte{
+  font-size:0.9rem;}
+
+  .slider-with-text-slider {
+    width: 100%;
+     padding-bottom: 0;
+  }
+  .slider-item img {
+    object-fit: contain; 
+    max-height: 300px; 
+  }
+  .slider-nav {
+    display: none;
+  }
+}
+
+
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.getElementById("slider-track-{{ section.id }}");
+  const slides = track.querySelectorAll(".slider-item");
+  const prevBtn = document.querySelector(".slider-nav.prev");
+  const nextBtn = document.querySelector(".slider-nav.next");
+  let currentIndex = 0;
+
+  function goToSlide(index) {
+    currentIndex = (index + slides.length) % slides.length;
+    track.scrollTo({
+      left: slides[0].offsetWidth * currentIndex,
+      behavior: "smooth"
+    });
+    updateDots?.();
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  nextBtn.addEventListener("click", nextSlide);
+  prevBtn.addEventListener("click", prevSlide);
+
+  setInterval(nextSlide, 6000); //  6 segundos
+});
+
+</script>
+
+{% schema %}
+{
+  "name": "Slider with Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Este es el título"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño del título (rem)",
+      "min": 1,
+      "max": 5,
+      "step": 0.1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Peso del título",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Este es el texto debajo del título.</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto (rem)",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "Saber más"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto del botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Color de fondo del botón",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Tamaño del botón (rem)",
+      "min": 0.8,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "range",
+      "id": "button_weight",
+      "label": "Peso del botón",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Invertir orden de columnas (imagen a la derecha)",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Slide de imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del slider"
+        },
+  {
+  "type": "text",
+  "id": "caption_text",
+  "label": "Texto debajo de la imagen"
+},
+{
+  "type": "color",
+  "id": "caption_color",
+  "label": "Color del texto",
+  "default": "#333333"
+},
+{
+  "type": "range",
+  "id": "caption_size",
+  "label": "Tamaño del texto (rem)",
+  "min": 0.5,
+  "max": 2,
+  "step": 0.1,
+  "default": 1
+},
+{
+  "type": "range",
+  "id": "caption_weight",
+  "label": "Peso del texto",
+  "min": 100,
+  "max": 900,
+  "step": 100,
+  "default": 400
+}
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Slider with Text",
+      "category": "Secciones personalizadas"
+    }
+  ]
+}
+{% endschema %}

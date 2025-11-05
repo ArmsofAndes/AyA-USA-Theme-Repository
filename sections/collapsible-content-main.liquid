@@ -1,0 +1,322 @@
+{{- 'collapsible-content.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+	assign section_heading = section.settings.heading
+	assign section_description = section.settings.description
+	assign uppercase_heading = section.settings.uppercase_heading
+	assign disable_top_spacing = section.settings.disable_top_spacing
+	assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+-%}
+<div class="collapsible-content heading-uppercase-{{ uppercase_heading }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}">
+	<div class="row">
+		<div class="small-12 columns">
+			{% render 'section-header', section_heading: section_heading, section_description: section_description, section_heading_left: false %}
+			<div class="collapsible-content__inner">
+				{%- for block in section.blocks -%}
+					{%- if block.settings.heading != blank -%}
+						{%- assign anchor_id = block.settings.anchor_id | default: '' | strip -%}
+						<collapsible-row class="accordion" {{ block.shopify_attributes }} {% if anchor_id != blank %}id="{{ anchor_id }}"{% endif %}>
+							<details id="Details-{{ block.id }}-{{ section.id }}" {% if block.settings.open %}open{% endif %}>
+								<summary style="font-size: {{ section.settings.heading_font_size }}px;">
+									{{ block.settings.heading | default: block.settings.page.title }}
+									<span></span>
+								</summary>
+								<div class="collapsible__content accordion__content rte" id="Accordion-{{ block.id }}-{{ section.id }}" style="font-size: {{ section.settings.content_font_size }}px;">
+									{%- if block.type == 'specification' -%}
+											{%- render 'product-specification-table', block: block -%}
+									{%- else -%}
+									{{ block.settings.content }}
+									{{ block.settings.page.content }}
+									{{ block.settings.custom_liquid }}
+									{%- endif -%}
+								</div>
+							</details>
+						</collapsible-row>
+						{%- endif -%}
+				{%- endfor -%}
+			</div>
+		</div>
+	</div>
+</div>
+{% schema %}
+  {
+    "name": "Collapsible content",
+		"class": "section-collapsible-content",
+    "settings": [
+			{
+				"type": "text",
+				"id": "heading",
+				"label": "Heading",
+				"default": "Collapsible content"
+			},
+			{
+				"type": "richtext",
+				"id": "description",
+				"label": "Description",
+				"default": "<p>Add a short description for this section</p>"
+			},
+			{
+				"type": "checkbox",
+				"id": "uppercase_heading",
+				"default": true,
+				"label": "Make tab headings uppercase"
+			},
+			{
+        "type": "header",
+        "content": "Spacing"
+      },
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": false,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": false,
+				"label": "Remove bottom spacing"
+			},
+      {
+  "type": "range",
+  "id": "heading_font_size",
+  "label": "Tamaño del encabezado (px)",
+  "min": 12,
+  "max": 36,
+  "step": 1,
+  "default": 18
+},
+{
+  "type": "range",
+  "id": "content_font_size",
+  "label": "Tamaño del contenido (px)",
+  "min": 12,
+  "max": 28,
+  "step": 1,
+  "default": 16
+}
+    ],
+    "blocks": [
+			{
+				"type": "collapsible_tab",
+				"name": "Collapsible row",
+				"settings": [
+						{
+						"type": "text",
+						"id": "heading",
+						"default": "Collapsible row",
+						"info": "Include a heading that explains the content.",
+						"label": "Heading"
+					},
+					{
+						"type": "text",
+						"id": "anchor_id",
+						"label": "ID de anclaje (para enlaces internos)",
+						"info": "Ejemplo: step-1, paso-uno. Úsalo para crear enlaces desde otras secciones.",
+						"placeholder": "step-1"
+					},
+					{
+						"type": "checkbox",
+						"id": "open",
+						"default": false,
+						"label": "Open by default"
+					},
+					{
+						"type": "richtext",
+						"id": "content",
+						"label": "Row content"
+					},
+					{
+						"type": "page",
+						"id": "page",
+						"label": "Row content from page"
+					},
+					{
+						"type": "liquid",
+						"id": "custom_liquid",
+						"label": "Custom liquid",
+						"info": "Add app snippets or other Liquid code to create advanced customizations. For product description, you can use {{ product.description }}"
+					}
+				]
+			},
+			{
+        "type": "specification",
+        "name": "Specifications",
+				"limit": 1,
+        "settings": [
+					{
+						"type": "text",
+						"id": "heading",
+						"default": "Specifications",
+						"label": "Heading"
+					},
+					{
+						"type": "text",
+						"id": "anchor_id",
+						"label": "ID de anclaje (para enlaces internos)",
+						"info": "Ejemplo: specifications. Úsalo para crear enlaces desde otras secciones.",
+						"placeholder": "specifications"
+					},
+					{
+						"type": "textarea",
+						"id": "content",
+						"label": "Metafields",
+						"info": "Include a list of labels and product metafield keys below, separated by a colon, one per line. Example: Color:custom.color"
+					},
+					{
+						"type": "text",
+						"id": "empty_field_label",
+						"default": "N/A",
+						"label": "Empty field text",
+						"info": "Text to use for empty fields"
+					}
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collapsible content main",
+				"blocks": [
+	        {
+	          "type": "collapsible_tab"
+	        },
+	        {
+	          "type": "collapsible_tab"
+	        },
+	        {
+	          "type": "collapsible_tab"
+	        },
+	        {
+	          "type": "collapsible_tab"
+	        },
+	        {
+	          "type": "collapsible_tab"
+	        }
+	      ]
+      }
+    ],
+		"enabled_on": {
+			"templates": ["*"],
+			"groups": [
+				"header", "footer"
+			]
+		}
+  }
+{% endschema %}
+
+<script>
+(function() {
+  function initCollapsibleAccordion() {
+    const allSections = document.querySelectorAll('.section-collapsible-content');
+    
+    allSections.forEach(section => {
+      const contentInner = section.querySelector('.collapsible-content__inner');
+      
+      if (contentInner && !contentInner.dataset.accordionInitialized) {
+        contentInner.dataset.accordionInitialized = 'true';
+        
+        const accordions = Array.from(contentInner.querySelectorAll('collapsible-row'));
+        let isAnimating = false;
+        
+        accordions.forEach(accordion => {
+          const details = accordion.querySelector('details');
+          if (!details) return;
+          
+          details.addEventListener('toggle', function(e) {
+            // Si se está abriendo este acordeón
+            if (details.open && !isAnimating) {
+              isAnimating = true;
+              
+              // Cerrar todos los demás primero
+              accordions.forEach(otherAccordion => {
+                if (otherAccordion !== accordion) {
+                  const otherDetails = otherAccordion.querySelector('details');
+                  if (otherDetails && otherDetails.open) {
+                    otherDetails.open = false;
+                  }
+                }
+              });
+              
+              // Resetear el flag después de la animación
+              setTimeout(() => {
+                isAnimating = false;
+              }, 300);
+            }
+          });
+        });
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCollapsibleAccordion);
+  } else {
+    initCollapsibleAccordion();
+  }
+})();
+</script>
+
+
+{% comment %} Smooth scroll para enlaces de anclaje + abrir collapsible automáticamente {% endcomment %}
+<script>
+(function() {
+  function initAnchorLinks() {
+    // Manejar hash en la URL al cargar la página
+    if (window.location.hash) {
+      setTimeout(function() {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement && targetElement.tagName.toLowerCase() === 'collapsible-row') {
+          const details = targetElement.querySelector('details');
+          if (details && !details.open) {
+            const summary = details.querySelector('summary');
+            if (summary) {
+              summary.click();
+            }
+          }
+          
+          setTimeout(function() {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 300);
+        }
+      }, 100);
+    }
+    
+    // Manejar clicks en enlaces con hash
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      
+      const targetId = link.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement && targetElement.tagName.toLowerCase() === 'collapsible-row') {
+        e.preventDefault();
+        
+        const details = targetElement.querySelector('details');
+        if (details && !details.open) {
+          const summary = details.querySelector('summary');
+          if (summary) {
+            summary.click();
+          }
+        }
+        
+        setTimeout(function() {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Actualizar URL sin recargar
+          if (history.pushState) {
+            history.pushState(null, null, '#' + targetId);
+          }
+        }, 300);
+      }
+    });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnchorLinks);
+  } else {
+    initAnchorLinks();
+  }
+})();
+</script>

@@ -1,0 +1,484 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": false,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "image_with_text_overlay_V9NgWC": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_JEAW7E": {
+          "type": "heading",
+          "settings": {
+            "text": "Natural Dye Collection",
+            "heading_font_size": 35,
+            "heading_font_weight": "500",
+            "heading_color": "#edeee9"
+          }
+        },
+        "text_n8awVA": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We're on a mission to create world's most sustainable clothing and our Natural Dye Collection, dyed with plant-based dyes, is the first step towards 100% natural clothes.</p>",
+            "description_size": "medium",
+            "text_font_size": 16,
+            "text_font_weight": "400",
+            "text_color": "#edeee9"
+          }
+        }
+      },
+      "block_order": [
+        "heading_JEAW7E",
+        "text_n8awVA"
+      ],
+      "custom_css": [
+        ".rte {width: 50%;}",
+        ".image-with-text-overlay {padding: 6%;}",
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px !important; overflow: hidden; } .rte {width: 100%; } .image-with-text-overlay--heading {font-size: 24px !important; font-weight: 600 !important; } .rte {font-size: 14px !important; }}"
+      ],
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/eucalyptus1-1655822095956.webp",
+        "image_parallax": false,
+        "desktop_vh_height": 65,
+        "desktop_height": "desktop-height-full",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-left",
+        "text_alignment": "left",
+        "overlay_color": "#000000",
+        "overlay_opacity": 7,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_nmWnGH": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_LgGiar": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Natural Colors",
+            "color": "#2b3537",
+            "font_size": 28,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_LgGiar"
+      ],
+      "custom_css": [
+        ".rich-text {max-width: 1340px; margin: auto;}",
+        "@media screen and (max-width: 749px) {h3 {margin-bottom: 20px; font-size: 20px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "custom_anchor_id": "",
+        "section_width": "grid",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_txaJLD": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_w67p6i": {
+          "type": "heading",
+          "settings": {
+            "text": "Natural White: Undyed Cotton",
+            "description_size": "medium",
+            "font_size": 24,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_LNmjPn": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The most sustainable option is our undyed clothing, made using only natural raw white Peruvian Organic Pima Cotton without any color additives.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "heading_w67p6i",
+        "text_LNmjPn"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; } p {font-size: 14px; } h3 {font-size: 18px !important; }}",
+        ".small-12 {margin-bottom: 20px;}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/mensplasticfreetshirtcrewneckcolornaturalwhite-1655823230947.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "grid",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_86mqEp": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_XnPJtM": {
+          "type": "heading",
+          "settings": {
+            "text": "Natural Blue: Indigo",
+            "description_size": "medium",
+            "font_size": 24,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_MLMP9U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The leaves of Indigofera plant are a natural dye used for millennia amongst ancient cultures, creating a variety of natural blue colors. Our Natural Blue has a deep blue shade.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        },
+        "heading_rQAdBQ": {
+          "type": "heading",
+          "settings": {
+            "text": "Dyeing Method",
+            "description_size": "medium",
+            "font_size": 20,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_FkqX3V": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Indigofera leaves are soaked in water and then left to ferment, converting the naturally present chemical, indican, to indigotin, the blue pigment.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "heading_XnPJtM",
+        "text_MLMP9U",
+        "heading_rQAdBQ",
+        "text_FkqX3V"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; } p {font-size: 14px; } h3 {font-size: 18px !important; }}",
+        ".small-12 {margin-bottom: 20px;}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/womensecofriendlytshirtvneckcolornaturalblue-1655823230999.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "grid",
+        "layout": "text_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_Xejkqg": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_deirzr": {
+          "type": "heading",
+          "settings": {
+            "text": "Natural Gray: Eucalyptus",
+            "description_size": "medium",
+            "font_size": 24,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_4VAQcw": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pigment extracted from Eucalyptus leaves, grown in the Peruvian Andes Mountains, creates an earthy Taupe shade; a gray color with brown undertones.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        },
+        "heading_HkB8Lt": {
+          "type": "heading",
+          "settings": {
+            "text": "Dyeing Method",
+            "description_size": "medium",
+            "font_size": 20,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_6kPwe4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Tender young leaves are boiled in water to extract the color. The amount of time in the water affects the shade and the final color of the garment.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "heading_deirzr",
+        "text_4VAQcw",
+        "heading_HkB8Lt",
+        "text_6kPwe4"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; padding-bottom: 0px; } p {font-size: 14px; } h3 {font-size: 18px !important; }}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/womensbreathabletshirtcrewneckcolornaturalgray-1655823230961.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "grid",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_MaJd9C": {
+      "type": "rich-text",
+      "blocks": {
+        "decorative_line_7Q68LB": {
+          "type": "decorative_line",
+          "settings": {
+            "line_thickness": 1,
+            "line_color": "#444444",
+            "line_width": 100
+          }
+        },
+        "heading_LD8dew": {
+          "type": "heading",
+          "settings": {
+            "text": "Dyeing with Indigo",
+            "color": "#2b3537",
+            "font_size": 28,
+            "font_weight": 500
+          }
+        },
+        "text_6tWzFx": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our co-founder Meli takes you on a tour to discover how we dye our clothes with natural Indigo dye.</p>",
+            "custom_liquid": "",
+            "color": "#2b3537",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "decorative_line_7Q68LB",
+        "heading_LD8dew",
+        "text_6tWzFx"
+      ],
+      "custom_css": [
+        ".rich-text {max-width: 1340px; margin: auto;}",
+        "@media screen and (max-width: 749px) {h3 {margin-bottom: 20px; font-size: 20px !important; } p {font-size: 15px; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "custom_anchor_id": "",
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "video_hxVawN": {
+      "type": "video",
+      "custom_css": [
+        ".row {padding: 0 8%;}",
+        "@media screen and (max-width: 749px) {.row {padding: 0; }}"
+      ],
+      "name": "Video",
+      "settings": {
+        "heading": "",
+        "heading_left": true,
+        "description": "",
+        "section_width": "grid",
+        "video": "https://www.youtube.com/watch?v=0nLBY6BPOGY&embeds_referring_euri=https%3A%2F%2Fecoaya.com%2F&source_ve_path=OTY3MTQ",
+        "video_autoplay": false,
+        "aspect_ratio": "16-9",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": false
+      }
+    },
+    "rich_text_NWT8ng": {
+      "type": "rich-text",
+      "blocks": {
+        "text_ra9hKa": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Natural vs Low Impact Dyes</h4><p>Reactive and Low Impact synthetic dyes are a better option than regular synthetic dyes, however, they are still petroleum-based. We are on a journey towards a petroleum-free production, which is why we aim to only make clothing using natural dyes.</p><h4>Low Impact Dyes</h4><p>Our low impact synthetic dyes are certified by the Global Organic Textile Standard (GOTS). Compared to regular synthetic dyes, low impact dyes don't contain toxic chemicals and mordants, and have a higher absorption rate which creates less water waste.</p><h4>Natural Dyes</h4><p>Natural dyes are gentle on the environment as they don't contain any toxic chemical compounds or petroleum. The pigment is extracted from plant leaves and boiled together with mordants to fix to the fabric.</p>",
+            "custom_liquid": "",
+            "color": "#2b3537",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_ra9hKa"
+      ],
+      "custom_css": [
+        ".rich-text {max-width: 1340px; margin: auto; padding: 4%;}",
+        "h4 {font-weight: 500; font-size: 24px;}",
+        "@media screen and (max-width: 749px){h4 {font-size: 16px;} p{font-size:14px; text-align:justify; } .rich-text{padding-top:30px; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "custom_anchor_id": "",
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "#edeee9",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_THrCqG": {
+      "type": "gallery",
+      "blocks": {
+        "image_ibe4pc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/dsc1557-1656685548255.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "Shop Women's",
+            "link": "shopify://collections/all-womens",
+            "use_text_button": false,
+            "block_link": "shopify://collections/all-womens",
+            "product_list": []
+          }
+        },
+        "image_egTUtL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/dsc1833-1656685548437.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "Shop Men's",
+            "link": "shopify://collections/all-mens",
+            "use_text_button": false,
+            "block_link": "shopify://collections/all-mens",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_ibe4pc",
+        "image_egTUtL"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important; height: 80vh;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: #d5cfc1; color: #2b3537; border-radius: 5px; font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 500; border: none;}",
+        ".button:hover {background-color: #2b3537; color: #d5cfc1;}"
+      ],
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "left",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_qhtqC9": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    const allDetails = document.querySelectorAll('.image-with-text details');\n\n    allDetails.forEach((detail) => {\n      detail.addEventListener('toggle', function () {\n        if (detail.open) {\n          allDetails.forEach((otherDetail) => {\n            if (otherDetail !== detail) {\n              otherDetail.removeAttribute('open');\n            }\n          });\n        }\n      });\n    });\n  });\n</script>\n<style>\n#compostable .columns ,#pfas .columns,#goals .columns,#progres .columns{\n  padding: 20px;\n  margin: 0;\n}\n\n.image-with-text h3 {\n  letter-spacing: 0.5px;\n}\n.image-with-text .rte {\n  letter-spacing: 0.5px;\n  line-height: 2em;\n  text-align: justify;\n}\n#plastic-free .image-with-text__image-media img {\n  height: 170px !important;\n  object-fit: contain;\n  width: 100%;\n  }\n@media screen and (max-width: 749px) {\n .image-with-text h3 ,#compostable h3,#eco h3,#goals h3,#pfa h3 {\n  font-size:22px!important;\n}\n .image-with-text__content, {\n    margin-left: 0px;\n    margin-right: 0px;\n    padding-left: 0 !important;\n    padding-right: 0 !important;\n  }\n\n\n#plastic-free .image-with-text__image-media {\n    height: 107px !important;\n    padding-bottom: 0 !important;\n  }\n\n\n#plastic-free .image-with-text__image-media img {\n    height: 107px !important;\n    width: 100% !important;\n    object-fit: contain !important;\n    position: static !important;\n  }\n}\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_overlay_V9NgWC",
+    "rich_text_nmWnGH",
+    "image_with_text_txaJLD",
+    "image_with_text_86mqEp",
+    "image_with_text_Xejkqg",
+    "rich_text_MaJd9C",
+    "video_hxVawN",
+    "rich_text_NWT8ng",
+    "gallery_THrCqG",
+    "custom_liquid_qhtqC9"
+  ]
+}

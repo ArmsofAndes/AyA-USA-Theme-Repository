@@ -1,0 +1,486 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "From Wardrobe to Garden: How to Compost Wool Clothing Sustainably",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/Gemini_Generated_Image_w8bp2uw8bp2uw8bp.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published Oct 12, 2020 | Updated Dec 18, 2024",
+            "color": "#0e355e",
+            "font_size": 17,
+            "font_weight": 500
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Reading time: 4 minutes</strong></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {text-align: left; margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_4PBRaq": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/pf-e8aea88a--AdobeStock274661182.webp",
+            "link": "shopify://blogs/news/biodegradable-vs-compostable-what-is-the-difference-sustainability",
+            "caption": "Biodegradable vs. Compostable - What is the Difference?",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_hjamRV": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/DSC08697.webp",
+            "link": "shopify://blogs/news/what-makes-alpaca-wool-best-for-hiking",
+            "caption": "What makes alpaca wool best for hiking?",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<p>Every year, millions of textiles end up in<a href=\"https://www.ecoaya.com/blogs/sustainability/clothing-landfills-pollution-fast-fashion\" target=\"_blank\"><strong>landfills</strong></a>, contributing to pollution and wasting valuable resources. Unlike synthetic fabrics that take centuries to degrade,<strong>wool—whether from alpaca, sheep, or goat—is biodegradable and can enrich the earth as it decomposes</strong>. Composting wool offers a practical and sustainable solution to textile waste, turning old garments into a gift for the planet.<br/><br/>Let’s explore how you can turn your old wool clothing into nutrient-rich soil and contribute to a healthier planet.<br/><br/></p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/Label_WhatsApp_Image_2023-03-31_at_12.14.25_PM_1.webp",
+            "caption": "Picture by Agencia Andina",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_dEHyAY": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Why Composting Wool?</h3><p>Wool stands out among textiles because of its natural keratin composition, a protein that microbes can digest<strong> over 6-12 months</strong>, allowing it to decompose under the right conditions [1,2,3].<br/><br/><strong>Composting wool contributes to environmental health in several ways.</strong> As wool breaks down into organic matter, <a href=\"https://doi.org/10.1007/s13762-024-05802-6\" target=\"_blank\"><strong>it releases valuable nutrients like nitrogen and sulfur</strong></a>, which fertilize the soil and promote plant growth [1,4]. Additionally, wool fibers improve soil stability by retaining moisture and reducing erosion, making it especially beneficial for arid or drought-prone soils [2]. In this way, giving back to the earth supports a circular economy and completes the product’s lifecycle.<br/><br/>Therefore, this process transforms it into a valuable resource rather than waste, reducing reliance on <a href=\"https://www.ecoaya.com/blogs/sustainability/clothing-landfills-pollution-fast-fashion\" target=\"_blank\"><strong>landfills</strong></a>. In landfills, <strong>natural decomposition is often hindered by compacted waste</strong>, lack of oxygen, and the presence of non-organic materials, leading to methane emissions—a potent greenhouse gas.<br/><br/><strong>However, not all wool is compostable.</strong> Wool blended with synthetic materials like polyester or acrylic is not biodegradable and should not be composted. Moreover, many wool textiles are treated with <a href=\"https://www.ecoaya.com/blogs/sustainability/naturally-dyed-organic-fibers-fast-fashion\" target=\"_blank\"><strong>heavy metal-based dyes</strong></a>, anti-shrink chemicals like chlorine, superwash coatings, or other finishes. These chemical treatments can <strong>slow biodegradation</strong> and potentially release <strong>harmful substances into the soil </strong>[2].<br/><br/>To ensure safe composting, it’s essential to choose untreated or minimally processed wool and understand <strong>how to properly prepare your garments for the process</strong>.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_4PBRaq",
+        "right_image_block_hjamRV",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP",
+        "left_text_dEHyAY"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>Related content</p>",
+        "right_title_size": 20,
+        "right_title_weight": 700,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/womens-ultimate-outdoor-tshirt-crew-neck-black.webp",
+            "link": "shopify://products/womens-alpaca-wool-t-shirt-crew-neck",
+            "caption": "Women's Alpaca Wool T-Shirt: 160 Ultralight Crew Neck",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Mens-Alpaca-Wool-Base-Layer300LightweightHalf-Zip4.webp",
+            "link": "shopify://products/mens-alpaca-wool-base-layer-300-half-zip",
+            "caption": "Men's Alpaca Wool Base Layer: 300 Lightweight Half-Zip",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_iv4o2civ4o2civ4o.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Prepare your wool clothing for composting</h3><p>If you decide to compost your wool clothes, make sure your garment is fully compostable and choose the most suitable composting method for your needs. Follow these steps to ensure your wool clothing decomposes effectively:<br/></p><h4>1. Check the label</h4><p>Before composting, check the label. Is your garment made of 100% wool (or other natural fibers) or is it a blend of wool and synthetics? <br/></p><p>Synthetic fibers do NOT biodegrade. They take many decades to fall apart and in the process they <a href=\"https://doi.org/10.1007/s13762-024-05802-6\" target=\"_blank\"><strong>release harmful microplastics into the environment</strong></a> [1,5]. Check your label for any of the following: polyester, nylon, elastane (lycra/spandex), acrylic. If your garment is a synthetic blend (natural fibers mixed with synthetics), avoid composting and find a recycling bin or center instead.<br/></p><p>Most modern cities nowadays provide easy access to recycling. You may find textile recycling bins together with paper, glass and plastic bins. Find out what options are available where you live and what materials they collect. This might be a good option for synthetic materials or blends.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_qjcwrc": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_qk1zqxqk1zqxqk1z.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_QwLdmW": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h4>2. Remove non-biodegradable components<strong><br/></strong></h4><p>Wool garments often include components that are not compostable, such as: zippers, buttons, elastic bands and labels. <br/></p><p>Additionally, check the stitching—some garments use synthetic threads (therefore non-biodegradable) that should be cut out and disposed of separately. Moreover, you may want to remove any decorative elements like screen printing or embroidered logos that are usually made of nylon or other plastics.<br/></p><h4>3. Cut into small pieces</h4><p>Chop the garment into smaller pieces to accelerate decomposition. Smaller fragments increase the surface area for microorganisms to work on, helping the wool break down faster.<br/></p><h4>4. Choose your composting site</h4><p>You have two options for where to place your wool clothes to biodegrade:<br/></p><ul><li><strong>Composting in a Bin:</strong></li></ul><p>Mix the wool pieces with green (nitrogen-rich) and brown (carbon-rich) organic matter such as kitchen scraps and garden waste. Ensure the compost pile is moist but not waterlogged, and turn the pile regularly to aerate it and maintain optimal microbial activity. Remember that wool may take longer to degrade than food waste, so patience is key.<br/></p><ul><li><strong>Burying in the Soil:</strong></li></ul><p>Dig a hole in your yard or garden, preferably in a spot that won’t be disturbed for several months. Place the wool pieces in the hole and cover them with soil. Mark the spot to avoid accidental digging before the composting process is complete and ensure the soil is moist to encourage microbial activity. waste, so patience is key.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_DdEGdh",
+        "right_image_block_cLcR8k",
+        "left_image_6bkrxL",
+        "left_text_XjzLYC",
+        "left_image_qjcwrc",
+        "left_text_QwLdmW"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_CE4DCV": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_image_m3R8Bn": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_1xrqs91xrqs91xrq.webp",
+            "caption": "Picture by Emufec",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_XHcXnL": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Closing the loop: Sustainable Choices Start with You<strong><br/></strong></h3><p>Composting wool clothing offers an environmentally conscious solution to textile waste, turning old garments into valuable nutrients for the earth. However, sustainability extends beyond purchasing eco-friendly products—it involves thoughtful use and disposal. Before composting your wool garments, consider their full potential:</p><ul><li><strong>Repair:</strong> Mend small tears or holes to extend their life.</li><li><strong>Donate:</strong> Pass on wearable items to someone who can use them.</li><li><strong>Upcycle:</strong> Transform old wool clothing into scarves, cushions, or tote bags.</li><li><strong>Compost: </strong>When garments truly reach the end of their life, let them nourish the soil.</li></ul><p>So, the next time you’re ready to retire a wool sweater, don’t toss it in the trash. Instead, turn it into a gift for the planet—because sustainability begins with informed choices and thoughtful actions. </p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "left_image_m3R8Bn",
+        "left_text_XHcXnL"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3{text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h3>Glossary keywords</h3><p><strong>Biodegradability:<br/></strong>The ability of a material to decompose naturally by microorganisms, leaving no harmful residues.</p><p><strong>Keratin:<br/></strong>A protein found in biological materials like wool and hair; it decomposes and releases nutrients into the soil as it breaks down.</p><p><strong>Landfill:<br/></strong>It is a place where solid waste of various kinds is deposited. They are engineered to be covered with layers of earth so that the waste can decompose without harming the environment.</p><p><strong>Microbial Activity:<br/></strong>It refers to the role that microorganisms have in the synergy of ecosystems, from maintaining habitats to stimulating the growth of living beings.</p><p><strong>Microplastics:<br/></strong>Tiny plastic particles, smaller than 5mm, found in the environment from the breakdown of larger plastics or industrial processes.</p>",
+        "right_title_size": 12,
+        "right_title_weight": 400,
+        "right_title_color": "#151515",
+        "right_alignment": "left"
+      }
+    },
+    "linea_horizontal_jCDaGe": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 95,
+        "color_linea": "#000000",
+        "grosor": 2,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Collie, S., Brorens, P., Hassan, M., & Fowler, I. (2024). Biodegradation behavior of wool and other textile fibers in aerobic composting conditions. International Journal of Environmental Science and Technology, 1-13. DOI: <a href=\"https://doi.org/10.1007/s13762-024-05802-6\" target=\"_blank\">https://doi.org/10.1007/s13762-024-05802-6</a></p><p>[2] Hodgson, A., Leighs, S. J., & van Koten, C. (2023). Compostability of wool textiles by soil burial. Textile Research Journal, 93(15-16), 3692-3702. DOI: <a href=\"https://doi.org/10.1177/00405175231163590\" target=\"_blank\">https://doi.org/10.1177/00405175231163590</a></p><p>[3] Hustvedt, G., Meier, E., & Waliczek, T. (2016). The feasibility of large-scale composting of waste wool. Green Fashion: Volume 1, 95-107. DOI: <a href=\"http://dx.doi.org/10.1007/978-981-10-0111-6_4\" target=\"_blank\">http://dx.doi.org/10.1007/978-981-10-0111-6_4</a></p><p>[4] Zheljazkov, V. (2023). Assessment of wool waste and hair waste as soil amendment and nutrient source. J Environ Qual, 34(6):2310-7. DOI: <a href=\"https://zheljazkov,%20v.%20(2023).%20assessment%20of%20wool%20waste%20and%20hair%20waste%20as%20soil%20amendment%20and%20nutrient%20source.%20j%20environ%20qual,%2034(6):2310-7.%20doi:https//doi.org/10.2134/jeq2004.0332\" target=\"_blank\">https://doi.org/10.2134/jeq2004.0332</a></p><p>[5] Ammayappan, L., Jose, S., & Arputha Raj, A. (2016). Sustainable production processes in textile dyeing. Green Fashion: Volume 1, 185-216. DOI: <a href=\"http://dx.doi.org/10.1007/978-981-10-0111-6_8\" target=\"_blank\">http://dx.doi.org/10.1007/978-981-10-0111-6_8</a></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\nh4{\nfont-weight:600;\n}\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section1_blog_text_and_contentrelated_CE4DCV",
+    "linea_horizontal_jCDaGe",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

@@ -1,0 +1,171 @@
+<script>
+  window.SimpleBundles = {
+    productVariants: {}
+  };
+
+  {% if product %}
+    {% for variant in product.variants %}
+      {% assign variant_options_v2 = variant.metafields.simple_bundles.variant_options_v2.value %}
+      {% assign variant_options_v1 = variant.metafields.simple_bundles.variant_options.value %}
+      {% if variant_options_v1 or variant_options_v2 %}
+        {% capture bundle_options_selector_html %}
+          {% render 'simple-bundles-options', variant: variant, div_id: 'simple-bundles-io-options' %}
+        {% endcapture %}
+        window.SimpleBundles.productVariants[{{ variant.id }}] = {
+          id: {{ variant.id }},
+          title: {{ variant.title | json }},
+          variant_options: {{ variant_options_v1 | json }},
+          variant_options_v2: {{ variant_options_v2 | json }},
+          bundle_options_selector_html: {{ bundle_options_selector_html | json }}
+        };
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  
+  (function () {
+    var forms = document.querySelectorAll('form[action*="cart/Add" i]');
+
+    function updateBundleSelection(form, variantId) {
+      var bundleSelectionField = form.querySelector(
+        'input[name="properties[_bundle_selection]"]'
+      );
+      var variantOptionsV2 =
+        window.SimpleBundles.productVariants[variantId].variant_options_v2;
+      var variantOptions =
+        window.SimpleBundles.productVariants[variantId].variant_options;
+
+      if (variantOptionsV2) {
+        var selectionValues = variantOptionsV2.map(function (optionGroup) {
+          return optionGroup
+            .map(function (option) {
+              var selectField = form.querySelector(
+                '[name="properties[' + option.optionName + ']"]'
+              );
+              return selectField ? selectField.value : "";
+            })
+            .join(" ++ ");
+        });
+        bundleSelectionField.value = selectionValues.join(" <> ");
+      } else if (variantOptions) {
+        var selectionValues = variantOptions.map(function (option) {
+          var selectField = form.querySelector(
+            '[name="properties[' + option.optionName + ']"]'
+          );
+          return selectField ? selectField.value : "";
+        });
+        bundleSelectionField.value = selectionValues.join(" <> ");
+      }
+    }
+
+    function setHiddenFields(select, variantId) {
+      forms.forEach(function (form) {
+        var hiddenField = form.querySelector(
+          'input[type="hidden"][name="' + select.name + '"]'
+        );
+
+        if (hiddenField) {
+          hiddenField.value = select.value;
+        } else {
+          hiddenField = document.createElement("input");
+          hiddenField.type = "hidden";
+          hiddenField.name = select.name;
+          hiddenField.value = select.value;
+          form.appendChild(hiddenField);
+        }
+
+        select.addEventListener("change", function () {
+          hiddenField.value = select.value;
+          updateBundleSelection(form, variantId);
+        });
+      });
+    }
+
+    function handleVariantChange(form) {
+      var submitButton = form.querySelector(
+        'button[type="submit"], input[type="submit"]'
+      );
+      var variantIdInput = form.querySelector(
+        'input[name="id"], select[name="id"]'
+      );
+      var variantId = variantIdInput ? variantIdInput.value : null;
+
+      if (!variantId || !window.SimpleBundles.productVariants[variantId]) {
+        return;
+      }
+
+      var bundleOptionsHtml =
+        window.SimpleBundles.productVariants[variantId]
+          .bundle_options_selector_html;
+      var optionsContainer = document.querySelector(
+        "[data-simple-bundles-options]"
+      );
+
+      if (optionsContainer) {
+        optionsContainer.innerHTML = "";
+        optionsContainer.insertAdjacentHTML("afterbegin", bundleOptionsHtml);
+      } else if (submitButton) {
+        var existingOptions = form.querySelector("[data-simple-bundles-options]");
+        if (existingOptions) {
+          existingOptions.remove();
+        }
+
+        optionsContainer = document.createElement("div");
+        optionsContainer.setAttribute("data-simple-bundles-options", "");
+        optionsContainer.insertAdjacentHTML("afterbegin", bundleOptionsHtml);
+        form.insertAdjacentElement("afterbegin", optionsContainer);
+      }
+
+      var selectFields = optionsContainer
+        ? optionsContainer.querySelectorAll("select")
+        : [];
+      selectFields.forEach(function (select) {
+        setHiddenFields(select, variantId);
+      });
+
+      var bundleSelectionField = form.querySelector(
+        'input[name="properties[_bundle_selection]"]'
+      );
+
+      if (!bundleSelectionField) {
+        bundleSelectionField = document.createElement("input");
+        bundleSelectionField.type = "hidden";
+        bundleSelectionField.name = "properties[_bundle_selection]";
+        form.appendChild(bundleSelectionField);
+      }
+
+      updateBundleSelection(form, variantId);
+    }
+
+    function initialize() {
+      forms.forEach(function (form) {
+        handleVariantChange(form);
+        setTimeout(() => {
+          handleVariantChange(form);
+        }, 500);
+
+        var observer = new MutationObserver(function () {
+          handleVariantChange(form);
+        });
+
+        var variantIdField = form.querySelector(
+          'input[name="id"], select[name="id"]'
+        );
+
+        if (variantIdField) {
+          observer.observe(variantIdField, { attributes: true });
+        }
+      });
+    };
+
+    // This will be fired on the initial page load
+    document.addEventListener("DOMContentLoaded", initialize);
+
+    // This will be fired when the user navigates to the document
+    window.addEventListener("pageshow", function (event) {
+      // The 'persisted' property is true when the page is loaded from the bfcache
+      if (event.persisted) {
+        initialize();
+      }
+    });
+  })();
+</script>

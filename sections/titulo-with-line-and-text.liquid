@@ -1,0 +1,236 @@
+{% schema %}
+{
+  "name": "Título con línea - texto",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Ancho de la sección",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "full-width-row", "label": "Full width" },
+        { "value": "full-width-row-full", "label": "Full width, no spacing" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "text_width",
+      "label": "Ancho del contenido",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "xlarge", "label": "Extra large" },
+        { "value": "grid", "label": "Grid" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_top_spacing",
+      "label": "Desactivar espaciado superior",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_bottom_spacing",
+      "label": "Desactivar espaciado inferior",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "titulo",
+      "name": "Título",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto del título"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del título",
+          "default": "#0e355e"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño del título (px)",
+          "min": 14,
+          "max": 48,
+          "step": 1,
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "font_weight",
+          "label": "Peso del título",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        }
+      ]
+    },
+    {
+      "type": "texto",
+      "name": "Texto",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color del texto",
+          "default": "#4a4a4a"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño del texto (px)",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_weight",
+          "label": "Peso del texto",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Título con línea - texto",
+      "blocks": [
+        { "type": "titulo" },
+        { "type": "texto" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+
+<div class="row159line {{ section.settings.section_width }}">
+  <div class="small-12 columns">
+    <div class="una-columna-con-titulo text-width-{{ section.settings.text_width }} section-spacing-padding
+      {% if section.settings.disable_top_spacing %} section-spacing--disable-top{% endif %}
+      {% if section.settings.disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}">
+      
+      {% for block in section.blocks %}
+        {% case block.type %}
+          
+          {% when 'titulo' %}
+            <div class="titulo-con-lineas"
+              style="color: {{ block.settings.color }};
+                     font-size: {{ block.settings.font_size }}px;
+                     font-weight: {{ block.settings.font_weight }};">
+              {{ block.settings.text }}
+            </div>
+
+          {% when 'texto' %}
+            <div class="texto-columna rte"
+              style="color: {{ block.settings.color }};
+                     font-size: {{ block.settings.font_size }}px;
+                     font-weight: {{ block.settings.font_weight }};">
+              {{ block.settings.text }}
+            </div>
+
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<style>
+
+  .row159line{
+    margin-left:8%;
+    margin-right:8%;
+  }
+  .content-width--small {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content-width--medium {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content-width--large {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content-width--xlarge {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content-width--grid {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .una-columna-con-titulo {
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .section-spacing--disable-top {
+    padding-top: 0 !important;
+  }
+
+  .section-spacing--disable-bottom {
+    padding-bottom: 0 !important;
+  }
+
+  .columna-unica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .titulo-con-lineas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .titulo-con-lineas::before,
+  .titulo-con-lineas::after {
+    content: "";
+    flex: 1;
+    border-top: 2px solid currentColor;
+    margin: 0 1rem;
+  }
+
+  .texto-columna.rte a {
+    color: inherit !important;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+</style>

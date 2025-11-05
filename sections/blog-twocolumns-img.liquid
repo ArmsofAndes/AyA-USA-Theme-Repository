@@ -1,0 +1,219 @@
+<div class="sectblog-twocolumns-img">
+  <div class="blogcolumns-wrapper">
+    
+    <!-- Columna 1 -->
+    <div class="column-box">
+      <div class="column-text-top" style="color: {{ section.settings.text1_color }}; font-size: {{ section.settings.text1_size }}px; font-weight: {{ section.settings.text1_weight }};">
+        {{ section.settings.text1_top }}
+      </div>
+      
+      {% if section.settings.image1 != blank %}
+        <img src="{{ section.settings.image1 | img_url: '500x' }}" alt="Imagen 1" style="max-width: 100%; height: auto;" />
+      {% endif %}
+      
+     <div class="column-text-bottom rte" style="color: {{ section.settings.text1b_color }}; font-size: {{ section.settings.text1b_size }}px; font-weight: {{ section.settings.text1b_weight }};">
+        {{ section.settings.text1_bottom }}
+      </div>
+    </div>
+
+    <!-- Columna 2 -->
+    <div class="column-box">
+      <div class="column-text-top" style="color: {{ section.settings.text2_color }}; font-size: {{ section.settings.text2_size }}px; font-weight: {{ section.settings.text2_weight }};">
+        {{ section.settings.text2_top }}
+      </div>
+      
+      {% if section.settings.image2 != blank %}
+        <img src="{{ section.settings.image2 | img_url: '500x' }}" alt="Imagen 2" style="max-width: 100%; height: auto;" />
+      {% endif %}
+      
+      <div class="column-text-bottom rte" style="color: {{ section.settings.text2b_color }}; font-size: {{ section.settings.text2b_size }}px; font-weight: {{ section.settings.text2b_weight }};">
+        {{ section.settings.text2_bottom }}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .sectblog-twocolumns-img {
+    padding: 60px 20px;
+  }
+
+  .blogcolumns-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .column-box {
+    flex: 1 1 300px;
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .column-text-top,
+  .column-text-bottom {
+    margin: 20px 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .blogcolumns-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "sectblog-twocolumns-img",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text1_top",
+      "label": "Texto superior columna 1",
+      "default": "Texto superior 1"
+    },
+    {
+      "type": "range",
+      "id": "text1_size",
+      "label": "Tamaño texto superior 1 (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "text1_weight",
+      "label": "Peso texto superior 1",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text1_color",
+      "label": "Color texto superior 1",
+      "default": "#000000"
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Imagen columna 1"
+    },
+    {
+      "type": "richtext",
+      "id": "text1_bottom",
+      "label": "Texto inferior columna 1",
+      "default": "<p>Texto inferior 1 con <strong>formato</strong> o <em>enlaces</em>.</p>"
+    },
+    {
+      "type": "range",
+      "id": "text1b_size",
+      "label": "Tamaño texto inferior 1 (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text1b_weight",
+      "label": "Peso texto inferior 1",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text1b_color",
+      "label": "Color texto inferior 1",
+      "default": "#000000"
+    },
+
+    {
+      "type": "text",
+      "id": "text2_top",
+      "label": "Texto superior columna 2",
+      "default": "Texto superior 2"
+    },
+    {
+      "type": "range",
+      "id": "text2_size",
+      "label": "Tamaño texto superior 2 (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "text2_weight",
+      "label": "Peso texto superior 2",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text2_color",
+      "label": "Color texto superior 2",
+      "default": "#000000"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Imagen columna 2"
+    },
+    {
+      "type": "richtext",
+      "id": "text2_bottom",
+      "label": "Texto inferior columna 2",
+      "default": "<p>Texto inferior 2 con <strong>formato</strong> y <a href='#'>links</a>.</p>"
+    },
+    {
+      "type": "range",
+      "id": "text2b_size",
+      "label": "Tamaño texto inferior 2 (px)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text2b_weight",
+      "label": "Peso texto inferior 2",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text2b_color",
+      "label": "Color texto inferior 2",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dos columnas con imagen y texto",
+      "category": "Secciones Personalizadas"
+    }
+  ]
+}
+{% endschema %}

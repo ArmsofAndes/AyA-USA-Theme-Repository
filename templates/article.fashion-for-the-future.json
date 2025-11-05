@@ -1,0 +1,575 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "Fashion for the Future: A World Environment Day Reflection",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/world_environment_day_machu_picchu.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published June 5, 2025",
+            "color": "#0e355e",
+            "font_size": 17,
+            "font_weight": 500
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Reading time: 5 minutes</strong></p><p>By Jordy Munarriz</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {text-align: left; margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_4PBRaq": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/DSC02828.webp",
+            "link": "shopify://blogs/news/alpaca-wool-gsm-guide",
+            "caption": "Alpaca Wool GSM Guide:Choose the Right Layer for You",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_hjamRV": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/zero-waste-outdoor-hiking-sustainability.webp",
+            "link": "shopify://blogs/news/zero-waste-in-outdoor-apparel-can-high-performance-gear-be-truly-sustainable",
+            "caption": "Wool Rethinking Outdoor Gear",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_WcN84d": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/marcahuasi-camping-amphitheater-mountain-plateau.webp",
+            "link": "shopify://blogs/news/storytelling-marcahuasi-peru-mystical-hike-above-the-clouds",
+            "caption": "Marcahuasi: A Hidden Andean Sanctuary Above the Clouds",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<p>Each year, <strong>June 5th</strong> invites us to pause and reflect on the state of our natural world. <strong>World Environment Day</strong> is not just a date on the calendar—<strong>it’s a global moment of awareness, of recalibration, and of responsibility</strong>. While many industries contribute to the environmental challenges we face, fashion industries have an immense potential to regenerate ecosystems, protect biodiversity, and foster cultural resilience. But only if we choose to do things differently.<br/></p><h3>Sustainable Animal Fibers and Regenerative Grazing<br/></h3><p>One of the most powerful shifts in recent years is the movement toward sustainable animal fiber systems, especially in regions with long-standing relationships to pastoralism. Unlike industrial livestock operations that rely on monoculture feed and produce high methane emissions, <strong>regenerative grazing models</strong>—particularly those involving animals adapted to local ecosystems, like alpacas or sheep—<strong>are proving that fiber production can be part of ecological restoration</strong> [1].</p><p>In the Andean highlands, for example, alpacas have been part of the landscape for thousands of years. Their padded feet are gentle on fragile mountain soils, avoiding compaction, while their <strong>selective grazing behavior encourages native grassland regeneration</strong> [1]. Recent studies show that alpaca grazing can actually improve soil structure, increase organic matter, and support the return of native plant species in degraded highland areas [1]. Their waste further contributes to nutrient cycling, enriching the soil naturally.</p><p><strong>These regenerative models contrast sharply with conventional agriculture</strong>, which has led to the loss of an estimated <strong>30–75% of organic carbon in soils globally</strong> [2]. But with well-managed grazing, ruminants like alpacas can become part of the solution. Rather than accelerating degradation, they can <strong>improve soil health, sequester carbon, and reduce erosion</strong>—benefits that, when carefully balanced, can even help offset their methane emissions [2,3].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/sustainable_animal_fibers_regenerative_grazing.webp",
+            "caption": "The monumental Inca walls of Saqsaywaman rise above Cusco, reflecting centuries of sacred history and architectural mastery. Picture by: Azzedine Rouichi",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_dEHyAY": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Animal Welfare in Fiber Production</h3><p>Beyond the environmental role of sustainable herding, the treatment of animals themselves has come under greater scrutiny. <a href=\"https://www.woah.org/en/what-we-do/animal-health-and-welfare/animal-welfare/\" target=\"_blank\"><strong>The Five Freedoms of Animal Welfare</strong></a>, established by the World Organisation for Animal Health (WOAH, formerly OIE), have become foundational principles in responsible animal husbandry. These include [4]:</p><ul><li>Freedom from hunger, thirst, and malnutrition.</li><li>Freedom from physical and thermal discomfort.</li><li>Freedom from pain, injury, and disease.</li><li>Freedom from fear and distress.</li><li>Freedom to express natural behaviors.</li></ul><p>In ethical fiber production, especially in the luxury segment, these freedoms are increasingly seen not as aspirational—but as non-negotiable [4]. Certifications and direct sourcing models help ensure that animals like alpacas and sheep are raised not merely as production units, but as sentient beings, with dignity and care deeply embedded in the systems that depend on them.<br/></p><p>When it comes to the fiber itself, <a href=\"https://armsofandes.com/blogs/news/alpaca-better-than-merino-cashmere\" target=\"_blank\"><strong>alpaca wool</strong></a> is an extraordinary example of form meeting function. It's lightweight, water-resistant [5], and doesn’t contain <a href=\"https://pubchem.ncbi.nlm.nih.gov/compound/Lanolin\" target=\"_blank\"><strong>lanolin</strong></a>, which makes it <a href=\"https://www.sciencedirect.com/science/article/pii/S1751731110000029?via%3Dihub\" target=\"_blank\"><strong>hypoallergenic</strong></a> and ideal for sensitive skin [6,7]. Alpaca fiber also has a longer lifespan compared to many other wools, which directly combats the throwaway culture of fast fashion. <strong>A garment that lasts decades is a garment that doesn’t end up in landfill.</strong></p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_4PBRaq",
+        "right_image_block_hjamRV",
+        "right_image_block_WcN84d",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP",
+        "left_text_dEHyAY"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>Related content</p>",
+        "right_title_size": 20,
+        "right_title_weight": 700,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/womens-crew-neck-relaxed-fit-ultra-soft-color-navy-blue_4c385c32-a8cf-4a97-8c22-23013f2eb808.webp",
+            "link": "shopify://products/womens-tshirt-relax-fit-160-ultralight",
+            "caption": "Women's Alpaca Wool Hiking T-Shirt: 160 Ultralight - Relaxed Fit",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_4DTPGr": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Womens-Alpaca-Wool-Leggings-300-Lightweight_2.webp",
+            "link": "shopify://products/womens-alpaca-wool-leggings-300",
+            "caption": "Women's Alpaca Wool Leggings: 300 Lightweight",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Mens-Alpaca-Wool-Tank-Top160Ultralight11.webp",
+            "link": "shopify://products/mens-alpaca-wool-tank-top",
+            "caption": "Men's Alpaca Wool Tank Top: 160 Ultralight",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/adobestock_107304536edited--edited-1638947750902.webp",
+            "caption": "Giant river otters swim among lush aquatic plants in the protected waters of Manu National Park—one of the world’s richest biodiversity hotspots.",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Dyes: Natural, Certified, and Safe</h3><p>But the sustainability of a garment doesn’t end with the fiber. <strong>The dyeing process is one of the most chemically intense stages in textile production</strong>—often hidden from view, but with serious consequences for both people and ecosystems. Today,<strong> more than 3,600 synthetic dyes</strong> are in use across the global fashion industry, involving over <strong>8,000 different chemicals</strong> in processes such as dyeing, fixing, and printing [8]. Many of these substances are derived <strong>from petroleum</strong>, and nearly <strong>40% of dyes contain chlorinated compounds</strong>, some of which have been linked to carcinogenic effects and persistent environmental toxicity [8,9].<br/></p><p><a href=\"https://www.scirp.org/journal/paperinformation?paperid=17027\" target=\"_blank\"><strong>These chemicals don’t just disappear</strong></a>—they often flow into rivers and soil systems in regions where environmental regulations are weak or poorly enforced [8]. The result is long-term damage to aquatic ecosystems, human health, and local farming communities [9].<br/></p><p>However, not all dyes are created equal. <strong>Plant-based and insect-derived dyes</strong>—like <a href=\"https://armsofandes.com/blogs/news/indigo-dye-ancient-peru\" target=\"_blank\"><strong>indigo</strong></a> or <a href=\"https://armsofandes.com/blogs/news/cochineal-dye-ancient-red-tradition-sustainability\" target=\"_blank\"><strong>cochineal</strong></a>—offer naturally vibrant tones with a fraction of the ecological cost [10]. When properly managed and certified, these natural dyes can be both safe and effective. Standards like <strong>GOTS</strong> (Global Organic Textile Standard) ensure that even natural additives and mordants are <strong>free from harmful toxins</strong>, and that wastewater is treated before returning to the environment [11].<br/></p><h3>Details Matter: Every Component Counts</h3><p>A garment’s components matter just as much as the fabric itself. <strong>That includes zippers, buttons, elastics, threads, and labels</strong>—all of which contribute to its final environmental footprint. While often treated as secondary details, <strong>these non-textile elements </strong>can represent <strong>a significant portion of a garment’s total impact</strong>, particularly when made from synthetic materials or complex blends that resist breakdown or recycling [12,13].<strong><br/></strong></p><p>Studies show that integrating natural or recyclable materials across all garment components not only reduces the environmental footprint, but also <a href=\"https://www.sciencedirect.com/science/article/abs/pii/S0921344910001825?via%3Dihub\" target=\"_blank\"><strong>simplifies post-consumer management</strong></a>, whether through composting, repair, or material recovery [13]. For a piece to be truly biodegradable or compostable, every element—down to the smallest stitch—must be free of synthetic coatings and chosen with circularity in mind.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_hjE49k": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/Womens-Menu-003.webp",
+            "caption": "Two travelers quietly explore a river in the Manu Biosphere Reserve, practicing sustainable tourism while surrounded by pristine Amazon rainforest.",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_QwLdmW": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Traceability and Transparency in Fashion<br/></h3><p>This brings us to one of the most important—and often neglected—aspects of sustainable fashion: traceability. It’s not just about labeling where something is made, but understanding who made it, how it was made, and under what conditions. This level of accountability does more than just build consumer trust—it becomes a tool for change. <strong>Traceability empowers people to make informed choices</strong>, and it puts pressure on brands and suppliers to improve environmental practices and uphold fair labor conditions [14].<strong><br/></strong></p><p>Moreover, <strong>traceability is key to social and environmental justice</strong> in the textile industry. Without clear data on production processes or waste streams, it becomes nearly impossible to implement truly circular systems or to ensure that those who make our clothes are protected and respected [15].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_cLcR8k",
+        "right_image_block_4DTPGr",
+        "right_image_block_DdEGdh",
+        "left_image_6bkrxL",
+        "left_text_XjzLYC",
+        "left_image_hjE49k",
+        "left_text_QwLdmW"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        ".custom-left-image {width: 100%; height: auto; display: block; max-height: 750px; object-fit: contain;}",
+        "h3{text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_CE4DCV": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_text_XHcXnL": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Slow Down, Connect, Learn</h3><p>Resist the urge to check off tourist hotspots in rapid succession. In Cusco, the journey becomes richer when you immerse yourself in the rhythms of local life. Instead of rushing, spend time joining <strong>community-led walks</strong>, <strong>traditional cooking classes</strong>, or <strong>weaving workshops </strong>with master artisans. Walk through Cusco’s vibrant markets with a local guide, help farmers during a harvest, or quietly birdwatch in the Sacred Valley alongside those who know every hidden trail. These slow experiences build real connections—and turn residents from service providers into storytellers and friends.<br/></p><p>Educate yourself on Andean cosmology, history, and environmental practices before and during your visit. Learning about the <strong>Festival of Inti Raymi</strong>, the sacred reverence for <strong>Pachamama </strong>(Mother Earth), or the meaning of <strong>ayni</strong>—reciprocal helping—deepens your understanding of the land and its people. Even small efforts, like greeting someone with \"Allillanchu\" (hello) or saying \"Sulpayki\" (thank you) in Quechua, are gestures that open doors and hearts [3].<br/></p><p>Traveling slowly also helps the environment: staying longer in one place reduces transport emissions and spreads your impact more meaningfully across the community. Moments like sharing coca tea with a <strong>Quechua family </strong>or <strong>spotting a soaring condor </strong>after hours of quiet patience can become the soul of your trip. In Cusco, slowing down isn’t just a choice—it’s a way of honoring the living culture around you.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_m3R8Bn": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/AboutUS-Menu-005_1.webp",
+            "caption": "Picture by: Alvaro Palacios",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_Mbqe9L": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Indigenous Knowledge as Sustainability Blueprint</h3><p>The weaving techniques of the Andes, the natural dyeing practices of Amazonian peoples, the animal-tending customs passed through generations—<strong>these are not just traditions; they are blueprints for sustainable living</strong>.<br/></p><p>Far from being outdated, these practices represent models of ecological intelligence, shaped by centuries of coexistence with the environment [17]. They often emerged not from scarcity, but from deep observation and harmony with nature—a knowledge system rooted in reciprocity, respect, and balance [18].<br/></p><p>Today, integrating this indigenous wisdom into contemporary fashion offers more than just aesthetic or symbolic value. It provides practical, low-impact solutions to environmental challenges, while also <strong>strengthening cultural identity </strong>and <strong>empowering the communities that hold these traditions </strong>[18].<strong><br/></strong></p><p>These ancestral approaches prove that sustainability is not a trend—it’s a way of life, and one that has long existed outside of the industrial paradigm.<br/></p><h3>An Integrated Future Is Already Here</h3><p>The environmental movement cannot be divorced from the cultural one. As we strive to heal the planet, we must also uplift the wisdom of those who have lived sustainably for centuries.<strong><br/></strong></p><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes</strong></a>, sustainability isn’t a single action—it’s a holistic practice. From working directly with herding communities in the Andes, to using <strong>biodegradable fibers </strong>and <strong>natural dyes</strong>, to ensuring that every detail—from thread to tag—is chosen with care, our approach is rooted in intention. We trace every step. We <strong>produce in one country</strong>. And we <strong>honor ancestral knowledge </strong>at every stage.<strong><br/></strong></p><p>This <strong>World Environment Day</strong>, we’re not just celebrating nature—we’re inviting our community to understand the systems behind what we wear. To see how true sustainability means rethinking the entire journey of a garment, and to recognize that the future of fashion must be slow, ethical, and deeply connected to place and people.<strong><br/></strong></p><p>This World Environment Day, we ask you: <strong>What story is your clothing telling?</strong></p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_qcNxK3": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/screenshot-20220204-at-160653-1644008867952.webp",
+            "caption": "Picture by Emufec",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_XHcXnL",
+        "left_image_m3R8Bn",
+        "left_text_Mbqe9L",
+        "left_image_qcNxK3"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h6><strong>Glossary keywords</strong></h6><p><strong>Animal Welfare:</strong><br/>Ethical treatment of animals, guided by the Five Freedoms (established by the World Organisation for Animal Health).</p><p><strong>Biodegradable:</strong><br/>Materials that decompose naturally without harming the environment, unlike synthetic alternatives (e.g., polyester).</p><p><strong>Carbon Footprint:</strong><br/>Total greenhouse gas emissions (e.g., CO₂, methane) produced directly or indirectly by a product, activity, or industry.</p><p><strong>Carbon Sequestration:</strong><br/>Process of capturing and storing atmospheric carbon dioxide, often through soil health improvement or vegetation growth.</p><p><strong>Circular Economy:</strong><br/>System aimed at minimizing waste by designing products for longevity, reuse, repair, and recycling, keeping resources in use as long as possible.</p><p><strong>Circularity:</strong><br/>Design principle ensuring products and materials can be reused, recycled, or returned to nature safely, reducing reliance on virgin resources.</p><p><strong>GOTS (Global Organic Textile Standard):</strong><br/>Leading certification for organic fibers, ensuring environmental and social criteria are met, including safe dyeing processes and fair labor practices.</p><p><strong>Hypoallergenic:</strong><br/>Materials (e.g., alpaca fiber) that minimize allergic reactions, often due to lack of lanolin or harsh chemicals.</p><p><strong>Indigenous Knowledge:</strong><br/>Traditional practices developed over generations, often emphasizing ecological balance and sustainability (e.g., Andean weaving techniques).</p><p><strong>Mordants:</strong><br/>Substances (e.g., alum, iron) used to fix natural dyes to fabrics, enhancing colorfastness. Must be non-toxic in certified sustainable processes.</p><p><strong>Natural Dyes:</strong><br/>Plant-, mineral-, or insect-based colorants (e.g., indigo, cochineal) with lower environmental impact than synthetic alternatives.</p><p><strong>Regenerative Agriculture/Grazing:</strong><br/>Farming practices that restore ecosystems (e.g., improving soil health, increasing biodiversity) while producing goods. Contrasts with extractive industrial models.</p><p><strong>Soil Health:</strong><br/>The capacity of soil to sustain plant and animal life, regulate water, and resist degradation. Improved by organic matter, microbial activity, and regenerative practices.</p><p><strong>Synthetic Dyes:</strong><br/>Chemically derived colorants (often petroleum-based) linked to water pollution and health risks. Over 3,600 are used globally, many containing toxic compounds.</p><p><strong>Traceability:</strong><br/>Tracking a product’s lifecycle (from raw materials to finished goods) to ensure ethical and environmental accountability.</p>",
+        "right_title_size": 12,
+        "right_title_weight": 400,
+        "right_title_color": "#151515",
+        "right_alignment": "left"
+      }
+    },
+    "section_blog_autor_eeJDpp": {
+      "type": "section-blog-autor",
+      "name": "Autor del Blog",
+      "settings": {
+        "icono_img": "shopify://shop_images/svg-path.svg",
+        "line_color": "#000000",
+        "line_thickness": 2,
+        "titulo": "Authors & Researchers",
+        "titulo_color": "#0e3553",
+        "titulo_size": 28,
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/Profile_AOA_5bd4ed33-e7e0-410d-9130-26c3dc4c0272.webp",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Jordy Munarriz",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Environmental Engineer with a master’s degree in renewable energy and a specialization in sustainability. A passionate traveler and advocate for responsible tourism, he captures the essence of exploration through storytelling, inspiring others to connect with nature in a conscious and meaningful way."
+      }
+    },
+    "section_blog_autor_add_wTqe8x": {
+      "type": "section-blog-autor-add",
+      "name": "section-blog-autor-add",
+      "settings": {
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/WhatsApp_Image_2025-02-18_at_11.57.35_a1a76a21-3264-4bf9-b1ae-49903fb6d535.jpg",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Lesia Tello",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Biologist and hiking enthusiast with a deep admiration for nature and the intricate mechanisms of life. With a background in biochemistry and a master’s degree in education, she blends science with adventure, exploring how we interact with the natural world and sharing insights on outdoor experiences."
+      }
+    },
+    "linea_horizontal_jCDaGe": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 95,
+        "color_linea": "#000000",
+        "grosor": 2,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Mitchell, Ross E. \"Community perspectives in sustainable tourism: lessons from Peru.\" Tourism, recreation and sustainability: Linking culture and the environment. Wallingford UK: CABI, 2008. 158-182.<a href=\"https://doi.org/10.1079/9781845934705.0158\" target=\"_blank\">https://doi.org/10.1079/9781845934705.0158</a></p><p>[2] UNESCO World Heritage Centre. Manú National Park. Retrieved from<a href=\"https://whc.unesco.org/en/list/402\" target=\"_blank\">https://whc.unesco.org/en/list/402</a></p><p>[3] De la Cadena, Marisol. \"Indigenous cosmopolitics in the Andes: Conceptual reflections beyond “politics”.\" Cultural anthropology 25.2 (2010): 334-370.<a href=\"https://doi.org/10.1111/j.1548-1360.2010.01061.x\" target=\"_blank\">https://doi.org/10.1111/j.1548-1360.2010.01061.x</a></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\n\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section1_blog_text_and_contentrelated_CE4DCV",
+    "section_blog_autor_eeJDpp",
+    "section_blog_autor_add_wTqe8x",
+    "linea_horizontal_jCDaGe",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

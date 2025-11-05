@@ -1,0 +1,339 @@
+{%- liquid
+	assign show_collection_image = section.settings.show_collection_image
+	assign show_collection_description = section.settings.show_collection_description
+	assign show_subcollections = section.settings.show_subcollections
+	assign make_heading_uppercase = section.settings.make_heading_uppercase
+	assign text_alignment = section.settings.text_alignment
+	assign overlay_color = section.settings.overlay_color
+	assign overlay_opacity = section.settings.overlay_opacity
+
+	assign image = collection.metafields.custom.header_image | file_url | image_tag: '', ''
+assign fallback_image = collection.featured_image
+
+if image == ''
+  assign image = fallback_image
+endif
+	assign title = collection.title
+	assign description = collection.description
+	assign collection_handle = collection.handle
+
+	if section.settings.image and collection.handle == 'all'
+		assign image = section.settings.image
+	endif
+-%}
+{%- if template == 'search' -%}
+	{%- liquid
+		assign show_collection_image = false
+		assign show_subcollections = false
+		assign title = 'search.heading' | t
+	-%}
+	{%- capture description %}
+		{% assign search_phrase = search.terms | replace: '*', '' %}
+		{% if '' != search_phrase %}
+			<p>{{ 'search.results_found' | t: count: search.results_count, key: search_phrase }}</p>
+		{% endif %}
+	{%- endcapture -%}
+{%- endif -%}
+{{ 'collection-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="collection-banner collection-banner--heading-uppercase-{{ make_heading_uppercase }}{% if show_collection_image and image %} collection-banner--has-bg{% endif %}" style="--overlay-color-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }}; --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }}">
+	<div class="collection-banner--breadcrumbs">
+		{%- render 'breadcrumbs' -%}
+	</div>
+	<div class="row full-width-row">
+		<div class="small-12 columns">
+
+          {%- if show_collection_image -%}
+  {%- if collection.metafields.custom.header_image != blank -%}
+    <div class="collection-banner--image">
+    <div class="collection-banner--image-wrapper">
+      <img 
+        src="{{ collection.metafields.custom.header_image | image_url: width: 1600 }}" 
+        width="1640"
+        height="600"
+        alt="Imagen de fondo personalizada"
+        
+         />
+    </div></div>
+			{%- elsif collection.featured_image != blank -%}
+			<div class="collection-banner--image">
+      {%- render 'responsive-image', image: collection.featured_image, sizes: '0x350,0x700', priority: 'high' -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+			<div class="collection-banner--content text-{{ text_alignment }}">
+				<h1 class="collection-banner--title" style="color: {{ section.settings.title_color }}; font-size: {{ section.settings.title_font_size }}rem;font-weight: {{ section.settings.title_font_weight }};line-height:{{ section.settings.title_font_size| plus: 0.5 }}rem;text-align: left;">
+  {{ collection.metafields.custom.title_collection | default: title }}
+</h1>
+  {%- if collection.metafields.custom.subtitle_collection != blank -%}
+  <p class="collection-banner--subtitle" style="color: {{ section.settings.subtitle_color }}; font-size: {{ section.settings.subtitle_font_size }}rem;font-weight: {{ section.settings.subtitle_font_weight }};text-align: left;">
+  {{ collection.metafields.custom.subtitle_collection }}
+</p>
+{%- endif -%}            
+{% if section.settings.collection_subtitle != blank %}
+  <p class="collection-banner--subtitle" style="color: {{ section.settings.subtitle_color }}; font-size: 1rem; margin-top: 0.5em;">
+    {{ section.settings.collection_subtitle }}
+  </p>
+{% endif %}
+              {% if template == 'search' %}
+					<form role="search" method="get" class="searchform" action="{{ routes.search_url }}">
+						<fieldset>
+							<input type="search" class="search-field" placeholder="{{ 'sections.header.search_for' | t | escape }}" value="{{ search.terms | replace: '*', '' }}" name="q" autocomplete="off">
+							<button type="submit" class="thb-search-submit">{% render 'svg-icons' with 'search' %}</button>
+						</fieldset>
+					</form>
+				{% endif %}
+				{%- if show_collection_description and description != '' -%}
+				<div class="collection-banner--description">
+					<p>{{ description }}</p>
+				</div>
+				{%- endif -%}
+				{%- if show_subcollections and linklists[collection_handle] != empty -%}
+					{%- capture subcollection_links -%}
+					{%- for link in linklists[collection_handle].links -%}
+						{%- assign link_collection = collections[link.handle] -%}
+						{%- if link_collection != blank -%}
+							<a href="{{ link_collection.url }}" title="{{ link_collection.title | escape }}" class="text-button{% if show_collection_image and image %} white{% endif %}">{{ link_collection.title }}</a>
+						{%- endif -%}
+					{%- endfor -%}
+					{%- endcapture -%}
+					{%- if subcollection_links != '' -%}
+					<div class="collection-banner--subcollections">
+						{{ subcollection_links }}
+					</div>
+					{%- endif -%}
+				{%- endif -%}
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+  .collection-banner {
+  background-color: #e0e0e0; /* plomo claro */
+    min-height: 31.25rem;
+     
+}
+
+ .collection-banner .full-width-row {
+  max-width: 100% !important;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.collection-banner .columns {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.collection-banner--image-wrapper {
+  position: relative;
+  width: 100%;
+  height:100%; /* ajustar según el diseño */
+  overflow: hidden;
+
+}
+.collection-banner--content {
+  /*padding-left: 3.5rem; o el valor que prefieras */
+}
+.collection-banner--image-wrapper img {
+  width: 100%;
+  height: 31.25rem;
+  object-fit: contain;
+  object-position: 12% center;
+  display: block;
+}
+   @media (max-width: 1024px) {
+    .collection-banner {
+    min-height: 25.25rem;
+    }
+   .collection-banner--image-wrapper img {
+  width: 80%;
+     
+  height: 25.25rem;
+  object-fit: contain;
+  object-position:12% center;
+  display: block;
+}
+   .collection-banner--content {
+  /*padding-left: 3.5rem; o el valor que prefieras */
+}
+   .collection-banner {
+  padding-left: 4%;
+  padding-right: 4%;
+}
+ } 
+@media screen and (max-width: 768px) {
+  .collection-banner--image-wrapper {
+    display: none;
+  }
+  .collection-banner--content {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+    .collection-banner--content {
+  padding-left: 0; /* o el valor que prefieras */
+}
+.collection-banner--subtitle{margin-left:0rem!important;}
+   .collection-banner {
+  padding-left: 3%;
+  padding-right: 3%;
+     min-height: 18.25rem;
+}
+
+}
+</style>
+{% schema %}
+{
+  "name": "Collection banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": true,
+      "label": "Show collection image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subcollections",
+      "default": true,
+      "label": "Show subcollections",
+      "info": "Links to subcollections from your menu will appear here. [Learn more.](https://documentation.fuelthemes.net/kb/how-do-i-add-sub-category-links-inside-main-collection-banner/)"
+    },
+    {
+      "type": "checkbox",
+      "id": "make_heading_uppercase",
+      "default": false,
+      "label": "Make heading uppercase"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content alignment"
+    },
+    {
+      "type": "header",
+      "content": "Catalog page"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn more about [catalog page](https://help.shopify.com/en/manual/online-store/themes/themes-by-shopify/vintage-themes/customizing-vintage-themes/change-catalog-page)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Catalog image",
+      "info": "Changes the image for the [catalog page](https://help.shopify.com/en/manual/online-store/themes/themes-by-shopify/vintage-themes/customizing-vintage-themes/change-catalog-page). 1920 x 640 px .jpg recommended."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 20
+    },
+
+    // Aquí agregamos los campos de título y subtítulo
+    {
+      "type": "header",
+      "content": "Título y Subtítulo"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Tamaño del Título (rem)",
+      "min": 1.2,
+      "max": 4,
+      "step": 0.1,
+      "default": 2.2
+    },
+    {
+  "type": "select",
+  "id": "title_font_weight",
+  "label": "Peso del Título",
+  "default": "400",
+  "options": [
+    { "value": "300", "label": "Light (300)" },
+    { "value": "400", "label": "Normal (400)" },
+    { "value": "500", "label": "Medium (500)" },
+    { "value": "600", "label": "Semibold (600)" },
+    { "value": "700", "label": "Bold (700)" }
+  ]
+},
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color del subtítulo",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "label": "Tamaño del Subtítulo (rem)",
+      "min": 0.8,
+      "max": 2.5,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+  "type": "select",
+  "id": "subtitle_font_weight",
+  "label": "Peso del Subtítulo",
+  "default": "300",
+  "options": [
+    { "value": "300", "label": "Light (300)" },
+    { "value": "400", "label": "Normal (400)" },
+    { "value": "500", "label": "Medium (500)" },
+    { "value": "600", "label": "Semibold (600)" },
+    { "value": "700", "label": "Bold (700)" }
+  ]
+}
+  ]
+}
+{% endschema %}

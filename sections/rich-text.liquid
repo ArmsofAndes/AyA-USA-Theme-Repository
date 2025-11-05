@@ -1,0 +1,713 @@
+{{- 'rich-text.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_width = section.settings.section_width
+  assign text_width = section.settings.text_width
+  assign text_position = section.settings.text_position
+  assign text_alignment = section.settings.text_alignment
+
+  assign color_bg = section.settings.color_bg | downcase
+  assign color_text = section.settings.color_text
+  assign color_links = section.settings.color_links
+
+  assign disable_top_spacing = section.settings.disable_top_spacing
+  assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+
+  assign solid_button_label = color_bg
+  if color_bg == 'transparent' or color_bg == 'rgba(0,0,0,0)'
+    assign solid_button_label = '#ffffff'
+  endif
+
+  assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit'
+-%}
+
+{%- if section.settings.use_global_font -%}
+  {%- assign section_font = settings.font_body | default: 'inherit' -%}
+{%- endif -%}
+
+
+<!-- Contenedor externo con fondo completo -->
+<div class="richtext-full-bg" {% if section.settings.custom_anchor_id != blank %} id="{{ section.settings.custom_anchor_id }}" {% endif %} 
+  style="background-color: {{ color_bg }};
+    {% if section.settings.background_image != blank %}
+      background-image: url({{ section.settings.background_image | img_url: 'master' }});
+      background-size: cover;
+      background-position: center;
+    {% endif %}">
+  <div class="row123 row {{ section_width }}" style = "padding: 0; margin:0">
+    <div class="small-12 columns">
+      <div class="rich-text text-{{ text_alignment }} text-position-{{ text_position }} text-width-{{ text_width }} section-spacing-padding font-{{ section.settings.font_family }}
+        {% if disable_top_spacing %} section-spacing--disable-top{% endif %}
+        {% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
+        style="--color-bg: {{ color_bg }};
+               --color-text: {{ color_text }};
+               --solid-button-background: {{ color_text }};
+               --outline-button-label: {{ color_text }};
+               --solid-button-label: {{ solid_button_label }};
+               --bg-body: {{ color_bg }};
+               --color-accent: {{ color_links }};
+               --color-accent-rgb: {{ color_links.rgb | replace: ' ' , ',' }};
+               font-family: {{ section_font }};">
+        <div class="rich-text__inner" style="font-family: {{ section_font }};">
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+
+              {%- when 'image' -%}
+                {% if block.settings.image != blank %}
+                  {% liquid
+                    assign image = block.settings.image
+                    assign master_width = image.src.width | append: 'x' | append: image.src.height
+                    render 'responsive-image', image: image, sizes: master_width, retina: block.settings.retina
+                  %}
+                {% else %}
+                  <div class="thb-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder_svg_tag' }}</div>
+                {% endif %}
+
+              {%- when 'subheading' -%}
+                <p class="subheading" {{ block.shopify_attributes }} 
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text }}
+                </p>
+
+              {%- when 'heading' -%}
+                <h3 class="custom-heading {{ block.settings.size }} font-{{ section.settings.font_family }}" {{ block.shopify_attributes }} 
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text | newline_to_br }}
+                </h3>
+
+              {%- when 'text' -%}
+                <div class="rte {{ block.settings.size }}" {{ block.shopify_attributes }} 
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text }}
+                  {{ block.settings.custom_liquid }}
+                </div>
+
+              {%- when 'decorative_line' -%}
+                <div class="richtext-line" {{ block.shopify_attributes }}
+                  style="height: {{ block.settings.line_thickness }}px; background-color: {{ block.settings.line_color }}; width: {{ block.settings.line_width_percent }}%; margin: 30px auto;">
+                </div>
+
+              {%- when 'button' -%}
+                {% if block.settings.link_label != blank %}
+                  <a class="custom-button"
+                     href="{{ block.settings.link }}"
+                     {{ block.shopify_attributes }}
+                     style="background-color: {{ block.settings.button_color }};
+                            color: {{ block.settings.button_text_color }};
+                            font-size: {{ block.settings.font_size }}px;
+                            font-weight: {{ block.settings.font_weight }};
+                            font-family: {{ section_font }};"
+                     data-hover-bg="{{ block.settings.button_hover_color }}"
+                     data-hover-text="{{ block.settings.button_hover_text_color }}">
+                    <span>{{ block.settings.link_label }}</span>
+                  </a>
+                {% endif %}
+
+              {%- when 'text-button' -%}
+                {% if block.settings.link_label != blank %}
+                  <a class="text-button" href="{{ block.settings.link }}" {{ block.shopify_attributes }} style="font-family: {{ section_font }};">{{ block.settings.link_label }}</a>
+                {% endif %}
+
+              {%- when 'accordion' -%}
+                <div class="accordion-block" {{ block.shopify_attributes }}>
+                  <button class="accordion-toggle" style="background-color: transparent; display: flex; align-items: center; color: {{ block.settings.title_color }}; justify-content: space-between; font-size: {{ block.settings.title_font_size | divided_by: 16.0 }}rem; font-weight: {{ block.settings.title_font_weight }}; font-family: {{ section_font }}; width: 100%;">
+                    <span>{{ block.settings.title }}</span>
+                    <span class="accordion-icon" style="transition: transform 0.3s ease;">▾</span>
+                  </button>
+                  <div class="accordion-content" style="display: none; font-family: {{ section_font }}; background-color: transparent; border-left: none; color: {{ block.settings.content_color }}; font-size: {{ block.settings.content_font_size | divided_by: 16.0 }}rem; font-weight: {{ block.settings.content_font_weight }};">
+                    <div class="rte" style="font-family: {{ section_font }};">
+                      {{ block.settings.content }}
+                    </div>
+                  </div>
+                </div>
+
+              {%- when 'custom_liquid' -%}
+                {{ block.settings.custom_liquid }}
+
+            {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+  .font-helvetica { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .font-arimo { font-family: 'Arimo', sans-serif; }
+  .font-roboto { font-family: 'Roboto', sans-serif; }
+  .font-poppins { font-family: 'Poppins', sans-serif; font-weight: 300; }
+  .font-source-sans { font-family: 'Source Sans Pro', sans-serif; }
+  .font-montserrat { font-family: 'Montserrat', sans-serif; }
+  .baskerville-font { font-family: "Baskerville", "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;}
+
+  .richtext-full-bg *::before,
+  .richtext-full-bg *::after { font-family: inherit; }
+
+  .accordion-toggle.active .accordion-icon { transform: rotate(180deg); }
+  .accordion-toggle { background: none; border: none; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-bottom: 0.5rem; width: 100%; text-align: left; padding: 10px; background-color: #f0f0f0; }
+  .accordion-content { display: none; padding: 10px; border-left: 3px solid #ccc; background-color: #fafafa; }
+  .accordion-toggle.active + .accordion-content { display: block; }
+
+
+{% comment %} modificacion {% endcomment %}
+  .rte {
+  /*padding: 0 10rem;*/
+}
+  @media (max-width: 768px) {
+  .custom-heading {
+    font-size: 2.5rem !important;
+  }
+}
+.section-4-text {
+    padding: 8% 6%; /* less padding left/right so content breathes */
+  }
+  
+  .section-4-text__row {
+    grid-template-columns: 1fr; /* stack title + text */
+    gap: 20px; /* more breathing room between title & text */
+  }
+
+  .section-4-text__row p {
+    margin-bottom: 12px; 
+  }
+
+  .section-4-text__title,
+  .section-4-text__content {
+    text-align: center; /* center both */
+  }
+{% comment %} modificacion {% endcomment %}
+}
+</style>
+
+<script>
+  function setupAccordions(scope = document) {
+    const toggles = scope.querySelectorAll(".accordion-toggle");
+    toggles.forEach(toggle => {
+      toggle.removeEventListener("click", toggle._accordionClick);
+      toggle._accordionClick = () => {
+        const isActive = toggle.classList.contains("active");
+        toggles.forEach(btn => {
+          btn.classList.remove("active");
+          const content = btn.nextElementSibling;
+          if (content && content.classList.contains("accordion-content")) {
+            content.style.display = "none";
+          }
+        });
+        if (!isActive) {
+          toggle.classList.add("active");
+          const content = toggle.nextElementSibling;
+          if (content && content.classList.contains("accordion-content")) {
+            content.style.display = "block";
+          }
+        }
+      };
+      toggle.addEventListener("click", toggle._accordionClick);
+    });
+  }
+  document.addEventListener("DOMContentLoaded", () => { setupAccordions(); });
+  document.addEventListener("shopify:section:load", (event) => { setupAccordions(event.target); });
+</script>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "section-rich-text",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_global_font",
+      "label": "Usar tipografía global del theme",
+      "default": false
+    },{
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía de la sección",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" },
+    { "value": "baskerville", "label": "Baskerville"}
+  ]
+},
+      {
+  "type": "text",
+  "id": "custom_anchor_id",
+  "label": "ID de anclaje (único, sin espacios)"
+},{
+  "type": "image_picker",
+  "id": "background_image",
+  "label": "Imagen de fondo"
+},{
+				"type": "select",
+				"id": "section_width",
+				"options": [
+					{
+						"value": "grid",
+						"label": "Grid"
+					},
+					{
+						"value": "full-width-row",
+						"label": "Full width"
+					},
+					{
+						"value": "full-width-row-full",
+						"label": "Full width, no spacing"
+					}
+				],
+				"default": "grid",
+				"label": "Section width"
+			},
+			{
+				"type": "select",
+				"id": "text_width",
+				"label": "Content width",
+				"options": [
+					{
+						"value": "small",
+						"label": "Small"
+					},
+					{
+						"value": "medium",
+						"label": "Medium"
+					},
+					{
+						"value": "large",
+						"label": "Large"
+					},
+					{
+						"value": "xlarge",
+						"label": "Extra large"
+					},
+					{
+						"value": "grid",
+						"label": "Grid"
+					}
+				],
+				"default": "medium"
+			},
+			{
+				"type": "select",
+				"id": "text_position",
+				"label": "Content position",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+				"type": "select",
+				"id": "text_alignment",
+				"label": "Content alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center"
+			},
+			{
+	      "type": "header",
+	      "content": "Colors"
+	    },
+			{
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background",
+        "default": "transparent"
+      },
+			{
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#151515"
+      },
+			{
+        "type": "color",
+        "id": "color_links",
+        "label": "Links",
+        "default": "#151515"
+      },
+			{
+	      "type": "header",
+	      "content": "Spacing"
+	    },
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": false,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": false,
+				"label": "Remove bottom spacing"
+			}
+    ],
+		"blocks": [
+			{
+				"type": "image",
+				"name": "Image",
+				"settings": [
+					{
+						"type": "image_picker",
+						"id": "image",
+						"label": "Image"
+					},
+					{
+						"type": "checkbox",
+						"id": "retina",
+						"label": "Enable retina",
+						"default": true,
+						"info": "Image will be displayed at half the size, making it look crisp on retina screens."
+					}
+				]
+			},
+			{
+				"type": "subheading",
+				"name": "Subheading",
+				"settings": [
+					{
+						"type": "text",
+						"id": "text",
+						"label": "Text",
+						"default": "Subheading for this section"
+					},
+                  {
+      "type": "color",
+      "id": "color",
+      "label": "Color"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de letra (px)",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+   {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso de fuente",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+				]
+			},
+			{
+				"type": "heading",
+				"name": "Heading",
+				"settings": [
+					{
+						"type": "text",
+						"id": "text",
+						"label": "Text",
+						"default": "Text"
+					},
+					{
+      "type": "color",
+      "id": "color",
+      "label": "Color"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de letra (px)",
+      "min": 10,
+      "max": 90,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso de fuente",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+				]
+			},
+			{
+        "type": "text",
+        "name": "Text",
+        "settings": [
+					{
+						"type": "richtext",
+						"id": "text",
+						"label": "Content",
+						"default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+					},
+					{
+						"type": "liquid",
+						"id": "custom_liquid",
+						"label": "Custom liquid",
+						"info": "Add app snippets or other Liquid code to create advanced customizations."
+					},
+					{
+      "type": "color",
+      "id": "color",
+      "label": "Color"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de letra (px)",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+   {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso de fuente",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+		      
+        ]
+      },
+			{
+        "type": "button",
+        "name": "Button",
+        "settings": [
+					{
+						"id": "link_label",
+						"type": "text",
+						"label": "Label",
+						"default": "Learn More",
+						"info": "Leave the label blank to hide the button."
+					},
+					{
+						"id": "link",
+						"type": "url",
+						"label": "Link"
+					},
+					{
+						"type": "checkbox",
+						"id": "button_outline",
+						"label": "Use outline button style",
+						"default": false
+					},
+          {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Color de texto"
+    },{
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Color de fondo (hover)"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Color de texto (hover)"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de fuente (px)",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso de fuente",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+       ]
+      },
+          {
+  "type": "decorative_line",
+  "name": "Línea decorativa",
+  "settings": [
+    {
+      "type": "range",
+      "id": "line_thickness",
+      "label": "Grosor de la línea (px)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Color de la línea",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "line_width",
+      "label": "Ancho de la línea",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    }
+  ]
+},
+			{
+        "type": "text-button",
+        "name": "Link",
+        "settings": [
+					{
+						"id": "link_label",
+						"type": "text",
+						"label": "Label",
+						"default": "Learn More",
+						"info": "Leave the label blank to hide the button."
+					},
+					{
+						"id": "link",
+						"type": "url",
+						"label": "Link"
+					}
+        ]
+      },
+{
+  "type": "accordion",
+  "name": "Acordeón",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título del acordeón"
+    },
+    {
+  "type": "richtext",
+  "id": "content",
+  "label": "Contenido del acordeón"
+},
+{
+  "type": "color",
+  "id": "title_color",
+  "label": "Color del título",
+  "default": "#000000"
+},
+{
+  "type": "range",
+  "id": "title_font_size",
+  "label": "Tamaño del título (px)",
+  "min": 12,
+  "max": 40,
+  "default": 18
+},
+{
+  "type": "range",
+  "id": "title_font_weight",
+  "label": "Peso del título",
+  "min": 100,
+  "max": 900,
+  "step": 100,
+  "default": 600
+},
+{
+  "type": "color",
+  "id": "content_color",
+  "label": "Color del contenido",
+  "default": "#333333"
+},
+{
+  "type": "range",
+  "id": "content_font_size",
+  "label": "Tamaño del contenido (px)",
+  "min": 12,
+  "max": 32,
+  "default": 16
+},
+{
+  "type": "range",
+  "id": "content_font_weight",
+  "label": "Peso del contenido",
+  "min": 100,
+  "max": 900,
+  "step": 100,
+  "default": 400
+}
+  ]
+},		
+          {
+				"type": "custom_liquid",
+				"name": "Custom liquid",
+				"settings": [
+					{
+						"type": "liquid",
+						"id": "custom_liquid",
+						"label": "Custom liquid",
+						"info": "Add app snippets or other Liquid code to create advanced customizations."
+					}
+				]
+			}
+    ],
+    "presets": [
+      {
+        "name": "Rich text",
+				"blocks": [
+					{
+						"type": "subheading"
+					},
+	        {
+	          "type": "heading"
+	        },
+	        {
+	          "type": "text"
+	        },
+	        {
+	          "type": "button"
+	        }
+	      ]
+      }
+    ],
+		"enabled_on": {
+			"templates": ["*"],
+			"groups": [
+				"header", "footer"
+			]
+		}
+  }
+{% endschema %}

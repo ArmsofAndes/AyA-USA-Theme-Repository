@@ -1,0 +1,126 @@
+<style>
+  .variant-input-wrap label {
+    margin-bottom: 0 !important;
+  }
+  .variant__button-label-swatches{
+    width: 35px;
+    height: 35px;
+    background-size: cover;
+  }
+  .variant-input-wrap {
+    display: flex;
+    align-content: stretch;
+    flex-wrap:wrap;
+    border: none; 
+    justify-content: center;
+  }
+  .variant-input-wrap input{
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .variant-input-wrap label {
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    padding: 7px 15px;
+    margin: 0 8px 12px 0;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #231f20;
+    overflow: hidden;
+}
+</style>
+<div id="{{ div_id }}">
+        
+  {% for variant_option in variant.metafields.simple_bundles.variant_options.value %}
+    {% assign option_name_param = variant_option.optionName | downcase | replace: " ", "-" | strip | append: "-" | append: forloop.index %}
+    
+    <strong>{{ variant_option.optionName }}</strong><br />
+
+    {% assign option_values = variant_option.optionValues | split: "," %}
+    {% assign option_inventories = variant_option.optionInventories | split: "," %}
+    <fieldset class="variant-input-wrap">
+    {% for option_value in option_values %}
+      {% assign option_value_param = option_value | downcase | replace: " ", "-" | strip %}
+      {% assign value = option_value | strip %}
+      
+      
+      {% assign radio_param = option_name_param | append: "-" | append: option_value_param %}
+  
+      <div class="variant-input">
+        {% if option_inventories[forloop.index0] %}
+          {% assign option_inventory = option_inventories[forloop.index0] | plus: 0 %}
+          <input type="radio" id="{{ radio_param }}" name="properties[{{ variant_option.optionName }}]" value="{{ value }}" data-inventory="{{ option_inventory }}" {% if option_inventory < 1 %}disabled{% endif %} {% if forloop.index == 1 %}checked{% endif %} autocomplete="off" />
+        {%  else  %}
+          <input type="radio" id="{{ radio_param }}" name="properties[{{ variant_option.optionName }}]" value="{{ value }}" {% if forloop.index == 1 %}checked{% endif %} autocomplete="off" />
+        {% endif  %}
+  
+        {% assign titleMatches = false %}
+        {% assign URLimage = "" %}
+        {% paginate shop.metaobjects.product_swatches.values by 250 %}
+         {% for color_item in shop.metaobjects.product_swatches.values %}
+           {% assign valueDowncase =  value | downcase%}
+           {% assign colorItemDowncase = color_item.option_name| downcase %}
+           
+          {% if  colorItemDowncase ==  valueDowncase %}
+            {% assign titleMatches = true %}
+            {% assign URLimage = color_item.option_image %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% endpaginate %}
+
+        {% if  titleMatches %}
+            <label class="variant__button-label variant__button-label-swatches" for="{{ radio_param }}" style="background: url({{ URLimage | image_url: width: 180, height: 180 }}); display: inline-block"></label><br/>
+          {% else %}
+            <label class="variant__button-label" for="{{ radio_param }}">{{ value }}</label><br />
+        {% endif %}
+      </div>
+    {% endfor %}
+    </fieldset>
+  {% endfor %}
+
+</div>
+
+<script>
+  (function() {
+    // function to update the hidden input value
+    function updateHiddenInputValue() {
+        var selects = document.querySelectorAll('#{{ div_id }} select');
+        var values = [];
+        
+        selects.forEach(function(select) {
+            var selectedOption = select.options[select.selectedIndex];
+            if (selectedOption) {
+                values.push(selectedOption.value);
+            }
+        });
+        
+        if (values.length === 0) {
+          return;
+        }
+        var hiddenInputValue = values.join(' <> ');
+        var hiddenInput = document.querySelector('#{{ div_id }} input[name="properties[_bundle_selection]"]');
+        if (!hiddenInput) {
+            hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'properties[_bundle_selection]';
+            document.getElementById('{{ div_id }}').appendChild(hiddenInput);
+        }
+        hiddenInput.value = hiddenInputValue;
+    }
+    // call the function initially to update the hidden input value
+    window.addEventListener('pageshow', updateHiddenInputValue);
+    // listen for changes on each select element and update the hidden input value
+    var selects = document.querySelectorAll('#{{ div_id }} select');
+    selects.forEach(function(select) {
+        select.addEventListener('change', updateHiddenInputValue);
+    });
+  })();
+</script>

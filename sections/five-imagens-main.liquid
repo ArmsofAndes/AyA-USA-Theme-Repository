@@ -1,0 +1,193 @@
+{% schema %}
+{
+  "name": "Five Images Layout Main",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagen grande (izquierda)"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link Grande (opcional)"
+    },
+
+
+
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagen columna 2 - Arriba"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link Imagen columna 2 - Arriba (opcional)"
+    },
+
+
+
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagen columna 2 - Abajo"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Link Imagen columna 2 - Abajo (opcional)"
+    },
+
+
+
+
+
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Imagen columna 3 - Arriba"
+    },
+    {
+      "type": "url",
+      "id": "link_4",
+      "label": "Link Imagen columna 3 - Arriba (opcional)"
+    },
+
+
+
+
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Imagen columna 3 - Abajo"
+    },
+    {
+      "type": "url",
+      "id": "link_5",
+      "label": "Link Imagen columna 3 - Abajo (opcional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Five Images Layout Main"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="five-images">
+  <div class="five-images__col big">
+    {% if section.settings.image_1 != blank %}
+      {% if section.settings.link_1 != blank %}
+        <a href="{{ section.settings.link_1 }}" class="five-images__link">
+          <img src="{{ section.settings.image_1 | image_url: width: 800 }}" alt="" loading="lazy">
+        </a>
+      {% else %}
+        <img src="{{ section.settings.image_1 | image_url: width: 800 }}" alt="" loading="lazy">
+      {% endif %}
+    {% endif %}
+  </div>
+  <div class="five-images__col">
+    {% if section.settings.image_2 != blank %}
+      {% if section.settings.link_2 != blank %}
+        <a href="{{ section.settings.link_2 }}" class="five-images__link">
+          <img src="{{ section.settings.image_2 | image_url: width: 400 }}" alt="" loading="lazy">
+        </a>
+      {% else %}
+        <img src="{{ section.settings.image_2 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+    {% endif %}
+    {% if section.settings.image_3 != blank %}
+      {% if section.settings.link_3 != blank %}
+        <a href="{{ section.settings.link_3 }}" class="five-images__link">
+          <img src="{{ section.settings.image_3 | image_url: width: 400 }}" alt="" loading="lazy">
+        </a>
+      {% else %}
+        <img src="{{ section.settings.image_3 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+    {% endif %}
+  </div>
+  <div class="five-images__col">
+    {% if section.settings.image_4 != blank %}
+      {% if section.settings.link_4 != blank %}
+        <a href="{{ section.settings.link_4 }}" class="five-images__link">
+          <img src="{{ section.settings.image_4 | image_url: width: 400 }}" alt="" loading="lazy">
+        </a>
+      {% else %}
+        <img src="{{ section.settings.image_4 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+    {% endif %}
+    {% if section.settings.image_5 != blank %}
+      {% if section.settings.link_5 != blank %}
+        <a href="{{ section.settings.link_5 }}" class="five-images__link">
+          <img src="{{ section.settings.image_5 | image_url: width: 400 }}" alt="" loading="lazy">
+        </a>
+      {% else %}
+        <img src="{{ section.settings.image_5 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+<style>
+.five-images {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr 0.7fr;
+  gap: 4px;
+}
+
+.five-images__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.five-images__link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.five-images__link:hover {
+  opacity: 0.85;
+}
+
+.five-images__col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* La columna de la izquierda (imagen grande) ocupa toda la altura */
+.five-images__col.big img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsivo en mobile */
+@media (max-width: 768px) {
+  .five-images {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  /* Imagen grande arriba */
+  .five-images__col.big {
+    width: 100%;
+  }
+
+  /* Las otras 2 columnas se convierten en un grid 2x2 */
+  .five-images__col:not(.big) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+
+  .five-images__col:not(.big) img {
+    height: auto;
+  }
+}
+</style>

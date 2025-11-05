@@ -1,0 +1,312 @@
+<div class="section-4-text" 
+  {% if section.settings.custom_anchor_id != blank %}
+    id="{{ section.settings.custom_anchor_id }}"
+  {% endif %}
+  style=" 
+    {% if section.settings.background_image != blank %}
+      background-image: url({{ section.settings.background_image | img_url: 'master' }});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% else %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  ">
+
+  <div class="section-4-text__overlay" 
+    style="background-color: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity }};">
+  </div>
+
+  {%- assign section_font = section.settings.font_family | default: 'montserrat' -%}
+  {%- if section.settings.use_global_font -%}
+    {%- assign section_font = settings.font_body | default: 'inherit' -%}
+  {%- endif -%}
+
+  <div class="section-4-text__wrapper">
+    {% for block in section.blocks %}
+      {% if block.type == 'text_block' %}
+        <div class="section-4-text__row">
+          <div class="section-4-text__title font-{{ section_font }}"
+            style="
+              color: {{ block.settings.title_color }};
+              font-weight: {{ block.settings.title_weight }};
+              font-size: {{ block.settings.title_size }}px;
+              {% if block.settings.title_underline %} text-decoration: underline; {% else %} text-decoration: none; {% endif %}
+            ">
+            {{ block.settings.title }}
+          </div>
+
+          <div class="section-4-text__content font-{{ section_font }}"
+            style="
+              color: {{ block.settings.text_color }};
+              font-weight: {{ block.settings.text_weight }};
+              font-size: {{ block.settings.text_size }}px;
+            ">
+            {{ block.settings.text }}
+          </div>
+        </div>
+      {% elsif block.type == 'spacer' %}
+        <div class="section-4-text__spacer" style="height: {{ block.settings.space_height }}px;"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.section-4-text {
+  position: relative;
+  padding: 5% 13% 6% 13%;
+  margin: 0;
+  color: #000;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  
+}
+
+.section-4-text__overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.section-4-text__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1;
+}
+
+.section-4-text__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* titulo izq, texto der */
+  gap: 40px; 
+  align-items: center;
+}
+
+.section-4-text__title {
+  text-align: right;
+}
+
+.section-4-text__content {
+  text-align: left;
+}
+
+.section-4-text__spacer {
+  width: 100%;
+}
+.section-4-text__row p{
+ margin-bottom: 5px; 
+}
+@media(max-width: 768px){
+  .section-4-text {
+  padding: 10% ;
+}
+  
+.section-4-text__row {
+  grid-template-columns: 1fr; /* en mobile se apila */
+  gap: 10px;
+}
+.section-4-text__row p{
+ margin-bottom: 10px; 
+}
+.section-4-text__title {
+  text-align: center!important;
+  font-size: 26px!important;
+}
+
+  .section-4-text__content {
+    text-align: center
+  }
+}
+</style>
+
+{%- if section.settings.use_global_font and section.settings.custom_anchor_id != blank -%}
+  <style>
+    #{{ section.settings.custom_anchor_id }} * {
+      font-family: {{ settings.font_body | default: 'inherit' }} !important;
+    }
+  </style>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "Bloques de título y texto",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_global_font",
+      "label": "Usar tipografía global del theme",
+      "default": false
+    },
+    {
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+}
+,
+    {
+      "type": "text",
+      "id": "custom_anchor_id",
+      "label": "ID de anclaje (opcional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo (si no hay imagen)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color de overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Opacidad overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Título + Texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_underline",
+          "label": "Subrayar título",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del título",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "title_weight",
+          "label": "Peso del título",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "bold", "label": "Negrita" },
+            { "value": "lighter", "label": "Ligero" }
+          ],
+          "default": "bold"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Tamaño del título",
+          "min": 12,
+          "max": 48,
+          "default": 20,
+          "unit": "px"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color del texto",
+          "default": "#000000"
+        },
+        {
+          "type": "select",
+          "id": "text_weight",
+          "label": "Peso del texto",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "bold", "label": "Negrita" },
+            { "value": "lighter", "label": "Ligero" }
+          ],
+          "default": "normal"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Tamaño del texto",
+          "min": 12,
+          "max": 48,
+          "default": 16,
+          "unit": "px"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Espacio",
+      "settings": [
+        {
+          "type": "range",
+          "id": "space_height",
+          "label": "Altura del espacio",
+          "min": 10,
+          "max": 200,
+          "step": 2,
+          "default": 40,
+          "unit": "px"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 14,
+  "presets": [
+    {
+      "name": "Bloques título + texto",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

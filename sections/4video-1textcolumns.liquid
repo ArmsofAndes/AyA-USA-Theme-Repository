@@ -1,0 +1,965 @@
+{% comment %} {% schema %}
+{
+  "name": "Videos con texto (4+1)",
+  "settings": [
+    {
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+}
+,{
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+},
+
+    {
+      "type": "text",
+      "id": "text_title_1",
+      "label": "Título 1",
+      "default": "Título 1"
+    },
+    {
+      "type": "color",
+      "id": "title_color_1",
+      "label": "Color del título 1",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_1",
+      "label": "Peso del título 1",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_1",
+      "label": "Tamaño del título 1",
+      "min": 12,
+      "max": 64,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_1",
+      "label": "Alineación del título 1",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "text",
+      "id": "text_title_2",
+      "label": "Título 2",
+      "default": "Título 2"
+    },
+    {
+      "type": "color",
+      "id": "title_color_2",
+      "label": "Color del título 2",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_2",
+      "label": "Peso del título 2",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_2",
+      "label": "Tamaño del título 2",
+      "min": 12,
+      "max": 64,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_2",
+      "label": "Alineación del título 2",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "text",
+      "id": "text_title_3",
+      "label": "Título 3",
+      "default": "Título 3"
+    },
+    {
+      "type": "color",
+      "id": "title_color_3",
+      "label": "Color del título 3",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_3",
+      "label": "Peso del título 3",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_3",
+      "label": "Tamaño del título 3",
+      "min": 12,
+      "max": 64,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_3",
+      "label": "Alineación del título 3",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 48,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "richtext",
+      "id": "richtext_content",
+      "label": "Texto de la columna 5",
+      "default": "<p>Aquí va tu texto.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL de YouTube"
+        },
+        {
+          "type": "video",
+          "id": "video_file",
+          "label": "Video hosted subido a Shopify"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Videos con texto 4+1",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<section class="videos-with-text ">
+  <div class="videos-with-text__grid">
+
+    <!-- Texto -->
+    <div class="videos-with-text__text">
+      {%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+
+<!-- Títulos -->
+{% if section.settings.text_title_1 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_1 }};
+    line-height: 1;
+   font-weight: {{ section.settings.title_weight_1 }};
+   font-size: {{ section.settings.title_size_1 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_1 }};">
+  {{ section.settings.text_title_1 }}
+</h3>
+{% endif %}
+
+{% if section.settings.text_title_2 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_2 }};
+  line-height: 1;
+   font-weight: {{ section.settings.title_weight_2 }};
+   font-size: {{ section.settings.title_size_2 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_2 }};">
+  {{ section.settings.text_title_2 }}
+</h3>
+{% endif %}
+
+{% if section.settings.text_title_3 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_3 }};
+  line-height: 1;
+   font-weight: {{ section.settings.title_weight_3 }};
+   font-size: {{ section.settings.title_size_3 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_3 }};">
+  {{ section.settings.text_title_3 }}
+</h3>
+{% endif %}
+      
+      <!-- Texto -->
+<div class="videos-with-text__content" style="color: {{ section.settings.text_color }};
+ font-weight: {{ section.settings.text_weight }};
+ font-size: {{ section.settings.text_size }}px;
+ font-family: {{ section_font }};
+ text-align: {{ section.settings.text_align }};">
+  {{ section.settings.richtext_content }}
+</div>
+    </div>
+
+    <!-- Videos -->
+    <div class="videos-with-text__videos">
+      {% for block in section.blocks %}
+        <div class="videos-with-text__video">
+          {% if block.type == 'video' and block.settings.video_url != blank %}
+            {% assign video_id = block.settings.video_url | split: 'v=' | last %}
+            <iframe 
+              src="{{ block.settings.video_url | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1&controls=0&showinfo=0&modestbranding=1&rel=0"
+              frameborder="0"
+              allow="autoplay; fullscreen"
+              allowfullscreen>
+            </iframe>
+          {% elsif block.settings.video_file != blank %}
+            {{ block.settings.video_file | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.videos-with-text {
+  margin: 5% 0;
+}
+
+.videos-with-text,
+.videos-with-text * {
+  font-family: inherit; 
+}
+
+/* Desktop: 5 columnas (4 videos + texto) */
+.videos-with-text__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  align-items: stretch;
+}
+
+.videos-with-text__videos {
+  display: contents; /* mantiene los videos en las 4 columnas del grid en desktop */
+}
+
+.videos-with-text__video iframe,
+.videos-with-text__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.videos-with-text__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* Cambiado de center a stretch */
+  padding: 20px 20px 20px 20px;
+  margin-left: 20px;
+}
+
+.videos-with-text__title {
+  margin-bottom: 10px;
+  width: 100%; /* Asegurar que ocupe todo el ancho disponible */
+}
+
+.videos-with-text__content {
+  /* Eliminamos text-align: center fijo para que sea controlable */
+}
+@media (min-width: 769px) {
+  .videos-with-text__text {
+    grid-column: 5; 
+    grid-row: 1;    
+  }
+}
+/* Mobile: texto arriba + videos en 2x2 */
+/* Se cambiará a max de 1000px y gap 10(ya no 768px y gap 20) */
+@media (max-width: 1000px) {
+  .videos-with-text__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .videos-with-text__text {
+    order: -1; /* sube el texto arriba */
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .videos-with-text__videos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila */
+    column-gap: 1px; /* espacio entre columnas */
+    row-gap: 1px; 
+  }
+
+  .videos-with-text__video iframe,
+  .videos-with-text__video video {
+    width: 100%;
+    height: auto;display: block;
+    aspect-ratio: 16/9; /* mantiene proporción */
+  }
+}</style> {% endcomment %}
+
+{% schema %}
+{
+  "name": "Videos con texto (4+1)",
+  "settings": [
+    {
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+}
+,{
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+},
+
+    {
+      "type": "text",
+      "id": "text_title_1",
+      "label": "Título 1",
+      "default": "Título 1"
+    },
+    {
+      "type": "color",
+      "id": "title_color_1",
+      "label": "Color del título 1",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_1",
+      "label": "Peso del título 1",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_1",
+      "label": "Tamaño del título 1",
+      "min": 12,
+      "max": 64,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_1",
+      "label": "Alineación del título 1",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "text",
+      "id": "text_title_2",
+      "label": "Título 2",
+      "default": "Título 2"
+    },
+    {
+      "type": "color",
+      "id": "title_color_2",
+      "label": "Color del título 2",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_2",
+      "label": "Peso del título 2",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_2",
+      "label": "Tamaño del título 2",
+      "min": 12,
+      "max": 64,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_2",
+      "label": "Alineación del título 2",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "text",
+      "id": "text_title_3",
+      "label": "Título 3",
+      "default": "Título 3"
+    },
+    {
+      "type": "color",
+      "id": "title_color_3",
+      "label": "Color del título 3",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight_3",
+      "label": "Peso del título 3",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size_3",
+      "label": "Tamaño del título 3",
+      "min": 12,
+      "max": 64,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "title_align_3",
+      "label": "Alineación del título 3",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 12,
+      "max": 48,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "richtext",
+      "id": "richtext_content",
+      "label": "Texto de la columna 5",
+      "default": "<p>Aquí va tu texto.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "URL de YouTube"
+        },
+        {
+          "type": "video",
+          "id": "video_file",
+          "label": "Video hosted subido a Shopify"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Videos con texto 4+1",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+<section class="videos-with-text ">
+  <div class="videos-with-text__grid">
+
+    <!-- Texto -->
+    <div class="videos-with-text__text">
+      {%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+
+<!-- Títulos -->
+{% if section.settings.text_title_1 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_1 }};
+    line-height: 1;
+   font-weight: {{ section.settings.title_weight_1 }};
+   font-size: {{ section.settings.title_size_1 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_1 }};">
+  {{ section.settings.text_title_1 }}
+</h3>
+{% endif %}
+
+{% if section.settings.text_title_2 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_2 }};
+  line-height: 1;
+   font-weight: {{ section.settings.title_weight_2 }};
+   font-size: {{ section.settings.title_size_2 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_2 }};">
+  {{ section.settings.text_title_2 }}
+</h3>
+{% endif %}
+
+{% if section.settings.text_title_3 != blank %}
+<h3 class="videos-with-text__title" style="color: {{ section.settings.title_color_3 }};
+  line-height: 1;
+   font-weight: {{ section.settings.title_weight_3 }};
+   font-size: {{ section.settings.title_size_3 }}px;
+   font-family: {{ section_font }};
+   text-align: {{ section.settings.title_align_3 }};">
+  {{ section.settings.text_title_3 }}
+</h3>
+{% endif %}
+      
+      <!-- Texto con wrapper para Read more -->
+      <div class="videos-with-text__text-wrapper">
+        <div class="videos-with-text__content" style="color: {{ section.settings.text_color }};
+         font-weight: {{ section.settings.text_weight }};
+         font-size: {{ section.settings.text_size }}px;
+         font-family: {{ section_font }};
+         text-align: {{ section.settings.text_align }};">
+          {{ section.settings.richtext_content }}
+        </div>
+        <button class="read-more-btn-videos-4-1" type="button">Read more</button>
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="videos-with-text__videos">
+      {% for block in section.blocks %}
+        <div class="videos-with-text__video">
+          {% if block.type == 'video' and block.settings.video_url != blank %}
+            {% assign video_id = block.settings.video_url | split: 'v=' | last %}
+            <iframe 
+              src="{{ block.settings.video_url | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1&controls=0&showinfo=0&modestbranding=1&rel=0"
+              frameborder="0"
+              allow="autoplay; fullscreen"
+              allowfullscreen>
+            </iframe>
+          {% elsif block.settings.video_file != blank %}
+            {{ block.settings.video_file | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.videos-with-text {
+  margin: 5% 0;
+}
+
+.videos-with-text,
+.videos-with-text * {
+  font-family: inherit; 
+}
+
+/* Desktop: 5 columnas (4 videos + texto) */
+.videos-with-text__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  align-items: stretch;
+}
+
+.videos-with-text__videos {
+  display: contents;
+}
+
+.videos-with-text__video iframe,
+.videos-with-text__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.videos-with-text__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 20px 20px 20px 20px;
+  margin-left: 20px;
+}
+
+.videos-with-text__text-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.videos-with-text__title {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.videos-with-text__content {
+  transition: max-height 1.4s ease;
+}
+
+/* Botón Read more - OCULTO por defecto en desktop */
+.read-more-btn-videos-4-1 {
+  display: none;
+  background: none;
+  border: none;
+  color: rgb(59, 59, 59);
+  cursor: pointer;
+  padding: 5px 0;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.read-more-btn-videos-4-1:hover {
+  color: rgb(0, 0, 0);
+}
+
+@media (min-width: 769px) {
+  .videos-with-text__text {
+    grid-column: 5; 
+    grid-row: 1;    
+  }
+}
+
+/* Mobile: texto arriba + videos en 2x2 */
+@media (max-width: 1000px) {
+  .videos-with-text__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .videos-with-text__text {
+    order: -1;
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .videos-with-text__videos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1px;
+    row-gap: 1px; 
+  }
+
+  .videos-with-text__video iframe,
+  .videos-with-text__video video {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16/9;
+  }
+}
+
+/* Read more SOLO en mobile ≤768px */
+@media (max-width: 768px) {
+  .videos-with-text__content {
+    max-height: 0; /* 5 líneas por defecto */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .videos-with-text__content.expanded {
+    max-height: 2000px;
+  }
+
+  .read-more-btn-videos-4-1 {
+    display: inline-block;
+  }
+
+  .read-more-btn-videos-4-1.hidden {
+    display: none;
+  }
+}
+.videos-with-text__content {
+  transition: max-height 0.3s ease; /* was 0.5s */
+}
+</style>
+
+<script>
+(function() {
+  let isInitialized = false;
+  
+  function toggleText() {
+    const textContent = document.querySelector('.videos-with-text__content');
+    const readMoreButton = document.querySelector('.read-more-btn-videos-4-1');
+    
+    if (!textContent || !readMoreButton) return;
+    
+    if (textContent.classList.contains('expanded')) {
+      textContent.classList.remove('expanded');
+      readMoreButton.textContent = 'Read more';
+    } else {
+      textContent.classList.add('expanded');
+      readMoreButton.textContent = 'Read less';
+    }
+  }
+  
+  function initReadMore() {
+    const readMoreButton = document.querySelector('.read-more-btn-videos-4-1');
+    const textContent = document.querySelector('.videos-with-text__content');
+    
+    if (!readMoreButton || !textContent) return;
+    
+    // Remover evento anterior si existe
+    if (isInitialized) {
+      readMoreButton.removeEventListener('click', toggleText);
+    }
+    
+    // Solo activar en mobile (768px o menos)
+    if (window.innerWidth <= 768) {
+      // Verificar si el texto realmente necesita truncarse
+      const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+      const maxHeight = lineHeight * 5;
+      
+      if (textContent.scrollHeight <= maxHeight) {
+        readMoreButton.style.display = 'none';
+      } else {
+        readMoreButton.style.display = 'inline-block';
+        readMoreButton.addEventListener('click', toggleText);
+        isInitialized = true;
+      }
+    } else {
+      // En desktop: asegurar que todo esté visible
+      textContent.classList.remove('expanded');
+      textContent.style.maxHeight = 'none';
+      readMoreButton.style.display = 'none';
+    }
+  }
+  
+  // Inicializar al cargar la página
+  document.addEventListener('DOMContentLoaded', initReadMore);
+  
+  // Reinicializar al cambiar el tamaño de la ventana
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      const readMoreButton = document.querySelector('.read-more-btn-videos-4-1');
+      const textContent = document.querySelector('.videos-with-text__content');
+      
+      if (!readMoreButton || !textContent) return;
+      
+      // RESET COMPLETO primero
+      textContent.classList.remove('expanded');
+      textContent.style.removeProperty('max-height');
+      
+      if (window.innerWidth > 768) {
+        // Desktop: mostrar todo y ocultar botón
+        readMoreButton.style.display = 'none';
+        if (isInitialized) {
+          readMoreButton.removeEventListener('click', toggleText);
+          isInitialized = false;
+        }
+      } else {
+        // Mobile: verificar si necesita truncarse
+        setTimeout(function() {
+          const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+          const maxHeight = lineHeight * 5;
+          
+          if (textContent.scrollHeight > maxHeight) {
+            readMoreButton.style.display = 'inline-block';
+            readMoreButton.textContent = 'Read more';
+            if (!isInitialized) {
+              readMoreButton.addEventListener('click', toggleText);
+              isInitialized = true;
+            }
+          } else {
+            readMoreButton.style.display = 'none';
+          }
+        }, 10);
+      }
+    }, 250);
+  });
+})();
+</script>

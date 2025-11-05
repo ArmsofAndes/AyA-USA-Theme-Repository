@@ -1,0 +1,144 @@
+{% schema %}
+{
+  "name": "Navegación con botones",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Color de fondo de la sección",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de letra (px)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto del botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_text_color",
+      "label": "Color del texto al hacer hover",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo del botón",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Color de fondo al hacer hover",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color del borde del botón",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Radio de borde del botón (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "bold_text",
+      "label": "Texto en negrita",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Botón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón",
+          "default": "Ir a sección"
+        },
+        {
+          "type": "text",
+          "id": "section_id",
+          "label": "ID de la sección destino (sin #)",
+          "default": "about-us"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Navegación con botones estilizados",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div 
+  class="button-nav-section" 
+  style="text-align:center; padding: 2rem; background-color: {{ section.settings.section_background }};"
+>
+  {% for block in section.blocks %}
+    <a 
+      href="#{{ block.settings.section_id }}" 
+      class="custom-btn"
+      style="
+        display:inline-block;
+        margin: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        font-size: {{ section.settings.font_size }}px;
+        color: {{ section.settings.text_color }};
+        background-color: {{ section.settings.background_color }};
+        font-weight: {{ section.settings.bold_text | default: false | if: 'bold', 'normal' }};
+        border-radius: {{ section.settings.border_radius }}px;
+        text-decoration: none;
+        border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+        transition: all 0.3s ease;
+      "
+      onmouseover="
+        this.style.backgroundColor='{{ section.settings.hover_color }}';
+        this.style.color='{{ section.settings.hover_text_color }}';
+      "
+      onmouseout="
+        this.style.backgroundColor='{{ section.settings.background_color }}';
+        this.style.color='{{ section.settings.text_color }}';
+      "
+    >
+      {{ block.settings.button_label }}
+    </a>
+  {% endfor %}
+</div>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

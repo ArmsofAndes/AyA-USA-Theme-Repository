@@ -1,0 +1,209 @@
+{% schema %}
+{
+  "name": "section-blog-autor-add",
+  "settings": [
+    {
+      "type": "select",
+      "id": "titulo_weight",
+      "label": "Peso del título",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Semi-negrita" },
+        { "value": "700", "label": "Negrita" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "autor_imagen",
+      "label": "Imagen del autor"
+    },
+    {
+  "type": "color",
+  "id": "border_color",
+  "label": "Color del borde de la imagen",
+  "default": "#000000"
+},
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde (px)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    
+    {
+      "type": "text",
+      "id": "autor_titulo",
+      "label": "Título del autor",
+      "default": "autor"
+    },
+    {
+  "type": "color",
+  "id": "autor_titulo_color",
+  "label": "Color del título",
+  "default": "#000000"
+},
+    {
+  "type": "range",
+  "id": "autor_titulo_size",
+  "label": "Tamaño del título del autor (px)",
+  "min": 14,
+  "max": 48,
+  "step": 1,
+  "default": 24
+},
+{
+  "type": "range",
+  "id": "titulo_font_weight",
+  "min": 100,
+  "max": 900,
+  "step": 100,
+  "label": "Grosor del título",
+  "default": 600
+},
+{
+  "type": "color",
+  "id": "descripcion_color",
+  "label": "Color de descripción",
+  "default": "#333333"
+},
+    {
+  "type": "range",
+  "id": "autor_texto_size",
+  "label": "Tamaño del texto del autor (px)",
+  "min": 12,
+  "max": 32,
+  "step": 1,
+  "default": 16
+},
+{
+  "type": "range",
+  "id": "descripcion_font_weight",
+  "min": 100,
+  "max": 900,
+  "step": 100,
+  "label": "Grosor de descripción",
+  "default": 400
+},
+
+    {
+      "type": "textarea",
+      "id": "autor_texto",
+      "label": "Texto del autor",
+      "default": "sobre el autor"
+    }
+  ],
+  "presets": [
+    {
+      "name": "section-blog-autor-add"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.section-blog-autor-add {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+
+
+.autor-contenido-add {
+  display: flex;
+  align-items: center;
+ padding-left:10%;
+  gap: 60px;
+  flex-wrap: wrap;
+  width:100%;
+}
+
+.autor-imagen-add {
+  flex-shrink: 0;
+height: 275px;
+width: 275px;padding:10px;
+  border-radius: 50%;
+  object-fit: cover;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: var(--border-color);
+}
+
+.autor-texto-add {
+ width: 50%;
+  max-width: 60%;
+  text-align: left;
+}
+ .autor-texto-add h3 {
+  font-size: var(--autor-titulo-size);
+  font-weight: {{ section.settings.titulo_font_weight }};
+  color: {{ section.settings.autor_titulo_color }};
+  
+}
+  .autor-texto-add p {
+  font-size: var(--autor-texto-size);
+  color: {{ section.settings.descripcion_color }};
+  font-weight: {{ section.settings.descripcion_font_weight }};
+  text-align:justify; line-height:1.7em;
+}
+@media (max-width: 768px) {
+  
+  .autor-contenido-add {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; padding-left:0%;
+  }
+.autor-imagen-add {
+    width: 80%;
+    max-width: 80%;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .autor-texto-add {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .autor-texto-add {
+    text-align: center;
+  }
+}
+  
+</style>
+
+<div class="section-blog-autor"
+     style="
+       --line-color: {{ section.settings.line_color }};
+       --line-thickness: {{ section.settings.line_thickness }}px;
+       --titulo-size: {{ section.settings.titulo_size| divided_by: 16.0 }}rem;
+       --titulo-color: {{ section.settings.titulo_color }};
+       --titulo-weight: {{ section.settings.titulo_weight }};
+       --border-color: {{ section.settings.border_color }};
+       --border-width: {{ section.settings.border_width }}px;
+  --autor-titulo-size: {{ section.settings.autor_titulo_size| divided_by: 16.0 }}rem;
+--autor-texto-size: {{ section.settings.autor_texto_size| divided_by: 16.0 }}rem;
+     "
+>
+  <!-- Línea superior con ícono -->
+  
+
+  <!-- Contenido autor -->
+  <div class="autor-contenido">
+    {% if section.settings.autor_imagen %}
+      <img class="autor-imagen" src="{{ section.settings.autor_imagen | image_url: width: 300 }}" alt="Autor">
+    {% endif %}
+    <div class="autor-texto">
+      <h3>{{ section.settings.autor_titulo }}</h3>
+      <p>{{ section.settings.autor_texto }}</p>
+    </div>
+  </div>
+
+  <!-- Línea inferior 
+  <div class="linea-horizontal"></div>-->
+</div>

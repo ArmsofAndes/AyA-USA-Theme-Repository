@@ -1,0 +1,323 @@
+{% schema %}
+{
+  "name": "Galeria-img+text",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_global_font",
+      "label": "Usar tipografía global del theme",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Tipografía",
+      "default": "montserrat",
+      "options": [
+        { "value": "helvetica", "label": "Helvetica Neue" },
+        { "value": "arimo", "label": "Arimo" },
+        { "value": "roboto", "label": "Roboto" },
+        { "value": "poppins", "label": "Poppins Light" },
+        { "value": "source-sans", "label": "Source Sans" },
+        { "value": "montserrat", "label": "Montserrat" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_text",
+      "name": "Imagen con texto",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del título",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Tamaño del título",
+          "default": 18,
+          "min": 12,
+          "max": 48,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "title_font_weight",
+          "label": "Peso del título",
+          "default": "600",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto debajo (puedes usar negrita)"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño de texto",
+          "default": 16,
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Peso del texto",
+          "default": "400",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Galería imágenes + texto",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-image-grid font-{{ section.settings.font_family }}" 
+  {% if section.settings.use_global_font %} 
+    style="font-family: {{ settings.font_body | default: 'inherit' }} !important; background-color: {{ section.settings.background_color }};"
+  {% else %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+>
+  <div class="image-grid-container">
+    {% for block in section.blocks %}
+      <div class="image-grid-item" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | image_url: width: 600 }}" alt="" loading="lazy">
+        {% endif %}
+        
+        {% if block.settings.title != blank %}
+          <h3 class="image-grid-title"
+             style="color: {{ block.settings.title_color }};
+                    font-size: {{ block.settings.title_font_size }}px;
+                    font-weight: {{ block.settings.title_font_weight }};
+                    {% if section.settings.use_global_font %} font-family: {{ settings.font_body | default: 'inherit' }} !important; {% endif %}">
+            {{ block.settings.title }}
+          </h3>
+        {% endif %}
+        
+        {% if block.settings.text != blank %}
+          <div class="image-grid-text-wrapper">
+            <div class="image-grid-text truncated"
+               style="color: {{ block.settings.text_color }};
+                      font-size: {{ block.settings.font_size }}px;
+                      font-weight: {{ block.settings.font_weight }};
+                      {% if section.settings.use_global_font %} font-family: {{ settings.font_body | default: 'inherit' }} !important; {% endif %}">
+              {{ block.settings.text }}
+            </div>
+            <button class="read-more-btn" type="button">Read more</button>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.custom-image-grid {
+  padding: 40px 40px;
+}
+
+.image-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+}
+
+.image-grid-item {
+  text-align: center;
+}
+
+.image-grid-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.image-grid-title {
+  margin-top: 15px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.image-grid-text-wrapper {
+  position: relative;
+}
+
+.image-grid-text {
+  margin-top: 10px;
+  line-height: 1.4;
+  text-align: left;
+  transition: max-height 0.3s ease;
+}
+
+.image-grid-text.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-grid-text.truncated::after {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: white;
+  padding-left: 5px;
+}
+
+.image-grid-text.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.image-grid-text.expanded::after {
+  display: none;
+}
+
+.image-grid-text p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.image-grid-text strong {
+  font-weight: 700;
+}
+
+.read-more-btn {
+  background: none;
+  border: none;
+  color:rgb(59, 59, 59); /* Color negro */
+  cursor: pointer;
+  padding: 5px 0;
+  margin-top: 5px;
+  text-decoration: none; /* Quita el subrayado */
+  font-size: 14px;
+  font-weight: 900; /* Agrega negrita */
+  display: inline-block;
+  font-style: italic;
+}
+
+.read-more-btn:hover {
+  color:rgb(0, 0, 0); /* Color al pasar el mouse */
+}
+
+.read-more-btn.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .image-grid-container {
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+  }
+
+  .image-grid-title {
+    font-size: 14px !important;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .image-grid-text {
+    font-size: 12px !important; 
+    margin-top: 6px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const readMoreButtons = document.querySelectorAll('.read-more-btn');
+  
+  readMoreButtons.forEach(function(button) {
+    const textWrapper = button.previousElementSibling;
+    
+    // Verificar si el texto realmente necesita truncarse
+    const lineHeight = parseFloat(window.getComputedStyle(textWrapper).lineHeight);
+    const maxHeight = lineHeight * 3;
+    
+    if (textWrapper.scrollHeight <= maxHeight) {
+      button.style.display = 'none';
+    }
+    
+    button.addEventListener('click', function() {
+      if (textWrapper.classList.contains('truncated')) {
+        textWrapper.classList.remove('truncated');
+        textWrapper.classList.add('expanded');
+        button.textContent = 'Read less';
+      } else {
+        textWrapper.classList.remove('expanded');
+        textWrapper.classList.add('truncated');
+        button.textContent = 'Read more';
+      }
+    });
+  });
+});
+</script>

@@ -1,0 +1,775 @@
+<div id="ProductInfo-{{ section.id }}" class="product-information--inner{% if section.settings.enable_sticky_info %} production-information--sticky{% endif %}">
+  {%- assign product_form_id = 'product-form-' | append: section.id -%}
+  {%- assign outline_button = false -%}
+  {% for block in section.blocks %}
+    {%- case block.type -%}
+    {%- when '@app' -%}
+      {% render block %}
+    {%- when 'text' -%}
+      <p class="product--text {{ block.settings.text_style }}"
+   style="font-size: {{ block.settings.font_size }}rem;
+          font-weight: {{ block.settings.font_weight }};
+          text-align: {{ block.settings.text_align }};
+          margin-bottom: {{ block.settings.margin_bottom }}rem;
+          color: {{ block.settings.text_color }};"
+   {{ block.shopify_attributes }}>
+  {{ block.settings.text }}
+</p>
+    {%- when 'custom_liquid' -%}
+      {{ block.settings.custom_liquid }}
+    {%- when 'title' -%}
+      <div class="product-title-container" {{ block.shopify_attributes }}>
+        
+         <style>
+      .product__title h1 {
+      color: {{ block.settings.title_color }};
+      font-size: {{ block.settings.title_size }}rem;
+      font-weight: {{ block.settings.title_weight }};
+      text-align: {{ block.settings.title_justify }};
+      line-height: {{ block.settings.title_size }}rem;
+      padding-bottom: {{ block.settings.title_padding_bottom }}rem;
+        margin-bottom:0; line-heigth:1.2rem;
+    }
+    .product__subtitle {
+      color: {{ block.settings.subtitle_color }};
+      font-size: {{ block.settings.subtitle_size }}rem;
+      font-weight: {{ block.settings.subtitle_weight }};
+      text-align: {{ block.settings.subtitle_justify }};
+      line-height: {{ block.settings.subtitle_size }}rem;
+      padding-bottom: {{ block.settings.subtitle_padding_bottom }}rem;
+      margin-bottom:0;line-heigth:1.2rem;
+    }
+  </style>
+
+  {% assign product_title = product.title | split: ": " %}
+  <div class="product__title">
+    <h1>{{ product_title[0] | escape }}</h1><span id="product_title--score"></span>
+    <p class="product__subtitle">{{ product_title[1] }}</p>
+  </div>
+
+{%- if block.settings.show_products_rating and product.metafields.reviews.rating.value != blank -%}
+         <a class="star-rating-container" href="#judgeme_product_reviews">
+  <div class="star-rating" style="--star-rating: {{ product.metafields.reviews.rating.value.rating }};"></div>
+  <span class="star-average">({{ product.metafields.reviews.rating.value.rating | round: 1 }})</span>
+</a>
+        {%- endif -%}
+      
+        <div class="product-price-container">
+          <div class="no-js-hidden" id="price-{{ section.id }}" aria-live="polite">
+            {% render 'product-price', product: product, use_variant: true, show_badges: true, show_custom_badges: block.settings.show_custom_badges %}
+          </div>
+          {%- if section.settings.show_taxes_included != blank -%}
+            {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+              <div class="product__tax caption">
+                {%- if cart.taxes_included -%}
+                  {{ 'products.product.include_taxes' | t }}
+                {%- endif -%}
+                {%- if shop.shipping_policy.body != blank -%}
+                  {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+        
+      </div>
+    {%- when 'description' -%}
+      {%- liquid
+        assign seo_text_max_height = block.settings.seo_text_max_height
+        assign seo_text_read_more = block.settings.seo_text_read_more
+        assign seo_text_read_less = block.settings.seo_text_read_less
+      -%}
+      <div {{ block.shopify_attributes }}>
+      {%- render 'text-max-height', no_bg: true, content: product.description, custom_liquid: seo_text_custom_liquid, read_more: seo_text_read_more, read_less: seo_text_read_less, max_height: seo_text_max_height, extra_class: 'product-short-description' -%}
+      </div>
+    {%- when 'inventory_level' -%}
+      {% render 'product-inventory-notice', product: product, section: section, block: block %}
+
+      
+      
+      {%- when 'variant_picker' -%}
+      {%- unless product.has_only_default_variant -%}
+      {%- liquid
+        assign is_disabled = block.settings.variant_is_disabled
+        assign picker_type = 'dropdown'
+	      assign color_picker = true
+        assign color_picker_size = block.settings.color_picker_size | default: 'regular'
+        assign color_picker_use_variants = block.settings.color_picker_use_variants
+      -%}
+      <!-- Segundo mensaje oculto inicialmente (Undyed) -->
+<div style="margin-top: 0.1rem;">
+<div id="undyed-message-bottom" style="display:none; inline-flex; align-items: center;
+      gap: 0.6rem; border: 1px solid #C48749; padding: 0.1rem 0.6rem; border-radius: 7px;
+      background-color: rgb(196, 135, 73); color: #fff; font-size: 0.9rem; width: auto; max-width: max-content;">
+  <span>{{ block.settings.texto_debajo_tallas_extra | default: "Chemical-Free" }}</span>
+</div>
+</div>
+      <variant-selects
+        id="variant-selects-{{ section.id }}"
+        class="no-js-hidden"
+        data-update-url="{{ update_url }}"
+        data-section="{{ section.id }}"
+        data-url="{{ product.url }}"
+        data-is-disabled="{{ is_disabled }}"
+      >
+        <div class="variations" {{ block.shopify_attributes }}>
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              assign option_name = option.name | downcase | escape
+              assign option_type = block.settings.picker_type
+              assign picker_type = option_type
+              assign swatch_count = option.values | map: 'swatch' | compact | size 
+              if block.settings.color_picker
+                if option_name contains 'color' or option_name contains 'colour' or option_name contains 'couleur' or option_name contains 'farbe'
+                  assign option_type = 'color'
+                endif
+
+                # Additional swatch variant options set inside theme settings
+                assign color_swatches_variant_option = settings.color_swatches_variant_option | downcase | split: ', '
+
+                if color_swatches_variant_option contains option_name
+                  assign option_type = 'color'
+                endif
+              endif
+              unless block.settings.color_picker
+                assign color_picker = false
+              endunless
+
+              if swatch_count > 0
+                assign option_type = 'color'
+              endif
+            -%}
+            {%- liquid
+              assign option_slug = option.name | downcase
+              assign sizing_link = ''
+
+              assign sizing_guide_variant = block.settings.sizing_guide_variant | default: 'Size' | downcase
+            -%}
+            {%- if option_slug == sizing_guide_variant -%}
+              {%- if block.settings.sizing_guide_text != '' -%}
+                  {%- capture sizing_link -%}
+                    <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#PopupModal-{{ block.id }}">
+                      <button id="ProductPopup-{{ block.id }}" class="product-popup-modal__button" type="button" aria-haspopup="dialog">
+                        {% render 'svg-icons-inline', icon: block.settings.sizing_guide_icon %}<span>{{ block.settings.sizing_guide_text }}</span></button>
+                    </modal-opener>
+                  {%- endcapture -%}
+                  {%- capture sizing_popup -%}
+                  <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal">
+                    <div role="dialog" aria-label="{{ block.settings.sizing_guide_text }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+                      <div class="product-popup-modal__content-header">
+                        <h5>{{ block.settings.sizing_guide_page.title }}</h5>
+                        <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'svg-icons' with 'close' %}</button>
+                      </div>
+                      <scroll-shadow>
+                        <div class="product-popup-modal__content-info">
+                          {{ block.settings.sizing_guide_page.content }}
+                        </div>
+                      </scroll-shadow>
+                    </div>
+                  </modal-dialog>
+                  <script src="{{ 'modal-dialog.js' | asset_url }}" defer="defer"></script>
+                  {%- endcapture -%}
+              {%- endif -%}
+            {%- endif -%}
+           
+ {% render 'product-option', split_variants_using_metafield: block.settings.split_variants_using_metafield, option_type: option_type, color_picker_size: color_picker_size, color_picker_use_variants: color_picker_use_variants, product: product, option: option, forloop: forloop, product_form_id: product_form_id, sizing_link: sizing_link, first_variant_option_header: block.settings.first_variant_option_header, first_variant_option_color: block.settings.first_variant_option_color, first_variant_option_weight: block.settings.first_variant_option_weight, first_variant_option_font_size: block.settings.first_variant_option_font_size, first_variant_option_padding_top: block.settings.first_variant_option_padding_top, first_variant_option_padding_bottom: block.settings.first_variant_option_padding_bottom, second_variant_option_header: block.settings.second_variant_option_header, second_variant_option_color: block.settings.second_variant_option_color, second_variant_option_weight: block.settings.second_variant_option_weight, second_variant_option_font_size: block.settings.second_variant_option_font_size, second_variant_option_padding_top: block.settings.second_variant_option_padding_top, second_variant_option_padding_bottom: block.settings.second_variant_option_padding_bottom, third_variant_option_header: block.settings.third_variant_option_header, third_variant_option_color: block.settings.third_variant_option_color, third_variant_option_weight: block.settings.third_variant_option_weight, third_variant_option_font_size: block.settings.third_variant_option_font_size, third_variant_option_padding_top: block.settings.third_variant_option_padding_top, third_variant_option_padding_bottom: block.settings.third_variant_option_padding_bottom, third_variant_option_text_link: block.settings.third_variant_option_text_link, third_variant_option_link: block.settings.third_variant_option_link, second_variant_option_text_link: block.settings.second_variant_option_text_link, second_variant_option_link: block.settings.second_variant_option_link, first_variant_option_text_link: block.settings.first_variant_option_text_link, first_variant_option_link: block.settings.first_variant_option_link %}
+            
+            {%- endfor -%}
+        </div>
+        <script type="application/json">
+          {{ product.variants | json }}
+        </script>
+      </variant-selects>
+      {%- endunless -%}
+      <noscript class="product-form__noscript-wrapper-{{ section.id }}">
+        <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+          <label for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+          <div class="select">
+            <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
+              {%- for variant in product.variants -%}
+                <option
+                  {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                  {% if variant.available == false %}disabled{% endif %}
+                  value="{{ variant.id }}">
+                  {{ variant.title }}
+                  {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+                  - {{ variant.price | money | strip_html -}}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+      </noscript>
+
+   <!-- Primer mensaje (Undyed) -->
+<div id="undyed-message-top" style="display: none; line-height: 1.3rem; font-weight: 500; margin-bottom: 1rem; font-size: 0.9rem; color: #C48749;">
+  {% if block.settings.texto_debajo_tallas %}
+    {{ block.settings.texto_debajo_tallas }}
+  {% else %}
+    This item’s fabric has no synthetic dyes or fabric finishings and is 100% free of petrochemicals.
+  {% endif %}
+</div>
+
+<!-- Script adaptado para Theme Reformation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const topMessage = document.getElementById('undyed-message-top');
+    const bottomMessage = document.getElementById('undyed-message-bottom');
+
+    function getSelectedSwatchValue() {
+      const selectedSwatch = document.querySelector('[type="radio"]:checked');
+      return selectedSwatch?.value?.trim()?.toLowerCase() || '';
+    }
+
+    function toggleMessages() {
+      const selectedValue = getSelectedSwatchValue();
+
+      // Mostrar topMessage solo si es Undyed o Natural
+     // if (selectedValue === 'undyed' || selectedValue.includes('natural') || selectedValue.includes('ecoprint')
+      //) {
+        if (selectedValue === 'undyed') {
+        topMessage.style.display = 'block';
+        bottomMessage.style.display = 'inline-flex';
+      } else {
+        topMessage.style.display = 'none';
+        bottomMessage.style.display = 'none';
+      }
+    }
+
+    // Asignar evento a todos los swatches
+    const swatches = document.querySelectorAll('[type="radio"]');
+    swatches.forEach((swatch) => {
+      swatch.addEventListener('change', toggleMessages);
+    });
+
+    // Ejecutar al cargar
+    toggleMessages();
+  });
+</script>   
+
+
+   
+    {%- when 'side_panel' -%}
+      <side-panel-links class="side-panel-links">
+        {%- if block.settings.side_panel_1_label != '' -%}
+        <button class="side-panel-links--link no-js-hidden" data-id="1">{% render 'svg-icons-inline', icon: block.settings.side_panel_1_icon %}<span class="text-button">{{ block.settings.side_panel_1_label }}</span></button>
+        {%- endif -%}
+        {%- if block.settings.side_panel_2_label != '' -%}
+        <button class="side-panel-links--link no-js-hidden" data-id="2">{% render 'svg-icons-inline', icon: block.settings.side_panel_2_icon %}<span class="text-button">{{ block.settings.side_panel_2_label }}</span></button>
+        {%- endif -%}
+        {%- if block.settings.side_panel_3_label != '' -%}
+        <button class="side-panel-links--link no-js-hidden" data-id="3">{% render 'svg-icons-inline', icon: block.settings.side_panel_3_icon %}<span class="text-button">{{ block.settings.side_panel_3_label }}</span></button>
+        {%- endif -%}
+      </side-panel-links>
+    {%- when 'buy_buttons' -%}
+        {%- assign outline_button = block.settings.outline_button -%}
+        {% render 'product-add-to-cart', product: product, form: form, product_form_id: product_form_id, block: block, pickup: pickup %}
+    {%- when 'share' -%}
+        {% render 'social-share', share_label: false, share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+    {%- when 'specifications_tab' -%}
+    {%- if block.settings.heading != blank -%}
+    <collapsible-row class="product--accordion accordion" {{ block.shopify_attributes }}>
+      <details id="Details-{{ block.id }}-{{ section.id }}" {% if block.settings.open %}open{% endif %}>
+        <summary>
+          {{ block.settings.heading | default: block.settings.page.title }}<span></span>
+        </summary>
+        <div class="collapsible__content accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+          {%- render 'product-specification-table', block: block -%}
+        </div>
+      </details>
+    </collapsible-row>
+    {%- endif -%}
+ 
+{%- when 'tabs' -%}
+            {% style %}
+            .tabs-block {
+              padding-top: {{ block.settings.padding_top -}}rem;
+              padding-bottom: {{ block.settings.padding_bottom -}}rem;
+            }
+            {% if block.settings.hide_mobile %}
+              @media screen and (max-width: 750px) {
+                .tabs-block {
+                  display: none;
+                }
+              }
+            {% endif %}
+            {% endstyle %}
+              <div class="tabs-block">
+
+{% assign show_tab1_title_1 = block.settings.tab1_title | strip %}
+{% assign show_tab1_title_2 = block.settings.tab1_title2 | strip %}
+{% assign has_tab1 = false %}
+{% if show_tab1_title_1 != "" %}
+  {% assign has_tab1 = true %}
+{% endif %}
+{% if show_tab1_title_2 != "" %}
+  {% assign has_tab1 = true %}
+{% endif %}
+
+{% assign show_tab2_title_1 = block.settings.tab2_title | strip %}
+{% assign show_tab2_title_2 = block.settings.tab2_title2 | strip %}
+{% assign has_tab2 = false %}
+{% if show_tab2_title_1 != "" %}
+  {% assign has_tab2 = true %}
+{% endif %}
+{% if show_tab2_title_2 != "" %}
+  {% assign has_tab2 = true %}
+{% endif %}
+
+{% assign show_tab3_title_1 = block.settings.tab3_title | strip %}
+{% assign show_tab3_title_2 = block.settings.tab3_title2 | strip %}
+{% assign has_tab3 = false %}
+{% if show_tab3_title_1 != "" %}
+  {% assign has_tab3 = true %}
+{% endif %}
+{% if show_tab3_title_2 != "" %}
+  {% assign has_tab3 = true %}
+{% endif %}
+      
+                <div class="tab-customize">
+                  {% style %}
+                  .tabcontent-cus {
+                    display: none;
+                    padding: 6px 12px;
+                    {% if block.settings.border_on %}
+                    border: 1px solid #ccc;
+                    border-top: none;
+                    {% endif %}
+                  }
+
+                  .tab1-title-1{
+                    color: {{ block.settings.tab1_title_color }};
+                    font-size: {{ block.settings.tab_title1_size -}}rem;
+                    font-weight: {{- block.settings.tab_title1_weight -}};
+                    text-align: {{ block.settings.tab_title1_justify -}};
+                    padding-top: {{ block.settings.tab1_title_padding_top -}}rem;
+                    padding-bottom: {{ block.settings.tab1_title_padding_bottom -}}rem;
+                  }
+                  .tab1-title-2 {
+                    color: {{ block.settings.tab1_title2_color }};
+                    font-size: {{ block.settings.tab_title12_size -}}rem;
+                    font-weight: {{- block.settings.tab_title12_weight -}};
+                    text-align: {{ block.settings.tab_title12_justify -}};
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                  }
+
+                  .tab2-title-1 {
+                    color: {{ block.settings.tab2_title_color }};
+                    font-size: {{ block.settings.tab_title2_size -}}rem;
+                    font-weight: {{- block.settings.tab_title2_weight -}};
+                    text-align: {{ block.settings.tab_title2_justify -}};
+                    padding-top: {{ block.settings.tab2_title_padding_top -}}rem;
+                    padding-bottom: {{ block.settings.tab2_title_padding_bottom -}}rem;
+                  }
+                  .tab2-title-2 {
+                    color: {{ block.settings.tab2_title2_color }};
+                    font-size: {{ block.settings.tab_title22_size -}}rem;
+                    font-weight: {{- block.settings.tab_title22_weight -}};
+                    text-align: {{ block.settings.tab_title22_justify -}};
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                  }
+
+                  .tab3-title-1 {
+                    color: {{ block.settings.tab3_title_color }};
+                    font-size: {{ block.settings.tab_title3_size -}}rem;
+                    font-weight: {{- block.settings.tab_title3_weight -}};
+                    text-align: {{ block.settings.tab_title3_justify -}};
+                    padding-top: {{ block.settings.tab3_title_padding_top -}}rem;
+                    padding-bottom: {{ block.settings.tab3_title_padding_bottom -}}rem;
+                  }
+                  .tab3-title-2 {
+                    color: {{ block.settings.tab3_title2_color }};
+                    font-size: {{ block.settings.tab_title32_size -}}rem;
+                    font-weight: {{- block.settings.tab_title32_weight -}};
+                    text-align: {{ block.settings.tab_title32_justify -}};
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                  }
+                  
+                  .tab1__content {
+                    color: {{ block.settings.tab1_content_color }};
+                    font-size: {{ block.settings.tab1_content_size -}}rem;
+                    text-align: {{ block.settings.tab1_content_justify -}};
+                  }
+                  .tab2__content {
+                    color: {{ block.settings.tab2_content_color }};
+                    font-size: {{ block.settings.tab2_content_size -}}rem;
+                    text-align: {{ block.settings.tab2_content_justify -}};
+                  }
+                  .tab3__content {
+                    color: {{ block.settings.tab3_content_color }};
+                    font-size: {{ block.settings.tab3_content_size -}}rem;
+                    text-align: {{ block.settings.tab3_content_justify -}};
+                  }
+
+                  .tab-customize button.active {
+                    background-color: {{ block.settings.btn_bk_active }};
+                  }
+                  .tab-customize button.active .tab-button__image {
+                    display: none;
+                  }
+                  .tab-customize button .tab-button__image--white {
+                    display: none;
+                  }
+                  .tab-customize button.active .tab-button__image--white {
+                    display: block;
+                  }
+                  .tab-button__image,
+                  .tab-button__image--white {
+                    width: 100%;
+                    height: 100%;
+                    max-width: {{ block.settings.tab_icon_size }}rem;
+                    max-height: {{ block.settings.tab_icon_size }}rem;
+                  }
+                  .tablinks-cus:hover .tab-button__image {
+                    filter: opacity(0.9) drop-shadow(0 0 0 {{ block.settings.icon_color_hover }});
+                  }
+                {% endstyle %}
+      
+     {% assign default_tab1 = '01.webp' | file_url %}
+{% assign default_tab1_white = '02.webp' | file_url %}
+{% assign default_tab2 = 'Co2_7f132856-829d-4f67-bdd0-77ce6ccd8f98.webp' | file_url %}
+{% assign default_tab2_white = 'Co2_White_480aacd8-30d5-41c4-a057-1857056ef6c7.webp' | file_url %}
+{% assign default_tab3 = '03.webp' | file_url %}
+{% assign default_tab3_white = '04.webp' | file_url %}
+                   {% if has_tab1 %}
+    <button class="tablinks-cus" onclick="openTab(event, 'tab-1')" id="tab-cus-active" aria-label="Abrir pestaña 1">
+      <img class="tab-button__image" src="{% if block.settings.tab1_image != blank %}{{ block.settings.tab1_image | img_url: 'medium' }}{% else %}{{ default_tab1 }}{% endif %}" alt="" role="presentation">
+      <img class="tab-button__image--white" src="{% if block.settings.tab1_image_white != blank %}{{ block.settings.tab1_image_white | img_url: 'medium' }}{% else %}{{ default_tab1_white }}{% endif %}" alt="" role="presentation">
+    </button>
+  {% endif %}
+
+  {% if has_tab2 %}
+    <button class="tablinks-cus" onclick="openTab(event, 'tab-2')" aria-label="Abrir pestaña 2">
+      <img class="tab-button__image" src="{% if block.settings.tab2_image != blank %}{{ block.settings.tab2_image | img_url: 'medium' }}{% else %}{{ default_tab2 }}{% endif %}" alt="" role="presentation">
+      <img class="tab-button__image--white" src="{% if block.settings.tab2_image_white != blank %}{{ block.settings.tab2_image_white | img_url: 'medium' }}{% else %}{{ default_tab2_white }}{% endif %}" alt="" role="presentation">
+    </button>
+  {% endif %}
+
+  {% if has_tab3 %}
+    <button class="tablinks-cus" onclick="openTab(event, 'tab-3')" aria-label="Abrir pestaña 3">
+      <img class="tab-button__image" src="{% if block.settings.tab3_image != blank %}{{ block.settings.tab3_image | img_url: 'medium' }}{% else %}{{ default_tab3 }}{% endif %}" alt="" role="presentation">
+      <img class="tab-button__image--white" src="{% if block.settings.tab3_image_white != blank %}{{ block.settings.tab3_image_white | img_url: 'medium' }}{% else %}{{ default_tab3_white }}{% endif %}" alt="" role="presentation">
+    </button>
+  {% endif %}
+
+</div>
+                <!-- Tab content -->
+                {% if has_tab1 %}
+  <div id="tab-1" class="tabcontent-cus animate-opacity" style="display: block;">
+                  {% style %}
+                  {% if block.settings.tab1_title2_hide_mobile %}
+                  @media screen and (max-width: 750px) {
+                    .tab1-title-2 {
+                      display: none;
+                    }
+                  }
+                  {% endif %}
+                  {% endstyle %}
+                  <div class="tabcontent__title tab1-title-1 {{ block.settings.tab1_title_family }}">{{ block.settings.tab1_title }}</div>
+    <div class="tabcontent__title tab1-title-2 {{ block.settings.tab1_title2_family }}">{{ block.settings.tab1_title2 }}</div>
+    <div class="tab1__content {{ block.settings.tab1_content_family }}">{{ block.settings.tab1_content }}</div>
+  </div>
+{% endif %}
+                {% if has_tab2 %}
+  <div id="tab-2" class="tabcontent-cus animate-opacity">
+                  {% style %}
+                  {% if block.settings.tab2_title2_hide_mobile %}
+                  @media screen and (max-width: 750px) {
+                    .tab2-title-2 {
+                      display: none;
+                    }
+                  }
+                  {% endif %}
+                  {% endstyle %}
+                  <div class="tabcontent__title tab2-title-1 {{ block.settings.tab2_title_family }}">{{ block.settings.tab2_title }}</div>
+    <div class="tabcontent__title tab2-title-2 {{ block.settings.tab2_title2_family }}">{{ block.settings.tab2_title2 }}</div>
+    <div class="tab2__content {{ block.settings.tab2_content_family }}">{{ block.settings.tab2_content }}</div>
+  </div>
+{% endif %}
+               {% if has_tab3 %}
+  <div id="tab-3" class="tabcontent-cus animate-opacity">
+                  {% style %}
+                  {% if block.settings.tab3_title2_hide_mobile %}
+                  @media screen and (max-width: 750px) {
+                    .tab3-title-2 {
+                      display: none;
+                    }
+                  }
+                  {% endif %}
+                  {% endstyle %}
+                  <div class="tabcontent__title tab3-title-1 {{ block.settings.tab3_title_family }}">{{ block.settings.tab3_title }}</div>
+    <div class="tabcontent__title tab3-title-2 {{ block.settings.tab3_title2_family }}">{{ block.settings.tab3_title2 }}</div>
+    <div class="tab3__content {{ block.settings.tab3_content_family }}">{{ block.settings.tab3_content }}</div>
+  </div>
+{% endif %}
+                <style>
+                .tab-customize {
+                  display: flex;
+                  overflow: hidden;
+                  justify-content: space-around;
+                }
+                .tablinks-cus {
+                  border-radius: .6rem;
+                }
+                .tab-customize button {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  min-width: 3.1rem;
+                  min-height: 3.1rem;
+                  padding: 0;
+                  background-color: inherit;
+                  float: left;
+                  border: none;
+                  outline: none;
+                  cursor: pointer;
+                  transition: 0.3s;
+                }
+                .tabcontent__title {
+                  width: 100%;
+                }
+                .tabcontent__title p {
+                  margin: 0;
+                }
+                </style>
+              </div>
+
+      
+      {% comment %}
+   inicio de acordeon metafield con condicional
+ {% endcomment %}  
+  {%- when 'collapsible_tab' -%}
+  {%- assign has_content = false -%}
+
+  {%- if block.settings.content != blank -%}
+    {%- assign has_content = true -%}
+  {%- elsif block.settings.page != blank -%}
+    {%- assign has_content = true -%}
+  {%- elsif block.settings.custom_liquid != blank -%}
+    {%- assign has_content = true -%}
+  {%- endif -%}
+
+  {%- if has_content -%}
+    <collapsible-row class="product__accordion accordion" {{ block.shopify_attributes }}>
+      <details id="Details-{{ block.id }}-{{ section.id }}" {% if block.settings.open %}open{% endif %}>
+        <summary style=" color: {{ block.settings.title_color }}!important;
+    font-weight: {{ block.settings.title_weight }};
+    font-size: {{ block.settings.title_size }}rem;">
+          {{ block.settings.heading | default: block.settings.page.title }}
+          <span class="icon-toggle"></span>
+        </summary>
+        <div class="collapsible__content accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}" 
+          style="
+    color: {{ block.settings.content_color }}!important;
+    font-weight: {{ block.settings.content_weight }};
+    font-size: {{ block.settings.content_size }}rem;
+  ">
+          {%- if block.settings.content != blank -%}
+            {{ block.settings.content }}
+          {%- endif -%}
+
+          {%- if block.settings.page != blank -%}
+            {{ block.settings.page.content }}
+          {%- endif -%}
+
+          {%- if block.settings.custom_liquid != blank -%}
+            {{ block.settings.custom_liquid }}
+          {%- endif -%}
+        </div>
+      </details>
+    </collapsible-row>
+  {%- endif -%}
+   {% comment %}
+   FIN de acordeon metafield con condicional
+ {% endcomment %}   
+    {%- when 'complementary' -%}
+      <product-recommendations class="complementary-products no-js-hidden" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_list_limit }}&intent=complementary">
+        {%- if recommendations.performed and recommendations.products_count > 0 -%}
+
+          <div class="complementary-products--inner">
+            {%- if block.settings.block_heading != blank -%}
+              <div class="complementary-products--heading">{{ block.settings.block_heading }}</div>
+            {%- endif -%}
+            {%- for recommended_product in recommendations.products limit: block.settings.product_list_limit offset: continue -%}
+              {%- render 'product-card-small', product_small: recommended_product, quick_add: true -%}
+            {%- endfor -%}
+          </div>
+          <script src="{{ 'product-recommendations.js' | asset_url }}" defer="defer"></script>
+        {%- endif -%}
+      </product-recommendations>
+    {%- when 'image' -%}
+      <div class="product-information--image {{ block.settings.position }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image_link -%}<a href="{{ block.settings.image_link }}">{%- endif -%}
+        {% if block.settings.image %}
+        {%- liquid
+          assign image = block.settings.image
+          assign sizes = image.src.width | append: 'x' | append: image.src.height
+          render 'responsive-image', image: image, sizes: sizes
+          -%}
+        {%- else -%}
+          <div class="thb-placeholder">
+            {{ 'image' | placeholder_svg_tag: 'placeholder_svg_tag' }}
+          </div>
+        {%- endif -%}
+      {%- if block.settings.image_link -%}</a>{%- endif -%}
+      </div>
+    {% when 'custom_option' %}
+      {%- if block.settings.label != blank -%}
+        {%- liquid
+          assign line_item_input_id = product_form_id | append: '-custom-' | append: forloop.index
+          assign line_item_input_name = block.settings.label | escape | prepend: 'properties[' | append: ']'
+          assign required = block.settings.text_required
+          assign text_placeholder = block.settings.text_placeholder
+        -%}
+        <fieldset class="product-form__input product-information--line-item" {{ block.shopify_attributes}}>
+          <div class="form__label" for="{{ line_item_input_id }}">{{ block.settings.label | escape }}</div>
+          {% case block.settings.type %}
+            {% when 'text' %}
+                <input class="product-information--line-item--text" type="text" id="{{ line_item_input_id }}" form="{{ product_form_id }}" name="{{ line_item_input_name }}" placeholder="{{ text_placeholder }}" form="{{ product_form_id }}" {% if required %}required{% endif %}>
+
+            {% when 'textarea' %}
+                <textarea class="product-information--line-item--textarea" id="{{ line_item_input_id }}" form="{{ product_form_id }}" name="{{ line_item_input_name }}" rows="3" placeholder="{{ text_placeholder }}" form="{{ product_form_id }}" {% if required %}required{% endif %}></textarea>
+
+            {% when 'checkbox' %}
+                <input type="hidden" form="{{ product_form_id }}" name="{{ line_item_input_name }}" value="{{ block.settings.checkbox_unchecked_value | escape }}">
+                <input type="checkbox" class="custom-checkbox" form="{{ product_form_id }}" name="{{ line_item_input_name }}" value="{{ block.settings.checkbox_checked_value | escape }}" id="{{ line_item_input_id }}" {% if required %}required{% endif %}>
+
+            {% when 'multiple' %}
+              {%- assign custom_options = block.settings.multiple_options | newline_to_br | strip_newlines | split: '<br />' -%}
+
+              {% if block.settings.multiple_style == 'dropdown' %}
+                <div class="select">
+                  <select name="{{ line_item_input_name }}" id="{{ line_item_input_id }}" form="{{ product_form_id }}">
+                    {% for option in custom_options %}
+                      <option value="{{ option | escape }}" {% if forloop.first %} selected{% endif %}>{{ option | escape }}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="select-arrow">{%- render 'svg-icons' with 'thb-select' -%}</div>
+                </div>
+              {% else %}
+                {% for option in custom_options %}
+                  <label class="label">
+                    <input type="radio" form="{{ product_form_id }}" name="{{ line_item_input_name }}" value="{{ option | escape }}"{% if forloop.first %} checked{% endif %}>
+                    <span class="label__text-beside-input">{{ option | escape }}</span>
+                  </label>
+                {% endfor %}
+              {% endif %}
+          {% endcase %}
+        </fieldset>
+      {%- endif -%}
+    {%- when 'sku' -%}
+      <div class="product-sku product--text {{ block.settings.sku_style }}" id="sku-{{ section.id }}" {{ block.shopify_attributes }}>{{ product.selected_or_first_available_variant.sku }}</div>
+    {%- when 'product_link' -%}
+			<a href="{{ product.url }}" title="{{ 'products.product.view_product_details' | t | escape }}" class="text-button view-product-details" {{ block.shopify_attributes }}>{{ 'products.product.view_product_details' | t }}</a>
+    {%- when 'siblings' -%}
+      {%- render 'product-siblings' product: product, product_form_id: product_form_id, block: block -%}
+    {%- when 'shipping_estimator' -%}
+      <collapsible-row class="product__accordion accordion" {{ block.shopify_attributes }}>
+        <details id="Details-{{ block.id }}-{{ section.id }}" {% if block.settings.open %}open{% endif %}>
+          <summary>
+            {{- 'sections.cart.shipping_estimator.estimate_shipping' | t -}}
+            <span>{%- render 'svg-icons' with 'thb-collapsible-arrow' -%}</span>
+          </summary>
+          <div class="collapsible__content accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+            {%- render 'shipping-estimator', section: section, shipping_estimator: block -%}
+          </div>
+        </details>
+      </collapsible-row>
+    {%- when 'fit_guide' -%}
+      <div class="product-fit-guide" style="--active-color: {{ block.settings.color_active_segment }};" {{ block.shopify_attributes }}>
+        {%- liquid
+          assign block_heading = block.settings.block_heading
+          assign label_active = block.settings.label_active | abs | at_most: 5 | at_least: 1
+          assign label_left = block.settings.label_left
+          assign label_middle = block.settings.label_middle
+          assign label_right = block.settings.label_right
+        -%}
+        {%- if block_heading != blank -%}<div class="product-fit-guide--heading">{{ block_heading }}</div>{%- endif -%}
+        <div class="product-fit-guide--lines">
+          {%- for i in (1..5) -%}
+          <div class="product-fit-guide--line{% if label_active == i %} product-fit-guide--line--active{%- endif -%}"></div>
+          {%- endfor -%}
+        </div>
+        <div class="product-fit-guide--labels">
+          <div class="product-fit-guide--label-left">{{ label_left }}</div>
+          {%- if label_middle != blank -%}<div class="product-fit-guide--label-middle">{{ label_middle }}</div>{%- endif -%}
+          <div class="product-fit-guide--label-right">{{ label_right }}</div>
+        </div>
+        <link rel="stylesheet" href="{{ 'product-fit.css' | asset_url }}" media="print" onload="this.media='all'">
+      </div>
+    {%- when 'payment_icons' -%}
+      <div class="payment-icons">
+      {%- unless shop.enabled_payment_types == empty -%}
+        {%- for type in shop.enabled_payment_types -%}
+          <figure>{{ type | payment_type_svg_tag: class: 'payment-icons__icon' }}</figure>
+        {%- endfor -%}
+      {%- endunless -%}
+      </div>
+    {% when 'bundle-picker' %}
+      {% render 'bundle-picker', settings: block.settings, block: block %}
+  {%- endcase -%}
+  {% endfor %}
+</div>
+{%- if section.settings.enable_sticky_add_to_cart -%}
+{% render 'product-add-to-cart-sticky', product: product, media: first_image, color_picker: color_picker, picker_type: picker_type, form: form, is_disabled: is_disabled, outline_button: outline_button %}
+{%- endif -%}
+
+{{ sizing_popup }}
+<style>
+  .product-popup-modal table{
+    width:100%!important;
+  }
+   .star-rating {
+  font-size: 1.4rem!important; /*  */
+  height: auto;
+}
+  .star-rating-container {
+  font-size: 1rem!important;
+  gap: 0.1rem;
+  margin-bottom: 0.5rem;}
+</style>
+
+ <script>
+  function openTab(evt, tabName) {
+    let i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent-cus");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("tablinks-cus");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].classList.remove("active");
+    }
+
+    const tab = document.getElementById(tabName);
+    if (tab) {
+      tab.style.display = "block";
+    }
+
+    if (evt.currentTarget) {
+      evt.currentTarget.classList.add("active");
+    }
+  }
+
+  // Activar automáticamente la primera pestaña visible al cargar
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll(".tablinks-cus");
+    const tabContents = document.querySelectorAll(".tabcontent-cus");
+
+    for (let i = 0; i < tabButtons.length; i++) {
+      const button = tabButtons[i];
+      const tabId = button.getAttribute("onclick").match(/'([^']+)'/)[1]; // extrae el ID del tab
+
+      const tab = document.getElementById(tabId);
+      if (tab) {
+        openTab({ currentTarget: button }, tabId);
+        break;
+      }
+    }
+  });
+</script>

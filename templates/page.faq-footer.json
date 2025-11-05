@@ -1,0 +1,438 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [
+        "@media screen and (max-width: 768px) {{padding: 1rem; font-size: 0.9rem; } table {width: 100%; overflow-x: auto; display: block; font-size: 0.7rem; } th {font-size: 0.7rem; margin: 1rem; }}"
+      ],
+      "settings": {
+        "show_page_title": false,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": false
+      }
+    },
+    "rich_text_MiLgzc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_XFCDRg": {
+          "type": "heading",
+          "settings": {
+            "text": "Frequently Asked Questions",
+            "color": "#0e355e",
+            "font_size": 35,
+            "font_weight": 700
+          }
+        }
+      },
+      "block_order": [
+        "heading_XFCDRg"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_iNkyeH": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_VNBWAH": {
+          "type": "heading",
+          "settings": {
+            "text": "About Alpaca",
+            "color": "",
+            "font_size": 26,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_VNBWAH"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding-top: 30px;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "collapsible_content_3Fkw9p": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_tab_8QkHLn": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why use alpaca wool?",
+            "open": false,
+            "content": "<p>While merino wool has long been the outdoor industry’s benchmark for high-performance natural fiber, alpaca wool has features that make it perfect for use in the outdoors. Research shows that alpaca wool is actually a <a href=\"https://armsofandes.com/pages/alpaca-wool-performance\" target=\"_blank\">higher performing natural fiber than merino wool</a>, with improved comfort, moisture-wicking and temperature regulation properties. We also believe that alpaca wool is the <a href=\"https://armsofandes.com/pages/sustainability\" target=\"_blank\">most sustainable fiber </a>available on the market, due to the way it is produced, sourced and turned into garments.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_PD8tFK": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Where are Arms of Andes clothes made?",
+            "open": false,
+            "content": "<p>Arms of Andes technical outdoor apparel is made from start to finish in Peru. </p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_fYU4nA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why does Arms of Andes make clothing in Peru?",
+            "open": false,
+            "content": "<p>As the world’s main exporter of alpaca fiber, Peru has the largest population of alpacas in the world and is the seat of knowledge about alpaca wool. Working in Peru allows us to <span style=\"text-decoration:underline\"><strong>ensure the traceability and quality of our products, as well as reduce our carbon footprint</strong></span><span style=\"text-decoration:underline\">, </span>particularly when considering shipping. Manufacturing the garments close to the source of the alpaca wool means that all transport during production is overland, so we only use air transport for distribution and shipping the final products to you.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_9AcEGi": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why aren’t other technical products made of alpaca wool?",
+            "open": false,
+            "content": "<p>Alpaca wool is expensive and historically thought of as a fiber for fashion, so alpaca clothing brands have generally focused on luxury and style instead of performance. At Arms of Andes, we have developed a unique fabric made entirely from <span style=\"text-decoration:underline\"><strong>100% alpaca wool </strong></span>(the highest grade of alpaca fiber), which <a href=\"https://armsofandes.com/pages/alpaca-better-than-merino-cashmere\" target=\"_blank\">performs even better than merino wool</a> in the outdoors.<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_CbqNHh": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How is alpaca wool different to merino wool, synthetics and other fabrics?",
+            "open": false,
+            "content": "<p>When compared to merino wool, synthetics and cotton, alpaca wool has been shown to be the softest, lightest, and most breathable option. It also regulates body temperature (in both the heat and the cold) and wicks sweat away from the skin even better than merino wool. Further, the structure of the individual fibers means that alpaca wool is softer and more comfortable than merino. You can find more information on our <a href=\"https://armsofandes.com/pages/alpaca-wool-performance\" target=\"_blank\">Alpaca Wool Performance page</a>.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_3n7qbR": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Is alpaca wool itchy?",
+            "open": false,
+            "content": "<p><span style=\"text-decoration:underline\"><strong>Not for most people. </strong></span>Sheep’s wool has a reputation for being itchy as it contains a naturally occurring grease called lanolin, which can cause allergic reactions on human skin. Wool fibers also have microscopic “scales” on them which protrude from the surface and cause woolen fabrics to feel prickly or itchy. Alpacas produce <span style=\"text-decoration:underline\"><strong>tiny amounts of lanolin </strong></span>compared to sheep, reducing the probability of allergic reactions, and scales on alpaca wool fibers are smaller and protrude less, meaning that <span style=\"text-decoration:underline\"><strong>alpaca clothing feels much softer against the skin.</strong></span></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_8QkHLn",
+        "collapsible_tab_PD8tFK",
+        "collapsible_tab_fYU4nA",
+        "collapsible_tab_9AcEGi",
+        "collapsible_tab_CbqNHh",
+        "collapsible_tab_3n7qbR"
+      ],
+      "custom_css": [
+        ".collapsible-content__inner {width: 75%; margin: 0 auto;}"
+      ],
+      "name": "Collapsible content",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "uppercase_heading": false,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "heading_font_size": 16,
+        "content_font_size": 14
+      }
+    },
+    "rich_text_g8nAJD": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_NQxqYg": {
+          "type": "heading",
+          "settings": {
+            "text": "How to Use Alpaca Products",
+            "color": "",
+            "font_size": 26,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_NQxqYg"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding-top: 30px;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "collapsible_content_CBFUNc": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_tab_htJxQL": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How do I know what size to choose?",
+            "open": false,
+            "content": "<p>The sizing of Arms of Andes products is based on the international sizing system and you can see the basis of these sizes in our <a href=\"https://armsofandes.com/pages/size-guide-men-and-women\" target=\"_blank\">Size Guide</a>.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_w8RGmr": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How do I care for my alpaca wool garments?",
+            "open": false,
+            "content": "<p>Alpaca wool doesn’t need washing as much as other fibers, as it is highly odor-resistant and has anti-bacterial properties. When Arms of Andes garments do need a wash, we recommend hand washing in cool water with a mild detergent and air-drying flat. Chemicals like fabric softeners and bleach are not needed and garments shouldn’t be dry-cleaned or tumble dried. You can see full care instructions <a href=\"https://armsofandes.com/pages/alpaca-wool-care\" target=\"_blank\">here</a>.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_b8XRth": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Is Alpaca wool just suitable for cold weather?",
+            "open": false,
+            "content": "<p><strong>No! </strong>A key feature of alpaca wool is <a href=\"https://armsofandes.com/pages/alpaca-wool-performance\" target=\"_blank\">thermal regulation</a>, which means it keeps you warm in cold weather and helps cool you down in the heat. Our fabrics are also highly breathable, and wick sweat away from the body, so you’ll be comfortable in our lighter base layers, even on hard hikes in hot weather.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_XXQzD3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What is the difference between 300 and 420 fabrics?",
+            "open": false,
+            "content": "<p>These numbers refer to the <a href=\"https://armsofandes.com/pages/fabric-weight-system\" target=\"_blank\">fabric weight system</a>, indicating how much one square meter of alpaca wool fabric weighs. In functional terms, this means that <span style=\"text-decoration:underline\"><strong>the higher the number, the warmer the clothing will be</strong></span><span style=\"text-decoration:underline\">. </span>Garments with a 420 weight are the thickest and warmest and work well in cold conditions, while the 300 garments are lightweight and suitable for use in all but the warmest conditions. On the other hand, 160 garments are perfect anywhere: underneath other layers for added warmth on a cold hike or on their own in a hot yoga class. </p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_3PrTRb": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What does layering mean?",
+            "open": false,
+            "content": "<p>Layering is a way of dressing to account for the varying conditions you will encounter during any outdoor activity. <span style=\"text-decoration:underline\"><strong>Layering starts with a thinner base layer</strong></span><span style=\"text-decoration:underline\">, </span>that sits next to your skin, followed by additional layers, of the same or increasing thickness. <span style=\"text-decoration:underline\"><strong>Using several thinner layers has been shown to be warmer than one thick layer, </strong></span>as a layer of warm air gets trapped between each piece of clothing, helping to keep you warm. Layering also means your clothing will <span style=\"text-decoration:underline\"><strong>feel less bulky, giving greater freedom of movement. </strong></span>It is important that the layers fit snugly – especially the one next to your skin – as this helps to maintain heat and improves the moisture-wicking capabilities of your layering system. Another benefit of layering is that <span style=\"text-decoration:underline\"><strong>you can adapt to changing conditions </strong></span>when you’re out and about, taking layers off as the day warms up and putting them on again when you feel cold.<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_htJxQL",
+        "collapsible_tab_w8RGmr",
+        "collapsible_tab_b8XRth",
+        "collapsible_tab_XXQzD3",
+        "collapsible_tab_3PrTRb"
+      ],
+      "custom_css": [
+        ".collapsible-content__inner {width: 75%; margin: 0 auto;}"
+      ],
+      "name": "Collapsible content",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "uppercase_heading": false,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "heading_font_size": 16,
+        "content_font_size": 14
+      }
+    },
+    "rich_text_CcNWBQ": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_WwRi4A": {
+          "type": "heading",
+          "settings": {
+            "text": "Purchasing with Arms of Andes",
+            "color": "",
+            "font_size": 26,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_WwRi4A"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding-top: 30px;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "collapsible_content_CEL7pW": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_tab_Xiw9jj": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "What payment methods do you accept?",
+            "open": false,
+            "content": "<p>We accept all major credit cards or, if you prefer, you can pay with your Paypal, Amazon Pay, GPay and Shop Pay account.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_EnxnDj": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How much does shipping cost?",
+            "open": false,
+            "content": "<p><span style=\"text-decoration:underline\"><strong>Free shipping on orders above $200 within the USA.</strong></span>1. For Canada, the shipping cost can range between $10 to $50. Shipping to the rest of the world generally costs around $25, based on the weight and size of the package.  For shipping to Europe and the United Kingdom, please visit our <a href=\"https://armsofandes.eu/\" target=\"_blank\">European Site</a>. </p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_4T8wLN": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "When will I receive my products?",
+            "open": false,
+            "content": "<p>Please allow 2 business days after the date of purchase for handling. <span style=\"text-decoration:underline\"><strong>Delivery within the USA  can take 2-7 business days</strong></span><span style=\"text-decoration:underline\">. </span>We deliver from Los Angeles, CA, so all items have already passed US customs. </p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_DXKchU": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Which countries do you ship to?",
+            "open": false,
+            "content": "<p><span style=\"text-decoration:underline\"><strong>We can ship to almost any location worldwide</strong></span><span style=\"text-decoration:underline\">. </span>In the USA and Canada, shipping for orders under US$200 is calculated based on the package weight, while orders over US$200 include free shipping. For shipping to Europe and the United Kingdom, please visit our <a href=\"https://armsofandes.eu/\" target=\"_blank\">European site</a>. Shipping to the rest of the world usually costs around US$25, depending on the weight of your order.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_YjfTEJ": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How can I track my order?",
+            "open": false,
+            "content": "<p>Once your items have been shipped, we will send you a tracking number by e-mail.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_4CrUmN": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How can I return or exchange products?",
+            "open": false,
+            "content": "<p>We want you to feel confident about ordering with us. You have 15 days from the day you receive your order to return your garments for a full refund or an exchange. All garments must be returned in their original condition. Once we receive your return and confirm the condition is good, you will receive a full refund or the new item. For hygienic purposes, panties and boxer briefs cannot be returned or refunded.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_6rQEgN": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How are refunds processed?",
+            "open": false,
+            "content": "<p>Once the item you are returning is received and inspected, we will send you an email to notify you and confirm if the refund will be approved. After approval, the corresponding amount will be credited to credit card or original method of payment,within a certain amount of days.</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_zEHWUh": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Are Arms of Andes products covered by a warranty?",
+            "open": false,
+            "content": "<p>Yes, manufacturing defects in Arms of Andes clothing are eligible for a full refund. Please note that natural wear and tear, including pilling and abrasion, are not considered factory defects and are therefore not covered by the Warranty. Further, damage incurred by the user – including, but not limited to, rips, tears and damage occurring during washing when care instructions are not followed – are not covered by the Warranty. In the unlikely event that you receive an Arms of Andes garment that you feel is defective, please contact our customer service department so that we can arrange the return and inspection of the garment to determine if the defect falls under the Warranty.</p>",
+            "page": "",
+            "custom_liquid": "<style>\na{color:#ED7332;}\n</style>"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_Xiw9jj",
+        "collapsible_tab_EnxnDj",
+        "collapsible_tab_4T8wLN",
+        "collapsible_tab_DXKchU",
+        "collapsible_tab_YjfTEJ",
+        "collapsible_tab_4CrUmN",
+        "collapsible_tab_6rQEgN",
+        "collapsible_tab_zEHWUh"
+      ],
+      "custom_css": [
+        ".collapsible-content__inner {width: 75%; margin: 0 auto;}"
+      ],
+      "name": "Collapsible content",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "uppercase_heading": false,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "heading_font_size": 16,
+        "content_font_size": 14
+      }
+    },
+    "custom_liquid_A4xH3c": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<script>\n  document.addEventListener('DOMContentLoaded', function () {\n    const accordions = document.querySelectorAll('.collapsible-content details');\n\n    accordions.forEach((accordion) => {\n      accordion.addEventListener('toggle', function () {\n        if (accordion.open) {\n          accordions.forEach((otherAccordion) => {\n            if (otherAccordion !== accordion && otherAccordion.open) {\n              otherAccordion.removeAttribute('open');\n            }\n          });\n        }\n      });\n    });\n  });\n</script>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_MiLgzc",
+    "rich_text_iNkyeH",
+    "collapsible_content_3Fkw9p",
+    "rich_text_g8nAJD",
+    "collapsible_content_CBFUNc",
+    "rich_text_CcNWBQ",
+    "collapsible_content_CEL7pW",
+    "custom_liquid_A4xH3c"
+  ]
+}

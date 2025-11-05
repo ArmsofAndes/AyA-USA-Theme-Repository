@@ -1,0 +1,74 @@
+{% schema %}
+{
+  "name": "Línea decorativa",
+  "settings": [
+    {
+      "type": "select",
+      "id": "alineacion",
+      "label": "Alineación",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centrada" },
+        { "value": "right", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "ancho",
+      "label": "Ancho (%)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "color_linea",
+      "label": "Color de la línea",
+      "default": "#0e355e"
+    },
+    {
+      "type": "range",
+      "id": "grosor",
+      "label": "Grosor (px)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "espacio_superior",
+      "label": "Espacio arriba (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "espacio_inferior",
+      "label": "Espacio abajo (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Línea decorativa"
+    }
+  ]
+}
+{% endschema %}
+
+<hr style="
+  width: {{ section.settings.ancho }}%;
+  border: none;
+  border-top: {{ section.settings.grosor }}px solid {{ section.settings.color_linea }};
+  margin-top: {{ section.settings.espacio_superior }}px;
+  margin-bottom: {{ section.settings.espacio_inferior }}px;
+  {% if section.settings.alineacion == 'left' %}margin-left: 0;{% elsif section.settings.alineacion == 'right' %}margin-left: auto;{% else %}margin-left: auto; margin-right: auto;{% endif %}
+">

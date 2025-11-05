@@ -1,0 +1,37 @@
+<a href="{{ settings.floating_button_link }}" class="floating-button">
+  {{ settings.floating_button_text }}
+</a>
+
+<style>
+.floating-button {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  padding: 10px 20px;
+  background-color: {{ settings.floating_button_bg }};
+  color: {{ settings.floating_button_text_color }};
+  font-size: {{ settings.floating_button_font_size }}px;
+  font-weight: {{ settings.floating_button_font_weight }};
+  border: {{ settings.floating_button_border_width }}px solid {{ settings.floating_button_border_color }};
+  border-radius: {{ settings.floating_button_border_radius }}px;
+  text-decoration: none;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  text-align:center!important;
+  cursor: default; /*Ya no es clickeable*/
+  pointer-events: none; /*Ya no redirige*/
+}
+
+:hover  {
+  {% comment %} color: white; {% endcomment %}
+  /*background-color: {{ settings.floating_button_hover_bg }};*/
+}
+
+@media (max-width: 769px) {
+  .floating-button {
+    display: none;
+  }
+}
+</style>
+
+

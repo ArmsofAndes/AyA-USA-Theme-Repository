@@ -1,0 +1,127 @@
+{% schema %}
+{
+  "name": "Dos columnas con títulos",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "columna_izquierda",
+      "name": "Columna Izquierda",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titulo_izq",
+          "label": "Título izquierda"
+        },
+        {
+          "type": "richtext",
+          "id": "contenido_izq",
+          "label": "Contenido izquierda"
+        }
+      ]
+    },
+    {
+      "type": "columna_derecha",
+      "name": "Columna Derecha",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titulo_der",
+          "label": "Título derecha"
+        },
+        {
+          "type": "richtext",
+          "id": "contenido_der",
+          "label": "Contenido derecha"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "Dos columnas con títulos",
+      "blocks": [
+        { "type": "columna_izquierda" },
+        { "type": "columna_derecha" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="dos-columnas-con-titulo">
+  {% for block in section.blocks %}
+    {% if block.type == 'columna_izquierda' %}
+      <div class="columna columna-izquierda">
+        {% if block.settings.titulo_izq %}
+          <div class="titulo-con-lineas">{{ block.settings.titulo_izq }}</div>
+        {% endif %}
+        <div class="texto-columna rte">
+          {{ block.settings.contenido_izq }}
+        </div>
+      </div>
+    {% elsif block.type == 'columna_derecha' %}
+      <div class="columna columna-derecha">
+        {% if block.settings.titulo_der %}
+          <div class="titulo-con-lineas">{{ block.settings.titulo_der }}</div>
+        {% endif %}
+        <div class="texto-columna rte">
+          {{ block.settings.contenido_der }}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<style>
+.dos-columnas-con-titulo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width:1300px;
+  margin:auto;
+}
+
+.columna {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.titulo-con-lineas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0e355e;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.titulo-con-lineas::before,
+.titulo-con-lineas::after {
+  content: "";
+  flex: 1;
+  border-top: 2px solid #0e355e;
+  margin: 0 1rem;
+}
+
+.texto-columna.rte {
+  text-align: center ;
+  font-size: 16px;
+  line-height: 2em;
+  color: #4a4a4a;
+  width: 100%;
+}
+
+.texto-columna.rte a {
+  color: #0e355e !important;
+  font-weight: 500;
+  text-decoration: underline;
+}
+</style>
+

@@ -1,0 +1,187 @@
+<div class="seccion-texto-slider">
+  <!-- Columna izquierda -->
+  <div class="contenedor-texto">
+    <h2 class="titulo-texto">{{ section.settings.titulo }}</h2>
+    <div class="contenido-texto">{{ section.settings.texto }}</div>
+  </div>
+
+  <!-- Columna derecha (slider) -->
+  <div class="slider-texto">
+    <div class="slider-wrapper">
+      {% for block in section.blocks %}
+        <div class="slide">
+          <h3 class="slide-titulo">{{ block.settings.titulo_slide }}</h3>
+          <p class="slide-parrafo">{{ block.settings.texto_slide }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <!-- Dots debajo del slider -->
+  <div class="slider-dots">
+    {% for block in section.blocks %}
+      <span class="dot{% if forloop.first %} active{% endif %}"></span>
+    {% endfor %}
+  </div>
+</div>
+  </div>
+
+
+<style>
+ .seccion-texto-slider {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 2rem;
+  gap: 2rem;
+  max-width:1300px;
+  margin:auto;
+}
+
+.contenedor-texto {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.titulo-texto {
+  font-size: 30px;
+  color: #0e355e;
+  margin-bottom: 1rem;
+  line-height: 1.5em;
+letter-spacing: 0.5px;
+}
+
+.contenido-texto {
+  font-size: 18px;
+  color: #4a4a4a;
+  line-height: 1.8;
+}
+
+.slider-texto {
+  flex: 1 1 45%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 2rem;
+  text-align: center;
+}
+
+.slide-titulo {
+  font-size: 20px;
+  color: #4a4a4a;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.slide-parrafo {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #4a4a4a;
+}
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.slider-dots .dot {
+  width: 30px;
+  height: 3px;
+  background-color: #ccc;
+  border-radius: 2px;
+  transition: background-color 0.3s;
+}
+
+.slider-dots .dot.active {
+  background-color: #0e355e;
+}
+
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const slider = document.querySelector('.slider-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    let index = 0;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function showNextSlide() {
+      index = (index + 1) % slides.length;
+      updateSlider();
+    }
+
+    // Mostrar el primer slide inmediatamente
+    updateSlider();
+
+    // Empezar el autoplay
+    setInterval(showNextSlide, 4000);
+  });
+</script>
+{% schema %}
+{
+  "name": "Texto + Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título de la columna izquierda",
+      "default": "Título principal"
+    },
+    {
+      "type": "richtext",
+      "id": "texto",
+      "label": "Texto de la columna izquierda",
+      "default": "<p>Texto de presentación o introducción que acompaña al slider del lado derecho.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide de texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titulo_slide",
+          "label": "Título del slide",
+          "default": "Título del slide"
+        },
+        {
+          "type": "textarea",
+          "id": "texto_slide",
+          "label": "Texto del slide",
+          "default": "Este es el texto del slide. Puedes usarlo para testimonios, frases destacadas o descripciones."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Texto con Slider de Títulos",
+      "category": "Secciones personalizadas",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

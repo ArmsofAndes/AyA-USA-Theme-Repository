@@ -1,0 +1,1275 @@
+{% comment %} {% schema %}
+{
+  "name": "Texto con videos",
+  "settings": [
+    {
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+}
+,
+    {
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía del texto",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+},
+
+    {
+      "type": "richtext",
+      "id": "main_text",
+      "label": "Texto principal",
+      "default": "<p>Escribe tu texto aquí</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video cuadrado",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    },
+    {
+      "type": "video_full",
+      "name": "Video alto completo",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_full",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted_full",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Texto con 3 videos Main",
+      "blocks": [
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video_full" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+
+<section class="text-with-videos" style="--section-font-family: {{ section_font }};">
+
+ 
+  <div class="text-with-videos__container">
+    <!-- Columna Izquierda -->
+    <div class="text-with-videos__left">
+      <div class="text-with-videos__content" style="color: {{ section.settings.text_color }}; font-weight: {{ section.settings.text_weight }}; font-size: {{ section.settings.text_size }}px;">
+        {{ section.settings.main_text }}
+      </div>
+    </div>
+
+    <!-- Columna Videos Cuadrados -->
+    <div class="text-with-videos__middle">
+  {% for block in section.blocks %}
+    {% if block.type == 'video' and block.settings.video != blank %}
+      <div class="text-with-videos__video">
+  {% if block.settings.video_hosted != blank %}
+    <div class="video-wrapper">
+      {{ block.settings.video_hosted | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1000x' }}
+    </div>
+  {% elsif block.settings.video != blank %}
+    {% assign video_id = block.settings.video | split: 'v=' | last %}
+    <iframe 
+      src="{{ block.settings.video | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+      frameborder="0" 
+      allow="autoplay; fullscreen" 
+      allowfullscreen>
+    </iframe>
+  {% endif %}
+</div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+    <!-- Columna Video Full -->
+    <div class="text-with-videos__right">
+  {% for block in section.blocks %}
+    {% if block.type == 'video_full' and block.settings.video_full != blank %}
+      <div class="text-with-videos__video--full">
+        {% if block.settings.video_hosted_full != blank %}
+              {{ block.settings.video_hosted_full | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1200x' }}
+            {% elsif block.settings.video_full != blank %}
+              {% assign video_id = block.settings.video_full | split: 'v=' | last %}
+              <iframe 
+                src="{{ block.settings.video_full | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen>
+              </iframe>
+            {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+  </div>
+</section>
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-with-videos,
+.text-with-videos * {
+  font-family: var(--section-font-family, inherit) !important;
+}
+
+
+
+.text-with-videos {
+  padding: 0 0 0% 5%;
+}
+
+.text-with-videos__container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.68fr 1.3fr;
+  gap: 3px;
+  align-items: stretch;
+}
+
+/* Texto */
+.text-with-videos__left {
+  display: flex;
+  align-items: center;
+  padding-right:5px;
+  margin-bottom:10px;  
+}
+
+  
+}
+
+.text-with-videos__content {
+  max-width: 500px;
+}
+
+/* Columna del medio (2 videos cuadrados) */
+.text-with-videos__middle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.text-with-videos__video {
+  position: relative;
+  width: 100%; overflow: hidden;
+  padding-top: 100%; /* cuadrado */
+}
+
+.text-with-videos__video iframe,
+.text-with-videos__video video,
+.text-with-videos__video .video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-with-videos__video video {
+  object-fit: cover;
+}
+/* Columna derecha (1 video que ocupa todo el alto) */
+.text-with-videos__right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.text-with-videos__video--full {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  min-height: 100%; 
+  overflow: hidden;
+}
+
+.text-with-videos__video--full iframe,
+.text-with-videos__video--full video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;}
+
+  /* Responsive mobile */
+  /* Responsive modificamos a partir de 1200px, ya no a 768 */
+@media (max-width: 1200px) {
+  .text-with-videos__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas */
+    gap: 3px;
+  }
+
+  /* Texto siempre arriba, ocupa las 2 columnas */
+  .text-with-videos__left {
+    grid-column: 1 / -1;
+    padding:0 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Columna de los dos videos cuadrados */
+  .text-with-videos__middle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* Columna del video largo */
+  .text-with-videos__right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .text-with-videos__video--full {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .text-with-videos__video--full iframe,
+  .text-with-videos__video--full video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text-with-videos{
+    padding: 0;
+    }
+}
+</style> {% endcomment %}
+
+{% comment %} Prueba 1 {% endcomment %}
+{% comment %} 
+{% schema %}
+{
+  "name": "Texto con videos",
+  "settings": [
+    {
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+}
+,
+    {
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía del texto",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+},
+
+    {
+      "type": "richtext",
+      "id": "main_text",
+      "label": "Texto principal",
+      "default": "<p>Escribe tu texto aquí</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video cuadrado",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    },
+    {
+      "type": "video_full",
+      "name": "Video alto completo",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_full",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted_full",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Texto con 3 videos Main",
+      "blocks": [
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video_full" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+
+<section class="text-with-videos" style="--section-font-family: {{ section_font }};">
+
+ 
+  <div class="text-with-videos__container">
+    <!-- Columna Izquierda -->
+    <div class="text-with-videos__left">
+      <div class="text-with-videos__text-wrapper">
+        <div class="text-with-videos__content" style="color: {{ section.settings.text_color }}; font-weight: {{ section.settings.text_weight }}; font-size: {{ section.settings.text_size }}px;">
+          {{ section.settings.main_text }}
+        </div>
+        <button class="read-more-btn-videos" type="button">Read more</button>
+      </div>
+    </div>
+
+    <!-- Columna Videos Cuadrados -->
+    <div class="text-with-videos__middle">
+  {% for block in section.blocks %}
+    {% if block.type == 'video' and block.settings.video != blank %}
+      <div class="text-with-videos__video">
+  {% if block.settings.video_hosted != blank %}
+    <div class="video-wrapper">
+      {{ block.settings.video_hosted | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1000x' }}
+    </div>
+  {% elsif block.settings.video != blank %}
+    {% assign video_id = block.settings.video | split: 'v=' | last %}
+    <iframe 
+      src="{{ block.settings.video | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+      frameborder="0" 
+      allow="autoplay; fullscreen" 
+      allowfullscreen>
+    </iframe>
+  {% endif %}
+</div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+    <!-- Columna Video Full -->
+    <div class="text-with-videos__right">
+  {% for block in section.blocks %}
+    {% if block.type == 'video_full' and block.settings.video_full != blank %}
+      <div class="text-with-videos__video--full">
+        {% if block.settings.video_hosted_full != blank %}
+              {{ block.settings.video_hosted_full | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1200x' }}
+            {% elsif block.settings.video_full != blank %}
+              {% assign video_id = block.settings.video_full | split: 'v=' | last %}
+              <iframe 
+                src="{{ block.settings.video_full | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen>
+              </iframe>
+            {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+  </div>
+</section>
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-with-videos,
+.text-with-videos * {
+  font-family: var(--section-font-family, inherit) !important;
+}
+
+.text-with-videos {
+  padding: 0 0 0% 5%;
+}
+
+.text-with-videos__container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.68fr 1.3fr;
+  gap: 3px;
+  align-items: stretch;
+}
+
+/* Texto */
+.text-with-videos__left {
+  display: flex;
+  align-items: center;
+  padding-right:5px;
+  margin-bottom:10px;  
+}
+
+.text-with-videos__text-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.text-with-videos__content {
+  max-width: 500px;
+  transition: max-height 1.4s ease;
+}
+
+/* Estilos del botón Read more - OCULTO en desktop */
+.read-more-btn-videos {
+  display: none; /* Oculto por defecto en desktop */
+  background: none;
+  border: none;
+  color: rgb(59, 59, 59);
+  cursor: pointer;
+  padding: 5px 0;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.read-more-btn-videos:hover {
+  color: rgb(0, 0, 0);
+}
+
+/* Columna del medio (2 videos cuadrados) */
+.text-with-videos__middle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.text-with-videos__video {
+  position: relative;
+  width: 100%; overflow: hidden;
+  padding-top: 100%; /* cuadrado */
+}
+
+.text-with-videos__video iframe,
+.text-with-videos__video video,
+.text-with-videos__video .video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-with-videos__video video {
+  object-fit: cover;
+}
+/* Columna derecha (1 video que ocupa todo el alto) */
+.text-with-videos__right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.text-with-videos__video--full {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  min-height: 100%; 
+  overflow: hidden;
+}
+
+.text-with-videos__video--full iframe,
+.text-with-videos__video--full video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive mobile - AQUÍ SE ACTIVA EL READ MORE */
+@media (max-width: 768px) {
+  .text-with-videos__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .text-with-videos__left {
+    grid-column: 1 / -1;
+    padding: 0 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* ACTIVAR funcionalidad Read More en mobile */
+  .text-with-videos__content {
+    max-width: 100%;
+    max-height: calc(1.6em * 5); /* Mostrar solo 5 líneas por defecto */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .text-with-videos__content.expanded {
+    max-height: 2000px; /* Altura suficiente para mostrar todo */
+  }
+
+  /* Mostrar botón en mobile */
+  .read-more-btn-videos {
+    display: inline-block;
+  }
+
+  .read-more-btn-videos.hidden {
+    display: none;
+  }
+
+  .text-with-videos__middle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .text-with-videos__right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .text-with-videos__video--full {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .text-with-videos__video--full iframe,
+  .text-with-videos__video--full video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-with-videos {
+    padding: 0;
+  }
+}
+</style>
+
+<script>
+(function() {
+  let isInitialized = false;
+  
+  function toggleText() {
+    const textContent = document.querySelector('.text-with-videos__content');
+    const readMoreButton = document.querySelector('.read-more-btn-videos');
+    
+    if (!textContent || !readMoreButton) return;
+    
+    if (textContent.classList.contains('expanded')) {
+      textContent.classList.remove('expanded');
+      readMoreButton.textContent = 'Read more';
+    } else {
+      textContent.classList.add('expanded');
+      readMoreButton.textContent = 'Read less';
+    }
+  }
+  
+  function initReadMore() {
+    const readMoreButton = document.querySelector('.read-more-btn-videos');
+    const textContent = document.querySelector('.text-with-videos__content');
+    
+    if (!readMoreButton || !textContent) return;
+    
+    // Remover evento anterior si existe
+    if (isInitialized) {
+      readMoreButton.removeEventListener('click', toggleText);
+    }
+    
+    // Solo activar en mobile (768px o menos)
+    if (window.innerWidth <= 768) {
+      // Verificar si el texto realmente necesita truncarse
+      const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+      const maxHeight = lineHeight * 5;
+      
+      if (textContent.scrollHeight <= maxHeight) {
+        readMoreButton.style.display = 'none';
+      } else {
+        readMoreButton.style.display = 'inline-block';
+        // Agregar evento de clic
+        readMoreButton.addEventListener('click', toggleText);
+        isInitialized = true;
+      }
+    } else {
+      // En desktop: asegurar que todo esté visible
+      textContent.classList.remove('expanded');
+      textContent.style.maxHeight = 'none';
+      readMoreButton.style.display = 'none';
+    }
+  }
+  
+  // Inicializar al cargar la página
+  document.addEventListener('DOMContentLoaded', initReadMore);
+  
+  // Reinicializar al cambiar el tamaño de la ventana
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      const readMoreButton = document.querySelector('.read-more-btn-videos');
+      const textContent = document.querySelector('.text-with-videos__content');
+      
+      if (!readMoreButton || !textContent) return;
+      
+      if (window.innerWidth > 768) {
+        // Desktop: mostrar todo y ocultar botón
+        textContent.classList.remove('expanded');
+        textContent.style.maxHeight = 'none';
+        readMoreButton.style.display = 'none';
+        if (isInitialized) {
+          readMoreButton.removeEventListener('click', toggleText);
+          isInitialized = false;
+        }
+      } else {
+        // Mobile: verificar si necesita truncarse
+        textContent.classList.remove('expanded');
+        textContent.style.maxHeight = 'calc(1.6em * 5)';
+        
+        const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+        const maxHeight = lineHeight * 5;
+        
+        if (textContent.scrollHeight > maxHeight) {
+          readMoreButton.style.display = 'inline-block';
+          readMoreButton.textContent = 'Read more';
+          if (!isInitialized) {
+            readMoreButton.addEventListener('click', toggleText);
+            isInitialized = true;
+          }
+        } else {
+          readMoreButton.style.display = 'none';
+        }
+      }
+    }, 250);
+  });
+})();
+</script> {% endcomment %}
+
+{% comment %} Prueba 2 {% endcomment %}
+
+{% schema %}
+{
+  "name": "Texto con videos",
+  "settings": [
+    {
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+}
+,
+    {
+  "type": "select",
+  "id": "font_family",
+  "label": "Tipografía del texto",
+  "default": "montserrat",
+  "options": [
+    { "value": "helvetica", "label": "Helvetica Neue" },
+    { "value": "arimo", "label": "Arimo" },
+    { "value": "roboto", "label": "Roboto" },
+    { "value": "poppins", "label": "Poppins Light" },
+    { "value": "source-sans", "label": "Source Sans" },
+    { "value": "montserrat", "label": "Montserrat" }
+  ]
+},
+
+    {
+      "type": "richtext",
+      "id": "main_text",
+      "label": "Texto principal",
+      "default": "<p>Escribe tu texto aquí</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video cuadrado",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    },
+    {
+      "type": "video_full",
+      "name": "Video alto completo",
+      "settings": [
+        {
+          "type": "video_url",
+          "id": "video_full",
+          "label": "URL del video",
+          "accept": ["youtube", "vimeo"]
+        },
+        {
+          "type": "video",
+          "id": "video_hosted_full",
+          "label": "Video hosted (subido en Shopify)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Texto con 3 videos Main",
+      "blocks": [
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video_full" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+
+<section class="text-with-videos" style="--section-font-family: {{ section_font }};">
+
+ 
+  <div class="text-with-videos__container">
+    <!-- Columna Izquierda -->
+    <div class="text-with-videos__left">
+      <div class="text-with-videos__text-wrapper">
+        <div class="text-with-videos__content" style="color: {{ section.settings.text_color }}; font-weight: {{ section.settings.text_weight }}; font-size: {{ section.settings.text_size }}px;">
+          {{ section.settings.main_text }}
+        </div>
+        <button class="read-more-btn-videos" type="button">Read more</button>
+      </div>
+    </div>
+
+    <!-- Columna Videos Cuadrados -->
+    <div class="text-with-videos__middle">
+  {% for block in section.blocks %}
+    {% if block.type == 'video' and block.settings.video != blank %}
+      <div class="text-with-videos__video">
+  {% if block.settings.video_hosted != blank %}
+    <div class="video-wrapper">
+      {{ block.settings.video_hosted | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1000x' }}
+    </div>
+  {% elsif block.settings.video != blank %}
+    {% assign video_id = block.settings.video | split: 'v=' | last %}
+    <iframe 
+      src="{{ block.settings.video | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+      frameborder="0" 
+      allow="autoplay; fullscreen" 
+      allowfullscreen>
+    </iframe>
+  {% endif %}
+</div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+    <!-- Columna Video Full -->
+    <div class="text-with-videos__right">
+  {% for block in section.blocks %}
+    {% if block.type == 'video_full' and block.settings.video_full != blank %}
+      <div class="text-with-videos__video--full">
+        {% if block.settings.video_hosted_full != blank %}
+              {{ block.settings.video_hosted_full | video_tag: autoplay: true, loop: true, controls: false, muted: true, playsinline: true, image_size: '1200x' }}
+            {% elsif block.settings.video_full != blank %}
+              {% assign video_id = block.settings.video_full | split: 'v=' | last %}
+              <iframe 
+                src="{{ block.settings.video_full | replace: 'watch?v=', 'embed/' }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&playsinline=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen>
+              </iframe>
+            {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+  </div>
+</section>
+
+<style>
+  .font-helvetica {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-arimo {
+  font-family: 'Arimo', sans-serif;
+}
+.font-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+.font-source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-with-videos,
+.text-with-videos * {
+  font-family: var(--section-font-family, inherit) !important;
+}
+
+.text-with-videos {
+  padding: 0 0 0% 5%;
+}
+
+.text-with-videos__container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.68fr 1.3fr;
+  gap: 3px;
+  align-items: stretch;
+}
+
+/* Texto */
+.text-with-videos__left {
+  display: flex;
+  align-items: center;
+  padding-right:5px;
+  margin-bottom:10px;  
+}
+
+.text-with-videos__text-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.text-with-videos__content {
+  max-width: 500px;
+  transition: max-height 1.4s ease;
+}
+
+/* Estilos del botón Read more - OCULTO en desktop */
+.read-more-btn-videos {
+  display: none; /* Oculto por defecto en desktop */
+  background: none;
+  border: none;
+  color: rgb(59, 59, 59);
+  cursor: pointer;
+  padding: 5px 0;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.read-more-btn-videos:hover {
+  color: rgb(0, 0, 0);
+}
+
+/* Columna del medio (2 videos cuadrados) */
+.text-with-videos__middle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.text-with-videos__video {
+  position: relative;
+  width: 100%; overflow: hidden;
+  padding-top: 100%; /* cuadrado */
+}
+
+.text-with-videos__video iframe,
+.text-with-videos__video video,
+.text-with-videos__video .video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-with-videos__video video {
+  object-fit: cover;
+}
+/* Columna derecha (1 video que ocupa todo el alto) */
+.text-with-videos__right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.text-with-videos__video--full {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%; 
+  min-height: 100%; 
+  overflow: hidden;
+}
+
+.text-with-videos__video--full iframe,
+.text-with-videos__video--full video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive mobile - AQUÍ SE ACTIVA EL READ MORE */
+@media (max-width: 768px) {
+  .text-with-videos__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .text-with-videos__left {
+    grid-column: 1 / -1;
+    padding: 0 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* ACTIVAR funcionalidad Read More en mobile */
+  .text-with-videos__content {
+    max-width: 100%;
+    max-height: calc(1.6em * 5); /* Mostrar solo 5 líneas por defecto */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .text-with-videos__content.expanded {
+    max-height: 2000px; /* Altura suficiente para mostrar todo */
+  }
+
+  /* Mostrar botón en mobile */
+  .read-more-btn-videos {
+    display: inline-block;
+  }
+
+  .read-more-btn-videos.hidden {
+    display: none;
+  }
+
+  .text-with-videos__middle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .text-with-videos__right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .text-with-videos__video--full {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .text-with-videos__video--full iframe,
+  .text-with-videos__video--full video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-with-videos {
+    padding: 0;
+  }
+}
+</style>
+
+<script>
+(function() {
+  let isInitialized = false;
+  
+  function toggleText() {
+    const textContent = document.querySelector('.text-with-videos__content');
+    const readMoreButton = document.querySelector('.read-more-btn-videos');
+    
+    if (!textContent || !readMoreButton) return;
+    
+    if (textContent.classList.contains('expanded')) {
+      textContent.classList.remove('expanded');
+      readMoreButton.textContent = 'Read more';
+    } else {
+      textContent.classList.add('expanded');
+      readMoreButton.textContent = 'Read less';
+    }
+  }
+  
+  function initReadMore() {
+    const readMoreButton = document.querySelector('.read-more-btn-videos');
+    const textContent = document.querySelector('.text-with-videos__content');
+    
+    if (!readMoreButton || !textContent) return;
+    
+    // Remover evento anterior si existe
+    if (isInitialized) {
+      readMoreButton.removeEventListener('click', toggleText);
+    }
+    
+    // Solo activar en mobile (768px o menos)
+    if (window.innerWidth <= 768) {
+      // Verificar si el texto realmente necesita truncarse
+      const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+      const maxHeight = lineHeight * 5;
+      
+      if (textContent.scrollHeight <= maxHeight) {
+        readMoreButton.style.display = 'none';
+      } else {
+        readMoreButton.style.display = 'inline-block';
+        // Agregar evento de clic
+        readMoreButton.addEventListener('click', toggleText);
+        isInitialized = true;
+      }
+    } else {
+      // En desktop: asegurar que todo esté visible
+      textContent.classList.remove('expanded');
+      textContent.style.maxHeight = 'none';
+      readMoreButton.style.display = 'none';
+    }
+  }
+  
+  // Inicializar al cargar la página
+  document.addEventListener('DOMContentLoaded', initReadMore);
+  
+  // Reinicializar al cambiar el tamaño de la ventana
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      const readMoreButton = document.querySelector('.read-more-btn-videos');
+      const textContent = document.querySelector('.text-with-videos__content');
+      
+      if (!readMoreButton || !textContent) return;
+      
+      // RESET COMPLETO primero
+      textContent.classList.remove('expanded');
+      textContent.style.removeProperty('max-height'); // Remover estilos inline
+      
+      if (window.innerWidth > 768) {
+        // Desktop: mostrar todo y ocultar botón
+        readMoreButton.style.display = 'none';
+        if (isInitialized) {
+          readMoreButton.removeEventListener('click', toggleText);
+          isInitialized = false;
+        }
+      } else {
+        // Mobile: verificar si necesita truncarse
+        // Esperar un tick para que el DOM se actualice
+        setTimeout(function() {
+          const lineHeight = parseFloat(window.getComputedStyle(textContent).lineHeight);
+          const maxHeight = lineHeight * 5;
+          
+          if (textContent.scrollHeight > maxHeight) {
+            readMoreButton.style.display = 'inline-block';
+            readMoreButton.textContent = 'Read more';
+            if (!isInitialized) {
+              readMoreButton.addEventListener('click', toggleText);
+              isInitialized = true;
+            }
+          } else {
+            readMoreButton.style.display = 'none';
+          }
+        }, 10);
+      }
+    }, 250);
+  });
+})();
+</script>

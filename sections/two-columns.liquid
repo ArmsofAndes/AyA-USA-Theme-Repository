@@ -1,0 +1,145 @@
+{% schema %}
+{
+  "name": "Doscolumnasconfigurables",
+  "max_blocks": 2,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "columna_1",
+      "name": "Columna izquierda",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "texto_columna_1",
+          "label": "Texto columna izquierda"
+        },
+        {
+          "type": "checkbox",
+          "id": "mostrar_divider_1",
+          "label": "Mostrar línea debajo del texto",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "columna_2",
+      "name": "Columna derecha",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "texto_columna_2",
+          "label": "Texto columna derecha"
+        },
+        {
+          "type": "checkbox",
+          "id": "mostrar_divider_2",
+          "label": "Mostrar línea debajo del texto",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dos columnas configurables",
+      "blocks": [
+        { "type": "columna_1" },
+        { "type": "columna_2" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+ .columns-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .texto-columna-1 {
+    letter-spacing: 2px;
+    margin: 0;
+    font-size: 34px;
+    text-align: center;
+    color: rgb(14, 53, 94) !important;
+    font-weight: 600;
+  }
+
+  .texto-columna-2 {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    line-height: 2em;
+    text-align: justify;
+    color:#4A4A4A;
+  }
+ /* 
+ .dos-columnas-section {
+  padding-left: 9.5%;
+  padding-right: 9.5%;
+  */
+  } 
+  .divider {
+  width: 100%;
+  max-width: 300px;
+  border: none;
+  border-top: 2px solid #0e355e;
+  margin: 0.2rem auto 0 auto; /* centrado horizontal con auto */
+}
+.texto-columna-1.rte,
+.texto-columna-1.rte * {
+  color: rgb(14, 53, 94) !important;
+}
+  
+</style>
+<div class="dos-columnas-section page-width" style="margin-top: 5rem;">
+  <style>
+  @media (max-width: 768px) {
+  .dos-columnas-section {
+    margin: 0 1.4rem!important; /* Override the inline style */
+    }
+  .page-width{
+    width:auto;
+    margin-top:2rem!important;
+  }
+  }
+  </style>
+  <div class="columns-container" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      <style>
+      @media (max-width: 768px) {
+      .columns-container {
+        gap:0.1rem!important; /* Override the inline style */
+        }
+      }
+      </style>
+    {% for block in section.blocks %}
+      <div class="column" style="flex: 1; min-width: 300px;">
+        {% if block.type == 'columna_1' %}
+          <div class="texto-columna-1 rte" style="letter-spacing: 2px; margin-top: 0px; margin-bottom: 0px; font-size: 34px; text-align: center; color: #0e355eff !important; font-weight: 600;">
+  {{ block.settings.texto_columna_1 }}
+</div>
+
+          {% if block.settings.mostrar_divider_1 %}
+            <hr class="divider">
+          {% endif %}
+        {% elsif block.type == 'columna_2' %}
+         <div class="texto-columna-2 rte" style="font-size: 16px; letter-spacing: 0.5px; line-height: 2em; text-align: justify;">{{ block.settings.texto_columna_2 }}</div>
+          {% if block.settings.mostrar_divider_2 %}
+            <hr class="divider" style="border: none; border-top: 1px solid #e1e1e1; margin-top: 1rem;">
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

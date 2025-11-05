@@ -1,0 +1,170 @@
+{{- 'gallery.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop
+  assign section_width = section.settings.section_width
+  assign column_spacing = section.settings.column_spacing
+  assign text_alignment = section.settings.text_alignment
+  assign heading_size = section.settings.heading_size
+  assign disable_top_spacing = section.settings.disable_top_spacing
+  assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+-%}
+
+<div class="row {{ section_width }}">
+  <div class="small-12 columns">
+    <div class="gallery gallery-spacing--{{ column_spacing }} text-{{ text_alignment }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}" style="--gallery-columns: {{ columns_desktop }};">
+      <div class="gallery__inner">
+        {%- for block in section.blocks -%}
+          <div class="gallery__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <figure>
+                <!-- Imagen clickeable -->
+                <a href="{{ block.settings.block_link | default: '#' }}">
+                  <img src="{{ block.settings.image | img_url: '1024x1024' }}" alt="{{ block.settings.title | escape }}">
+                </a>
+                <!-- Texto debajo de la imagen -->
+                <figcaption class="gallery__text">
+                  {% if block.settings.subheading != blank %}
+                    <p class="subheading">{{ block.settings.subheading }}</p>
+                  {% endif %}
+                  {% if block.settings.title != blank %}
+                    <h4 class="{{ heading_size }}">{{ block.settings.title }}</h4>
+                  {% endif %}
+                  {% if block.settings.text != blank %}
+                    <p>{{ block.settings.text }}</p>
+                  {% endif %}
+                  {% if block.settings.link_label != blank and block.settings.link != blank %}
+                    {% assign button_class = block.settings.use_text_button | default: false | if: 'text-button', 'button' %}
+                    <a class="{{ button_class }}" href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>
+                  {% endif %}
+                </figcaption>
+              </figure>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.gallery__item figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.gallery__text {
+  text-align: {{ text_alignment }};
+  padding: 10px 0 0 0;
+}
+.gallery__text p, .gallery__text h4 {
+  margin: 0 0 5px 0;
+}
+.gallery__text .button, .gallery__text .text-button {
+  margin-top: 5px;
+}
+@media screen and (max-width: 749px) {
+  .gallery__item {
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+  .gallery__item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Gallery Below Text",
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "full-width-row", "label": "Full width" },
+        { "value": "full-width-row-full", "label": "Full width, no spacing" }
+      ],
+      "default": "grid",
+      "label": "Section width"
+    },
+    {
+      "type": "select",
+      "id": "column_spacing",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "small",
+      "label": "Column spacing"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h1", "label": "Large" },
+        { "value": "h2", "label": "Medium" },
+        { "value": "h3", "label": "Small" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_top_spacing",
+      "label": "Remove top spacing",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_bottom_spacing",
+      "label": "Remove bottom spacing",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "subheading", "label": "Subheading" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Description" },
+        { "type": "text", "id": "link_label", "label": "Button label" },
+        { "type": "url", "id": "link", "label": "Button link" },
+        { "type": "checkbox", "id": "use_text_button", "label": "Use text button", "default": false },
+        { "type": "url", "id": "block_link", "label": "Image link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Gallery Below Text", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }] }
+  ]
+}
+{% endschema %}

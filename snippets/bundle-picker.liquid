@@ -1,0 +1,613 @@
+{{ 'bundle-picker.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  .bundle-slot[open] .bundle_trigger {
+    background-color: {{settings.accordion_header_bg }};
+  }
+  .bundle-content-wrapper {
+    padding-top: {{settings.padding_top -}}px;
+    padding-bottom: {{settings.padding_bottom -}}px;
+  }
+  .bundle-option__label {
+    color: {{ settings.option_label_color }};
+    font-weight: {{ settings.option_label_weight }};
+    font-size: {{ settings.option_label_font_size }}px;
+  }
+  .bundle-slot__title h3 {
+    color: {{settings.accordion_title_color }};
+    font-weight: {{ settings.accordion_title_weight }};
+    font-size: {{ settings.accordion_title_font_size }}px;
+  }
+  .bundle-slot__subtitle {
+    color: {{settings.accordion_subtitle_color }};
+    font-weight: {{ settings.accordion_subtitle_weight }};
+    font-size: {{ settings.accordion_subtitle_font_size }}px;
+  }
+{% endstyle %}
+<!-- Bundle Picker -->
+{% assign bundle_entry = product.metafields.custom.bundle.value %}
+
+{%- liquid
+  assign custom_colors = settings.color_swatches | newline_to_br | split: '<br />'
+  assign key_array = ''
+  assign val_array = ''
+
+  for color in custom_colors
+    assign key = color | split: ':' | first | rstrip
+    assign value = color | split: ':' | last | lstrip
+    assign key_array = key_array | append: ',' | append: key
+    assign val_array = val_array | append: ',' | append: value
+  endfor
+
+  assign key_array = key_array | remove_first: ',' | strip_newlines | downcase | split: ','
+  assign val_array = val_array | remove_first: ',' | split: ','
+
+  assign variant_image_size = '40'
+  case color_picker_size
+    when 'large'
+      assign variant_image_size = '72'
+    when 'xlarge'
+      assign variant_image_size = '104'
+  endcase
+-%}
+
+{% if bundle_entry %}
+  <bundle-picker
+    data-bundle-title="{{ bundle_entry.title | escape }}"
+    data-bundle-handle="{{ bundle_entry.handle }}"
+  >
+    <div class="bundle-slots">
+      <dropdown-component class="bundle-picker__dropdown" breakpoint="9999">
+        {%- for rel in bundle_entry.products.value -%}
+          {%- assign p = rel.value | default: rel -%}
+          {% assign custom_link = p.metafields.custom.custom_link.value %}
+          {% assign size_guide_page = p.metafields.custom.size_guide.value %}
+
+          {%- if p and p.handle -%}
+            {%- if size_guide_page != blank -%}
+              {%- capture sizing_link -%}
+                <modal-opener class="product-popup-modal__opener no-js-hidden" data-modal="#PopupModal-{{ block.id }}{{ forloop.index }}">
+                  <button id="ProductPopup-{{ block.id }}" class="product-popup-modal__button" type="button" aria-haspopup="dialog">
+                    {% render 'svg-icons-inline', icon: block.settings.sizing_guide_icon %}<span>{{ settings.size_guide }}</span></button>
+                </modal-opener>
+              {%- endcapture -%}
+              {%- capture sizing_popup -%}
+                <modal-dialog id="PopupModal-{{ block.id }}{{ forloop.index }}" class="product-popup-modal">
+                  <div role="dialog" aria-label="{{ settings.size_guide }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+                    <div class="product-popup-modal__content-header">
+                      <h5>{{ size_guide_page.title }}</h5>
+                      <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'svg-icons' with 'close' %}</button>
+                    </div>
+                    <scroll-shadow>
+                      <div class="product-popup-modal__content-info">
+                        {{ size_guide_page.content }}
+                      </div>
+                    </scroll-shadow>
+                  </div>
+                </modal-dialog>
+              {%- endcapture -%}
+            {%- endif -%}
+
+            {%- capture variants_json -%}{{ p.variants | json }}{%- endcapture -%}
+            {%- capture options_json -%}{{ p.options_with_values | json }}{%- endcapture -%}
+            {% assign slot_title = p.metafields.custom.bundle_title.value %}
+            {% assign pack_amount = 1 %}
+
+            {% if bundle_entry.is_it_a_pack %}
+              {% assign pack_amount = bundle_entry.pack_quantity.value %}
+            {% endif %}
+
+            {% for i in (1..pack_amount) %}
+              {% assign pack_index = forloop.index %}
+
+              {% assign loop = forloop.parentloop %}
+
+              {% if bundle_entry.is_it_a_pack %}
+                {% assign pack_amount = bundle_entry.pack_quantity.value %}
+                {% assign loop = forloop %}
+              {% endif %}
+
+              <div
+                dropdown
+                {% if loop.first %}
+                  open
+                {% endif %}
+                class="bundle-slot"
+                data-slot
+                data-product-id="{{ p.id }}"
+                data-product-handle="{{ p.handle }}"
+                data-variants="{{ variants_json | escape }}"
+                data-options="{{ options_json | escape }}"
+              >
+                <button class="bundle_trigger" trigger="">
+                  <div class="bundle-slot__heading">
+                    <div class="bundle-slot__title">
+                      <h3>
+                        {% if slot_title != blank %}{{ slot_title }}{% else %}{{ p.title }}{% endif %}
+                      </h3>
+                      <svg
+                        width="10"
+                        heigth="6"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        class="icon icon-caret"
+                        viewBox="0 0 10 6"
+                      >
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                        </path>
+                      </svg>
+                    </div>
+                    <div class="bundle-slot__subtitle">Selection: <span data-selection></span></div>
+                  </div>
+                </button>
+                <div
+                  class="bundle-content-wrapper"
+                  style="padding-left: .5rem; {% unless loop.first %}height: 0px; overflow: hidden;{% endunless %}"
+                >
+                  <div class="bundle__content">
+                    {%- for opt in p.options_with_values -%}
+                      {%- assign is_color = false -%}
+                      {% assign option_name = opt.name | downcase %}
+                      {% if option_name contains 'color' %}
+                        {%- assign is_color = true -%}
+                      {% endif %}
+
+                      <!-- Color Options -->
+                      {%- if is_color -%}
+                        {%- assign opts1 = p.metafields.custom.variant_options_1.value -%}
+                        {%- assign opts2 = p.metafields.custom.variant_options_2.value -%}
+                        {%- assign opt_name_handle = opt.name | handleize -%}
+                        {%- assign rendered = '' -%}
+
+                        {%- comment -%} ---------- SET 1: Low Impact Dyes ---------- {%- endcomment -%}
+                        {%- if opts1 != blank -%}
+                          <div class="bundle-option" data-opt data-opt-name="{{ opt.name | escape }}">
+                            <span class="bundle-option__label">{{ settings.low_impact_dyes }}</span>
+
+                            <div class="bundle-radios {{ opt.name | downcase }}">
+                              {%- for entry in opts1 -%}
+                                {%- assign v = entry.label -%}
+                                {%- if v == blank -%}{% continue %}{%- endif -%}
+                                {%- unless opt.values contains v -%}{% continue %}{%- endunless -%}
+
+                                {%- assign dedupe_key = '|' | append: v | append: '|' -%}
+                                {%- if rendered contains dedupe_key -%}{% continue %}{%- endif -%}
+                                {%- assign rendered = rendered | append: dedupe_key -%}
+
+                                {%- assign val_handle = v | handleize -%}
+                                {%- assign input_id = 'slot-'
+                                  | append: p.id
+                                  | append: '-'
+                                  | append: opt_name_handle
+                                  | append: '-'
+                                  | append: val_handle
+                                  | append: pack_index
+                                -%}
+
+                                {%- liquid
+                                  assign color_value = entry.color | downcase | escape
+
+                                  # Theme color overrides (settings.color_swatches "name: value" lines)
+                                  for custom_color in key_array
+                                    if custom_color == color_value
+                                      assign color_value = val_array[forloop.index0]
+                                    endif
+                                  endfor
+
+                                  assign bg_value = blank
+                                  if color_value contains '.'
+                                    assign bg_value = color_value | file_url
+                                    assign color_value = 'var(--bg-body)'
+                                  endif
+
+                                  # Optional: use variant image as swatch
+                                  if color_picker_use_variants
+                                    for variant in p.variants
+                                      if variant.title contains v and variant.image
+                                        assign bg_value = variant.image | image_url: width: variant_image_size
+                                        break
+                                      endif
+                                    endfor
+                                  endif
+                                -%}
+
+                                <div
+                                  class="swatch"
+                                  data-input-id="{{ input_id }}"
+                                  style="--option-color: {{ color_value | downcase | escape }}; {% if bg_value %}--option-color-image: url('{{ bg_value | escape }}');{% endif %}"
+                                >
+                                  <input
+                                    class="swatch-input"
+                                    type="radio"
+                                    id="{{ input_id }}"
+                                    name="slot-{{ p.id }}-{{ opt_name_handle }}-{{ pack_index }}"
+                                    value="{{ v | escape }}"
+                                    data-slot-title="{{ slot_title | handleize }}"
+                                    data-option
+                                  >
+                                  <label class="swatch-label" for="{{ input_id }}" data-label="{{ v | escape }}">
+                                    <span class="circle"></span>
+                                  </label>
+                                </div>
+                              {%- endfor -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+
+                        {%- comment -%} ---------- SET 2: 100% Plant Dyes ---------- {%- endcomment -%}
+                        {%- if opts2 != blank -%}
+                          <div class="bundle-option" data-opt data-opt-name="{{ opt.name | escape }}">
+                            <div class="bundle-option__label">
+                              {{ settings.plant_dyes }}
+                              {%- if custom_link -%}
+                                <a class="custom-link" href="{{ custom_link }}">{{ settings.custom_link }}</a>
+                              {%- endif -%}
+                            </div>
+
+                            <div class="bundle-radios {{ opt.name | downcase }}">
+                              {%- for entry in opts2 -%}
+                                {%- assign v = entry.label -%}
+                                {%- if v == blank -%}{% continue %}{%- endif -%}
+                                {%- unless opt.values contains v -%}{% continue %}{%- endunless -%}
+
+                                {%- assign dedupe_key = '|' | append: v | append: '|' -%}
+                                {%- if rendered contains dedupe_key -%}{% continue %}{%- endif -%}
+                                {%- assign rendered = rendered | append: dedupe_key -%}
+
+                                {%- assign val_handle = v | handleize -%}
+                                {%- assign input_id = 'slot-'
+                                  | append: p.id
+                                  | append: '-'
+                                  | append: opt_name_handle
+                                  | append: '-'
+                                  | append: val_handle
+                                  | append: pack_index
+                                -%}
+
+                                {%- liquid
+                                  assign color_value = entry.color | downcase | escape
+
+                                  # Theme color overrides
+                                  for custom_color in key_array
+                                    if custom_color == color_value
+                                      assign color_value = val_array[forloop.index0]
+                                    endif
+                                  endfor
+
+                                  assign bg_value = blank
+                                  if color_value contains '.'
+                                    assign bg_value = color_value | file_url
+                                    assign color_value = 'var(--bg-body)'
+                                  endif
+
+                                  if color_picker_use_variants
+                                    for variant in p.variants
+                                      if variant.title contains v and variant.image
+                                        assign bg_value = variant.image | image_url: width: variant_image_size
+                                        break
+                                      endif
+                                    endfor
+                                  endif
+                                -%}
+
+                                <div
+                                  class="swatch"
+                                  data-input-id="{{ input_id }}"
+                                  style="--option-color: {{ color_value | downcase | escape }}; {% if bg_value %}--option-color-image: url('{{ bg_value | escape }}');{% endif %}"
+                                >
+                                  <input
+                                    class="swatch-input"
+                                    type="radio"
+                                    id="{{ input_id }}"
+                                    name="slot-{{ p.id }}-{{ opt_name_handle }}-{{ pack_index }}"
+                                    value="{{ v | escape }}"
+                                    data-slot-title="{{ slot_title | handleize }}"
+                                    data-option
+                                  >
+                                  <label class="swatch-label" for="{{ input_id }}" data-label="{{ v | escape }}">
+                                    <span class="circle"></span>
+                                  </label>
+                                </div>
+                              {%- endfor -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+
+                      <!-- Size Options -->
+                      {%- if opt.name == 'Size' -%}
+                        <div class="bundle-option" data-opt data-opt-name="{{ opt.name | escape }}">
+                          <div class="bundle-option__label">
+                            {{ opt.name }}
+                            {% comment %}
+                              <button
+                                class="size-guide"
+                                type="button"
+                                data-open-modal="#size-guide-modal"
+                                data-size-guide-url="{{ size_guide_page}}"
+                              >
+                                {{ settings.size_guide }}
+                              </button>
+                            {% endcomment %}
+                            {{ sizing_link }}
+                          </div>
+                          {{ sizing_popup }}
+
+                          <div class="bundle-radios {{ opt.name | downcase}}">
+                            {%- assign opt_name_handle = opt.name | handleize -%}
+                            {%- for v in opt.values -%}
+                              {%- assign val_handle = v | handleize -%}
+                              {%- assign input_id = 'slot-'
+                                | append: p.id
+                                | append: '-'
+                                | append: opt_name_handle
+                                | append: '-'
+                                | append: val_handle
+                                | append: pack_index
+                              -%}
+                              <div class="swatch" data-input-id="{{ input_id }}">
+                                <input
+                                  class="swatch-input"
+                                  type="radio"
+                                  id="{{ input_id }}"
+                                  name="slot-{{ p.id }}-{{ opt_name_handle }}-{{ pack_index }}"
+                                  value="{{ v | escape }}"
+                                  data-option
+                                  {% if opt.selected_value == v -%}
+                                    checked
+                                  {%- endif -%}
+                                >
+                                <label
+                                  class="swatch-label swatch-label--size"
+                                  for="{{ input_id }}"
+                                  data-label="{{ v | escape }}"
+                                >
+                                  {{ v }}
+                                </label>
+                              </div>
+                            {%- endfor -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+
+                  <label class="bundle-qty visually-hidden">
+                    Quantity
+                    <input type="number" min="1" value="1" data-qty>
+                  </label>
+                  <div class="bundle-meta visually-hidden">
+                    <span data-price>{{ p.selected_or_first_available_variant.price | money }}</span>
+                    <span data-status></span>
+                  </div>
+
+                  {% unless loop.last %}
+                    <div class="next-button-wrapper"><button data-next>Next</button></div>
+                  {% endunless %}
+                </div>
+              </div>
+            {% endfor %}
+          {%- endif -%}
+        {%- endfor -%}
+      </dropdown-component>
+
+      <!-- Global CTA once -->
+      <div class="bundle-footer">
+        <button type="button" class="bundle-add-all" data-add-all disabled>Add to cart</button>
+        <div class="bundle-error" data-error role="alert" hidden></div>
+      </div>
+    </div>
+  </bundle-picker>
+
+  <script src="{{ 'bundle-picker.js' | asset_url }}" defer></script>
+  <script src="{{ 'modal-dialog.js' | asset_url }}" defer="defer"></script>
+  <!-- Gallery / options sync -->
+  <script>
+    (() => {
+      const sliderRoot = document.querySelector('product-slider');
+      if (!sliderRoot) return;
+
+      const maxPerColor = parseInt(sliderRoot.getAttribute('data-max-per-color') || '4', 10);
+      const slides = Array.from(sliderRoot.querySelectorAll('.product-images__slide'));
+      const thumbsRoot = document.querySelector('.product-thumbs');
+      const thumbs = thumbsRoot ? Array.from(thumbsRoot.querySelectorAll('.product-thumb')) : [];
+
+      function showSet({ colorHandle, slotTitle } = {}) {
+        const wantColor = (colorHandle || 'all').toLowerCase();
+        const wantSlot = (slotTitle || '').toLowerCase();
+
+        // small helper to normalize/handleize text
+        const handleize = (str = '') =>
+          str
+            .toLowerCase()
+            .normalize('NFKD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+
+        // 0) Pool = all slides except "cover" images
+        const pool = slides.filter((s) => {
+          const alt = (s.querySelector('img')?.getAttribute('alt') || '').toLowerCase();
+          return !alt.includes('cover');
+        });
+
+        // 1) filter by color (or pass-through for 'all')
+        const byColor = (arr) => {
+          if (wantColor === 'all') return arr;
+          return arr.filter((s) => (s.dataset.color || '').toLowerCase().includes(wantColor));
+        };
+
+        // 2) filter by slot title (check in img alt, handleized)
+        const bySlot = (arr) => {
+          if (!wantSlot) return arr; // if none provided, no extra filtering
+          return arr.filter((s) => {
+            const alt = s.querySelector('img')?.getAttribute('alt') || '';
+            return handleize(alt).includes(wantSlot);
+          });
+        };
+
+        // Try color + slot first
+        let candidates = bySlot(byColor(pool));
+
+        // Fallbacks:
+        if (candidates.length === 0 && wantColor !== 'all') {
+          // 1) color only
+          const colorOnly = byColor(pool);
+          if (colorOnly.length > 0) {
+            candidates = colorOnly;
+          } else {
+            // 2) no color matches at all → show ALL non-cover (no cap)
+            candidates = pool;
+          }
+        }
+        // Normal cap rules
+        let visible;
+        if (wantColor === 'all') {
+          // keep your current behavior: cap when 'all'
+          visible = candidates.slice(0, maxPerColor);
+        } else if (candidates === pool && wantColor !== 'all') {
+          // we fell all the way back to "show everything" due to 0 color matches, no cap
+          visible = candidates;
+        } else {
+          // color (and maybe slot) had matches, cap
+          visible = candidates.slice(0, maxPerColor);
+        }
+
+        // Apply visibility
+        slides.forEach((s) => (s.style.display = 'none'));
+        visible.forEach((s) => (s.style.display = 'block'));
+
+        // Sync thumbnails
+        if (thumbs?.length) {
+          const visibleIds = new Set(visible.map((v) => v.dataset.mediaId));
+          thumbs.forEach((t) => (t.hidden = !visibleIds.has(t.dataset.mediaId)));
+        }
+
+        // Nudge common sliders
+        if (window.productSwiper?.update) {
+          try {
+            window.productSwiper.update();
+          } catch {}
+        }
+        if (window.productFlickity?.reloadCells) {
+          try {
+            window.productFlickity.reloadCells();
+            window.productFlickity.resize();
+          } catch {}
+        }
+        window.dispatchEvent(new Event('resize'));
+      }
+
+      // Listen for bundle event
+      document.addEventListener('gallery:filter-color', (e) => {
+        const { colorHandle, slotTitle } = e.detail || {};
+        showSet({ colorHandle, slotTitle });
+      });
+    })();
+  </script>
+  <!-- Size Guide -->
+  {% comment %}
+    <script>
+      (() => {
+        const trigger = document.querySelector('[data-size-guide]');
+        const dialog = document.getElementById('size-guide-modal');
+        const closeBtn = dialog.querySelector('.dialog__close');
+
+        // open
+        trigger?.addEventListener('click', () => dialog.showModal());
+
+        // close via button
+        closeBtn?.addEventListener('click', () => dialog.close());
+
+        // close when clicking backdrop
+        dialog.addEventListener('click', (e) => {
+          const rect = dialog.getBoundingClientRect();
+          const inside =
+            e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+          if (!inside) dialog.close();
+        });
+      })();
+    </script>
+  {% endcomment %}
+  <!-- Section REndering for Size Guide -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dialog = document.getElementById('size-guide-modal');
+      if (!dialog) return;
+      const bodyEl = dialog.querySelector('[data-modal-body]');
+      const cache = new Map();
+
+      async function fetchPageSlice(url, selector = '.page-content-width') {
+        if (cache.has(url)) return cache.get(url);
+
+        const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        if (!res.ok) throw new Error(`Failed to fetch ${url} (${res.status})`);
+
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        let node = doc.querySelector(selector);
+
+        // Fallbacks if theme markup differs
+        if (!node) node = doc.querySelector('#MainContent') || doc.body;
+
+        const content = node.innerHTML;
+        cache.set(url, content);
+        return content;
+      }
+
+      // Open handler (works for any button with data-size-guide-url)
+      document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-size-guide-url]');
+        if (!btn) return;
+
+        e.preventDefault();
+        const raw = btn.getAttribute('data-size-guide-url') || '';
+        const url = toRelativeShopPath(raw);
+        bodyEl.innerHTML = '<p>Loading…</p>';
+
+        try {
+          const content = await fetchPageSlice(url, '.page-content-width');
+          bodyEl.innerHTML = content;
+          dialog.showModal();
+        } catch (err) {
+          console.error(err);
+          bodyEl.innerHTML = '<p>Could not load size guide.</p>';
+          dialog.showModal();
+        }
+      });
+
+      // Close via X and backdrop
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-modal-close]')) dialog.close();
+      });
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+    });
+
+    // Turn absolute URL (https://store.com/pages/size-guide...) into relative (/pages/size-guide...)
+    // Also handles already-relative urls and trims whitespace.
+    function toRelativeShopPath(input, fallback = '') {
+      if (!input) return fallback;
+      const s = String(input).trim();
+
+      // Prefer the URL API; fall back to string ops if it fails
+      try {
+        const u = new URL(s, window.location.origin); // works for absolute or relative
+        // If the path contains known storefront prefixes, keep it; else keep pathname anyway
+        return u.pathname + u.search + u.hash || fallback;
+      } catch {
+        // Not a valid URL; try to slice from /pages/... or just ensure leading slash
+        const prefixes = ['/pages/', '/blogs/', '/collections/', '/products/', '/policies/'];
+        for (const p of prefixes) {
+          const i = s.indexOf(p);
+          if (i !== -1) return s.slice(i);
+        }
+        // Strip protocol+domain if present, else prepend slash
+        return s.replace(/^https?:\/\/[^/]+/i, '').replace(/^(?!\/)/, '/') || fallback;
+      }
+    }
+  </script>
+{% endif %}

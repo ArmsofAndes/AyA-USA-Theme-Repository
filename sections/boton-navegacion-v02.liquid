@@ -1,0 +1,149 @@
+{% schema %} 
+{
+  "name": "Boton-navegacion-v02",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Color de fondo de la sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "font_size",
+      "label": "Tamaño de letra (rem)",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color del borde del contenedor",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Radio de borde del contenedor (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "container_background",
+      "label": "Color de fondo del contenedor",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cuadro_nav",
+      "name": "Cuadro navegación",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del cuadro",
+          "default": "Texto"
+        },
+        {
+          "type": "text",
+          "id": "section_id",
+          "label": "ID de la sección destino (sin #)",
+          "default": "destino"
+        },
+        {
+          "type": "image_picker",
+          "id": "cuadro_image",
+          "label": "Imagen del cuadro"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Boton-navegacion-v02",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="boton-navegacion-v02__section" style="
+  background-color: {{ section.settings.section_background }};
+   padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;">
+  {% for block in section.blocks %}
+    <a href="#{{ block.settings.section_id }}" class="boton-navegacion-v02__cuadro"
+       style="
+         width: 300px;
+         min-height: 300px;
+         background-color: {{ section.settings.container_background }};
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: flex-start;
+         text-align: center;
+         color: {{ section.settings.text_color }};
+         font-size: {{ section.settings.font_size }}rem;
+         font-weight: {{ section.settings.font_weight }};
+         border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+         border-radius: {{ section.settings.border_radius }}px;
+         padding: 1.5rem 1.5rem 1rem 1.5rem;
+         text-decoration: none;
+         transition: transform 0.3s ease;
+       "
+       onmouseover="this.style.transform = 'scale(1.05)';"
+       onmouseout="this.style.transform = 'scale(1)';"
+    >
+      <div style="margin-bottom: 1rem; pointer-events: none;">{{ block.settings.button_label }}</div>
+      {% if block.settings.cuadro_image %}
+        <img src="{{ block.settings.cuadro_image | img_url: '300x' }}" alt="Imagen" style="width: 100%; height: auto; border-radius: 18px; pointer-events: none;">
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+
+<style>
+  @media screen and (max-width: 749px) {
+    .boton-navegacion-v02__cuadro {
+      display: block !important;
+      width: 100% !important;
+      max-width: 300px;
+      margin: 0.25rem auto !important; 
+      box-sizing: border-box;
+      height: auto !important;
+      min-height: 70px; 
+      padding: 10px; 
+    }
+  }
+</style>

@@ -1,0 +1,510 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "5 Ways To Have A Green Christmas This Year",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/anniesprattzh7geuorbuwunsplash-1637000852716.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published November 15, 2021",
+            "color": "#151515",
+            "font_size": 14,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 8%; margin-right: 8%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_GpWLNc": {
+      "type": "rich-text",
+      "blocks": {
+        "text_wEPTzF": {
+          "type": "text",
+          "settings": {
+            "text": "<p>As 2021 draws to a close, the excitement starts to build as we approach Christmas. For most folks, it is the favorite time of the year. Time for loved ones, giving gifts, Christmas trees and a few days of pigging out on food!</p><p>However, the more informed consumer is now looking at what the environmental cost of the festivities are. </p>",
+            "custom_liquid": "",
+            "color": "#000000",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_wEPTzF"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 3% 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_iPyQYA": {
+      "type": "rich-text",
+      "blocks": {
+        "text_8cH3ee": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Globally, during Christmas, our waste levels increase by almost 30% with excess packaging, wrapping paper, holiday cards, food waste, and unsustainable practices. </p>",
+            "custom_liquid": "",
+            "color": "#000000",
+            "font_size": 25,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_8cH3ee"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 0 10% 0 10%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_GBKQVK": {
+      "type": "rich-text",
+      "blocks": {
+        "text_396Cgd": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Here are a few tweaks you can make to have an environmentally friendly Christmas and enjoy the holidays guilt-free!</p><p></p><ul><li>Eco-Friendly Christmas Tree</li><li>Eco-Friendly Christmas Gifts</li><li>Save Wrapping Paper And Send E-Cards</li><li>Watch Out For Food Waste</li><li>Reduce and Reuse Everything</li></ul><h3>1. Eco-Friendly Christmas Tree</h3><p>82% of all Christmas trees are artificial trees made up of plastic. Most trees cannot be recycled and end up going to landfills. You would need to use an artificial tree about 4-6 times before its environmental impact is lower than that of a real tree. So if you want to get a plastic tree, make sure it's the perfect one so that it stays with you for decades.</p><p>The most sustainable option is to buy an actual<strong> tree that has roots</strong> and can be replanted once cut. Potted Christmas trees can also be rented during the festive season. When looking for a tree, look for the FSC (Forest Stewardship Council) logo as much as you can. FSC certification means the tree has been sourced sustainably. When choosing a cut tree or an artificial tree, look at second hand rather than new. Loads of people give up their trees and your wallet will thank you for it!</p>",
+            "custom_liquid": "",
+            "color": "#000000",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_396Cgd"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 3% 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_qTCCgz": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_yPV379": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>2. Eco-Friendly Christmas Gifts</h3><p>While it may be tempting to go on a shopping spree and spoil your loved ones, try opting for more environmentally friendly options. Considering the carbon footprint of what we buy will have a lasting impact on the environment.</p>",
+            "description_size": "medium",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_yPV379"
+      ],
+      "custom_css": [
+        ".row {margin: 0 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/dsc01465ig-1637242780199.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": true,
+        "video_controls": true,
+        "height": "small",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "text_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#151515",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_ERzNDn": {
+      "type": "rich-text",
+      "blocks": {
+        "text_3qUi6e": {
+          "type": "text",
+          "settings": {
+            "text": "<p>If your loved one has no need for something tangible, consider experience gifts such as travel e-vouchers, movie tickets, or a vacation rental somewhere instead. Try opting for sustainable options or shop on a eco-friendly shopping platform like Verdoo.com that is partnered with over 10,000 responsible businesses to bring you carbon neutral options.</p><h3>3. Save Wrapping Paper And Send E-Cards</h3><p><strong>Paper makes up 40% of all waste in the United States</strong>, comprising a whopping 71 million tons a year. Paper manufacturing is using about 40% of the global wood supply, contributing to deforestation and destruction of various habitats. In addition, the paper manufacturing process releases greenhouse gases into the atmosphere, exacerbating global warming.</p>",
+            "custom_liquid": "",
+            "color": "#000000",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_3qUi6e"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 0% 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_3CNHyY": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_tKgxnj": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Skip buying single-use wrapping paper</strong>and use magazines, newspapers, or recycled paper instead. Wrapping paper often comes with glitter, foil, or some other microplastics that render them unrecyclable. Some retailers do sell wrapping paper made from recycled material. Get creative! Anything that is destined for the landfills can be used to wrap gifts.</p>",
+            "description_size": "medium",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_tKgxnj"
+      ],
+      "custom_css": [
+        ".row {margin: 0 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/freestocksuqziuz9nczeunsplash-1637002094763.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": true,
+        "video_controls": true,
+        "height": "small",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#151515",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_gEp3LT": {
+      "type": "rich-text",
+      "blocks": {
+        "text_kjmtLk": {
+          "type": "text",
+          "settings": {
+            "text": "<p>If you really have to buy wrapping paper, buy eco-friendly or recycled whenever possible. You can also wrap gifts in fabric that can be reused and recycled. In the US, over two billion Christmas cards are sold each year, all of which are single-use. Skip the traditional card-sending and send a personally designed electronic card instead, or a video message!</p><h3>4. Watch Out For Food Waste</h3><p>While one of the best parts of Christmas parties are the dinners, we tend to overestimate the amount of food we actually need. Alarmingly,<strong> about 40% of all the food in the United States is wasted</strong>, equating to roughly 108 billion pounds and $161 billion. From farmers to manufacturers, and then to our homes, it is critical we reduce food waste whenever possible and consumption between Thanksgiving and Christmas is at its highest.</p><p>Try estimating the quantity needed for you and your guests to the best of your availability, and have your guests pack away the leftovers. You can also freeze your leftovers for your own consumption later down the road. When shopping for your Christmas dinner, consider how far the food has to travel to get onto your plate. Buying local produce that is in season will have a lower carbon footprint, and support smaller farmers that could be using less pesticides. The bonus is that you’ll be giving back to the community!</p><h3>5. Reduce and Reuse Everything</h3><p>If receiving gifts, save the ribbons, wrapping paper, foam stuffings, or anything that can be repurposed for something else further down the road. Cardboard boxes can be opened flat and stored or recycled, while bubble wrap can be reused.</p><p>Old electronics and clothes that are no longer in use can be donated to thrift stores or charities. Before throwing anything in the trash, just check if it can be repurposed into something else. It is not only healthy for your wallet, it also will cut back on what gets sent to landfills!</p>",
+            "custom_liquid": "",
+            "color": "#000000",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_kjmtLk"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 0% 8% 0 8%;}",
+        ".rte {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "center_icon_text_8xrehQ": {
+      "type": "center-icon-text",
+      "custom_css": [
+        "p {line-height: 2em; letter-spacing: 0.5px;}"
+      ],
+      "name": "center-icon-text",
+      "settings": {
+        "image": "shopify://shop_images/arrow_up.jpg",
+        "image_width": 50,
+        "text": "Scroll to top",
+        "text_size": 16,
+        "text_weight": "300",
+        "text_color": "#000000"
+      }
+    },
+    "linea_horizontal_BQqtza": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 85,
+        "color_linea": "#0e355e",
+        "grosor": 1,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\n\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "rich_text_GpWLNc",
+    "rich_text_iPyQYA",
+    "rich_text_GBKQVK",
+    "image_with_text_qTCCgz",
+    "rich_text_ERzNDn",
+    "image_with_text_3CNHyY",
+    "rich_text_gEp3LT",
+    "center_icon_text_8xrehQ",
+    "linea_horizontal_BQqtza",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

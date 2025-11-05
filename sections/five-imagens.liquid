@@ -1,0 +1,113 @@
+{% schema %}
+{
+  "name": "Five Images Layout",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagen grande (izquierda)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagen columna 2 - arriba"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagen columna 2 - abajo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Imagen columna 3 - arriba"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Imagen columna 3 - abajo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Five Images Layout"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="five-images">
+  <div class="five-images__col big">
+    {% if section.settings.image_1 != blank %}
+      <img src="{{ section.settings.image_1 | image_url: width: 800 }}" alt="" loading="lazy">
+    {% endif %}
+  </div>
+  <div class="five-images__col">
+    {% if section.settings.image_2 != blank %}
+      <img src="{{ section.settings.image_2 | image_url: width: 400 }}" alt="" loading="lazy">
+    {% endif %}
+    {% if section.settings.image_3 != blank %}
+      <img src="{{ section.settings.image_3 | image_url: width: 400 }}" alt="" loading="lazy">
+    {% endif %}
+  </div>
+  <div class="five-images__col">
+    {% if section.settings.image_4 != blank %}
+      <img src="{{ section.settings.image_4 | image_url: width: 400 }}" alt="" loading="lazy">
+    {% endif %}
+    {% if section.settings.image_5 != blank %}
+      <img src="{{ section.settings.image_5 | image_url: width: 400 }}" alt="" loading="lazy">
+    {% endif %}
+  </div>
+</div>
+<style>
+.five-images {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr 0.7fr;
+  gap: 4px;
+}
+
+.five-images__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.five-images__col img {
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
+  display: block;
+}
+
+/* La columna de la izquierda (imagen grande) ocupa toda la altura */
+.five-images__col.big img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsivo en mobile */
+@media (max-width: 768px) {
+  .five-images {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  /* Imagen grande arriba */
+  .five-images__col.big {
+    width: 100%;
+  }
+
+  /* Las otras 2 columnas se convierten en un grid 2x2 */
+  .five-images__col:not(.big) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+
+  .five-images__col:not(.big) img {
+    height: auto;
+  }
+}
+</style>

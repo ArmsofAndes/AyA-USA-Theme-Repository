@@ -1,0 +1,590 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "The Hidden Health Risks of Synthetic Fibers ",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/microplastic_in_clothing_731a1320-f1bc-4819-8cc5-fd62b9d62662.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_9jQjEd": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published June 19, 2025",
+            "color": "#0e355e",
+            "font_size": 18,
+            "font_weight": 400
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Reading time: 8 minutes</strong></p><p>By Jordy Munarriz</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_9jQjEd",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {text-align: left; margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_4PBRaq": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/DSC02828_85583291-04f7-4dc0-835b-2a8944915cd5.webp",
+            "link": "https://armsofandes.com/blogs/news/alpaca-wool-gsm-guide",
+            "caption": "Alpaca Wool GSM Guide:Choose the Right Layer for You",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_hjamRV": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/zero-waste-outdoor-hiking-sustainability.jpg",
+            "link": "shopify://blogs/news/zero-waste-in-outdoor-apparel-can-high-performance-gear-be-truly-sustainable",
+            "caption": "Wool Rethinking Outdoor Gear",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_pwxqUk": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/marcahuasi-camping-amphitheater-mountain-plateau.webp",
+            "link": "shopify://blogs/news/storytelling-marcahuasi-peru-mystical-hike-above-the-clouds",
+            "caption": "Marcahuasi: A Hidden Andean Sanctuary Above the Clouds",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<p><strong>Polyester, nylon, acrylic—these synthetic fibers are everywhere, from base layers to everyday essentials.</strong> Praised for their low cost and durability, they’ve become the default fabric for outdoor gear and modern wardrobes alike. But behind their “performance” promise lies a growing concern: these materials may be harming your health more than helping it.</p><p>Scientific studies now link synthetic textiles to a range of health issues—<strong>from respiratory damage to hormonal disruption</strong>. In this article, we dive into the latest research, highlight the risks of everyday exposure, and offer natural, performance-ready alternatives that protect both your body and the planet.</p><h3>Inhaling Microfibers: How Synthetic Fibers Impact Your Lungs</h3><h3>Microplastic Inhalation and Lung Disease<br/></h3><p><strong>Synthetic microfibers</strong> are no longer just an environmental issue. They're now considered a growing <strong>threat to human health</strong>, particularly through the air we breathe.</p><p>Once airborne, these microscopic fibers can be <a href=\"https://pubmed.ncbi.nlm.nih.gov/37971785/\" target=\"_blank\"><strong>inhaled and settle deep within the lungs</strong></a>, where they may remain lodged for years. Research shows just how small these particles are: nylon microfibers as tiny as <strong>12 × 31 μm</strong> and polyester fibers up to <strong>15 × 52 μm</strong> have been detected floating in indoor environments [1][2].</p><p>This isn’t just theoretical. In a study of autopsies, <strong>97% of lung tissue samples</strong> from patients with chronic respiratory disease were found to contain <strong>synthetic fibers</strong> [3].</p><p>And the danger isn’t limited to factories or high-exposure jobs. Everyday environments—our homes, closets, and laundry rooms—are part of the problem. A <strong>15-minute cycle in a typical household dryer</strong> can release over <strong>500,000 microfibers </strong>into the air [6]. Once suspended, they can linger in indoor spaces where most of us spend the majority of our time. In fact, indoor air has up to 8 times more microplastics than the outdoors [7].</p><p>Long-term exposure to these particles has been linked to <strong>reduced lung function</strong>, <strong>pulmonary fibrosis</strong>, and <strong>early-onset emphysema</strong>—especially in people with constant exposure, like textile workers, where 15–40% develop work-related respiratory illness [4][5].</p><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes</strong></a>, we believe performance wear shouldn’t compromise your breath. That’s why we make garments with 100% natural alpaca wool, a breathable fiber that doesn’t release plastic particles—so you can move freely without inhaling synthetic harm.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/microfiber_inhalation_lung_isease.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_dEHyAY": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Cellular-Level Damage from Synthetic Textile Exposure</h3><p>Studies using laboratory-grown “mini lungs” have shown that exposure to nylon microfibers disrupts the normal development of lung cells. This interference impairs the lungs’ ability to regenerate tissue after injury—<strong>a key function for anyone who values stamina, oxygen efficiency, or recovery after exertion</strong> [8].<br/></p><p>Animal research further supports these findings. In one study, mice exposed to tire-derived microplastics developed <strong>fibrotic lesions and chronic lung inflammation</strong>, early indicators of interstitial lung disease, a group of conditions marked by progressive scarring and breathing difficulties [9].</p><p>More recent research (2024) has confirmed that continuous exposure to <a href=\"https://particleandfibretoxicology.biomedcentral.com/articles/10.1186/s12989-024-00592-8\" target=\"_blank\"><strong>synthetic particles causes oxidative damage</strong></a>—an imbalance that stresses lung cells, damages DNA, and contributes to long-term respiratory decline [10].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_4PBRaq",
+        "right_image_block_hjamRV",
+        "right_image_block_pwxqUk",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP",
+        "left_text_dEHyAY"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>Related content</p>",
+        "right_title_size": 20,
+        "right_title_weight": 700,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "tabla_blog_FT3WLX": {
+      "type": "tabla-blog",
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}"
+      ],
+      "name": "Tabla-blog",
+      "settings": {
+        "row_1": "<p>Fiber ;; Type Where It Reaches in the Lungs ;;Health Impact;;Environmental Breakdown </p>",
+        "row_2": "<p>Synthetic Microfibers;;Deep into the alveoli (deep lung);;High concern: difficult for the body to clear, may trigger chronic inflammation, fibrosis, and possibly cancer;;Very slow – can persist for centuries</p>",
+        "row_3": "<p>Plant-based Fibers (Cotton);;Mainly upper airways;;Low risk: usually cleared naturally; pesticide residues may irritate skin slightly but minimal lung effects. If it's organic cotton, the chemical risk from pesticides is eliminated.;;High – breaks down in weeks to months</p>",
+        "row_4": "<p>Animal Fibers (Wool, Alpaca);;Typically reach bronchi and throat;;Low to moderate: biodegradable proteins are broken down by the body; rare allergic or irritant reactions. In alpaca wool, reactions are reduced because chemical washing is not required before making it.;;High – degrades within a few months.</p>",
+        "row_5": "",
+        "row_6": "",
+        "row_7": "",
+        "row_8": "",
+        "row_9": "",
+        "row_10": "",
+        "row_11": "",
+        "row_12": "",
+        "row_13": "",
+        "row_14": ""
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/mens-outdoor-tank-top-color-black.webp",
+            "link": "shopify://products/mens-alpaca-wool-tank-top",
+            "caption": "Men's Alpaca Wool Tank Top 160 Ultralight",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Womens-Alpaca-Wool-Long-Sleeve-Shirt-160-Ultralight_18.webp",
+            "link": "shopify://products/womens-tshirt-relax-fit-160-ultralight",
+            "caption": "Women's Alpaca Wool Hiking T-Shirt 160 Ultralight Relaxed Fit",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_VYUmr8": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Womens-Alpaca-Wool-Leggings-420-Midweight_2.webp",
+            "link": "shopify://products/womens-alpaca-wool-leggings-300",
+            "caption": "Women's Alpaca Wool Leggings 300 Lightweight",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Digestive Disruption: How Microplastics Travel Through Your Gut</h3><h3>Ingestion and Gastrointestinal Impact<br/></h3><p>Microplastics are no longer just a marine concern—they’ve become an inescapable part of our daily environment. These particles are now found in the air we breathe, the food we eat, and the water we drink, making accidental ingestion almost impossible to avoid [3].<br/></p><p>Once inside the gastrointestinal tract, microplastics can do more than simply pass through. Research shows that they can <strong>trigger inflammation, oxidative stress, and disturb the gut microbiome</strong>—the vital ecosystem of bacteria that supports digestion, immunity, and overall well-being [3,11].<br/></p><p>But the impact doesn’t stop there. A study published in Environmental Health Perspectives revealed that microplastics can <strong>translocate</strong>—moving from the gut into distant <strong>organs like the liver, kidneys, and even the brain</strong> [3,12]. This suggests a far-reaching, systemic exposure that affects more than just the digestive system.<br/></p><p>If you're someone who values clean nutrition, gut balance, and high performance from the inside out, it’s worth considering that the fibers in your clothes may be adding more than comfort to your life. Wearing synthetic fabrics—especially next to the skin—can contribute to microplastic ingestion through fiber shedding, especially during physical activity.<br/></p><h3>Microplastics and Gut Microbiome Imbalance<br/></h3><p>The <strong>gut microbiome</strong>—a vast community of trillions of microorganisms living in the digestive tract—is central to human health. It helps regulate inflammation, process nutrients, support the immune system, and even influence mood and metabolism.<strong><br/></strong></p><p>But this finely tuned ecosystem is highly sensitive to disruption.<strong><br/></strong></p><p>Once ingested, these microscopic particles can disrupt the microbial balance of the gut, a condition known as <a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC12006732/\" target=\"_blank\"><strong>dysbiosis</strong></a> [13]. When dysbiosis occurs, harmful bacteria begin to outcompete beneficial ones. This imbalance can weaken the gut’s ability to regulate key processes, leaving the body more vulnerable to inflammation, poor nutrient absorption, and weakened immune defense [14].<strong><br/></strong></p><p>Over time, this disruption may contribute to chronic digestive conditions. In fact, studies have linked nylon fiber exposure to an increased risk of inflammatory bowel diseases like <strong>Crohn’s disease and ulcerative colitis</strong> [3].<strong><br/></strong></p><p>While the connection between textiles and gut health may not be immediately obvious, it’s a reminder that the materials we live in daily have deeper consequences than surface comfort. Clothing isn't just a layer—it’s part of our exposure.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/digestive_system_human_plastics.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_QwLdmW": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Colorectal Cancer and Microfiber Exposure<br/></h3><p>While research is still evolving, new studies are pointing to a concerning trend: a possible link between microplastic exposure and <a href=\"https://doi.org/10.1016/j.canep.2025.102840\" target=\"_blank\"><strong>early-onset colorectal cancer</strong></a> (EOCRC) [15].<strong><br/></strong></p><p>Scientists suggest that when microplastics are ingested, they may trigger <strong>chronic inflammation</strong> and <strong>damage the intestinal lining</strong>—conditions that create a favorable environment for cancer to develop [15]. This is particularly relevant as rates of EOCRC continue to rise globally, especially in younger populations.<strong><br/></strong></p><p>Though a definitive causal relationship has not yet been confirmed, the findings are enough to raise red flags. They add to a growing body of evidence that microplastic exposure can have long-term consequences for digestive and overall health.<br/></p><h3>Skin Deep: Allergies, Infections & Hormonal Exposure from Synthetic Clothes</h3><h3>Skin Irritation and Synthetic Fabric Allergies<br/></h3><p>Studies show that <strong>up to 70% of individuals with sensitive skin report rashes</strong>, itching, or contact dermatitis when wearing synthetic clothing, particularly during heat, humidity, or physical activity [16,17]. The culprits are often chemical additives used in the manufacturing process—such as <strong>phthalates </strong>and <strong>heavy-metal dyes</strong>—which can leach out with sweat and friction.<strong><br/></strong></p><p>For those with conditions like <strong>atopic dermatitis (eczema)</strong>, the issue can be even more pronounced. Between <a href=\"https://doi.org/10.1016/j.det.2010.01.004\" target=\"_blank\"><strong>60–70% of patients with this condition</strong></a> experience worsening symptoms when wearing synthetic garments [18]. One key reason is the lack of breathability in synthetic fibers, which tend to trap moisture and heat against the skin—creating an environment that irritates rather than protects.<br/></p><h3>Infections and Bacterial Imbalance in Intimate Areas</h3><p>Synthetic fabrics like polyester, nylon, and spandex are commonly used in underwear for their stretch and form fit. But these same properties can lead to unintended consequences, especially in the intimate area.<strong><br/></strong></p><p>Because they <strong>trap heat and moisture against the skin</strong>, these fabrics create a warm, humid environment ideal for the overgrowth of yeast and harmful bacteria. As a result, they significantly increase the<strong> risk of vaginal infections</strong> like candidiasis and bacterial vaginosis [19].<strong><br/></strong></p><p>Unlike natural fibers, synthetic textiles lack <strong>breathability </strong>and d<strong>o not wick moisture away </strong>effectively. This can lead not only to discomfort, but also to <strong>a disruption of the vaginal microbiome</strong>—the natural balance of bacteria that helps protect against infection [5,19].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_yUj9LQ": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/candidiasis_synthetic_fabric.webp",
+            "caption": "",
+            "caption_size": 14,
+            "caption_weight": 400,
+            "caption_color": "#555555"
+          }
+        },
+        "left_text_Db46dJ": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Hormone-Disrupting Chemicals in Synthetic Clothing<br/></h3><p>Beyond the issue of moisture, synthetic underwear also carries a hidden chemical risk. Analyses have revealed that many of these textiles contain <a href=\"https://doi.org/10.32388/0GADTB.2\" target=\"_blank\"><strong>endocrine-disrupting chemicals</strong></a><strong> </strong>(EDCs) such as <strong>phthalates</strong>, <strong>bisphenols</strong>, and <strong>nonylphenols </strong>[5,20,21].<strong><br/></strong></p><p>These chemicals can leach from the fabric and be absorbed directly through the skin, especially in areas with thin, permeable tissue—like the vulva [5,22].<strong><br/></strong></p><p>Over time, even <strong>low-level exposure to EDCs has been linked to a wide range of health concerns</strong>, including:<strong><br/></strong></p><ul><li><strong>Fertility issues</strong>, such as anovulation and reduced implantation success [22]</li><li><strong>Menstrual and ovarian disorders</strong>, including PCOS and endometriosis [23]</li><li><strong>Hormone-sensitive cancers</strong>, like breast, uterine, and ovarian cancer [23]</li><li><strong>Pregnancy complications</strong>, from miscarriage to fetal development issues [5,24]</li></ul><p>The evidence is clear: prolonged skin contact with chemically treated synthetics—especially in intimate garments—can directly impact reproductive and hormonal health.<strong><br/></strong></p><p>That’s why opting for natural, breathable, and chemical-free fabrics—such as <strong>organic cotton</strong> or <strong>alpaca wool</strong>—is not just a comfort decision. It’s a conscious step toward safeguarding one of the most vulnerable systems in the body.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_DdEGdh",
+        "right_image_block_cLcR8k",
+        "right_image_block_VYUmr8",
+        "left_text_XjzLYC",
+        "left_image_6bkrxL",
+        "left_text_QwLdmW",
+        "left_image_yUj9LQ",
+        "left_text_Db46dJ"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section2_blog_text_and_glosary_50_50_aTPRtA": {
+      "type": "section2-blog-text-and-glosary-50-50",
+      "blocks": {
+        "left_text_gWGJEA": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Chronic Health Risks from Synthetic Fibers</h3><p>Mounting research suggests that prolonged exposure to synthetic fibers—and the chemicals embedded within them—can affect the body far beyond the surface.<br/></p><p>As previously noted, many of these effects are especially concerning for the <strong>hormonal and endocrine systems</strong>, particularly in women. But the risks extend further.<br/></p><h3>Hormonal Imbalance and Endocrine Disruption<br/></h3><p><strong>Endocrine-disrupting chemicals (EDCs)</strong> are substances that can mimic, block, or alter hormonal signals in the body—even at very low levels of exposure. And they are commonly found in synthetic textiles.<br/></p><p>One example is <a href=\"https://pubmed.ncbi.nlm.nih.gov/34069956/\" target=\"_blank\"><strong>phthalates</strong></a>, used to soften plastics and frequently detected in synthetic clothing, particularly in activewear. These chemicals can be absorbed through the skin or inhaled during wear, and have been shown to <strong>interfere with estrogen and testosterone production</strong>, potentially impacting fertility in both men and women [21,25].<br/></p><p>Another widespread EDC is <a href=\"https://doi.org/10.1016/j.jsbmb.2011.05.002\" target=\"_blank\"><strong>bisphenol A</strong></a> (BPA), best known for its use in rigid plastics but also present in some textile coatings. Studies have linked chronic BPA exposure to a range of metabolic and hormonal issues—including thyroid dysfunction, obesity, and insulin resistance [26,27,28].<br/></p><h3>Microplastics Found in Blood and Placenta</h3><p>One groundbreaking study from 2021 found <strong>microplastics embedded in human placental tissue</strong>, raising urgent concerns about fetal exposure during pregnancy and the potential risks for developmental health [29,30].<br/></p><p>In 2022, researchers in the Netherlands made another alarming discovery: <strong>microplastics in human blood</strong>, including particles of PET and polystyrene—materials commonly used in food packaging and synthetic fabrics [29].<br/></p><p>These findings suggest that <strong>microfibers </strong>are capable of <strong>crossing biological barriers</strong> once thought impermeable, with the potential to accumulate in organs such as the liver, kidneys, and brain.<br/></p><p>It’s a reminder that synthetic clothing doesn’t just stay on the surface—it interacts with the body at levels that science is only beginning to understand.<br/></p><h3>Oxidative Stress and Cellular Aging<br/></h3><p>Prolonged exposure to synthetic textiles may contribute to <a href=\"https://doi.org/10.1016/j.scitotenv.2019.134455\" target=\"_blank\"><strong>oxidative stress</strong></a>—a physiological imbalance between free radicals and the body’s natural antioxidant defenses [31]. This condition can quietly damage cells over time and is linked to a variety of long-term health issues.<br/></p><p>Specifically, oxidative stress has been associated with:<br/></p><ul><li>DNA fragmentation</li><li>Damage to proteins and lipids</li><li>Accelerated cellular aging</li><li>Inflammatory diseases and neurodegenerative disorders [31,32,33]</li></ul><p>Evidence from animal studies has shown that exposure to microplastics <strong>elevates markers of oxidative stress</strong>, while similar effects have been observed in <strong>human lung and gut cell cultures</strong> exposed to textile-derived fibers.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_EGFL6A": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/microplastics_in_bloodstream.webp",
+            "caption": "",
+            "caption_size": 14,
+            "caption_weight": 400,
+            "caption_color": "#555555"
+          }
+        },
+        "left_text_8Xac8y": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Who’s Most at Risk? Children, Women, and Textile Workers<br/></h3><p>While synthetic fibers pose risks to everyone, <strong>certain groups are especially vulnerable </strong>due to their stage of development, daily environments, or levels of exposure.<br/></p><h3>Why Children Are More Vulnerable to Airborne Microplastics from Clothing</h3><p>Children breathe faster than adults and spend much of their time close to the ground—where dust and microfibers settle. As a result, <strong>they inhale up to three times more microplastics</strong> than adults on a daily basis [3,34].<br/></p><p>Their respiratory systems are still developing, which makes them more susceptible to inflammation and damage caused by airborne toxins. A study from the University of Oklahoma revealed that indoor environments—where children spend more than <a href=\"https://doi.org/10.3390/microplastics3040040\" target=\"_blank\"><strong>90% of their time</strong></a>—are reservoirs of airborne microplastics, often from synthetic carpets, upholstery, and clothing [34].<br/></p><p>Potential health impacts include:<br/></p><ul><li>Worsening of asthma symptoms</li><li>Impaired development of the alveoli (air sacs in the lungs)</li><li>Disrupted immune function</li></ul><h3>How Synthetic Clothing Affects Women's Hormonal and Reproductive Health<br/></h3><p>Women may face greater exposure risks due to higher dermal contact with synthetic textiles—such as tight sportswear, underwear, and bras—particularly in warm or humid conditions.<strong><br/></strong></p><p>Chemical additives in these fabrics, including <strong>phthalates and BPA</strong>, can act as <strong>xenoestrogens</strong>—chemicals that mimic or disrupt natural hormones [19,26,27,28,29]. Prolonged contact can interfere with hormonal signaling, potentially affecting reproductive health and increasing the risk of hormone-sensitive conditions.<br/></p><h3>Occupational Exposure to Synthetic Fibers: The Health Risks for Textile Workers<br/></h3><p>Those who manufacture, cut, or dye synthetic textiles often work in high-fiber concentration environments, where air ventilation is limited and exposure is constant.<strong><br/></strong></p><p>Studies have shown that <strong>up to 4% of textile workers develop interstitial lung diseases</strong>, including fibrosis and chronic bronchitis, as a result of prolonged inhalation of fibers and exposure to chemical treatments used in textile production [35,36].<br/></p><h3>How to Build a Plastic-Free Wardrobe: Healthier Habits that Start with What You Wear</h3><ul><li><strong>Choose natural, breathable fabrics</strong> like 100% organic cotton or alpaca wool—especially for base layers, underwear, and activewear. These materials help minimize chemical absorption and allow your skin to breathe naturally.</li><li><strong>Avoid tight-fitting synthetic garments</strong>, particularly in warm or humid conditions. Friction and moisture retention can increase the risk of skin irritation, yeast infections, and bacterial imbalance.</li><li><strong>Wash clothes in cold water and air dry when possible.</strong> This reduces microfiber shedding by up to 80% and helps your garments last longer.</li><li><strong>Rinse new garments before wearing.</strong> This helps remove residual dyes, finishing agents, and formaldehyde that may still linger from production.</li><li><strong>Read clothing labels carefully. </strong>Be cautious with polyester, nylon, acrylic, and elastane—especially in intimate or skin-tight items.</li><li><strong>Avoid “moisture-wicking” synthetics</strong> during workouts if you’re prone to irritation. Natural fibers like alpaca offer high breathability and moisture management—without the chemical coatings.</li><li><strong>Support transparent, ethical brands</strong> that disclose their textile sources, avoid petroleum-based blends, and commit to truly sustainable practices.</li><li><strong>Share what you’ve learned. </strong>Host a clothing swap, talk to friends and family, or support community efforts to reduce plastic in fashion. Awareness grows through conversation.</li></ul><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes</strong></a>, we believe true performance supports both human health and ecological balance. That’s why we create garments from 100% natural alpaca wool and plastic-free—for those who move through life with purpose, and who refuse to wear what harms them.<strong><br/></strong></p><p>The truth is, synthetic clothing has long been marketed as the practical choice: affordable, quick-drying, high-performance. But behind every plastic thread lies a cost—to our bodies and to the planet.<strong><br/></strong></p><p>Every microfiber we inhale. Every drop of BPA our skin absorbs. Every synthetic wash cycle that releases invisible pollutants into the environment. These aren’t isolated incidents. They’re part of a system built on convenience, not consequence.<strong><br/></strong></p><p><strong>If our clothes are making us sick, why is the industry still calling it performance?</strong></p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_JCCDgU": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/womensbreathablesweatpantsmidweightcolornavyblue-1658525581740.webp",
+            "caption": "",
+            "caption_size": 14,
+            "caption_weight": 400,
+            "caption_color": "#555555"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_gWGJEA",
+        "left_image_EGFL6A",
+        "left_text_8Xac8y",
+        "left_image_JCCDgU"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Sect2-blog-glosary-50",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h3>Glossary keywords</h3><p><strong>Anovulation: </strong><br/>The absence of ovulation in the menstrual cycle, often linked to hormone disruption caused by chemicals like BPA and phthalates.</p><p><strong>Atopic Dermatitis:</strong><br/>A chronic skin condition (eczema) that flares with exposure to irritants—including synthetic fabrics and their chemical additives.</p><p><strong>Bacterial Vaginosis (BV):</strong><br/>A vaginal imbalance caused by the overgrowth of harmful bacteria. Triggered by warmth, trapped moisture, and lack of airflow—conditions common with synthetic underwear.</p><p><strong>Bioaccumulation:</strong><br/>The gradual buildup of substances (like microplastics or chemicals) in the body over time due to repeated exposure.</p><p><strong>Biopersistence:</strong><br/>The ability of a substance to resist degradation and remain inside the body for extended periods, potentially causing long-term harm.</p><p><strong>Bisphenol A (BPA):</strong><br/>A synthetic chemical used in plastics and textile coatings. BPA mimics estrogen in the body and has been linked to hormonal imbalances, infertility, and cancer.</p><p><strong>Candidiasis:</strong><br/>A common fungal infection (often called a yeast infection) that can occur when moisture and heat accumulate, particularly in non-breathable synthetic underwear.</p><p><strong>Colorectal Cancer (CRC):</strong><br/>Cancer of the colon or rectum. Emerging studies link early-onset cases to chronic gut inflammation potentially caused by microplastic exposure.</p><p><strong>Dermal Absorption:</strong><br/>The process by which chemicals in textiles can pass through the skin and enter the bloodstream, particularly in areas with thin or sensitive skin.</p><p><strong>Dysbiosis:</strong><br/>A disruption in the natural balance of gut bacteria. This condition can weaken digestion, immunity, and even affect mental health.</p><p><strong>Endocrine Disruptors (EDCs):</strong><br/>Chemicals that interfere with the body’s hormone systems. Linked to fertility issues, cancers, and hormonal disorders.</p><p><strong>Endocrine System:</strong><br/>The collection of glands and hormones regulating metabolism, reproduction, and growth. Synthetic chemicals can interfere with its function.</p><p><strong>Endometriosis:</strong><br/>A painful condition in which tissue similar to the uterine lining grows outside the uterus. Studies have associated increased risk with chemical exposures through clothing and environment.</p><p><strong>Fibrosis:</strong><br/>Thickening and scarring of tissue, especially in the lungs, caused by persistent irritation—such as from inhaled microfibers.</p><p><strong>Interstitial Lung Disease:</strong><br/>A group of chronic respiratory disorders caused by scarring (fibrosis) of lung tissue. Long-term inhalation of synthetic fibers can contribute to its development.</p><p><strong>Nonylphenols:</strong><br/>Toxic surfactants used in some textile processes. They can disrupt hormone function and persist in the environment.</p><p><strong>Oxidative Damage:</strong><br/>Harm to cells caused by free radicals. Linked to premature aging, respiratory issues, and chronic disease.</p><p><strong>Oxidative Stress:</strong><br/>A cellular imbalance between free radicals and antioxidants, leading to inflammation, DNA damage, and accelerated aging. Often triggered by exposure to pollutants like microplastics.</p><p><strong>Phthalates:</strong><br/>Plasticizing agents used to increase flexibility in plastics and synthetic fabrics. Known endocrine disruptors associated with reproductive and metabolic disorders.</p><p><strong>Synthetic Fibers:</strong><br/>Man-made textile fibers produced from petroleum-based chemicals, including polyester, nylon, acrylic, and spandex.</p><p><strong>Systemic Exposure:</strong><br/>When a substance spreads throughout the body, often via the bloodstream, affecting multiple organs.</p><p><strong>Translocation (in biology):</strong><br/>The movement of microplastics or chemicals from one part of the body (e.g., gut) to another (e.g., liver or brain).</p><p><strong>Xenoestrogens:</strong><br/>Synthetic compounds that imitate estrogen in the body, disrupting natural hormonal balance. Found in many EDCs used in clothing production.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section_blog_autor_eeJDpp": {
+      "type": "section-blog-autor",
+      "name": "Autor del Blog",
+      "settings": {
+        "icono_img": "shopify://shop_images/svg-path.svg",
+        "line_color": "#000000",
+        "line_thickness": 2,
+        "titulo": "Authors & Researchers",
+        "titulo_color": "#0e3553",
+        "titulo_size": 28,
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/Profile_AOA_5bd4ed33-e7e0-410d-9130-26c3dc4c0272.webp",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Jordy Munarriz",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Environmental Engineer with a master’s degree in renewable energy and a specialization in sustainability. A passionate traveler and advocate for responsible tourism, he captures the essence of exploration through storytelling, inspiring others to connect with nature in a conscious and meaningful way."
+      }
+    },
+    "linea_horizontal_Gm8d34": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 95,
+        "color_linea": "#000000",
+        "grosor": 2,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Song S, van Dijk F, Vasse GF, Liu Q, Gosselink IF, Weltjens E, et al. Inhalable Textile Microplastic Fibers Impair Airway Epithelial Differentiation. Am J Respir Crit Care Med . 2024 Feb 15;209(4):427-443. doi: 10.1164/rccm.202211-2099OC. PMID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/37971785/\" target=\"_blank\">37971785</a>.<br/>[2] Williams M, McClure PR. Toxicological Profile for Synthetic Vitreous Fibers. Atlanta (GA): Agency for Toxic Substances and Disease Registry; 2004 Sep.<br/>[3] Dethmers K, Spek H, Kraaijeveld B. Do Clothes Make Us Sick? Fashion, Fibers and Human Health. Amsterdam: Plastic Soup Foundation; 2022 Oct. Available from:<a href=\"https://www.plasticsoupfoundation.org/rapporten/Do-clothes-make-us-sick-Fashion-fibers-and-human-health-PSF2022-1.pdf\" target=\"_blank\">https://www.plasticsoupfoundation.org/rapporten/Do-clothes-make-us-sick-Fashion-fibers-and-human-health-PSF2022-1.pdf</a>[4] Song S, van Dijk F, Vasse GF, Liu Q, Gosselink IF, Weltjens E, Remels AHV, de Jager MH, Bos S, Li C, Stoeger T, Rehberg M, Kutschke D, van Eck G, Wu X, Willems SH, Boom D, Kooter IM, Spierings D, Wardenaar R, Cole MJ, Nawijn MC, Salvati A, Gosens R, Melgert BN. Inhalable textile microplastic fibers impair airway epithelial differentiation. Am J Respir Crit Care Med. 2023 Nov 16;209(4):427-443. doi:<a href=\"https://plymsea.ac.uk/id/eprint/10074/1/song-et-al-2023-inhalable-textile-microplastic-fibers-impair-airway-epithelial-differentiation.pdf\" target=\"_blank\">10.1164/rccm.202211-2099OC</a>.<br/>[5] Dutchen S. Microplastics everywhere. Harvard Medicine Magazine. 2023 Spring. Available from:<a href=\"https://magazine.hms.harvard.edu/articles/microplastics-everywhere\" target=\"_blank\">https://magazine.hms.harvard.edu/articles/microplastics-everywhere</a>[6] Tao D, Zhang K, Xu S, Lin H, Liu Y, Kang J, Yim T, Giesy JP, Leung KMY. Microfibers released into the air from a household tumble dryer. Environ Sci Technol Lett. 2022;9(2):120–6. Available from:<a href=\"https://pubs.acs.org/doi/10.1021/acs.estlett.1c00911\" target=\"_blank\">https://pubs.acs.org/doi/10.1021/acs.estlett.1c00911</a>[7] Gaylarde CC, Baptista Neto JA, da Fonseca EM. Indoor airborne microplastics: human health importance and effects of air filtration and turbulence. Microplastics. 2024;3(4):653-670. doi:<a href=\"https://www.mdpi.com/2673-8929/3/4/40\" target=\"_blank\">10.3390/microplastics304004</a>.<br/>[8] Melgert BN. Microplastics and their effects on the human body. University of Groningen; 2025 Apr 22. Available from:<a href=\"https://www.rug.nl/news/2025/04/microplastics-and-their-effects-on-the-human-body?lang=en\" target=\"_blank\">https://www.rug.nl/news/2025/04/microplastics-and-their-effects-on-the-human-body?lang=en</a>[9] Vasse GF, Melgert BN. Microplastic and plastic pollution: impact on respiratory disease and health. Eur Respir Rev. 2024 Jun 12;33(172):230226. doi: 10.1183/16000617.0226-2023. PMID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/39009408/\" target=\"_blank\">39009408</a>; PMCID: PMC11262622.<br/>[10] Tomonaga T, Higashi H, Izumi H, et al. Investigation of pulmonary inflammatory responses following intratracheal instillation of and inhalation exposure to polypropylene microplastics. Part Fibre Toxicol. 2024;21:29. doi:<a href=\"https://particleandfibretoxicology.biomedcentral.com/articles/10.1186/s12989-024-00592-8\" target=\"_blank\">10.1186/s12989-024-00592-8</a>.<br/>[11] Bora SS, Gogoi R, Sharma MR, Anshu, Borah MP, Deka P, et al. Microplastics and human health: unveiling the gut microbiome disruption and chronic disease risks. Front Cell Infect Microbiol. 2024 Nov 24;14:1492759. doi:<a href=\"https://www.frontiersin.org/journals/cellular-and-infection-microbiology/articles/10.3389/fcimb.2024.1492759/full\" target=\"_blank\">10.3389/fcimb.2024.1492759</a>.<br/>[12] University of New Mexico Health Sciences Center. Microplastics make their way from the gut to other organs. UNM HSC Newsroom. 2024 Apr 12.<br/>[13] Shen Y, Fan N, Ma SX, Cheng X, Yang X, Wang G. Gut microbiota dysbiosis: pathogenesis, diseases, prevention, and therapy. MedComm (2020). 2025 Apr 18;6(5):e70168. doi: 10.1002/mco2.70168. PMID: 40255918; PMCID:<a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC12006732/\" target=\"_blank\">PMC12006732</a>.<br/>[14] Tamargo A, Molinero N, Reinosa JJ, Gutiérrez L, Real C, Jiménez R, et al. PET microplastics affect human gut microbiota communities during simulated gastrointestinal digestion, first evidence of plausible polymer biodegradation during human digestion. Sci Rep. 2022;12:528. doi:<a href=\"https://www.nature.com/articles/s41598-021-04489-w\" target=\"_blank\">10.1038/s41598-021-04489-w</a>.<br/>[15] Mashayekhi-Sardoo H, Ghoreshi ZAS, Askarpour H, Arefinia N, Ali-Hassanzadeh M. The clinical relevance of microplastic exposure on colorectal cancer: A systematic review. Cancer Epidemiol. 2025 Aug;97:102840. https://doi.org/10.1016/j.canep.2025.102840 [16] Celiker U, Ilhan N, Ozercan I, Demir T, Celiker H. Octreotide reduces ischaemia-reperfusion injury in the retina. Acta Ophthalmol Scand. 2002 Aug;80(4):395-400. doi: 10.1034/j.1600-0420.2002.800409.x. PMID:<a href=\"https://doi.org/10.1016/j.canep.2025.102840\" target=\"_blank\">12190782</a>.<br/>[17] Kallini JR, Riaz F, Khachemoune A. Tinea versicolor in dark-skinned individuals. Int J Dermatol. 2014 Feb;53(2):137–41. doi:<a href=\"https://doi.org/10.1111/ijd.12345\" target=\"_blank\">10.1111/ijd.12345</a>.<br/>[18] Mellerio JE. Infection and colonization in epidermolysis bullosa. Dermatol Clin. 2010 Apr;28(2):267–9. doi:<a href=\"https://doi.org/10.1016/j.det.2010.01.004\" target=\"_blank\">10.1016/j.det.2010.01.004</a>.<br/>[19] Carter KA, Balkus JE, Anzala O, Kimani J, Hoffman NG, Fiedler TL, Mochache V, Fredricks DN, McClelland RS, Srinivasan S. Associations between vaginal bacteria and bacterial vaginosis signs and symptoms: a comparative study of Kenyan and American women. Front Cell Infect Microbiol. 2022 Mar 3;12:801770. doi:<a href=\"https://doi.org/10.3389/fcimb.2022.801770\" target=\"_blank\">10.3389/fcimb.2022.801770</a>.<br/>[20] Rovira J, Souza MCO, Nadal M, Domingo JL. Human health risks from textile chemicals: a critical review of recent evidence (2019–2025). Qeios [Internet]. 2025 Apr 18 [cited 2025 Jun 2]; Available from:<a href=\"https://doi.org/10.32388/0GADTB.2\" target=\"_blank\">https://doi.org/10.32388/0GADTB.2</a>[21] Liu J, Zhang L, Lu G, Jiang R, Yan Z, Li Y. Occurrence, toxicity and ecological risk of Bisphenol A analogues in aquatic environment – A review. Ecotoxicol Environ Saf. 2021 Jan 15;208:111481. doi:<a href=\"https://doi.org/10.1016/j.ecoenv.2020.111481\" target=\"_blank\">10.1016/j.ecoenv.2020.111481</a>.<br/>[22] Marconetto A, Babini A, Ñañez M, Moreno L, Rosato O, Fux Otta C. Principales disruptores endocrinos vinculados con salud reproductiva femenina: bases biológicas de su asociación [Main endocrine disruptors related to female reproductive health: biological basis of their association]. Medicina (B Aires). 2022 Aug;82(3).<br/>[23] Wedel Herrera K. Disruptores endocrinos: un riesgo para la salud reproductiva. Rev méd sinerg [Internet]. 2019 Jun 1 [cited 2025 Jun 2];4(6):24-30.<br/>[24] Rolfo A, Nuzzo AM, De Amicis R, Moretti L, Bertoli S, Leone A. Fetal-maternal exposure to endocrine disruptors: correlation with diet intake and pregnancy outcomes. Nutrients. 2020 Jun 11;12(6):1744. doi: 10.3390/nu12061744. PMID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/32545151/\" target=\"_blank\">32545151</a>; PMCID: PMC7353272.<br/>[25] Wang Y, Qian H. Phthalates and their impacts on human health. Healthcare (Basel). 2021 May 18;9(5):603. doi: 10.3390/healthcare9050603. PMID: 34069956; PMCID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/34069956/\" target=\"_blank\">PMC8157593</a>.<br/>[26] García García M, Picó Y, Morales-Suárez-Varela M. Effects of Bisphenol A on the risk of developing obesity. Nutrients. 2024 Oct 31;16(21):3740. doi:<a href=\"https://doi.org/10.3390/nu16213740\" target=\"_blank\">10.3390/nu16213740</a>.<br/>[27] Rubin BS. Bisphenol A: An endocrine disruptor with widespread exposure and multiple effects. J Steroid Biochem Mol Biol. 2011 Oct;127(1-2):27-34. doi:<a href=\"https://doi.org/10.1016/j.jsbmb.2011.05.002\" target=\"_blank\">10.1016/j.jsbmb.2011.05.002</a>.<br/>[28] Gore AC, Chappell VA, Fenton SE, Flaws JA, Nadal A, Prins GS, Toppari J, Zoeller RT. EDC-2: The Endocrine Society's Second Scientific Statement on Endocrine-Disrupting Chemicals. Endocr Rev. 2015 Dec;36(6):E1–E150. doi:<a href=\"https://doi.org/10.1210/er.2015-1010\" target=\"_blank\">10.1210/er.2015-1010</a>.<br/>[29] Leslie HA, van Velzen MJM, Brandsma SH, Vethaak AD, Garcia-Vallejo JJ, Lamoree MH. Discovery and quantification of plastic particle pollution in human blood. Environ Int. 2022 May;163:107199. doi:<a href=\"https://doi.org/10.1016/j.envint.2022.107199\" target=\"_blank\">10.1016/j.envint.2022.107199</a>. [30] Ragusa A, Svelato A, Santacroce C, Catalano P, Notarstefano V, Carnevali O, Papa F, Rongioletti MCA, Baiocco F, Draghi S, D'Amore E, Rinaldo D, Matta M, Giorgini E. Plasticenta: First evidence of microplastics in human placenta. Environ Int. 2021 Jan;146:106274. doi: 10.1016/j.envint.2020.106274. Epub 2020 Dec 2. PMID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/33395930/\" target=\"_blank\">33395930</a>.<br/>[31] Prata JC, da Costa JP, Lopes I, Duarte AC, Rocha-Santos T. Environmental exposure to microplastics: An overview on possible human health effects. Sci Total Environ. 2020 Feb 1;702:134455. doi:<a href=\"https://doi.org/10.1016/j.scitotenv.2019.134455\" target=\"_blank\">10.1016/j.scitotenv.2019.134455</a>.<br/>[32] Al-Thani RF, Yasseen BT. Phytoremediation of polluted soils and waters by native Qatari plants: Future perspectives. Environ Pollut. 2020 Apr;259:113694. doi:<a href=\"https://doi.org/10.1016/j.envpol.2019.113694\" target=\"_blank\">10.1016/j.envpol.2019.113694</a>.<br/>[33] Hurley RR, Lusher AL, Olsen M, Nizzetto L. Validation of a method for extracting microplastics from complex, organic-rich, environmental matrices. Environ Sci Technol. 2018 Jun 9;52(13):7409-17. doi:<a href=\"https://doi.org/10.1021/acs.est.8b01517\" target=\"_blank\">10.1021/acs.est.8b02211</a>.<br/>[34] Gaylarde CC, Baptista Neto JA, da Fonseca EM. Indoor airborne microplastics: human health importance and effects of air filtration and turbulence. Microplastics. 2024;3(4):653-670. doi:<a href=\"https://doi.org/10.3390/microplastics3040040\" target=\"_blank\">10.3390/microplastics3040040</a>.<br/>[35] Ghio AJ, Funkhouser W, Pugh CB, Winters S, Stonehuerner JG, Mahar AM, Roggli VL. Pulmonary fibrosis and ferruginous bodies associated with exposure to synthetic fibers. Toxicol Pathol. 2006;34(6):723-9. doi: 10.1080/01926230600932448. PMID:<a href=\"https://pubmed.ncbi.nlm.nih.gov/17074740/\" target=\"_blank\">17074740</a>.<br/>[36] Scarlat I, Stepa R, Haiducu M, Visileanu E, Grosu MC. Workers exposure to synthetic textiles microfibers. MATEC Web Conf. 2024;389:00080. doi:<a href=\"https://doi.org/10.1051/matecconf/202438900080\" target=\"_blank\">10.1051/matecconf/202438900080</a>.<br/><br/></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP  MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_AzyeP3": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\n\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "tabla_blog_FT3WLX",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section2_blog_text_and_glosary_50_50_aTPRtA",
+    "section_blog_autor_eeJDpp",
+    "linea_horizontal_Gm8d34",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_AzyeP3"
+  ]
+}

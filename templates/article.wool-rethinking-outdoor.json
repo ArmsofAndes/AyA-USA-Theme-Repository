@@ -1,0 +1,533 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "Wool Rethinking Outdoor Gear: Is Zero Waste Possible in a High-Performance Industry?",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/zero-waste-outdoor-hiking-sustainability.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published March 28, 2025",
+            "color": "#0e355e",
+            "font_size": 17,
+            "font_weight": 500
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Reading time: 5 minutes</strong></p><p>By Lesia Tello & Jordy Munarriz</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {text-align: left; margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_W6XGXY": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/rainproof-gear-PFAS.webp",
+            "link": "shopify://blogs/news/pfas-in-the-clothes-forever-chemicals",
+            "caption": "PFAS: The \"Forever Chemicals\"Hidden in Your Clothes",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_hjamRV": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Indigo-dye-powder.jpg",
+            "link": "shopify://blogs/news/indigo-dye-ancient-peru",
+            "caption": "Woven by Time: The Story of Indigo Dye in Ancient Peru",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_4PBRaq": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/red-dyes-cochineal-insect.webp",
+            "link": "shopify://blogs/news/cochineal-dye-ancient-red-tradition-sustainability",
+            "caption": "Cochineal Dye: The Ancient Red That Defined Tradition and Sustainability",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Zero Waste Meets the Great Outdoors<br/></h3><p>Outdoor apparel is designed to help us explore nature, but ironically, much of it ends up harming the very landscapes we seek to protect. As we observe <strong>the International Day of Zero Waste</strong> this month, it's time to ask: can outdoor fashion truly align with a zero waste vision?</p><p>The outdoor industry heavily relies on synthetic materials built for performance but not for end-of-life sustainability. Yet growing awareness, technological advances, and a resurgence of biodegradable fibers like alpaca wool are sparking new conversations. If the clothes we wear to protect us from the elements can also protect the Earth, then we have a responsibility to pursue that path.<br/></p><h3>Synthetic Dominance in Outdoor Apparel: Built to Last, but Never to Leave</h3><p>Walk into any outdoor gear store and you’ll find aisles lined with polyester base layers, nylon jackets, and elastane-infused leggings. <strong>These synthetic materials dominate the market</strong> for good reasons: they repel water, stretch easily, and hold up under extreme conditions. But there's a hidden cost.</p><p>Most synthetic fibers are petroleum-based and non-biodegradable. A single jacket can take hundreds of years to decompose, <a href=\"https://www.ecoaya.com/blogs/sustainability/microplastic-fibers-washing-machines-fashion-clothing-pollution\" target=\"_blank\"><strong>shedding microplastics into the environment with every wash</strong></a><strong> </strong>[1]. <a href=\"https://armsofandes.com/blogs/news/pfas-in-the-clothes-forever-chemicals\" target=\"_blank\"><strong>PFAS</strong></a>—harmful forever chemicals—are also present in many waterproof treatments, further worsening the pollution footprint [2]. The outdoor industry, ironically, contributes significantly to the pollution of the very ecosystems it celebrates.</p><p>While these materials deliver performance, their environmental legacy is permanent. This conflict calls into question the sustainability narratives surrounding \"durable\" technical apparel.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/textile-landfill-clothing-waste-environmental-impact.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        },
+        "left_text_gfWtma": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Closing the Loop: Can Circularity Work in the Outdoor Industry?</h3><p><strong>The circular economy promises a new model</strong>—one where products are reused, repaired, and regenerated. But in practice, the outdoor apparel sector struggles to adopt it.<br/></p><p>Garments in this category often combine <strong>multiple synthetic components that are hard to separate and recycle</strong> [2]. Features like waterproof membranes, zippers, and stretch panels add functional value but complicate end-of-life processing. Brands face a dilemma: prioritize performance or <a href=\"https://www.ecoaya.com/blogs/sustainability/circular-fashion-the-sustainable-future\" target=\"_blank\"><strong>circularity</strong></a>?<br/></p><p>Some companies are experimenting with take-back programs and mono-material designs. True circularity will require rethinking everything from product design to business models [3]. However, <strong>persistent obstacles remain: limited recycling infrastructure, high costs, and consumer reluctance</strong> [3].<br/></p><p><strong>Recycled materials</strong> now make up approximately <strong>50%</strong> of some outdoor brands’ collections, but post-consumer recycling remains rare and difficult to scale [2].<br/></p><p>In addition, brands are often hesitant to communicate their<strong> sustainability initiatives </strong>for fear of being accused of greenwashing. This trend—known as green hushing—leaves consumers underinformed and slows down broader cultural shifts [2].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_W6XGXY",
+        "right_image_block_hjamRV",
+        "right_image_block_4PBRaq",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP",
+        "left_text_gfWtma"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>Related content</p>",
+        "right_title_size": 20,
+        "right_title_weight": 700,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Mens-Alpaca-Wool-Tank-Top160Ultralight11.webp",
+            "link": "shopify://products/mens-alpaca-wool-tank-top",
+            "caption": "Men's Alpaca Wool Tank Top: 160 Ultralight",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/womens-crew-neck-relaxed-fit-ultra-soft-color-navy-blue_4c385c32-a8cf-4a97-8c22-23013f2eb808.webp",
+            "link": "shopify://products/womens-tshirt-relax-fit-160-ultralight",
+            "caption": "Women's Alpaca Wool Hiking T-Shirt: 160 Ultralight - Relaxed Fit",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_CxhyHH": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Womens-Alpaca-Wool-Leggings-300-Lightweight_2.webp",
+            "link": "shopify://products/womens-alpaca-wool-leggings-300",
+            "caption": "Women's Alpaca Wool Leggings: 300 Lightweight",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>The Upcycling Dilemma: Reusing Industrial Waste</h3><p>One promising area within circular strategies is <strong>the upcycling of post-industrial textile waste</strong>. This includes fabric off-cuts, unsold inventory, and defective materials discarded before reaching consumers.<br/></p><p>A case study of an outdoor brand attempting to upcycle its own waste showed the company struggled with inconsistent material quality, lack of standardized processes, and supply chain inefficiencies [4]. <strong>Upcycling sounds good in theory, but turning waste into value at scale is still a major challenge.</strong><br/></p><p>Standardization, digital tracking, and modular design could unlock this potential—but the outdoor industry is only beginning to explore these tools.<br/></p><h3>Biodegradable Sportswear: Is It Really Possible?<br/></h3><p><strong>Biodegradability offers an alternative approach</strong>: instead of managing waste, eliminate it from the start. Materials like alpaca wool, merino, and other natural fibers are renewable and return to the Earth without polluting it.<br/></p><p>Recent studies show that these materials can perform well in <a href=\"https://armsofandes.com/blogs/news/5-reasons-why-alpaca-wool-is-essential-for-snowboarding\" target=\"_blank\"><strong>base and mid layers</strong></a>. In addition to being breathable and naturally moisture-wicking, <strong>they decompose without leaving microplastics behind </strong>[1].<br/></p><p>The global market for biodegradable textiles is expected to reach <a href=\"https://www.grandviewresearch.com/\" target=\"_blank\"><strong>$5.2 billion by 2025</strong></a> [5]. While these fabrics may not yet replace synthetic shell layers in extreme conditions, the performance gap is narrowing. The future may lie in hybrid systems: combining biodegradable layers for comfort with minimal synthetic outer shells—and always with a plan for responsible disposal.<br/></p><p>Brands like Arms of Andes are opening new paths by proving that 100% biodegradable gear can also be high-performance and beautiful.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/conscious-hiking-woman-nature-zero-waste.webp",
+            "caption": "Picture by: Rodolfoclix",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_DdEGdh",
+        "right_image_block_cLcR8k",
+        "right_image_block_CxhyHH",
+        "left_text_XjzLYC",
+        "left_image_6bkrxL"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_CE4DCV": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_text_XHcXnL": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Marketing Minimalism: Can We Sell \"Buy Less\"?</h3><p>The outdoor industry thrives on adventure. But adventure doesn’t need excess.<br/></p><p><strong>Sufficiency-oriented marketing strategies</strong> invite consumers to <strong>buy less</strong>, choose better, and <strong>value durability over novelty</strong> [6]. This includes messaging around repairability, timeless design, and emotional attachment to gear.<br/></p><p>Some brands are embracing this approach by offering lifetime warranties, repair guides, and storytelling that celebrates product longevity. <strong>Others still cling to fast cycles and seasonal trends.</strong> The question is: can we shift from marketing adrenaline to marketing awareness?<br/></p><h3>Toward a Zero Waste Outdoor Industry: Steps Forward</h3><p>Perfection is unrealistic. But that doesn’t mean progress isn’t possible. Across all six sources, the following pathways emerged as essential for reducing waste:<br/></p><ul><li><strong>Local, small-batch production</strong> to minimize overstock and transport emissions.</li><li><strong>Natural and biodegradable materials</strong>, especially for layers worn close to the body.</li><li><strong>Circular systems</strong>, such as take-back programs, digital passports, and repair infrastructure.</li><li><strong>Educating consumers</strong> about mindful purchasing and care.</li><li><strong>Policy and regulation </strong>to support infrastructure for collection and processing, and push the industry toward standardized sustainability practices [2].</li></ul><p>The industry must also rethink its definitions of innovation: it’s not just about faster drying times, but also about slower consumption cycles and deeper environmental ethics.<br/></p><h3>Zero Waste as a Daily Practice</h3><p><strong>The International Day of Zero Waste is not just about pledges or campaigns. </strong>It’s about reshaping how we think about resources, responsibility, and resilience.<br/></p><p>As nature lovers and explorers, we owe it to the planet to ensure that the clothes we wear in the wild are not harming it. Whether it’s choosing biodegradable base layers, extending the life of a jacket, or simply buying less, each step matters.<br/></p><p><strong>The path to zero waste starts with one mindful decision at a time.</strong> Because the most sustainable gear is the one that protects the planet it was made to explore. made to explore.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_m3R8Bn": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/minimalist-sustainable-lifestyle-footprints-nature.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_XHcXnL",
+        "left_image_m3R8Bn"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3{text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h6><strong>Glossary keywords</strong></h6><p><strong>Biodegradable:</strong><br/>A material that can naturally break down in the environment without leaving harmful residues like microplastics.</p><p><strong>Biodegradable:</strong><br/>A material capable of breaking down naturally over time by microorganisms, reducing its long-term impact on landfills and ecosystems.</p><p><strong>Circular economy:</strong><br/>An economic model that focuses on designing out waste, keeping materials in use for as long as possible, and regenerating natural systems.</p><p><strong>Green hushing:</strong><br/>When companies avoid talking about their sustainability initiatives due to fear of public scrutiny or accusations of greenwashing.</p><p><strong>Greenwashing:</strong><br/>The practice of making misleading claims about the environmental benefits of a product or company to appear more sustainable than it actually is.</p><p><strong>Microplastics:</strong><br/>Tiny plastic particles shed from synthetic fibers, often during washing, that pollute waterways and harm ecosystems.</p><p><strong>Mono-material:</strong><br/>A product made from a single type of material, which makes it easier to recycle compared to blended or composite materials.</p><p><strong>Performance gap:</strong><br/>The difference in functionality—such as water resistance or durability—between synthetic materials and natural, biodegradable alternatives.</p><p><strong>PFAS:</strong><br/>A group of synthetic chemicals, often called “forever chemicals,” used in waterproof coatings that do not break down easily in the environment and can pose health risks.</p><p><strong>Take-back program:</strong><br/>A brand-led initiative where consumers can return used clothing for recycling, reuse, or responsible disposal.</p><p><strong>Upcycling:</strong><br/>The creative reuse of waste materials or unwanted products to make new, higher-value items instead of discarding them.</p>",
+        "right_title_size": 12,
+        "right_title_weight": 400,
+        "right_title_color": "#151515",
+        "right_alignment": "left"
+      }
+    },
+    "section_blog_autor_XrhqDb": {
+      "type": "section-blog-autor",
+      "name": "section-blog-autor",
+      "settings": {
+        "icono_img": "shopify://shop_images/svg-path.svg",
+        "line_color": "#000000",
+        "line_thickness": 2,
+        "titulo": "Authors & Researchers",
+        "titulo_color": "#000000",
+        "titulo_size": 28,
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/Profile_AOA_5bd4ed33-e7e0-410d-9130-26c3dc4c0272.webp",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Jordy Munarriz",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Environmental Engineer with a master’s degree in renewable energy and a specialization in sustainability. A passionate traveler and advocate for responsible tourism, he captures the essence of exploration through storytelling, inspiring others to connect with nature in a conscious and meaningful way."
+      }
+    },
+    "section_blog_autor_add_3jAx3p": {
+      "type": "section-blog-autor-add",
+      "name": "section-blog-autor-add",
+      "settings": {
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/WhatsApp_Image_2025-02-18_at_11.57.35_a1a76a21-3264-4bf9-b1ae-49903fb6d535.jpg",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Lesia Tello",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Biologist and hiking enthusiast with a deep admiration for nature and the intricate mechanisms of life. With a background in biochemistry and a master’s degree in education, she blends science with adventure, exploring how we interact with the natural world and sharing insights on outdoor experiences."
+      }
+    },
+    "linea_horizontal_jCDaGe": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 95,
+        "color_linea": "#000000",
+        "grosor": 2,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Singh A. Innovations in biodegradable sportswear: assessing environmental impact and athlete performance in sustainable textile development. In: International Conference on Sustainable Fashion and Technical Textiles; November 2024; Singapore. Singapore: Springer Nature Singapore; 2024. p. 49–59.<br/></p><p>[2] Kelly C. Closing the loop: an exploration of the challenges and opportunities in circular economy adoption in the outdoor apparel industry. 2025.<br/></p><p>[3] Fuchs M, Hovemann G. The circular economy concept in the outdoor sporting goods industry: challenges and enablers of current practices among brands and retailers. Sustainability. 2022;14(13):7771.<br/></p><p>[4] Giordano D. Weaving the circle: exploring the potential and challenges to upcycle post-industrial textile waste of an outdoor apparel company [master’s thesis]. 2019.<br/></p><p>[5] Grand View Research. Biodegradable textiles market size, share & trends analysis report by product (biodegradable polyester, biodegradable cotton), by application (clothing, household), by region, and segment forecasts, 2021–2025 [Internet]. 2021 [cited 2025 Mar 27]. Available from:<a href=\"https://www.grandviewresearch.com/\" target=\"_blank\">https://www.grandviewresearch.com.</a></p><p>[6] Gossen M, Kropfeld MI. “Choose nature. Buy less.” Exploring sufficiency-oriented marketing and consumption practices in the outdoor industry. Sustainable Production and Consumption. 2022;30:720–736.<br/><br/></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\nfont-size:30px;\n}\nh4{\nfont-weight:600;\n}\n.custom-left-richtext p,\n.custom-left-richtext ul {\n  line-height: {{ block.settings.caption_size | plus: 2 }}rem !important;\n}\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section1_blog_text_and_contentrelated_CE4DCV",
+    "section_blog_autor_XrhqDb",
+    "section_blog_autor_add_3jAx3p",
+    "linea_horizontal_jCDaGe",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

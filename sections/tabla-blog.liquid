@@ -1,0 +1,216 @@
+{% schema %}
+{
+  "name": "Tabla-blog",
+  "settings": [
+   {
+  "type": "richtext",
+  "id": "row_1",
+  "label": "Fila 1",
+  "default": "<p><a href='#'>Dato 1</a>;;<strong> Dato 2</<strong>;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_2",
+  "label": "Fila 2",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_3",
+  "label": "Fila 3",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_4",
+  "label": "Fila 4",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_5",
+  "label": "Fila 5",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_6",
+  "label": "Fila 6",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_7",
+  "label": "Fila 7",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+    {
+  "type": "richtext",
+  "id": "row_8",
+  "label": "Fila 8",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+{
+  "type": "richtext",
+  "id": "row_9",
+  "label": "Fila 9",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+{
+  "type": "richtext",
+  "id": "row_10",
+  "label": "Fila 10",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+}, 
+   {
+  "type": "richtext",
+  "id": "row_11",
+  "label": "Fila 11",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+{
+  "type": "richtext",
+  "id": "row_12",
+  "label": "Fila 12",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+}, 
+    {
+  "type": "richtext",
+  "id": "row_13",
+  "label": "Fila 13",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+},
+{
+  "type": "richtext",
+  "id": "row_14",
+  "label": "Fila 14",
+  "default": "<p><a href='#'>Dato 1</a>;; Dato 2;; Dato 3;; Dato 4;; Dato 5;; Dato 6</p>"
+}
+  ],
+  "presets": [
+    {
+      "name": "Tabla-blog",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+
+<style>
+  .custom-table-blog {
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 16px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+   margin: 20px 0;
+}
+.first-data-row td {
+  font-weight: bold;
+}
+.custom-table th, .custom-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  
+}
+
+.custom-table th {
+  background-color: #f4f4f4;
+  
+}
+
+.custom-table-blog table {
+  box-shadow: rgba(0, 0, 0, 0.25) 4px 4px 16px;
+}
+  
+.first-data-row{
+  background-color: #f4f4f4;
+}
+
+.custom-table-blog table tr:nth-child(n+1):nth-child(-n+8):hover {
+  background-color: #f0f0f0; 
+  transition: background-color 0.3s ease;
+}
+ .custom-left-column {
+  flex: 0 0 74%;
+  max-width: 74%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+.custom-right-column {
+  flex: 0 0 23%;
+  max-width: 23%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
+} 
+  @media (max-width: 768px) {
+  .custom-left-column,
+  .custom-right-column {
+    flex: 1 1 100%;
+  }
+   
+    .custom-table th,
+    .custom-table td {
+      font-size: 0.75rem; /* 12px en móvil */
+    }
+  
+}
+</style>
+
+<!-- ASIGNACIÓN DE HEADERS -->
+{% assign headers = "" | split: "" %}
+{% for i in (1..6) %}
+  {% assign header_key = "header_" | append: i %}
+  {% assign header = section.settings[header_key] %}
+  {% if header != blank %}
+    {% assign headers = headers | push: header %}
+  {% endif %}
+{% endfor %}
+
+<div class="custom-table-blog custom-left-column">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        {% for header in headers %}
+          <th>{{ header }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% assign first_row_printed = false %}
+      {% for i in (1..14) %}
+        {% assign row_key = "row_" | append: i %}
+        {% assign row_string = section.settings[row_key] | strip %}
+        {% if row_string contains "<p>" and row_string contains "</p>" %}
+          {% assign raw_row = row_string | replace: "<p>", "" | replace: "</p>", "" %}
+          {% assign cells = raw_row | split: ";;" %}
+          {% if cells.size > 0 %}
+            <tr class="{% unless first_row_printed %}first-data-row{% endunless %}">
+              {% for cell in cells %}
+                <td>{{ cell | strip | raw }}</td>
+              {% endfor %}
+            </tr>
+            {% assign first_row_printed = true %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="custom-column custom-right-column">
+  <!-- Columna reservada vacía -->
+</div>

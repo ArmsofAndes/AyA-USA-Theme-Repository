@@ -1,0 +1,324 @@
+<section class="slider-columns-section" style="background-color: {{ section.settings.bg_color }};">
+ <div class="slider-auto">
+  <div class="slider-wrapper">
+    {% for block in section.blocks %}
+      <input type="radio" name="slider" id="slide-{{ forloop.index }}" {% if forloop.first %}checked{% endif %} hidden>
+    {% endfor %}
+
+    <div class="slides">
+      {% for block in section.blocks %}
+        <div class="slide">
+          <div class="columnsl">
+            <h3 style="
+  color: {{ block.settings.title_color }};
+  font-weight: {{ block.settings.title_weight }};
+  font-size: {{ block.settings.title_font_size | divided_by: 16.0 }}rem;">
+  {{ block.settings.title_1 }}
+            </h3>
+<div style="
+  color: {{ block.settings.text_color }};
+  font-weight: {{ block.settings.text_weight }};
+  font-size: {{ block.settings.text_font_size | divided_by: 16.0 }}rem;">
+  {{ block.settings.text_1 }}
+</div>
+          </div>
+          <div class="columnsl">
+            <h3 style="
+  color: {{ block.settings.title_color }};
+  font-weight: {{ block.settings.title_weight }};
+  font-size: {{ block.settings.title_font_size | divided_by: 16.0 }}rem;">
+  {{ block.settings.title_2 }}
+</h3>
+<div style="
+  color: {{ block.settings.text_color }};
+  font-weight: {{ block.settings.text_weight }};
+  font-size: {{ block.settings.text_font_size | divided_by: 16.0 }}rem;">
+  {{ block.settings.text_2 }}
+</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+<button class="slider-arrow left" aria-label="Anterior">&#10094;</button>
+<button class="slider-arrow right" aria-label="Siguiente">&#10095;</button>
+
+    <div class="slider-controls">
+      <label for="slide-1" class="arrow left" style="
+        border-color: {{ section.settings.arrow_color }};
+        border-width: {{ section.settings.arrow_thickness }}px;"></label>
+      <label for="slide-2" class="arrow right" style="
+        border-color: {{ section.settings.arrow_color }};
+        border-width: {{ section.settings.arrow_thickness }}px;"></label>
+    </div>
+
+    <div class="slider-nav">
+      {% for block in section.blocks %}
+        <label for="slide-{{ forloop.index }}" class="dot-line"></label>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+ </section>
+
+<style>
+  .slider-columns-section {
+    padding: 0 8%;
+    position: relative;
+  }
+  .slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0 10px;
+  pointer-events: all;
+}
+
+.slider-arrow.left {
+  left: 0;
+}
+
+.slider-arrow.right {
+  right: 0;
+}
+
+.slider-wrapper {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  background-color: #3d4a4f;
+  padding: 2% 4%;
+  border-radius: 30px;
+}
+
+ .slides {
+  display: flex;
+  width: 100%;
+  transition: transform 1.5s ease;
+}
+
+.slide {
+  flex: 0 0 100%; /* cada slide ocupa el 100% del contenedor */
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+  .columnsl {
+    width: 45%; margin: 4%;
+    text-align:center;
+  }
+
+  .slider-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
+
+  .slider-controls .arrow {
+    pointer-events: all;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .slider-controls .left {
+    border-width: 10px 15px 10px 0;
+    border-color: transparent {{ section.settings.arrow_color }} transparent transparent;
+    margin-left: 10px;
+  }
+
+  .slider-controls .right {
+    border-width: 10px 0 10px 15px;
+    border-color: transparent transparent transparent {{ section.settings.arrow_color }};
+    margin-right: 10px;
+  }
+
+  .slider-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+
+  .slider-nav .dot-line {
+    width: 30px;
+    height: 4px;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+
+  {% for block in section.blocks %}
+    input#slide-{{ forloop.index }}:checked ~ .slides {
+      transform: translateX(-{{ forloop.index0 | times: 100 }}%);
+    }
+
+    input#slide-{{ forloop.index }}:checked ~ .slider-nav label[for="slide-{{ forloop.index }}"] {
+      background-color: #000;
+    }
+  {% endfor %}
+
+  @media (max-width: 768px) {
+    .slide {
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+  }
+    .columnsl {
+      width: 80%;
+    }
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const slider = document.querySelector('.slider-auto');
+    const radios = document.querySelectorAll('input[name="slider"]');
+    const leftArrow = document.querySelector('.slider-arrow.left');
+    const rightArrow = document.querySelector('.slider-arrow.right');
+    let current = 0;
+    let interval = null;
+
+    function goToNextSlide() {
+      current = (current + 1) % radios.length;
+      radios[current].checked = true;
+    }
+
+    function goToPreviousSlide() {
+      current = (current - 1 + radios.length) % radios.length;
+      radios[current].checked = true;
+    }
+
+    function startAutoplay() {
+      interval = setInterval(goToNextSlide, 5000); // Cambia cada 5 segundos
+    }
+
+    function stopAutoplay() {
+      clearInterval(interval);
+    }
+
+    if (slider && radios.length > 1) {
+      startAutoplay();
+
+      // Pausar autoplay al hacer hover
+      slider.addEventListener('mouseenter', stopAutoplay);
+      slider.addEventListener('mouseleave', startAutoplay);
+
+      // Agrega funcionalidad a las flechas
+      if (leftArrow && rightArrow) {
+        leftArrow.addEventListener('click', function () {
+          stopAutoplay(); // opcional: detener al hacer click
+          goToPreviousSlide();
+        });
+
+        rightArrow.addEventListener('click', function () {
+          stopAutoplay(); // opcional: detener al hacer click
+          goToNextSlide();
+        });
+      }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Slider de columnas",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Título columna 1"
+        },
+        {
+          "type": "richtext",
+          "id": "text_1",
+          "label": "Texto columna 1"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Título columna 2"
+        },
+        {
+          "type": "richtext",
+          "id": "text_2",
+          "label": "Texto columna 2"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color de títulos",
+          "default": "#000000"
+        },
+       {
+  "type": "number",
+  "id": "title_font_size",
+  "label": "Tamaño del título (px)",
+  "default": 24
+},
+  {
+  "type": "number",
+  "id": "title_weight",
+  "label": "Peso del título (font-weight)",
+  "default": 500
+},
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#333333"
+        },
+        {
+  "type": "number",
+  "id": "text_font_size",
+  "label": "Tamaño del texto (px)",
+  "default": 16
+},
+     {
+  "type": "number",
+  "id": "text_weight",
+  "label": "Peso del texto (font-weight)",
+  "default": 400
+}
+
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Slider de columnas",
+      "category": "Custom",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

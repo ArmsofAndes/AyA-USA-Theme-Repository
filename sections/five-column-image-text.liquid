@@ -1,0 +1,108 @@
+{% schema %}
+{
+  "name": "Five Column Grid",
+  "settings": [
+     {
+      "type": "select",
+      "id": "container_width",
+      "label": "Ancho de la sección",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "Ancho completo"
+        },
+        {
+          "value": "wide",
+          "label": "Ancho amplio"
+        },
+        {
+          "value": "narrow",
+          "label": "Ancho estrecho"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Five Column Grid",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.five-column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 40px 0;
+  text-align: center;
+}
+.five-column-grid .column img {
+  max-width: 100%;
+  height: auto;
+}
+.five-column-grid .column p {
+  margin-top: 35px;
+  font-size: 22px;
+}
+  .section-width--full {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-width--wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-width--narrow {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+@media screen and (max-width: 749px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+{% endstylesheet %}
+
+
+<div class="five-column-grid-wrapper hide-on-mobile section-width--{{ section.settings.container_width }}">
+  <div class="five-column-grid">
+    {% for block in section.blocks %}
+      <div class="column">
+        {% if block.settings.image %}
+          <img src="{{ block.settings.image | image_url }}" alt="">
+        {% endif %}
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>

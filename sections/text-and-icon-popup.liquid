@@ -1,0 +1,412 @@
+{{ 'text-with-icons.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+	assign mobile_swipe = section.settings.mobile_swipe
+	assign text_alignment = section.settings.text_alignment
+	assign icon_position = section.settings.icon_position
+	assign icon_size = section.settings.icon_size
+	assign heading_size = section.settings.heading_size
+	assign color_bg = section.settings.color_bg
+	assign color_heading = section.settings.color_heading
+	assign color_text = section.settings.color_text
+	assign disable_top_spacing = section.settings.disable_top_spacing
+	assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+	assign has_bg = false
+
+	if color_bg != 'rgba(0,0,0,0)'
+		assign has_bg = true
+	endif
+-%}
+
+<div class="text-with-icons 
+  {% if section.settings.ocultar_en_mobile %}hide-section-mobile{% endif %}
+  {% if mobile_swipe %} swipe-on-mobile{% endif %}
+  text-{{ text_alignment }} icon-{{ icon_position }} icon-{{ icon_size }} heading-{{ heading_size }} 
+  icon-columns-{{ section.blocks.size }} text-with-icons-has-bg--{{ has_bg }}
+  section-spacing 
+  {% if disable_top_spacing %} section-spacing--disable-top{% endif %}
+  {% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}" 
+  style="--color-heading: {{ color_heading }};--color-text: {{ color_text }};--color-bg: {{ color_bg }}">
+  
+  {% if section.settings.section_titulo != blank %}
+    <div class="section-title" style="text-align: {{ section.settings.titulo_alineacion }}; margin: 0 1.5rem 3rem;">
+      <h2 style="color: {{ section.settings.titulo_color }}; font-size: {{ section.settings.titulo_tamano }}px; font-weight: {{ section.settings.titulo_peso }};">
+        {{ section.settings.section_titulo }}
+      </h2>
+    </div>
+  {% endif %}
+
+  <div class="text-with-icons__inner" style="--icon-columns: {{ section.blocks.size }}">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'icon_link' %}
+          <a href="{{ block.settings.link }}" class="text-with-icons__block hover-anim-{{ block.settings.hover_animation }}" {{ block.shopify_attributes }}>
+        {% when 'icon_popup' %}
+          <div role="button" data-modal-toggle="PopupModal-{{ block.id }}" class="text-with-icons__block hover-anim-{{ block.settings.hover_animation }}" style="cursor: pointer;" {{ block.shopify_attributes }}>
+        {% else %}
+          <div class="text-with-icons__block" {{ block.shopify_attributes }}>
+      {% endcase %}
+
+      <div class="text-with-icons__icon">
+        {% if block.settings.image != blank %}
+          <img data-src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt | escape }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" class="lazyload" />
+        {% else %}
+          {% render 'svg-icons-inline', icon: block.settings.icon %}
+        {% endif %}
+      </div>
+
+      <div class="text-with-icons__block-content">
+        {% if block.settings.heading != blank %}
+          <h6 class="body-font">{{ block.settings.heading }}</h6>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <div class="text-with-icons__text">{{ block.settings.text }}</div>
+        {% endif %}
+      </div>
+
+      {% if block.type == 'icon_link' %}
+        </a>
+      {% else %}
+        </div>
+      {% endif %}
+
+      {% if block.type == 'icon_popup' %}
+        <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal">
+          <div role="dialog" aria-label="{{ block.settings.heading }}" aria-modal="true" class="product-popup-modal__content" tabindex="-1">
+            <div class="product-popup-modal__content-header">
+              <h5>{{ block.settings.popup_page.title }}</h5>
+              <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="Cerrar">
+                <span style="font-size: 1.5rem; font-weight: bold;">&times;</span>
+              </button>
+            </div>
+            <scroll-shadow>
+              <div class="product-popup-modal__content-info">
+                {{ block.settings.popup_page.content }}
+              </div>
+            </scroll-shadow>
+          </div>
+        </modal-dialog>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script src="{{ 'modal-dialog.js' | asset_url }}" defer></script>
+{%- assign popup_blocks = section.blocks | where: "type", "icon_popup" -%}
+{%- if popup_blocks.size > 0 -%}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-modal-toggle]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const modalId = this.getAttribute("data-modal-toggle");
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.setAttribute("open", true);
+            modal.querySelector(".product-popup-modal__toggle").addEventListener("click", function () {
+              modal.removeAttribute("open");
+            });
+          }
+        });
+      });
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+  
+ {
+  "name": "Text with icons (dual)",
+  "class": "section-text-with-icons",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_titulo",
+      "label": "Título de la sección",
+      "default": "Ingresar título de iconos"
+    },
+    {
+      "type": "select",
+      "id": "titulo_alineacion",
+      "label": "Alineación del título",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "titulo_tamano",
+      "label": "Tamaño del título (px)",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "titulo_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "titulo_peso",
+      "label": "Peso del título (font-weight)",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "Posición del ícono",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "top", "label": "Arriba" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "icon_size",
+      "label": "Tamaño del ícono",
+      "options": [
+        { "value": "small", "label": "Pequeño" },
+        { "value": "medium", "label": "Mediano" },
+        { "value": "large", "label": "Grande" },
+        { "value": "xlarge", "label": "Extra grande" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Tamaño del título del ítem",
+      "options": [
+        { "value": "small", "label": "Pequeño" },
+        { "value": "medium", "label": "Mediano" },
+        { "value": "large", "label": "Grande" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_swipe",
+      "label": "Permitir swipe en móviles",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Color del título",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Color del texto",
+      "default": "#151515"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_top_spacing",
+      "label": "Quitar espacio superior",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_bottom_spacing",
+      "label": "Quitar espacio inferior",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "hover_animation",
+      "label": "Animación al hacer hover (general)",
+      "default": "none",
+      "options": [
+        { "label": "Ninguna", "value": "none" },
+        { "label": "Zoom", "value": "zoom" },
+        { "label": "Rotar", "value": "rotate" },
+        { "label": "Desvanecer", "value": "fade" },
+        { "label": "Saltar", "value": "bounce" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "ocultar_en_mobile",
+      "label": "Ocultar en móviles",
+      "default": false
+    }
+  ],
+
+  "blocks": [
+  {
+    "type": "icon",
+    "name": "Ícono con SVG o imagen",
+    "settings": [
+      {
+        "type": "select",
+        "id": "icon",
+        "label": "Ícono (SVG)",
+        "options": [
+          { "value": "none", "label": "None" },
+          { "value": "apple", "label": "Apple" },
+          { "value": "banana", "label": "Banana" },
+          { "value": "bottle", "label": "Bottle" },
+          { "value": "box", "label": "Box" },
+          { "value": "carrot", "label": "Carrot" },
+          { "value": "chat_bubble", "label": "Chat bubble" },
+          { "value": "check_mark", "label": "Check mark" },
+          { "value": "clipboard", "label": "Clipboard" },
+          { "value": "dairy", "label": "Dairy" },
+          { "value": "dairy_free", "label": "Dairy free" },
+          { "value": "dryer", "label": "Dryer" },
+          { "value": "eye", "label": "Eye" },
+          { "value": "fire", "label": "Fire" },
+          { "value": "gluten_free", "label": "Gluten free" },
+          { "value": "heart", "label": "Heart" },
+          { "value": "iron", "label": "Iron" },
+          { "value": "leaf", "label": "Leaf" },
+          { "value": "leather", "label": "Leather" },
+          { "value": "lightning_bolt", "label": "Lightning bolt" },
+          { "value": "lipstick", "label": "Lipstick" },
+          { "value": "lock", "label": "Lock" },
+          { "value": "map_pin", "label": "Map pin" },
+          { "value": "nut_free", "label": "Nut free" },
+          { "value": "pants", "label": "Pants" },
+          { "value": "paw_print", "label": "Paw print" },
+          { "value": "pepper", "label": "Pepper" },
+          { "value": "perfume", "label": "Perfume" },
+          { "value": "plane", "label": "Plane" },
+          { "value": "plant", "label": "Plant" },
+          { "value": "price_tag", "label": "Price tag" },
+          { "value": "question_mark", "label": "Question mark" },
+          { "value": "recycle", "label": "Recycle" },
+          { "value": "return", "label": "Return" },
+          { "value": "ruler", "label": "Ruler" },
+          { "value": "serving_dish", "label": "Serving dish" },
+          { "value": "shirt", "label": "Shirt" },
+          { "value": "shoe", "label": "Shoe" },
+          { "value": "silhouette", "label": "Silhouette" },
+          { "value": "snowflake", "label": "Snowflake" },
+          { "value": "star", "label": "Star" },
+          { "value": "stopwatch", "label": "Stopwatch" },
+          { "value": "truck", "label": "Truck" },
+          { "value": "washing", "label": "Washing" }
+        ],
+        "default": "ruler"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Imagen como ícono (160x160px recomendado)"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Título",
+        "default": "Heading"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Enlace personalizado"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Texto",
+        "default": "<p>Agrega contenido aquí</p>"
+      }
+    ]
+  },
+  {
+    "type": "icon_link",
+    "name": "Ícono con enlace",
+    "settings": [
+      { "type": "image_picker", "id": "image", "label": "Ícono" },
+      { "type": "text", "id": "heading", "label": "Título" },
+      { "type": "text", "id": "text", "label": "Texto" },
+      { "type": "url", "id": "link", "label": "Enlace" },
+      {
+        "type": "select",
+        "id": "hover_animation",
+        "label": "Animación al pasar el mouse",
+        "default": "none",
+        "options": [
+          { "value": "none", "label": "Ninguna" },
+          { "value": "zoom", "label": "Zoom" },
+          { "value": "fade", "label": "Desvanecer" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "icon_popup",
+    "name": "Ícono con popup",
+    "settings": [
+      { "type": "image_picker", "id": "image", "label": "Ícono" },
+      { "type": "text", "id": "heading", "label": "Título" },
+      { "type": "text", "id": "text", "label": "Texto" },
+      {
+        "type": "page",
+        "id": "popup_page",
+        "label": "Contenido del popup (desde página)"
+      },
+      {
+        "type": "select",
+        "id": "hover_animation",
+        "label": "Animación al pasar el mouse",
+        "default": "none",
+        "options": [
+          { "value": "none", "label": "Ninguna" },
+          { "value": "zoom", "label": "Zoom" },
+          { "value": "fade", "label": "Desvanecer" }
+        ]
+      }
+    ]
+  }
+],
+"presets": [
+  {
+    "name": "Text with icons popup",
+    "blocks": [
+      { "type": "icon" },
+      { "type": "icon_link" },
+      { "type": "icon_popup" }
+    ]
+  }
+]}
+
+{% endschema %}

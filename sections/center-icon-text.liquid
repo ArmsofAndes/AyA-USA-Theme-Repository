@@ -1,0 +1,83 @@
+<div class="center-icon-text-section" style="text-align: center; padding: 10px 0;">
+  {% if section.settings.image %}
+    <img 
+      src="{{ section.settings.image | image_url }}" 
+      alt="Ícono" 
+      style="max-width: {{ section.settings.image_width }}px; width: 100%; height: auto; display: inline-block;"
+    />
+  {% endif %}
+
+  {% if section.settings.text != blank %}
+    <p style="
+      margin-top: 10px;
+      font-size: {{ section.settings.text_size }}px;
+      font-weight: {{ section.settings.text_weight }};
+      color: {{ section.settings.text_color }};
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    ">
+      {{ section.settings.text }}
+    </p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Center-icon-text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Icono o imagen"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Ancho de la imagen (px)",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "default": 120
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto debajo de la imagen",
+      "default": "Texto editable desde el panel"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño de fuente del texto (px)",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "default": "400",
+      "options": [
+        { "label": "Normal", "value": "400" },
+        { "label": "Negrita", "value": "700" },
+        { "label": "Fina", "value": "300" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "center-icon-text",
+      "category": "Secciones personalizadas"
+    }
+  ]
+}
+{% endschema %}

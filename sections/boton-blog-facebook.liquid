@@ -1,0 +1,123 @@
+{% schema %}
+{
+  "name": "Botón Blog Facebook",
+  "tag": "section",
+  "class": "boton-blog-facebook",
+  "settings": [
+    {
+      "type": "text",
+      "id": "like_text",
+      "label": "Texto del botón Me gusta",
+      "default": "👍 Me gusta"
+    },
+    {
+      "type": "text",
+      "id": "like_url",
+      "label": "URL de Me gusta",
+      "default": "https://facebook.com"
+    },
+    {
+      "type": "text",
+      "id": "share_text",
+      "label": "Texto del botón Compartir",
+      "default": "📤 Compartir"
+    },
+    {
+      "type": "text",
+      "id": "share_url",
+      "label": "URL de Compartir",
+      "default": "https://facebook.com/share"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "600", "label": "Semi negrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Color del texto",
+      "default": "#0e355e"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botón Blog Facebook",
+      "category": "Social"
+    }
+  ]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+.boton-blog-facebook-wrapper .facebook-button {
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin: 5px;
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out, font-weight 0.2s ease;
+  font-family: inherit;
+}
+
+.boton-blog-facebook-wrapper .facebook-button:hover {
+  transform: scale(1.08);
+  font-weight: 700;
+}
+.boton-blog-facebook-wrapper{
+    padding: 0 8%;
+}
+{% endstylesheet %}
+
+
+
+<div class="boton-blog-facebook-wrapper" style="text-align: right; margin: 20px 0;">
+  <a
+    href="{{ section.settings.like_url }}"
+    class="facebook-button"
+    style="
+      font-size: {{ section.settings.font_size }}px;
+      font-weight: {{ section.settings.font_weight }};
+      color: #ffffff;
+      background-color: #1877f2;
+      border: none;
+    "
+  >
+    {{ section.settings.like_text }}
+  </a>
+
+  <a
+    href="{{ section.settings.share_url }}"
+    class="facebook-button"
+    style="
+      font-size: {{ section.settings.font_size }}px;
+      font-weight: {{ section.settings.font_weight }};
+      color: #ffffff;
+      background-color: #1877f2;
+      border: none;
+    "
+  >
+    {{ section.settings.share_text }}
+  </a>
+</div>
+
+
+

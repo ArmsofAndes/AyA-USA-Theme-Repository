@@ -1,0 +1,258 @@
+{% schema %}
+{
+  "name": "Botons-column",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo de la sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "radio",
+      "id": "button_layout",
+      "label": "Disposición de los botones",
+      "options": [
+        { "value": "column", "label": "Vertical" },
+        { "value": "row", "label": "Horizontal" }
+      ],
+      "default": "column"
+    },
+    {
+      "type": "header",
+      "content": "Visibilidad"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Botón",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texto del botón",
+          "default": "Haz clic aquí"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        },
+        {
+          "type": "header",
+          "content": "Estilo del botón"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color del texto",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño del texto",
+          "default": 16,
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Peso del texto",
+          "default": "600",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Color de fondo",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "label": "Border radius",
+          "default": 8,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "header",
+          "content": "Borde del botón"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Color del borde",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "border_width",
+          "label": "Ancho del borde",
+          "default": 2,
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "header",
+          "content": "Efecto Hover"
+        },
+        {
+          "type": "color",
+          "id": "hover_text_color",
+          "label": "Color de texto (Hover)",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "hover_background_color",
+          "label": "Color de fondo (Hover)",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "hover_border_color",
+          "label": "Color de borde (Hover)",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botons-column",
+      "category": "Custom",
+      "blocks": [
+        { "type": "button" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="botons-container botons-layout--{{ section.settings.button_layout }} {% if section.settings.hide_on_desktop %}hide-desktop{% endif %} {% if section.settings.hide_on_mobile %}hide-mobile{% endif %}"
+     style="
+       {% if section.settings.background_image != blank %}
+         background-image: url('{{ section.settings.background_image | image_url: width: 1600 }}');
+         background-size: cover;
+         background-position: center;
+       {% else %}
+         background-color: {{ section.settings.background_color }};
+       {% endif %}
+     ">
+  {% for block in section.blocks %}
+    <a
+      href="{{ block.settings.button_link }}"
+      class="custom-btn custom-btn-{{ block.id }}"
+      style="
+        color: {{ block.settings.text_color }};
+        font-size: {{ block.settings.font_size }}px;
+        font-weight: {{ block.settings.font_weight }};
+        background-color: {{ block.settings.background_color }};
+        border-radius: {{ block.settings.border_radius }}px;
+        border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+      "
+      {{ block.shopify_attributes }}
+    >
+      {{ block.settings.button_text }}
+    </a>
+    <style>
+      .custom-btn-{{ block.id }}:hover {
+        color: {{ block.settings.hover_text_color }} !important;
+        background-color: {{ block.settings.hover_background_color }} !important;
+        border: {{ block.settings.border_width }}px solid {{ block.settings.hover_border_color }} !important;
+      }
+    </style>
+  {% endfor %}
+</div>
+
+<style>
+.botons-container {
+  display: flex;
+  gap: 15px;
+  padding: 40px 20px;
+}
+
+/* Vertical Layout */
+.botons-layout--column {
+  flex-direction: column;
+  align-items: center;
+}
+.botons-layout--column .custom-btn {
+  width: 40%;
+}
+
+/* Horizontal Layout */
+.botons-layout--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* General Button Styles */
+.botons-container .custom-btn {
+  display: inline-block;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* Hide on Desktop */
+@media (min-width: 769px) {
+  .botons-container.hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Hide on Mobile */
+@media (max-width: 768px) {
+  .botons-container.hide-mobile {
+    display: none !important;
+  }
+  
+  /* On mobile, both layouts will stack vertically for better readability */
+  .botons-layout--row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .botons-container .custom-btn {
+    font-size: 1rem !important;
+    width: 100%;
+  }
+}
+</style>

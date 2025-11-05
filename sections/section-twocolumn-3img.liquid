@@ -1,0 +1,328 @@
+{% schema %}
+{
+  "name": "Imagenes 2 + 1 custom",
+  "settings": [
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Peso del título",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "bold"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título (px)",
+      "min": 12,
+      "max": 50,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Fuente del título",
+      "options": [
+        { "value": "helvetica", "label": "Helvetica Neue" },
+        { "value": "arimo", "label": "Arimo" },
+        { "value": "roboto", "label": "Roboto" },
+        { "value": "poppins", "label": "Poppins" },
+        { "value": "source-sans", "label": "Source Sans Pro" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "baskerville", "label": "Baskerville" }
+      ],
+      "default": "helvetica"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "bold", "label": "Negrita" },
+        { "value": "lighter", "label": "Ligero" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto (px)",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_font",
+      "label": "Fuente del texto",
+      "options": [
+        { "value": "helvetica", "label": "Helvetica Neue" },
+        { "value": "arimo", "label": "Arimo" },
+        { "value": "roboto", "label": "Roboto" },
+        { "value": "poppins", "label": "Poppins" },
+        { "value": "source-sans", "label": "Source Sans Pro" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "baskerville", "label": "Baskerville" }
+      ],
+      "default": "helvetica"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Imagen con texto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "title", "label": "Título" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Imagenes 2 + 1",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-image-grid">
+  <!-- Fila superior: 2 imágenes lado a lado -->
+  {% if section.blocks.size >= 2 %}
+  <div class="row top-row">
+    {% for block in section.blocks limit:2 %}
+      <div class="col-item">
+        <div class="image-wrapper">
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.title | escape }}">
+          {% endif %}
+        </div>
+        <div class="text-content">
+          {% if block.settings.title != blank %}
+            <h3 class="item-title font-{{ section.settings.title_font }}" style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }}; font-size: {{ section.settings.title_size }}px;">
+              {{ block.settings.title }}
+            </h3>
+          {% endif %}
+          {% if block.settings.text != blank %}
+            <div class="item-text font-{{ section.settings.text_font }}" style="color: {{ section.settings.text_color }}; font-weight: {{ section.settings.text_weight }}; font-size: {{ section.settings.text_size }}px;">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Fila inferior: 1 imagen centrada -->
+  {% if section.blocks.size >= 3 %}
+  <div class="row bottom-row">
+    {% assign third_block = section.blocks[2] %}
+    <div class="col-item single-item">
+      <div class="image-wrapper">
+        {% if third_block.settings.image %}
+          <img src="{{ third_block.settings.image | img_url: '600x' }}" alt="{{ third_block.settings.title | escape }}">
+        {% endif %}
+      </div>
+      <div class="text-content">
+        {% if third_block.settings.title != blank %}
+          <h3 class="item-title font-{{ section.settings.title_font }}" style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }}; font-size: {{ section.settings.title_size }}px;">
+            {{ third_block.settings.title }}
+          </h3>
+        {% endif %}
+        {% if third_block.settings.text != blank %}
+          <div class="item-text font-{{ section.settings.text_font }}" style="color: {{ section.settings.text_color }}; font-weight: {{ section.settings.text_weight }}; font-size: {{ section.settings.text_size }}px;">
+            {{ third_block.settings.text }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+/* Definición de fuentes */
+.font-helvetica { 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+.font-arimo { 
+  font-family: 'Arimo', sans-serif; 
+}
+.font-roboto { 
+  font-family: 'Roboto', sans-serif; 
+}
+.font-poppins { 
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 300; 
+}
+.font-source-sans { 
+  font-family: 'Source Sans Pro', sans-serif; 
+}
+.font-montserrat { 
+  font-family: 'Montserrat', sans-serif; 
+}
+.font-baskerville { 
+  font-family: "Baskerville", "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+}
+
+/* Contenedor principal */
+.custom-image-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Filas */
+.custom-image-grid .row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.custom-image-grid .row:last-child {
+  margin-bottom: 0;
+}
+
+/* Fila superior - 2 elementos */
+.custom-image-grid .top-row {
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.custom-image-grid .top-row .col-item {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+/* Fila inferior - 1 elemento centrado */
+.custom-image-grid .bottom-row {
+  justify-content: center;
+}
+
+.custom-image-grid .bottom-row .col-item {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Elementos individuales */
+.custom-image-grid .col-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Wrapper de imagen */
+.custom-image-grid .image-wrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.custom-image-grid .image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.custom-image-grid .image-wrapper:hover img {
+  transform: scale(1.02);
+}
+
+/* Contenido de texto */
+.custom-image-grid .text-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+.custom-image-grid .item-title {
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+
+.custom-image-grid .item-text {
+  margin: 0;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Sin limitación de líneas - mostrar texto completo */
+.custom-image-grid .item-text {
+  /* Texto completo sin truncamiento */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .custom-image-grid {
+    padding: 1rem 0.5rem;
+  }
+  
+  .custom-image-grid .row {
+    margin-bottom: 2rem;
+  }
+  
+  .custom-image-grid .top-row {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .custom-image-grid .top-row .col-item,
+  .custom-image-grid .bottom-row .col-item {
+    max-width: 100%;
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .custom-image-grid .image-wrapper {
+    max-width: 350px;
+    margin: 0 auto 1rem auto;
+  }
+  
+  .custom-image-grid .text-content {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-image-grid {
+    padding: 1rem 0.25rem;
+  }
+  
+  .custom-image-grid .image-wrapper,
+  .custom-image-grid .text-content {
+    max-width: 100%;
+  }
+}
+</style>

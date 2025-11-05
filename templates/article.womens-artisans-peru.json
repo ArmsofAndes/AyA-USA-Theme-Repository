@@ -1,0 +1,521 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "Women Artisans in the Peruvian Andes: Weaving Legacy, Resilience, and Identity",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/andean-woman-weaving-traditional-textiles-peru.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published Oct 12, 2020 | Updated Dec 18, 2024",
+            "color": "#0e355e",
+            "font_size": 17,
+            "font_weight": 500
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Reading time: 4 minutes</strong></p><p>By Lesia Tello & Jordy Munarriz</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {text-align: left; margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_4PBRaq": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/ski-trip-banner-ski-gear-clothing-essentials_516dc612-54d0-477a-811f-358e6a0f7ea0.webp",
+            "link": "shopify://blogs/news/everything-you-need-to-know-before-your-next-ski-trip",
+            "caption": "Everything You Need To Know Before Your Next Ski Trip",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_hjamRV": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Indigo-dye-powder.jpg",
+            "link": "shopify://blogs/news/indigo-dye-ancient-peru",
+            "caption": "Woven by Time: The Story of Indigo Dye in Ancient Peru",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_W6XGXY": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/rainproof-gear-PFAS.webp",
+            "link": "shopify://blogs/news/pfas-in-the-clothes-forever-chemicals",
+            "caption": "PFAS: The \"Forever Chemicals\"Hidden in Your Clothes",
+            "caption_size": 25,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<p>For centuries, <strong>Andean women artisans have woven more than just textiles—they have interlaced history, resilience, and identity into each thread</strong>. Their craft is a reflection of cultural heritage passed down through generations, a skill that connects them to their ancestors while securing their future. This blog honors the hands that keep tradition alive, the voices that fight for recognition, and the women whose artistry continues to shape the Andean highlands.<br/></p><h3>Threads of History: Women and Textile Production in the Andes</h3><p>Textile production in the Andes dates back thousands of years, with pre-Hispanic societies placing immense cultural and economic value on woven goods. In the Inca Empire, cloth was more than just clothing—it was <strong>a symbol of status, tribute, and social hierarchy</strong> [1]. Women played a pivotal role in this system. <a href=\"https://doi.org/10.1525/ap3a.1998.8.1.123\" target=\"_blank\"><strong>The Acllas, or \"Chosen Women\"</strong></a>, were skilled female weavers selected to create fine textiles for the nobility and religious ceremonies, reinforcing the link between femininity, craft, and power [1].<br/></p><p>This deep-rooted tradition persisted beyond the fall of the empire. Despite colonial disruptions, <a href=\"https://doi.org/10.1111/j.1470-9856.2011.00693.x\" target=\"_blank\"><strong>Andean women preserved their textile knowledge</strong></a>, adapting techniques while maintaining ancestral designs and meanings [2]. Today, their weavings remain a form of storytelling, documenting myths, landscapes, and personal narratives through vibrant patterns and natural dyes [3].</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/andean-woman-weaving-traditional-textiles-cusco-peru.png",
+            "caption": "Picture by: Anyela Malaga",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_4PBRaq",
+        "right_image_block_hjamRV",
+        "right_image_block_W6XGXY",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>Related content</p>",
+        "right_title_size": 20,
+        "right_title_weight": 700,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Mens-Alpaca-Wool-T-Shirt160UltralightCrewNeck10.webp",
+            "link": "shopify://products/mens-alpaca-wool-t-shirt-crew-neck",
+            "caption": "Men's Alpaca Wool T-Shirt: 160 Ultralight Crew Neck",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/womens-wool-baselayer-half-zip-color-gray.webp",
+            "link": "shopify://products/womens-alpaca-wool-base-layer-300-half-zip",
+            "caption": "Women's Alpaca Wool Base Layer: 300 Lightweight Half-Zip",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_CxhyHH": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/neck-gaiter-warmest-ultralight.webp",
+            "link": "shopify://products/alpaca-wool-neck-gaiter",
+            "caption": "Unisex Alpaca Wool Neck Gaiter: 160 Ultralight",
+            "caption_size": 20,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Crafting Livelihoods: The Economic and Social Role of Andean Women Artisans<br/></h3><p>In modern times, textile production is not just an art—it is a <strong>means of survival</strong>. Across the Peruvian Andes, female artisan groups form <strong>cooperatives and associations</strong> to access fair markets, improve economic stability, and preserve their traditions. Organizations like <strong>CIAP (Central Interregional de Artesanos del Perú)</strong> and <strong>Manuela Ramos</strong> provide artisans with training, raw materials, and access to international buyers, ensuring that their work reaches beyond local markets [4].<br/></p><p>However,<strong> financial stability remains a challenge</strong>. Many artisans struggle with seasonal demand fluctuations and income inequality within cooperatives, where access to orders and payments is often uneven [2]. Despite these obstacles, women continue to engage in textile production—not just for economic reasons, but for <strong>the social bonds and empowerment these groups offer</strong>.<br/></p><p>As many artisans express, <strong>belonging to a weaving collective is about more than just earning money—</strong><a href=\"https://folklife.si.edu/magazine/mujeres-legados-andes-peruanos\" target=\"_blank\"><strong>it is about sisterhood, self-worth, and community</strong></a> [4]. Weaving circles become safe spaces where women share experiences, support one another, and collectively navigate the challenges of rural life.<br/></p><h3>Cultural Guardians: The Women Who Preserve Andean Weaving</h3><p>One of the most influential figures in the preservation of Andean textiles is <strong>Nilda Callañaupa Álvarez</strong>, a Quechua weaver from Chinchero, Peru. As the founder of the <strong>Centro de Textiles Tradicionales del Cusco (CTTC)</strong>, she has dedicated her life<strong> to reviving and promoting traditional weaving techniques</strong>, ensuring that future generations inherit and value their cultural heritage [5].<br/></p><p>Her work exemplifies the resilience and leadership of Andean women artisans, who often <strong>act as educators, activists, and cultural ambassadors</strong>. Through initiatives like CTTC, young Quechua girls are learning not only the technical skills of weaving but also the significance of their craft as a form of identity, resistance, and connection to the land.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/andean-woman-baby-lamb-handwoven-textile-peru.webp",
+            "caption": "Picture by: Rodolfoclix",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_DdEGdh",
+        "right_image_block_cLcR8k",
+        "right_image_block_CxhyHH",
+        "left_text_XjzLYC",
+        "left_image_6bkrxL"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_CE4DCV": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_text_XHcXnL": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>The Challenges and Triumphs of Andean Women Artisans Today</h3><p>Despite their crucial role in cultural preservation, Andean women artisans face <strong>economic marginalization, gender inequality, and the pressures of globalization</strong>. Fast fashion and mass production threaten traditional textile markets, while the lack of governmental support makes it difficult for artisans to compete in a world driven by cheap synthetic materials.<br/></p><p>Yet, their work endures. <a href=\"https://www.ecoaya.com/blogs/sustainability/the-ethical-look-sustaianable-clothing-issues-and-key-elements\" target=\"_blank\"><strong>As demand for handmade, sustainable, and ethically sourced fashion grows</strong></a>, Andean artisans are gaining more visibility on global platforms. Brands committed to fair trade and slow fashion are recognizing the value of their expertise, creating new opportunities for women to earn fair wages and continue practicing their craft.<br/></p><p>Moreover, initiatives like <strong>“Casa de la Mujer Artesana”</strong> provide additional support by integrating social services, such as health care and education, into artisan programs—ensuring that women's well-being is prioritized alongside their economic independence [4].<br/></p><h3>A Future Woven by Women</h3><p><strong>Andean women artisans are the guardians of a centuries-old tradition, preserving their heritage while shaping a more equitable future.</strong> Their hands weave not just textiles, but resilience, community, and identity—an enduring testament to the strength of women artisans across generations.<br/></p><p>Their legacy is a reminder that craftsmanship is more than a skill; <strong>it is a language of heritage, a symbol of endurance, and a thread that connects the past, present, and future</strong>.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_m3R8Bn": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/andean-women-artisans-traditional-clothing-peru.webp",
+            "caption": "Picture by: Omar Hernandez",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_XHcXnL",
+        "left_image_m3R8Bn"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h6><strong>Glossary keywords</strong></h6><p><strong>Acllas (\"Chosen Women\"):</strong><br/>Elite female weavers in the Inca Empire selected to produce fine textiles for the nobility and religious ceremonies.</p><p><strong>Andean Weaving:</strong><br/>A traditional textile-making practice passed down through generations in the Peruvian Andes, using natural fibers and dyes.</p><p><strong>Casa de la Mujer Artesana:</strong><br/>A program that integrates social services, such as health care and education, to support female artisans.</p><p><strong>Centro de Textiles Tradicionales del Cusco (CTTC):</strong><br/>An organization founded by Nilda Callañaupa Álvarez dedicated to preserving traditional Andean weaving techniques.</p><p><strong>CIAP (Central Interregional de Artesanos del Perú):</strong><br/>A cooperative organization that supports Peruvian artisans by providing training, resources, and market access.</p><p><strong>Cooperative:</strong><br/>A group of artisans working together to improve economic stability, access fair trade markets, and preserve traditional crafts.</p><p><strong>Manuela Ramos:</strong><br/>A feminist NGO in Peru that empowers female artisans by providing training, fair trade opportunities, and economic support.</p><p><strong>Nilda Callañaupa Álvarez:</strong><br/>A Quechua weaver and activist dedicated to preserving Andean textile traditions through education and advocacy.</p>",
+        "right_title_size": 12,
+        "right_title_weight": 400,
+        "right_title_color": "#151515",
+        "right_alignment": "left"
+      }
+    },
+    "section_blog_autor_XrhqDb": {
+      "type": "section-blog-autor",
+      "name": "section-blog-autor",
+      "settings": {
+        "icono_img": "shopify://shop_images/svg-path.svg",
+        "line_color": "#000000",
+        "line_thickness": 2,
+        "titulo": "Authors & Researchers",
+        "titulo_color": "#000000",
+        "titulo_size": 28,
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/Profile_AOA_5bd4ed33-e7e0-410d-9130-26c3dc4c0272.webp",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Jordy Munarriz",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Environmental Engineer with a master’s degree in renewable energy and a specialization in sustainability. A passionate traveler and advocate for responsible tourism, he captures the essence of exploration through storytelling, inspiring others to connect with nature in a conscious and meaningful way."
+      }
+    },
+    "section_blog_autor_add_3jAx3p": {
+      "type": "section-blog-autor-add",
+      "name": "section-blog-autor-add",
+      "settings": {
+        "titulo_weight": "700",
+        "autor_imagen": "shopify://shop_images/WhatsApp_Image_2025-02-18_at_11.57.35_a1a76a21-3264-4bf9-b1ae-49903fb6d535.jpg",
+        "border_color": "#000000",
+        "border_width": 2,
+        "autor_titulo": "Lesia Tello",
+        "autor_titulo_color": "#000000",
+        "autor_titulo_size": 24,
+        "titulo_font_weight": 600,
+        "descripcion_color": "#333333",
+        "autor_texto_size": 16,
+        "descripcion_font_weight": 400,
+        "autor_texto": "Biologist and hiking enthusiast with a deep admiration for nature and the intricate mechanisms of life. With a background in biochemistry and a master’s degree in education, she blends science with adventure, exploring how we interact with the natural world and sharing insights on outdoor experiences."
+      }
+    },
+    "linea_horizontal_jCDaGe": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 95,
+        "color_linea": "#000000",
+        "grosor": 2,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Costin, C. L. (1998). Housewives, chosen women, skilled men: Cloth production and social identity in the late prehispanic Andes. Archeological Papers of the American Anthropological Association, 8(1), 123-141.<a href=\"https://doi.org/10.1525/ap3a.1998.8.1.123\" target=\"_blank\">https://doi.org/10.1525/ap3a.1998.8.1.123 2.</a></p><p>[2] Forstner, K. (2013). Women's group‐based work and rural gender relations in the southern Peruvian Andes. Bulletin of Latin American Research, 32(1), 46-60.<a href=\"https://doi.org/10.1111/j.1470-9856.2011.00693.x\" target=\"_blank\">https://doi.org/10.1111/j.1470-9856.2011.00693.x</a></p><p>[3] Malca, H. Q. (2024). Hilvanando la historia, las memorias y los saberes de las artesanas del telar de qallwa de Cajamarca, Perú. Revista de Ciencias Sociales (Cr), 50(183), 31-46.<br/></p><p>[4] Forstner, K. (2023). Walking as sisters The social dimension of group-based craft production in the Peruvian Andes. Craft Communities, 71.<br/></p><p>[5] Merotto, T. (2021, December 20). El hilo conductor: Mujeres tejen legados en los Andes peruanos. Smithsonian Folklife Magazine. Smithsonian Institution.<a href=\"https://folklife.si.edu/magazine/mujeres-legados-andes-peruanos\" target=\"_blank\">https://folklife.si.edu/magazine/mujeres-legados-andes-peruanos</a></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\nfont-size:30px;\n}\nh4{\nfont-weight:600;\n}\n.custom-left-richtext p,\n.custom-left-richtext ul {\n  line-height: {{ block.settings.caption_size | plus: 2 }}rem !important;\n}\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section1_blog_text_and_contentrelated_CE4DCV",
+    "section_blog_autor_XrhqDb",
+    "section_blog_autor_add_3jAx3p",
+    "linea_horizontal_jCDaGe",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

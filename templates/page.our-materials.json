@@ -1,0 +1,478 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": false,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "image_with_text_overlay_V9NgWC": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_JEAW7E": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Materials",
+            "heading_font_size": 35,
+            "heading_font_weight": "500",
+            "heading_color": "#2b3537"
+          }
+        }
+      },
+      "block_order": [
+        "heading_JEAW7E"
+      ],
+      "custom_css": [
+        ".image-with-text-overlay {padding: 6%;}",
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px !important; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; }}"
+      ],
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/eucalyptus-1656704406200_1.jpg",
+        "image_parallax": false,
+        "desktop_vh_height": 65,
+        "desktop_height": "desktop-height-full",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-left",
+        "text_alignment": "left",
+        "overlay_color": "#000000",
+        "overlay_opacity": 7,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_nmWnGH": {
+      "type": "rich-text",
+      "blocks": {
+        "text_3Jg33E": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The fashion industry is one of the largest polluters in the world which is why we are doing all we can to be different and to make a difference.</p><p>We are committed to produce clothing with the smallest carbon footprint that doesn't leave any waste in the environment, while looking for more sustainable innovations.</p>",
+            "custom_liquid": "",
+            "color": "#2b3537",
+            "font_size": 24,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_3Jg33E"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {p {font-size: 17px; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "custom_anchor_id": "",
+        "section_width": "full-width-row-full",
+        "text_width": "xlarge",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "image_with_text_txaJLD": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_w67p6i": {
+          "type": "heading",
+          "settings": {
+            "text": "Microplastics? No more!",
+            "description_size": "medium",
+            "font_size": 28,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_LNmjPn": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We create our clothing in ways that prevent any further plastic pollution. We are well aware of the impact of microplastics. Our entire planet and our bodies have been contaminated with microplastic and nanoplastic particles, many of which are plastic textile fibers. We drink, eat, and breathe plastic pieces, and the health consequences are yet unknown.</p><p>This is why we made clothing that's 100% free of plastics and biodegrades in nature without leaving any trace behind.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "heading_w67p6i",
+        "text_LNmjPn"
+      ],
+      "custom_css": [
+        ".row {padding: 4% 8%; /*max-height: 600px;*/}",
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; } p {font-size: 15px; }}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/1-1651608501993.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#eeeeee",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_86mqEp": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_XnPJtM": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Ingredients",
+            "description_size": "medium",
+            "font_size": 28,
+            "font_weight": 400,
+            "color": "#2b3537"
+          }
+        },
+        "text_MLMP9U": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We think of every little detail when it comes to sustainability, which is why even the smallest components have internationally recognized certificates, or are of a natural origin.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        },
+        "tabs_xEqEnT": {
+          "type": "tabs",
+          "settings": {}
+        },
+        "tabs_block_QaphFk": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Fabrics",
+            "tab_content": "<p><strong>GOTS Certified</strong></p><p>Our fabric is 100% Organic Pima Cotton from Peru. Sustainable practises across the entire Cotton production process is ensured by GOTS certification.</p>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        },
+        "tabs_block_8ajjpP": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Bands",
+            "tab_content": "<p><strong>Biodegradable Bands</strong></p><p>All our elastic bands are made from a mix of tree rubber and cotton. This eco-friendly mix ensures that our bands are both durable and gentle on the environment. </p>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        },
+        "tabs_block_P4eT77": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Threads",
+            "tab_content": "<p><strong>OEKO-TEX Certified</strong></p><p>The fabric is sewn into garments using 100% Pima Cotton threads that biodegrade at the end of the garment's lifespan.</p>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        },
+        "tabs_block_rqtDtz": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Dyes",
+            "tab_content": "<p><strong>GOTS Certified / 100% Natural</strong></p><p>Our garments are dyed with 2 types of dyes: </p><ul><li><a href=\"https://ecoaya.com/pages/natural-dye-collection\" target=\"_self\">100% natural dyes</a></li><li>GOTS certified low impact synthetic dyes</li></ul>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        },
+        "tabs_block_UfFwgg": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Fabric Finishing",
+            "tab_content": "<p><strong>OEKO-TEX Certified</strong></p><p>The STANDARD 100 certification by OEKO-TEX® ensures that the textile finishing has been tested for harmful substances.</p>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        },
+        "tabs_block_tYVwXG": {
+          "type": "tabs_block",
+          "settings": {
+            "tab_title": "Labels & Ink",
+            "tab_content": "<p><strong>GOTS Certified</strong></p><p>Inner labels are made from 100% Organic Cotton fabric which is printed with a GOTS certified ink that does not contain heavy metals or phthalates.</p>",
+            "tab_bg_color": "#ffffff",
+            "tab_hover_color": "#e2e2e2",
+            "tab_active_color": "#fb9e5b",
+            "tab_text_color": "#2b3537",
+            "tab_font_size": 14,
+            "tab_font_weight": "500",
+            "content_text_color": "#2b3537",
+            "content_font_size": 14,
+            "content_font_weight": "400"
+          }
+        }
+      },
+      "block_order": [
+        "heading_XnPJtM",
+        "text_MLMP9U",
+        "tabs_xEqEnT",
+        "tabs_block_QaphFk",
+        "tabs_block_8ajjpP",
+        "tabs_block_P4eT77",
+        "tabs_block_rqtDtz",
+        "tabs_block_UfFwgg",
+        "tabs_block_tYVwXG"
+      ],
+      "custom_css": [
+        ".row {padding: 4% 8%;}",
+        ".custom-tab-content p {margin-bottom: 3px;}",
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; } .rte p {font-size: 15px; }}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/header-our-materials-v1-1653661421710.png",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "text_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_Xejkqg": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_deirzr": {
+          "type": "heading",
+          "settings": {
+            "text": "100% Organic Pima Cotton",
+            "description_size": "medium",
+            "font_size": 28,
+            "font_weight": 500,
+            "color": "#2b3537"
+          }
+        },
+        "text_4VAQcw": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Peruvian Pima Cotton is one of the softest and top quality types of cotton in the world. Our Pima is also organically grown.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        },
+        "collapsible_tab_TeE46L": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Sustainability",
+            "open": false,
+            "title_color": "#2b3537",
+            "title_weight": 500,
+            "title_size": 0.9,
+            "content_color": "#2b3537",
+            "content_weight": 400,
+            "content_size": 0.9,
+            "content": "<ol><li>Saves 46% of CO2e compared to conventional cotton</li><li>Uses ZERO toxic pesticides and fertilizers</li></ol><p>Conventional cotton workers suffer with serious health issues due to the exposure to toxic chemicals on daily basis, relies on irrigation and releases 220 million tonnes of CO2 a year</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_twFxwG": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Supreme Quality",
+            "open": false,
+            "title_color": "#2b3537",
+            "title_weight": 500,
+            "title_size": 0.9,
+            "content_color": "#2b3537",
+            "content_weight": 400,
+            "content_size": 0.9,
+            "content": "<p>Peruvian Pima Cotton is harvested by hand which results in a clear white color and extra softness. Longer Pima Cotton fibers are softer and more durable than other types of cotton.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_9GkAgR": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Certifications",
+            "open": false,
+            "title_color": "#2b3537",
+            "title_weight": 500,
+            "title_size": 0.9,
+            "content_color": "#2b3537",
+            "content_weight": 400,
+            "content_size": 0.9,
+            "content": "<p>Aya's Organic Pima Cotton is certified according to international standards. </p>",
+            "image_1": "shopify://shop_images/4-1651771935806.webp",
+            "image_2": "shopify://shop_images/1-1651771935758.png",
+            "image_3": "shopify://shop_images/3-1651771935793.png",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_deirzr",
+        "text_4VAQcw",
+        "collapsible_tab_TeE46L",
+        "collapsible_tab_twFxwG",
+        "collapsible_tab_9GkAgR"
+      ],
+      "custom_css": [
+        ".row {padding: 4% 8%;}",
+        "@media screen and (max-width: 749px) {.image-with-text__content {margin-left: 0px; margin-right: 0px; padding-left: 0 !important; padding-right: 0 !important; } h3 {font-size: 18px !important; } p {font-size: 14.4px; }}"
+      ],
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/ayahomeaboutus1--edited-1654540195938.webp",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_controls": false,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "text_first",
+        "content_position": "text-left",
+        "color_bg": "#eeeeee",
+        "color_text": "#2b3537",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_THrCqG": {
+      "type": "gallery",
+      "blocks": {
+        "image_ibe4pc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/studioworker-1656962192536.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "Our Supply Chain",
+            "link": "shopify://pages/supply-chain",
+            "use_text_button": false,
+            "block_link": "shopify://pages/supply-chain",
+            "product_list": []
+          }
+        },
+        "image_egTUtL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/eucalyptus1-1655822095956.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "Natural Dye Collection",
+            "link": "shopify://pages/natural-dye-collection",
+            "use_text_button": false,
+            "block_link": "shopify://pages/natural-dye-collection",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_ibe4pc",
+        "image_egTUtL"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important; height: 80vh;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: #d5cfc1; color: #2b3537; border-radius: 5px; font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 500; border: none;}",
+        ".button:hover {background-color: #2b3537; color: #d5cfc1;}"
+      ],
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "left",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_qhtqC9": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    const allDetails = document.querySelectorAll('.image-with-text details');\n\n    allDetails.forEach((detail) => {\n      detail.addEventListener('toggle', function () {\n        if (detail.open) {\n          allDetails.forEach((otherDetail) => {\n            if (otherDetail !== detail) {\n              otherDetail.removeAttribute('open');\n            }\n          });\n        }\n      });\n    });\n  });\n</script>\n<style>\n#compostable .columns ,#pfas .columns,#goals .columns,#progres .columns{\n  padding: 20px;\n  margin: 0;\n}\n\n.image-with-text h3 {\n  letter-spacing: 0.5px;\n}\n.image-with-text .rte {\n  letter-spacing: 0.5px;\n  line-height: 2em;\n  text-align: justify;\n}\n\n@media screen and (max-width: 749px) {\n .image-with-text h3 {\n  font-size:22px!important;\n}\n .image-with-text__content, {\n    margin-left: 0px;\n    margin-right: 0px;\n    padding-left: 0 !important;\n    padding-right: 0 !important;\n  }\n\n}\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_overlay_V9NgWC",
+    "rich_text_nmWnGH",
+    "image_with_text_txaJLD",
+    "image_with_text_86mqEp",
+    "image_with_text_Xejkqg",
+    "gallery_THrCqG",
+    "custom_liquid_qhtqC9"
+  ]
+}

@@ -1,0 +1,332 @@
+{{- 'rich-text.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign section_width = section.settings.section_width
+  assign text_width = section.settings.text_width
+  assign text_position = section.settings.text_position
+  assign text_alignment = section.settings.text_alignment
+
+  assign color_bg = section.settings.color_bg | downcase
+  assign color_text = section.settings.color_text
+  assign color_links = section.settings.color_links
+
+  assign disable_top_spacing = section.settings.disable_top_spacing
+  assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+
+  assign solid_button_label = color_bg
+  if color_bg == 'transparent' or color_bg == 'rgba(0,0,0,0)'
+    assign solid_button_label = '#ffffff'
+  endif
+
+  assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit'
+-%}
+
+{%- if section.settings.use_global_font -%}
+  {%- assign section_font = settings.font_body | default: 'inherit' -%}
+{%- endif -%}
+
+<div class="richtext-full-bg"
+  {% if section.settings.custom_anchor_id != blank %} id="{{ section.settings.custom_anchor_id }}" {% endif %}
+  style="background-color: {{ color_bg }};
+    {% if section.settings.background_image != blank %}
+      background-image: url({{ section.settings.background_image | img_url: 'master' }});
+      background-size: cover;
+      background-position: center;
+    {% endif %}">
+  <div class="row123 row {{ section_width }}" style="padding: 0; margin:0">
+    <div class="small-12 columns">
+      <div class="rich-text text-{{ text_alignment }} text-position-{{ text_position }} text-width-{{ text_width }} section-spacing-padding font-{{ section.settings.font_family }}
+        {% if disable_top_spacing %} section-spacing--disable-top{% endif %}
+        {% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
+        style="--color-bg: {{ color_bg }};
+               --color-text: {{ color_text }};
+               --solid-button-background: {{ color_text }};
+               --outline-button-label: {{ color_text }};
+               --solid-button-label: {{ solid_button_label }};
+               --bg-body: {{ color_bg }};
+               --color-accent: {{ color_links }};
+               --color-accent-rgb: {{ color_links.rgb | replace: ' ' , ',' }};
+               font-family: {{ section_font }};">
+        <div class="rich-text__inner" style="font-family: {{ section_font }};">
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+
+              {%- when 'image' -%}
+                {% if block.settings.image != blank %}
+                  {% liquid
+                    assign image = block.settings.image
+                    assign master_width = image.src.width | append: 'x' | append: image.src.height
+                    render 'responsive-image', image: image, sizes: master_width, retina: block.settings.retina
+                  %}
+                {% else %}
+                  <div class="thb-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder_svg_tag' }}</div>
+                {% endif %}
+
+              {%- when 'subheading' -%}
+                <p class="subheading" {{ block.shopify_attributes }}
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text }}
+                </p>
+
+              {%- when 'heading' -%}
+                <h3 class="custom-heading {{ block.settings.size }} font-{{ section.settings.font_family }}" {{ block.shopify_attributes }}
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text | newline_to_br }}
+                </h3>
+
+              {%- when 'quote_heading' -%}
+                <div class="quote-heading" {{ block.shopify_attributes }}>
+                    <div class="quote-block">
+                    <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="40" height="40" fill="currentColor">
+                        <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"></path>
+                    </svg>
+                    </div>
+                    {%if block.settings.link != blank %}
+                    <a href="{{ block.settings.link }}" target="_blank" class="quote-heading-link" style="text-decoration:none; color:inherit;">
+                      <h3 class="custom-heading font-{{ section.settings.font_family }}"
+                        style="color: {{ block.settings.color }};
+                            font-size: {{ block.settings.font_size }}px;
+                            font-weight: {{ block.settings.font_weight }};
+                            font-family: {{ section_font }};">
+                    {{ block.settings.text }}
+                    </h3>
+                    </a>
+                    {%else%}
+                    <h3 class="custom-heading font-{{ section.settings.font_family }}"
+                        style="color: {{ block.settings.color }};
+                            font-size: {{ block.settings.font_size }}px;
+                            font-weight: {{ block.settings.font_weight }};
+                            font-family: {{ section_font }};">
+                    {{ block.settings.text }}
+                    </h3>
+                    {%endif%}
+                </div>
+
+              {%- when 'text' -%}
+                <div class="rte {{ block.settings.size }}" {{ block.shopify_attributes }}
+                  style="color: {{ block.settings.color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }}; font-family: {{ section_font }};">
+                  {{ block.settings.text }}
+                  {{ block.settings.custom_liquid }}
+                </div>
+
+              {%- when 'decorative_line' -%}
+                <div class="richtext-line" {{ block.shopify_attributes }}
+                  style="height: {{ block.settings.line_thickness }}px; background-color: {{ block.settings.line_color }}; width: {{ block.settings.line_width_percent }}%; margin: 30px auto;">
+                </div>
+
+              {%- when 'button' -%}
+                {% if block.settings.link_label != blank %}
+                  <a class="custom-button"
+                     href="{{ block.settings.link }}"
+                     {{ block.shopify_attributes }}
+                     style="background-color: {{ block.settings.button_color }};
+                            color: {{ block.settings.button_text_color }};
+                            font-size: {{ block.settings.font_size }}px;
+                            font-weight: {{ block.settings.font_weight }};
+                            font-family: {{ section_font }};"
+                     data-hover-bg="{{ block.settings.button_hover_color }}"
+                     data-hover-text="{{ block.settings.button_hover_text_color }}">
+                    <span>{{ block.settings.link_label }}</span>
+                  </a>
+                {% endif %}
+
+              {%- when 'text-button' -%}
+                {% if block.settings.link_label != blank %}
+                  <a class="text-button" href="{{ block.settings.link }}" {{ block.shopify_attributes }} style="font-family: {{ section_font }};">{{ block.settings.link_label }}</a>
+                {% endif %}
+
+              {%- when 'custom_liquid' -%}
+                {{ block.settings.custom_liquid }}
+
+            {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .quote-heading {
+    position: relative;
+    padding-left: 66px;
+    }
+
+    .quote-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+
+    .quote-icon {
+    color: #242C48;
+    width: 50px;
+    height: 50px;
+    transform: rotate(180deg);
+    }
+
+    .quote-heading-link {
+    display: block;
+    transition: opacity 0.3s ease;
+    }
+    
+    .quote-heading-link:hover {
+    opacity: 0.8;
+    }
+
+    @media (max-width: 768px){
+    .quote-icon {
+    width: 30px;
+    height: 30px;
+    }
+    .quote-heading {
+    padding-left: 46px;
+    }
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Rich text with Quote",
+  "class": "section-rich-text-quote",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_global_font",
+      "label": "Use global font from theme",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Section font",
+      "default": "montserrat",
+      "options": [
+        { "value": "helvetica", "label": "Helvetica Neue" },
+        { "value": "arimo", "label": "Arimo" },
+        { "value": "roboto", "label": "Roboto" },
+        { "value": "poppins", "label": "Poppins Light" },
+        { "value": "source-sans", "label": "Source Sans" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "baskerville", "label": "Baskerville" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "custom_anchor_id",
+      "label": "Anchor ID (unique, no spaces)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "color_links",
+      "label": "Links",
+      "default": "#151515"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_top_spacing",
+      "default": false,
+      "label": "Remove top spacing"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_bottom_spacing",
+      "default": false,
+      "label": "Remove bottom spacing"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Subheading" },
+        { "type": "color", "id": "color", "label": "Color" },
+        { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 60, "default": 24 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400 }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Talk about your brand" },
+        { "type": "color", "id": "color", "label": "Color" },
+        { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 90, "default": 24 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400 }
+      ]
+    },
+    {
+      "type": "quote_heading",
+      "name": "Quote Heading",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "What you guys are doing, it’s great!" },
+        { "type": "url", "id": "link", "label": "Link (optional)" },
+        { "type": "color", "id": "color", "label": "Color", "default": "#151515" },
+        { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 90, "default": 26 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400 }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Content", "default": "<p>Share info about your brand...</p>" },
+        { "type": "liquid", "id": "custom_liquid", "label": "Custom liquid" },
+        { "type": "color", "id": "color", "label": "Color" },
+        { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 60, "default": 24 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400 }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        { "id": "link_label", "type": "text", "label": "Label", "default": "Learn More" },
+        { "id": "link", "type": "url", "label": "Link" },
+        { "type": "color", "id": "button_color", "label": "Background color" },
+        { "type": "color", "id": "button_text_color", "label": "Text color" },
+        { "type": "color", "id": "button_hover_color", "label": "Hover background" },
+        { "type": "color", "id": "button_hover_text_color", "label": "Hover text" },
+        { "type": "range", "id": "font_size", "label": "Font size (px)", "min": 10, "max": 40, "default": 16 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400 }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom liquid",
+      "settings": [
+        { "type": "liquid", "id": "custom_liquid", "label": "Custom liquid" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text with Quote",
+      "blocks": [
+        { "type": "quote_heading" },
+        { "type": "text" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["*"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,763 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+{{- 'image-with-text-overlay.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+	assign section_width = section.settings.section_width
+	assign image = section.settings.image
+	assign image_parallax = section.settings.image_parallax
+	assign desktop_height = section.settings.desktop_height
+	assign mobile_height = section.settings.mobile_height
+	assign content_width = section.settings.content_width
+	assign content_position = section.settings.content_position
+	assign text_alignment = section.settings.text_alignment
+	assign overlay_color = section.settings.overlay_color
+	assign overlay_opacity = section.settings.overlay_opacity
+	assign disable_top_spacing = section.settings.disable_top_spacing
+	assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+
+	case mobile_height
+		when 'mobile-height-350'
+			assign mobile_image_height = 350
+		when 'mobile-height-400'
+			assign mobile_image_height = 400
+		when 'mobile-height-450'
+			assign mobile_image_height = 450
+		when 'mobile-height-500'
+			assign mobile_image_height = 620
+		else
+			assign mobile_image_height = 620
+	endcase
+
+	assign priority = false
+	assign heading_tag = 'h3'
+	if section.index == 1
+		assign priority = 'high'
+	assign heading_tag = 'h1'
+	endif
+-%}
+{%- if section.settings.use_global_font -%}
+  {% assign section_font = settings.font_body | default: 'inherit' %}
+{%- else -%}
+  {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
+{%- endif -%}
+<div class="row {{ section_width }}"
+	style="--section-font-family: "Baskervville", serif;">
+	<div class="small-12 columns">
+		<image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}" 
+          style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};height: {{ section.settings.desktop_vh_height }}vh;">
+			<div class="image-with-text-overlay--bg parallax--{{ image_parallax }}">
+				{% if image %}
+					{%- liquid
+						assign small_width = image.src.height | times: '375' | divided_by: image.src.width
+						assign master_width = image.src.width | append: 'x' | append: image.src.height
+						assign width = '375x' | append: small_width | append: ',' | append: master_width
+
+						assign class = ''
+						
+
+						if section.settings.mobile_image
+							assign class = class | append: ' image-with-text-overlay--desktop'
+						endif
+					-%}
+					{%- render 'responsive-image', image: image, sizes: width, class: class, priority: priority -%}
+				{% else %}
+					{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder_svg_tag' }}
+				{% endif %}
+				{%- if section.settings.mobile_image -%}
+					{%- liquid
+						assign image = section.settings.mobile_image
+						assign master_width = image.src.width | append: 'x' | append: image.src.height
+						assign width = '375x' | append: mobile_image_height | append: ',' | append: master_width
+
+						assign class = ''
+						if image_parallax
+							assign class = 'thb-parallax-image'
+						endif
+
+						assign class = class | append: ' image-with-text-overlay--mobile'
+						render 'responsive-image', image: image, sizes: width, class: class, priority: priority
+					-%}
+				{%- endif -%}
+			</div>
+
+			<div class="image-with-text-overlay--content content-{{ content_position }}">
+				<div class="image-with-text-overlay--content-inner content-width-{{ content_width }}">
+					{% for block in section.blocks %}
+						{%- case block.type -%}
+							{%- when 'subheading' -%}
+								<p class="subheading"
+   style="font-size: {{ block.settings.subheading_font_size | divided_by: 16.0 }}rem!important;
+          font-weight: {{ block.settings.subheading_font_weight }};
+          color: {{ block.settings.subheading_color }};
+		  font-family: "Baskervville", serif;
+        margin-top: {{ block.settings.margin_top }}rem;
+        margin-bottom: {{ block.settings.margin_bottom }}rem;"
+   {{ block.shopify_attributes }}>
+  {{ block.settings.text }}
+</p>
+							{%- when 'heading' -%}
+								<{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading"
+  style="font-family: "Baskervville", serif;
+  font-size: {{ block.settings.heading_font_size| divided_by: 16.0 }}rem; font-weight: {{ block.settings.heading_font_weight }}; color: {{ block.settings.heading_color }}; 
+  line-height: {{ block.settings.heading_font_size| divided_by: 16.0 }}rem; 
+  overflow: visible;
+	margin-top: {{ block.settings.margin_top }}rem;
+	margin-bottom: {{ block.settings.margin_bottom }}rem;"
+  {{ block.shopify_attributes }}>
+  {{ block.settings.text | newline_to_br }}
+</{{ heading_tag }}>
+							{%- when 'text' -%}
+								<div class="rte description-size--{{ block.settings.description_size }}" 
+									style="font-size: {{ block.settings.text_font_size }}px; 
+									font-weight: {{ block.settings.text_font_weight }}; 
+									color: {{ block.settings.text_color }};
+									font-family: "Baskervville", serif;
+                                    margin-top: {{ block.settings.margin_top }}rem;
+                                    margin-bottom: {{ block.settings.margin_bottom }}rem;
+                                    line-height: {{ block.settings.line_height }};" 
+									{{ block.shopify_attributes }}>
+  {{ block.settings.text }}
+</div>
+                                  {%- when 'button' -%}
+								{% if block.settings.button_text != blank %}
+								<a class="button{% if block.settings.button_outline %} outline{% endif %}"
+   href="{{ block.settings.button_link }}"
+   role="button"
+   style="
+     font-size: {{ block.settings.button_font_size }}px;
+     font-weight: {{ block.settings.button_font_weight }};
+     color: {{ block.settings.button_color }};
+     background-color: {{ block.settings.button_background_color }};
+     padding: 0.6em 1.5em;
+     line-height: 1.2;
+    border: {{ block.settings.button_border_width | default: 0 }}px {{ block.settings.button_border_style | default: 'solid' }} {{ block.settings.button_border_color | default: '#000000' }};                              
+    border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
+    font-family: "Baskervville", serif;">
+  <span>{{ block.settings.button_text }}</span>
+</a>
+
+								{% endif %}
+							{%- when 'space' -%}
+		            <div style="height: {{ block.settings.height | append: 'px' }}" {{ block.shopify_attributes }}></div>
+						{%- endcase -%}
+					{% endfor %}
+				</div>
+			</div>
+		</image-with-text-overlay>
+	</div>
+</div>
+<script src="{{ 'image-with-text-overlay.js' | asset_url }}" defer="defer"></script>
+<style>
+/* Tipografías */
+.font-helvetica { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.font-arimo { font-family: 'Arimo', sans-serif; }
+.font-roboto { font-family: 'Roboto', sans-serif; }
+.font-poppins { font-family: 'Poppins', sans-serif; font-weight: 300; }
+.font-source-sans { font-family: 'Source Sans Pro', sans-serif; }
+/*.font-montserrat { font-family: 'Montserrat', sans-serif; }*/
+
+.image-with-text-overlay--content,
+.image-with-text-overlay--content * {
+  font-family: "Baskervville", serif;
+}
+
+ /* hasta aqui las tipografias*/
+  a.button {
+  border: none;
+}
+  .image-with-text-overlay--content *,
+.image-with-text-overlay--content-inner * {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+   .thb-parallax-image,
+  .image-with-text-overlay--bg {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+@media only screen and (min-width: 1024px) {
+  .image-with-text-overlay--bg img {
+    object-position: center top !important;
+  }
+}
+@media only screen and (max-width: 749px) {
+  .image-with-text-overlay {
+    height: 620px !important;
+  }
+}
+</style>                                
+{% schema %}
+  {
+    "name": "Image with text overlay",
+		"class": "section-image-with-text-overlay",
+    "settings": [
+		{
+  "type": "checkbox",
+  "id": "use_global_font",
+  "label": "Usar tipografía global del theme",
+  "default": false
+	}
+,
+        {
+      "type": "select",
+      "id": "font_family",
+      "label": "Tipografía de la sección",
+      "default": "montserrat",
+      "options": [
+        { "value": "helvetica", "label": "Helvetica Neue" },
+        { "value": "arimo", "label": "Arimo" },
+        { "value": "roboto", "label": "Roboto" },
+        { "value": "poppins", "label": "Poppins Light" },
+        { "value": "source-sans", "label": "Source Sans" },
+        { "value": "montserrat", "label": "Montserrat" }
+      ]
+    },
+			{
+				"type": "select",
+				"id": "section_width",
+				"options": [
+					{
+						"value": "grid",
+						"label": "Grid"
+					},
+					{
+						"value": "full-width-row",
+						"label": "Full width"
+					},
+					{
+						"value": "full-width-row-full",
+						"label": "Full width, no spacing"
+					}
+				],
+				"default": "grid",
+				"label": "Section width"
+			},
+			{
+				"type": "image_picker",
+				"id": "image",
+				"label": "Image",
+				"info": "2800 x 650 .jpg recommended."
+			},
+			{
+				"type": "image_picker",
+				"id": "mobile_image",
+				"label": "Mobile image (optional)",
+				"info": "375 x 650 .jpg recommended."
+			},
+			{
+				"type": "checkbox",
+				"id": "image_parallax",
+				"default": false,
+				"label": "Enable parallax",
+				"info": "Animations must be enabled in theme settings"
+			},
+      {
+  "type": "range",
+  "id": "desktop_vh_height",
+  "label": "Alto en escritorio (vh)",
+  "min": 30,
+  "max": 100,
+  "step": 5,
+  "default": 80
+},
+
+			{
+				"type": "select",
+				"id": "desktop_height",
+				"label": "Desktop height",
+				"options": [
+					{
+						"value": "desktop-height-450",
+						"label": "450px"
+					},
+					{
+						"value": "desktop-height-550",
+						"label": "550px"
+					},
+					{
+						"value": "desktop-height-650",
+						"label": "650px"
+					},
+					{
+						"value": "desktop-height-750",
+						"label": "750px"
+					},
+					{
+						"value": "desktop-height-full",
+						"label": "Full screen"
+					}
+				],
+				"default": "desktop-height-650"
+			},
+			{
+				"type": "select",
+				"id": "mobile_height",
+				"label": "Mobile height",
+				"options": [
+					{
+						"value": "mobile-height-auto",
+						"label": "Adapt to content"
+					},
+					{
+						"value": "mobile-height-350",
+						"label": "350px"
+					},
+					{
+						"value": "mobile-height-400",
+						"label": "400px"
+					},
+					{
+						"value": "mobile-height-450",
+						"label": "450px"
+					},
+					{
+						"value": "mobile-height-500",
+						"label": "620px"
+					},
+					{
+						"value": "mobile-height-full",
+						"label": "Full screen"
+					}
+				],
+				"default": "mobile-height-500"
+			},
+			{
+				"type": "select",
+				"id": "content_width",
+				"label": "Content width",
+				"options": [
+					{
+						"value": "small",
+						"label": "Small"
+					},
+					{
+						"value": "medium",
+						"label": "Medium"
+					},
+					{
+						"value": "large",
+						"label": "Large"
+					}
+				],
+				"default": "medium"
+			},
+			{
+				 "type": "select",
+				 "id": "content_position",
+				 "label": "Content position",
+				 "options": [
+					 { "value": "middle-left", "label": "Middle left" },
+					 { "value": "middle-center", "label": "Middle center" },
+					 { "value": "middle-right", "label": "Middle right" },
+					 { "value": "bottom-left", "label": "Bottom left" },
+					 { "value": "bottom-center", "label": "Bottom center" },
+					 { "value": "bottom-right", "label": "Bottom right" }
+				 ],
+				 "default": "bottom-center"
+			},
+			{
+				"type": "select",
+				"id": "text_alignment",
+				"options": [
+					{
+						"value": "left",
+						"label": "Left"
+					},
+					{
+						"value": "center",
+						"label": "Center"
+					},
+					{
+						"value": "right",
+						"label": "Right"
+					}
+				],
+				"default": "center",
+				"label": "Content alignment"
+			},
+			{
+        "type": "header",
+        "content": "Colors"
+      },
+			{
+				"type": "color",
+				"id": "overlay_color",
+				"label": "Overlay",
+				"default": "#000000"
+			},
+			{
+				"type": "range",
+				"id": "overlay_opacity",
+				"min": 0,
+				"max": 100,
+				"step": 1,
+				"unit": "%",
+				"label": "Overlay opacity",
+				"default": 30
+			},
+			{
+	      "type": "header",
+	      "content": "Spacing"
+	    },
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": false,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": false,
+				"label": "Remove bottom spacing"
+			}
+    ],
+    "blocks": [
+			{
+				"type": "subheading",
+				"name": "Subheading",
+				"limit": 1,
+				"settings": [
+					{
+						"type": "text",
+						"id": "text",
+						"label": "Text",
+						"default": "Add a tagline"
+					},
+                 {
+  "type": "number",
+  "id": "subheading_font_size",
+  "label": "Tamaño de fuente del Subheading (px)",
+  "default": 16,
+  
+},
+{
+      "type": "select",
+      "id": "subheading_font_weight",
+      "label": "Peso de fuente",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Ligero (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medio (500)" },
+        { "value": "600", "label": "Semi-negrita (600)" },
+        { "value": "700", "label": "Negrita (700)" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Color del Subheading",
+      "default": "#ffffff"
+	},
+    {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin Bottom",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 1
+    }
+				]
+			},
+			{
+				"type": "heading",
+				"name": "Heading",
+				"limit": 1,
+				"settings": [
+					{
+						"type": "text",
+						"id": "text",
+						"label": "Text",
+						"default": "Image with text overlay"
+					},
+					{
+      "type": "number",
+      "id": "heading_font_size",
+      "label": "Tamaño de fuente (px)",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso de fuente",
+      "default": "700",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi Bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extra Bold (800)" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+	},
+    {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin Bottom",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 1
+    }
+				]
+			},
+			{
+        "type": "text",
+        "name": "Text",
+				"limit": 1,
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Content",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+          },
+					{
+						"type": "select",
+						"id": "description_size",
+						"label": "Size",
+						"options": [
+							{
+								"value": "small",
+								"label": "Small"
+							},
+							{
+								"value": "medium",
+								"label": "Medium"
+							},
+							{
+								"value": "large",
+								"label": "Large"
+							}
+						],
+						"default": "medium"
+					},
+          {
+      "type": "number",
+      "id": "text_font_size",
+      "label": "Tamaño de fuente del texto (px)",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Peso de fuente",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi Bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ]
+    },
+    {
+		"type": "range",
+      "id": "line_height",
+      "label": "Line Height",
+      "min": 1,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+	},
+    {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 0
+    },
+    {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin Bottom",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "unit": "rem",
+        "default": 1
+    }
+        ]
+      },
+			{
+        "type": "button",
+        "name": "Button",
+				"limit": 2,
+        "settings": [
+					{
+						"id": "button_text",
+						"type": "text",
+						"label": "Button label",
+						"default": "Shop Now",
+						"info": "Leave the label blank to hide the button."
+					},
+					{
+						"id": "button_link",
+						"type": "url",
+						"label": "Button link"
+					},
+          {
+      "type": "number",
+      "id": "button_font_size",
+      "label": "Tamaño de fuente del botón (px)",
+      "default": 16,
+     
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Peso de fuente",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Ligero (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medio (500)" },
+        { "value": "600", "label": "Semi-negrita (600)" },
+        { "value": "700", "label": "Negrita (700)" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Color del texto del botón",
+      "default": "#ffffff"
+    },
+          {
+  "type": "color",
+  "id": "button_background_color",
+  "label": "Color de fondo del botón",
+  "default": "#000000"
+},{
+  "type": "color",
+  "id": "button_border_color",
+  "label": "Color del borde del botón",
+  "default": "#000000"
+},
+{
+  "type": "range",
+  "id": "button_border_width",
+  "label": "Grosor del borde (px)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "default": 0
+},
+          {
+  "type": "range",
+  "id": "button_border_radius",
+  "label": "Radio del borde (border-radius)",
+  "min": 0,
+  "max": 50,
+  "step": 1,
+  "default": 4
+},
+{
+  "type": "select",
+  "id": "button_border_style",
+  "label": "Estilo del borde",
+  "default": "solid",
+  "options": [
+    { "value": "solid", "label": "Sólido" },
+    { "value": "dashed", "label": "Punteado" },
+    { "value": "dotted", "label": "Punteado fino" },
+    { "value": "double", "label": "Doble" },
+    { "value": "none", "label": "Ninguno" }
+  ]
+},
+					{
+						"type": "checkbox",
+						"id": "button_outline",
+						"label": "Use outline button style",
+						"default": false
+					}
+        ]
+      },
+      {
+        "type": "space",
+        "name": "Empty space",
+        "settings": [
+          {
+            "type": "range",
+            "id": "height",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Height",
+            "default": 50
+          }
+        ]
+      }
+    ],
+  	"max_blocks": 5,
+    "presets": [
+      {
+        "name": "Image with text overlay",
+				"blocks": [
+					{
+						"type": "subheading"
+					},
+					{
+						"type": "heading"
+					},
+					{
+						"type": "text"
+					},
+					{
+						"type": "button"
+					}
+				]
+      }
+    ],
+		"enabled_on": {
+			"templates": ["*"],
+			"groups": [
+				"header", "footer"
+			]
+		}
+  }
+{% endschema %}

@@ -1,0 +1,199 @@
+{% schema %}
+{
+  "name": "Dos filas",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "row_spacing",
+      "label": "Espaciado entre filas",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_text_spacing",
+      "label": "Espaciado entre título y texto",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Fila (Título + Texto)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título de ejemplo"
+        },
+        {
+          "type": "url",
+          "id": "title_url",
+          "label": "URL del título (opcional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_italic",
+          "label": "Título en itálico",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color de título",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "label": "Tamaño de título",
+          "default": 24,
+          "min": 12,
+          "max": 60,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "title_weight",
+          "label": "Peso de título",
+          "default": "600",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto",
+          "default": "<p>Este es el texto de ejemplo debajo del título.</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color de texto",
+          "default": "#333333"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Tamaño de texto",
+          "default": 16,
+          "min": 10,
+          "max": 40,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "text_weight",
+          "label": "Peso del texto",
+          "default": "400",
+          "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sección 2 filas - Texto editable",
+      "category": "Custom",
+      "blocks": [
+        { "type": "row" },
+        { "type": "row" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="two-rows-section"
+     style="
+       {% if section.settings.background_image != blank %}
+         background-image: url('{{ section.settings.background_image | image_url: width: 1600 }}');
+         background-size: cover;
+         background-position: center;
+       {% else %}
+         background-color: {{ section.settings.background_color }};
+       {% endif %}
+     ">
+  {% for block in section.blocks %}
+    <div class="row-item" {{ block.shopify_attributes }} style="margin-bottom: {{ section.settings.row_spacing }}px;">
+      {% if block.settings.title != blank %}
+        {% if block.settings.title_url != blank %}
+          <a href="{{ block.settings.title_url }}" style="text-decoration: none;">
+        {% endif %}
+
+        <h2 class="row-title"
+            style="color: {{ block.settings.title_color }};
+                   font-size: {{ block.settings.title_size }}px;
+                   font-weight: {{ block.settings.title_weight }};
+                   font-style: {% if block.settings.title_italic %}italic{% else %}normal{% endif %};
+                   margin-bottom: {{ section.settings.title_text_spacing }}px;">
+          {{ block.settings.title }}
+        </h2>
+
+        {% if block.settings.title_url != blank %}
+          </a>
+        {% endif %}
+      {% endif %}
+
+      {% if block.settings.text != blank %}
+        <div class="row-text rte"
+           style="color: {{ block.settings.text_color }};
+                  font-size: {{ block.settings.text_size }}px;
+                  font-weight: {{ block.settings.text_weight }};">
+          {{ block.settings.text }}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+.two-rows-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.row-item {
+  margin: 0; /* reset */
+}
+
+.row-title {
+  margin: 0; /* reset all margins, schema spacing takes over */
+  line-height: 1.2;
+}
+
+.row-text {
+  margin: 0; /* reset */
+  line-height: 1.5;
+}
+</style>

@@ -1,0 +1,987 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "WHAT IS SUSTAINABILITY IN FASHION?",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/what_-is_-sustainability_-article_-aoa.jpg",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published June, 1st 2021",
+            "color": "#9b9b9b",
+            "font_size": 14,
+            "font_weight": 400
+          }
+        },
+        "text_EMQtwr": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Sustainability: “The quality of causing little or no damage to the environment and therefore able to continue for a long time.”</p><p>- Cambridge Dictionary</p><p>To us at Arms of Andes, environmental sustainability in fashion industry means <strong>not harming the environment in all stages of production including the garment's end of life...</strong></p><p>So, what stages in fashion can cause harm to the environment?</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 20,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_EMQtwr"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        "p {line-height: 2em; letter-spacing: 0.5px; text-align: justify;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#4a4a4a",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "text_with_icons_qTantm": {
+      "type": "text-with-icons",
+      "blocks": {
+        "icon_dGbNCH": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-4ed397bf--unsustainable-clothing-manufacturing-methods.png",
+            "heading": "1. Extraction",
+            "link": "",
+            "text": "<p>Sourcing raw materials to create fibers for textiles, such as drilling (PET), shearing (wool), planting (cotton).<br/><br/></p>"
+          }
+        },
+        "icon_QEfKnf": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-d397bf33--single-sourcing.png",
+            "heading": "2. Supply Chain",
+            "link": "",
+            "text": "<p>The supply chain process can involve huge carbon footprints and waste resources like water and energy.</p>"
+          }
+        },
+        "icon_rLbqrq": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-97bf33fb--aoa-natural-clothes.png",
+            "heading": "3. Disposal",
+            "link": "",
+            "text": "<p>At a garment’s end of life, it likely becomes trash, which pollutes our land & oceans and hurts wildlife.<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon_dGbNCH",
+        "icon_QEfKnf",
+        "icon_rLbqrq"
+      ],
+      "custom_css": [
+        ".text-with-icons__block {background-color: #81eed2; padding: 24px; border-radius: 20px;}",
+        ".text-with-icons__text {margin-top: 10px;}"
+      ],
+      "name": "Text with icons",
+      "settings": {
+        "section_titulo": "",
+        "titulo_alineacion": "center",
+        "titulo_tamano": 32,
+        "titulo_color": "#000000",
+        "titulo_peso": 700,
+        "text_alignment": "center",
+        "icon_position": "top",
+        "icon_size": "xlarge",
+        "heading_size": "large",
+        "mobile_swipe": false,
+        "color_bg": "rgba(0,0,0,0)",
+        "color_heading": "#4a4a4a",
+        "color_text": "#4a4a4a",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "hover_animation": "none",
+        "ocultar_en_mobile": false
+      }
+    },
+    "rich_text_ERzNDn": {
+      "type": "rich-text",
+      "blocks": {
+        "text_3qUi6e": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hands were protected with a pair of <strong>wool gloves and a larger pair of reindeer mittens</strong>. To protect their heads Amundsen’s team wore <strong>wool balaclavas, hats, and scarves</strong>.</p><p>At the same time as Amundsen was racing for the South Pole, a British team lead by Captain Scott was also making an attempt to reach the pole. They opted for less animal fur clothing, instead used layers of wool and Burberry windproof fabric to keep out the cold. Amundsen won the race to the pole, arriving on the 14th of December 1911.</p><h3>Why did we switch to synthetics?</h3><p>Roald Amundsen and his Antarctic exploration team were racing to the south pole in the early 1900’s, a good 30 years before the creation of the first synthetic fabrics. Leaving them little choice as to what they could wear. However, <strong>modern winter enthusiasts almost always opt for synthetic materials </strong>over natural ones, why is that?</p><p>It’s due to a number of things. Primarily their insulative value. A synthetic jacket stuffed with down traps a great insulating layer of air around your body, which is going to keep you toasty warm.</p><p>Modern mountain climbers use full body suits made from synthetic materials. These suits can <strong>keep you warm in temperatures as low as -50⁰C</strong>, which would have been of great use to Amundsen and Scott. On top of their impressive insulative value, it’s also about weight. Modern materials like <strong>nylon and Gore-Tex are incredibly lightweight and strong</strong>, making them much more useful in tough environments.</p><p>Cost also had a lot to do with the shift. It is much easier to make massive amounts of petrochemical based fabrics like nylon and polyester, than it is for rear alpacas or sheep for their wool. However, <strong>the production methods used to make these synthetic fabrics have high environmental costs</strong>. Which is something worth considering now more than ever.</p><p>Synthetics are also very good at what they do. If you have ever been caught out in a rainstorm before, you probably have had silently praised your Gore-Tex layers for keeping you completely dry.</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        },
+        "image_qymAdM": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pf-8fcd739c--PFMR2020GlobalFiberProduction.webp",
+            "retina": false
+          }
+        },
+        "text_9zkXYH": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Image credit: Textile Exchange</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 10,
+            "font_weight": 400
+          }
+        },
+        "text_eizLLy": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>1. Extraction: Raw materials that harm the ecosystem</h3><p>The major ecological problem in raw material extraction for fibers used in the fashion industry is resource depletion. The extraction of natural resources for these fibers is causing irreversible damage to the environment.</p><h4>Consequences of petroleum extraction for polyester</h4><p>Polyester is made from fossil fuels (coal, natural gas, and petroleum). Fossils fuels formed over millions of years from the buried remains of plants and other organisms that were subjected to high pressure and temperatures over long periods of time. The first petroleum extraction occurred in 1859 and it has been on a rise ever since. Over the period of 162 years, we have been depleting this resource nonstop for use as fuel for transportation and heating, but also to make plastic products, such as plastic bottles, packaging, and textiles.<br/><br/>In 2015, <strong>33 billion barrels</strong> of oil were produced. 4% was used to produce plastics, of which 25% becomes textiles. [1] Although such a small percentage might seem insignificant, it equals <strong>330 million barrels each year </strong>that go directly to making synthetic fibers for textiles.<br/><br/>Petroleum reservoirs are found underground or beneath the ocean floor and extraction uses extracted with giant drilling machines. This extraction alone causes 3 major issues:</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_3qUi6e",
+        "image_qymAdM",
+        "text_9zkXYH",
+        "text_eizLLy"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 4% 4% 0 4%;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".rich-text__inner {text-align: center !important;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_qTCCgz": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_yPV379": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Chemical contamination</h4><p>Crude oil can be released during extraction into the environment creating oil spills. Petroleum contains highly toxic compounds which cause severe damage to flora and fauna. </p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        },
+        "text_mU4iaQ": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Disruption of wildlife habitats</h4><p>Oil extraction require construction of power lines, wellpads, roads, and fences. Heavy equipment used in the construction and the structures themselves disrupts wildlife habitats.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        },
+        "text_wRDANM": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Carbon emissions</h4><p>Oil drilling and subsequent processes require the use of heavy machinery and drills, which largely contribute to world's carbon pollution. Petroleum extraction, transportation and refining are estimated to produce 5% of total global carbon emissions.[2]</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_yPV379",
+        "text_mU4iaQ",
+        "text_wRDANM"
+      ],
+      "custom_css": [
+        ".row {margin: 0 4% 0 4%;}",
+        ".rte {background-color: #81eed2; padding: 24px; margin: 15px; border-radius: 20px;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/pf-4f3ad9c7--aoa-ecofriendly-production.png",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": true,
+        "video_controls": true,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#4a4a4a",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_6LtJWC": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_CXgRQ6": {
+          "type": "subheading",
+          "settings": {
+            "text": "A chemical contamination: The BP Deepwater Horizon drilling rig explosion in 2010 caused an oil spill in the Gulf of Mexico, releasing 134 million gallons of crude oil into the ocean, contaminating a large area of the marine ecosystem, and killing thousands of sea animals and marine birds.",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        },
+        "text_CJ84Em": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Polyester production is constantly increasing and therefore contributing more each year to the Earth’s pollution and destruction of ecosystems.</p><h4>Consequences of conventional cotton farming</h4><p>Cotton is the second most widely used fiber after polyester and unless it’s grown organically, it causes a lot of damage to the environment. According to World Wildlife Foundation, it takes 2,700 liters of water to produce enough cotton for one t-shirt. [3] On the other hand, organic cotton uses up to 91% less and reduces chemical pollution by up to 98% compared to conventional cotton. [4,5] However, the Textile Exchange Chart states organic cotton still only represents 1% of overall cotton production. There are 3 major issues in growing and harvesting cotton when using conventional methods:</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "subheading_CXgRQ6",
+        "text_CJ84Em"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 4% 4% 0 4%;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize; padding: 10px; border: 1px solid;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "image_with_text_667ak4": {
+      "type": "image-with-text",
+      "blocks": {
+        "text_rBTbbM": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Chemical contamination</h4><p>Heavy use of fertilizers, pesticides and insecticides is a major cause of water contamination and decreased soil fertility. The toxicity of such products is also a threat to biodiversity.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        },
+        "text_YqXLAD": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Soil depletion</h4><p>Lack of soil rotation and the use of synthetic fertilizers, pesticides and GMO seeds cause soil depletion in cotton farming. This includes soil degradation and erosion, as well as loss of soil fertility and biodiversity.</p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        },
+        "text_d334PM": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Water scarcity</h4><p>Inefficient irrigation systems combined with degraded soil that have low water absorbency are the main reasons why water is overused in cotton farming and causing water scarcity. </p>",
+            "description_size": "medium",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_rBTbbM",
+        "text_YqXLAD",
+        "text_d334PM"
+      ],
+      "custom_css": [
+        ".row {margin: 0 4% 0 4%;}",
+        ".rte {background-color: #81eed2; padding: 24px; margin: 15px; border-radius: 20px;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "custom_anchor_id": "",
+        "image": "shopify://shop_images/pf-e8d87cd8--arms-of-andes-organic-pima-cotton.png",
+        "use_video": false,
+        "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": true,
+        "video_controls": true,
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "section_width": "full-width-row-full",
+        "layout": "image_first",
+        "content_position": "text-left",
+        "color_bg": "#ffffff",
+        "color_text": "#4a4a4a",
+        "color_border": "#e2e2e2",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_gVkfim": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_tFarW8": {
+          "type": "subheading",
+          "settings": {
+            "text": "Water scarcity in the world: Intensive cotton farming is linked to complete drying up of the Aral Sea. The area was not only left without water but was also contaminated with a toxic footprint affecting the health and living conditions of millions of people.",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        },
+        "text_MiyRmP": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>2. A supply chain that doesn’t contaminate the environment<br/></h3><p>Most of the textile manufacturing industry has adopted the fast fashion model, producing clothes fast and cheap, which leads to further water and air pollution. This supply chain has 3 major unsustainable issues: high carbon footprint, use of toxic chemicals, and water contamination.<br/><br/>According to a McKinsey report [11], in 2018, the apparel and footwear industry produced 2,106 Mn tonnes CO2eq and more than 70% of it came from the supply chain. The rest came from product use, end of use, and retail. This is because each step of the production involves high energy consuming machines and the various stages generally occur in different factories (often in different countries or regions), leading to huge carbon footprints from transportation.<br/><br/>Additionally, the chemicals used in the fabric finishings, in order to make clothes more functional, as well as the synthetic dyes, can be incredibly toxic. Just a few chemicals used in fabric production include:<br/><br/>Formaldehyde: keeps clothes wrinkle-free<br/>PFAS (Per- and polyfluoroalkyl substances): makes your clothes waterproof<br/>Chromium: dyes clothes black<br/>and many more.<br/><br/>According to the EPA, these chemicals have been linked to respiratory problems, skin irritation, liver and kidney issues and other health issues. [10]</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "subheading_tFarW8",
+        "text_MiyRmP"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 4% 4% 0 4%;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize; padding: 10px; border: 1px solid;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "text_with_icons_diEMMK": {
+      "type": "text-with-icons",
+      "blocks": {
+        "icon_yRY4Wg": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-32f949d5--sourcing-materials.webp",
+            "heading": "Fiber production",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_N8XYQb": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/1arrow.jpg",
+            "heading": "Staple Fiber",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_mW7nyb": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-2bc232f9--yarn-factory.webp",
+            "heading": "Yarn Factory",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_Xty6R4": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura2.jpg",
+            "heading": "Yarn",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_qNLkUj": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-5d742bc2--textile-factory.webp",
+            "heading": "Fabric Factory",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_QPwBaC": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura3.jpg",
+            "heading": "Fabric",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_3bcTcP": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-02465d74--garment-factory.webp",
+            "heading": "Garment Factory",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_Fr6rxF": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura4.jpg",
+            "heading": "Garment",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_NpAwHQ": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-388a0246--fashion-retail-warehouse.webp",
+            "heading": "Brand Warehouse",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_gX6rbY": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura6.jpg",
+            "heading": "",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_iUU6Mg": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-79388a02--retail-store.webp",
+            "heading": "Acquisition:",
+            "link": "",
+            "text": "<p>- Retail Shop<br/>- Online Delivery</p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon_yRY4Wg",
+        "icon_N8XYQb",
+        "icon_mW7nyb",
+        "icon_Xty6R4",
+        "icon_qNLkUj",
+        "icon_QPwBaC",
+        "icon_3bcTcP",
+        "icon_Fr6rxF",
+        "icon_NpAwHQ",
+        "icon_gX6rbY",
+        "icon_iUU6Mg"
+      ],
+      "custom_css": [
+        "div .text-with-icons__icon {width: 80px; height: 80px; justify-content: center; display: flex; align-items: center;}",
+        ".text-with-icons__inner {display: flex; flex-wrap: wrap; justify-content: center; gap: 0px;}",
+        ".text-with-icons__block {margin: 10px;}",
+        ".body-font {display: inline-block; margin: 0 auto; text-align: center; max-width: 80%;}"
+      ],
+      "name": "Text with icons",
+      "settings": {
+        "section_titulo": "",
+        "titulo_alineacion": "center",
+        "titulo_tamano": 32,
+        "titulo_color": "#000000",
+        "titulo_peso": 700,
+        "text_alignment": "center",
+        "icon_position": "top",
+        "icon_size": "small",
+        "heading_size": "small",
+        "mobile_swipe": true,
+        "color_bg": "rgba(0,0,0,0)",
+        "color_heading": "#4e6c66",
+        "color_text": "#4e6c66",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "hover_animation": "none",
+        "ocultar_en_mobile": false
+      }
+    },
+    "rich_text_EMij8h": {
+      "type": "rich-text",
+      "blocks": {
+        "text_mCjNXc": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The general supply chain starts by creating the fiber, transporting it to a yarn factory, then to a fabric factory, and finally to a garment factory to create the actual clothes. Once the clothes are sold to a fashion brand, they are usually shipped by sea freight to the brand's warehouse and then to a retail store if needed. Almost every step of the supply chain is done in a different country or city and transported by sea fright.</p><p>Polyester fiber production: the most complicated fiber</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_mCjNXc"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 0 4% 0 4%;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "text_with_icons_hP7bY8": {
+      "type": "text-with-icons",
+      "blocks": {
+        "icon_HQdkTK": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-8aa15d4d--oil-industry.webp",
+            "heading": "Oil Well",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_UPbXGd": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura7.jpg",
+            "heading": "Crude oil & natural gas",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_DyxLek": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-a15d4d46--refinery-naptha-fraction.webp",
+            "heading": "Refinery(distilled into Naphtha)",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_nDcXfU": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura8.jpg",
+            "heading": "Chemicals (Ethylene & Xylene)",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_qbKyV4": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-4679028b--chemical-facility-for-polymerization.webp",
+            "heading": "Chemical facility(polymerization)",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_ahfEYN": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura9.jpg",
+            "heading": "PET Chips",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_iE4QtD": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-3907262b--polyester-fiber-production.webp",
+            "heading": "Polyester Fiber Production Facility",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_fEnaaG": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/Captura10.jpg",
+            "heading": "Polyester Fibers",
+            "link": "",
+            "text": ""
+          }
+        },
+        "icon_aA7EEG": {
+          "type": "icon",
+          "settings": {
+            "icon": "ruler",
+            "image": "shopify://shop_images/pf-2bc232f9--yarn-factory.webp",
+            "heading": "Yarn production Facility (or general supply chain) ",
+            "link": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_HQdkTK",
+        "icon_UPbXGd",
+        "icon_DyxLek",
+        "icon_nDcXfU",
+        "icon_qbKyV4",
+        "icon_ahfEYN",
+        "icon_iE4QtD",
+        "icon_fEnaaG",
+        "icon_aA7EEG"
+      ],
+      "custom_css": [
+        "div .text-with-icons__icon {width: 80px; height: 80px; justify-content: center; display: flex; align-items: center;}",
+        ".text-with-icons__inner {display: flex; flex-wrap: wrap; justify-content: center; gap: 0px;}",
+        ".text-with-icons__block-content {margin: 10px;}",
+        ".body-font {display: inline-block; margin: 0; text-align: center; max-width: 80%;}"
+      ],
+      "name": "Text with icons",
+      "settings": {
+        "section_titulo": "",
+        "titulo_alineacion": "center",
+        "titulo_tamano": 32,
+        "titulo_color": "#000000",
+        "titulo_peso": 700,
+        "text_alignment": "center",
+        "icon_position": "top",
+        "icon_size": "small",
+        "heading_size": "small",
+        "mobile_swipe": true,
+        "color_bg": "rgba(0,0,0,0)",
+        "color_heading": "#4e6c66",
+        "color_text": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "hover_animation": "none",
+        "ocultar_en_mobile": false
+      }
+    },
+    "rich_text_Uh6PMq": {
+      "type": "rich-text",
+      "blocks": {
+        "text_gafgLy": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The PET manufacturing processes are extremely demanding in terms of resource usage – including chemicals, water and energy – as well as highly contaminating to the environment.</p><h3>3. Clothes that don't leave a trace in the environment<br/></h3><p>The manufacturing process and the supply chain aren’t the only parts of the fashion industry that can have a negative impact on the environment. Certain fibers have an impact while a garment is in use and, of course, there will come a time when the garment won’t be worn anymore. These are both important considerations when determining the sustainability of a garment.<br/><br/>Microplastics: Clothing made of polyester and other synthetic fibers has been shown to release microplastics into the environment during use, especially when washed[12]. These microplastics can get into ecosystems, particularly our waterways and can damage living organisms if ingested.<br/><br/>Biodegradability: Synthetic fibers, such as polyester, nylon and spandex are not biodegradable. This means that living organisms can’t break them down when they are thrown away; it can take anywhere from 20 to 200 years for the fibers to break down enough for them to “disappear”. Conversely, biodegradable fibers will disappear completely through biological processes, usually within 6 to 24 months. However, just because a garment is made from a natural fiber – like cotton – doesn’t mean the garment as a whole is completely biodegradable and won’t contaminate at the end of its life. It is important to think about chemicals used during production, including dyes, which can leach into the environment once the garment is put in the trash. <br/></p><h4>So, what is sustainability in fashion?</h4><p>Many clothing manufacturers claim their garments are made in a sustainable way, whether that’s because they use recycled materials, or organic cotton. But as shown above, there are many aspects to clothing production that can have a major impact on its sustainability: from the extraction/fabrication of the fibers, to use of chemicals and water in fabric and garment production; from the carbon footprint of the factories and transportation, to what happens to the garment at the end of its life.<br/><br/>For optimal sustainability, it’s good to look for clothing that:<br/></p><ul><li>Is made from 100% natural, sustainably sourced fibers.</li><li>Is manufactured as near to the fiber/yarn source (and ideally to the buyer!) as possible.</li><li>Involves minimal chemical, water and energy use during manufacture.</li><li>Is colored using natural dyes, if at all possible!</li></ul><p>Very few garments on the market are 100% biodegradable, and few brands can claim truly sustainable production and garments from start to finish. However, many clothing brands are taking real steps towards sustainability, and any step in the right direction is a good one!</p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 18,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_gafgLy"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 4% 4% 0 4%;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "linea_horizontal_BQqtza": {
+      "type": "linea-horizontal",
+      "name": "Línea decorativa",
+      "settings": {
+        "alineacion": "center",
+        "ancho": 85,
+        "color_linea": "#0e355e",
+        "grosor": 1,
+        "espacio_superior": 20,
+        "espacio_inferior": 20
+      }
+    },
+    "rich_text_UQPEEW": {
+      "type": "rich-text",
+      "blocks": {
+        "text_RkRa7Y": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Resources</strong></p><p>1 <a href=\"https://www.ellenmacarthurfoundation.org/publications/a-new-textiles-economy-redesigning-fashions-future#purchase-options\">Ellen MacArthur Foundation: A New Textiles Economy</a></p><p>2 Masnadi et al: Global carbon intensity of crude oil production</p><p>3 <a href=\"https://www.worldwildlife.org/stories/the-impact-of-a-cotton-t-shirt\" target=\"_self\">World Wildlife Foundation: The Impact of A Cotton T-Shirt</a></p><p>4 <a href=\"https://www.soilassociation.org/media/19674/thirsty-for-fashion-soil-association-report.pdf\">Soil Association: Thirsty for Fashion?</a></p><p>5 <a href=\"https://waterfootprint.org/media/downloads/Assessm_water_footprint_cotton_India.pdf\">Water Footprint Network: Fair & Smart Use of The World's Fresh Water</a></p><p>6 U.S. Environmental Protection Agency</p><p>7 <a href=\"https://www.ellenmacarthurfoundation.org/our-work/activities/make-fashion-circular/report\">Ellen MacArthur Foundation: Make Fashion Circular Report</a></p><p>8 <a href=\"https://www.ellenmacarthurfoundation.org/publications/a-new-textiles-economy-redesigning-fashions-future#purchase-options\">Ellen MacArthur Foundation: A New Textiles Economy</a></p><p>9 <a href=\"https://www.ellenmacarthurfoundation.org/circular-economy/what-is-the-circular-economy\" target=\"_self\">Ellen MacArthur Foundation: What Is The Circular Economy?<br/></a></p><p><a href=\"https://www.epa.gov/pfas/basic-information-pfas\" target=\"_blank\">10 United States Environmental Protection Agency<br/></a></p><p><a href=\"https://www.mckinsey.com/~/media/mckinsey/industries/retail/our%20insights/fashion%20on%20climate/fashion-on-climate-full-report.pdf\" target=\"_blank\">11 McKinsey: Fashion on climate<br/></a></p><p><a href=\"https://www.mckinsey.com/~/media/mckinsey/industries/retail/our%20insights/fashion%20on%20climate/fashion-on-climate-full-report.pdf\" target=\"_blank\">1</a>2 Environ. Sci. Technol. 2020, 54, 6, 3288–3296 </p>",
+            "custom_liquid": "",
+            "color": "#4a4a4a",
+            "font_size": 16,
+            "font_weight": 300
+          }
+        }
+      },
+      "block_order": [
+        "text_RkRa7Y"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin: 4% 4% 0 4%;}",
+        "a {text-decoration: none;}",
+        ".rte {line-height: 1.5em; text-align: justify;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#696969",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pf-a90c0d6e--pileofnaturallydyedclothes.jpg",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "LEAVE NO TRACE APPAREL",
+            "link": "shopify://pages/leave-no-trace-apparel",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pf-2b9d2181--artembeliaikinTa3f1ZcCgWgunsplash.avif",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "WHAT ARE MICROPLASTICS IN THE FASHION INDUSTRY? ",
+            "link": "shopify://blogs/news/what-are-microplastics-in-the-fashion-industry",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\n\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "text_with_icons_qTantm",
+    "rich_text_ERzNDn",
+    "image_with_text_qTCCgz",
+    "rich_text_6LtJWC",
+    "image_with_text_667ak4",
+    "rich_text_gVkfim",
+    "text_with_icons_diEMMK",
+    "rich_text_EMij8h",
+    "text_with_icons_hP7bY8",
+    "rich_text_Uh6PMq",
+    "linea_horizontal_BQqtza",
+    "rich_text_UQPEEW",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}

@@ -1,0 +1,407 @@
+{% comment %} {% schema %}
+{
+  "name": "Custom 8 Products",
+  "settings": [
+    { "type": "product", "id": "product_1", "label": "Producto 1" },
+    { "type": "product", "id": "product_2", "label": "Producto 2" },
+    { "type": "product", "id": "product_3", "label": "Producto 3" },
+    { "type": "product", "id": "product_4", "label": "Producto 4" },
+    { "type": "product", "id": "product_5", "label": "Producto 5" },
+    { "type": "product", "id": "product_6", "label": "Producto 6" },
+    { "type": "product", "id": "product_7", "label": "Producto 7" },
+    { "type": "product", "id": "product_8", "label": "Producto 8" }
+  ],
+  "presets": [
+    {
+      "name": "Custom 8 Products",
+      "category": "Productos"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .custom8-products-section{
+  margin-top:0px;
+  margin-bottom:0px;
+}
+ .product-card .product-card--featured-image {
+  margin-bottom:0px!important;
+}
+.product-card {
+  margin-bottom: 0px!important;
+}
+.custom8-products-section .product8-card-slide{
+  padding:0px!important;
+  margin-bottom:0px!important;
+}
+/* Default = mobile slider */
+.custom8-products-section .custom8-slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hide overflow on mobile */
+}
+.custom8-products-section .custom8-slider-track {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.4s ease-in-out;
+}
+.custom8-products-section .product8-card-slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+.custom8-products-section .slider8-btn {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: block;
+}
+.custom8-products-section .slider8-btn.prev { left: 10px; }
+.custom8-products-section .slider8-btn.next { right: 10px; }
+
+/* Desktop grid overrides */
+@media screen and (min-width: 768px) {
+  .custom8-products-section .custom8-slider-track {
+    transform: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 -10px;
+  }
+  .custom8-products-section .product8-card-slide {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  .custom8-products-section .slider8-btn {
+    display: none;
+  }
+}
+</style>
+
+<div class="custom8-products-section section-spacing">
+  <div class="custom8-slider-container">
+    <button class="slider8-btn prev">←</button>
+    <div class="custom8-slider-track">
+      {%- liquid
+        assign product_handles_str = ""
+        for i in (1..8)
+          assign product_id = "product_" | append: i
+          assign product_handle = section.settings[product_id]
+          if product_handle != blank
+            assign product_handles_str = product_handles_str | append: ',' | append: product_handle
+          endif
+        endfor
+        assign product_handles = product_handles_str | remove_first: ',' | split: ','
+      -%}
+
+      {% for handle in product_handles %}
+        {%- assign product = all_products[handle] -%}
+        {% if product %}
+          <div class="product8-card-slide">
+            {% render 'product-card-overlay', product_card_product: product %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="slider8-btn next">→</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('shopify:section:load', initCustom8Slider);
+document.addEventListener('DOMContentLoaded', initCustom8Slider);
+
+function initCustom8Slider() {
+  document.querySelectorAll('.custom8-products-section').forEach(sectionEl => {
+    const track = sectionEl.querySelector(".custom8-slider-track");
+    const slides = sectionEl.querySelectorAll(".product8-card-slide");
+    const prevBtn = sectionEl.querySelector(".slider8-btn.prev");
+    const nextBtn = sectionEl.querySelector(".slider8-btn.next");
+
+    if (!track || slides.length < 2) return;
+
+    let index = 0;
+
+    function updateSlider() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    function initSlider() {
+      if (window.innerWidth < 768) {
+        slides.forEach(slide => {
+          slide.style.flex = "0 0 100%";
+          slide.style.maxWidth = "100%";
+        });
+        prevBtn.style.display = "block";
+        nextBtn.style.display = "block";
+        updateSlider();
+      } else {
+        track.style.transform = "none";
+        slides.forEach(slide => {
+          slide.style.flex = "0 0 25%";
+          slide.style.maxWidth = "25%";
+        });
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % slides.length;
+      updateSlider();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      index = (index - 1 + slides.length) % slides.length;
+      updateSlider();
+    });
+
+    window.addEventListener("resize", initSlider);
+
+    initSlider();
+  });
+}
+</script> {% endcomment %}
+
+{% schema %}
+{
+  "name": "Custom 8 Products",
+  "settings": [
+    { "type": "product", "id": "product_1", "label": "Producto 1" },
+    { "type": "product", "id": "product_2", "label": "Producto 2" },
+    { "type": "product", "id": "product_3", "label": "Producto 3" },
+    { "type": "product", "id": "product_4", "label": "Producto 4" },
+    { "type": "product", "id": "product_5", "label": "Producto 5" },
+    { "type": "product", "id": "product_6", "label": "Producto 6" },
+    { "type": "product", "id": "product_7", "label": "Producto 7" },
+    { "type": "product", "id": "product_8", "label": "Producto 8" },
+    {
+      "type": "header",
+      "content": "Autoplay Settings (Mobile only)"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_mobile",
+      "label": "Auto-rotate products on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change products every",
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom 8 Products",
+      "category": "Productos"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .custom8-products-section{
+  margin-top:0px;
+  margin-bottom:0px;
+}
+ .product-card .product-card--featured-image {
+  margin-bottom:0px!important;
+}
+.product-card {
+  margin-bottom: 0px!important;
+}
+.custom8-products-section .product8-card-slide{
+  padding:0px!important;
+  margin-bottom:0px!important;
+}
+/* Default = mobile slider */
+.custom8-products-section .custom8-slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hide overflow on mobile */
+}
+.custom8-products-section .custom8-slider-track {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.4s ease-in-out;
+}
+.custom8-products-section .product8-card-slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+.custom8-products-section .slider8-btn {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: block;
+}
+.custom8-products-section .slider8-btn.prev { left: 10px; }
+.custom8-products-section .slider8-btn.next { right: 10px; }
+
+/* Desktop grid overrides */
+@media screen and (min-width: 768px) {
+  .custom8-products-section .custom8-slider-track {
+    transform: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 -10px;
+  }
+  .custom8-products-section .product8-card-slide {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+  }
+  .custom8-products-section .slider8-btn {
+    display: none;
+  }
+}
+</style>
+
+{%- liquid
+  assign autoplay_mobile = section.settings.autoplay_mobile
+  assign autoplay_speed = section.settings.autoplay_speed | times: 1000
+-%}
+
+<div class="custom8-products-section section-spacing" 
+     data-autoplay="{{ autoplay_mobile }}" 
+     data-autoplay-speed="{{ autoplay_speed }}">
+  <div class="custom8-slider-container">
+    <button class="slider8-btn prev">←</button>
+    <div class="custom8-slider-track">
+      {%- liquid
+        assign product_handles_str = ""
+        for i in (1..8)
+          assign product_id = "product_" | append: i
+          assign product_handle = section.settings[product_id]
+          if product_handle != blank
+            assign product_handles_str = product_handles_str | append: ',' | append: product_handle
+          endif
+        endfor
+        assign product_handles = product_handles_str | remove_first: ',' | split: ','
+      -%}
+
+      {% for handle in product_handles %}
+        {%- assign product = all_products[handle] -%}
+        {% if product %}
+          <div class="product8-card-slide">
+            {% render 'product-card-overlay', product_card_product: product %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="slider8-btn next">→</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('shopify:section:load', initCustom8Slider);
+document.addEventListener('DOMContentLoaded', initCustom8Slider);
+
+function initCustom8Slider() {
+  document.querySelectorAll('.custom8-products-section').forEach(sectionEl => {
+    const track = sectionEl.querySelector(".custom8-slider-track");
+    const slides = sectionEl.querySelectorAll(".product8-card-slide");
+    const prevBtn = sectionEl.querySelector(".slider8-btn.prev");
+    const nextBtn = sectionEl.querySelector(".slider8-btn.next");
+
+    if (!track || slides.length < 2) return;
+
+    let index = 0;
+    let autoplayInterval = null;
+
+    // Leer configuración de autoplay desde data attributes
+    const autoplayEnabled = sectionEl.dataset.autoplay === 'true';
+    const autoplaySpeed = parseInt(sectionEl.dataset.autoplaySpeed) || 5000;
+
+    function updateSlider() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    function startAutoplay() {
+      // Solo iniciar autoplay si está habilitado y estamos en mobile
+      if (autoplayEnabled && window.innerWidth < 768) {
+        stopAutoplay(); // Limpiar cualquier intervalo existente
+        autoplayInterval = setInterval(() => {
+          index = (index + 1) % slides.length;
+          updateSlider();
+        }, autoplaySpeed);
+      }
+    }
+
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+    }
+
+    function initSlider() {
+      if (window.innerWidth < 768) {
+        slides.forEach(slide => {
+          slide.style.flex = "0 0 100%";
+          slide.style.maxWidth = "100%";
+        });
+        prevBtn.style.display = "block";
+        nextBtn.style.display = "block";
+        updateSlider();
+        startAutoplay(); // Iniciar autoplay en mobile
+      } else {
+        stopAutoplay(); // Detener autoplay en desktop
+        track.style.transform = "none";
+        slides.forEach(slide => {
+          slide.style.flex = "0 0 25%";
+          slide.style.maxWidth = "25%";
+        });
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % slides.length;
+      updateSlider();
+      startAutoplay(); // Reiniciar autoplay después de interacción manual
+    });
+
+    prevBtn.addEventListener("click", () => {
+      index = (index - 1 + slides.length) % slides.length;
+      updateSlider();
+      startAutoplay(); // Reiniciar autoplay después de interacción manual
+    });
+
+    window.addEventListener("resize", initSlider);
+
+    initSlider();
+  });
+}
+</script>

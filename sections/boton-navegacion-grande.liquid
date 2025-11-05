@@ -1,0 +1,177 @@
+{% schema %}
+{
+  "name": "Boton-gran-navegación",
+  "settings": [
+    {
+  "type": "image_picker",
+  "id": "section_background_image",
+  "label": "Imagen de fondo de la sección"
+},
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Color de fondo de la sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño de letra (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "font_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_text_color",
+      "label": "Color del texto al hacer hover",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color del borde del botón",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Radio de borde del botón (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Botón grande",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón",
+          "default": "Título"
+        },
+        {
+          "type": "text",
+          "id": "section_id",
+          "label": "ID de la sección destino (sin #)",
+          "default": "about-us"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Imagen de fondo"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Boton-gran-navegación",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="button-nav-section-large" style="
+  {% if section.settings.section_background_image %}
+    background-image: url({{ section.settings.section_background_image | img_url: 'master' }});
+    background-size: cover;
+    background-position: center;
+  {% else %}
+    background-color: {{ section.settings.section_background }};
+  {% endif %}
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;">
+  
+  {% for block in section.blocks %}
+    <a href="#{{ block.settings.section_id }}"
+       class="big-button custom-btn"
+       style="
+         width: 200px;
+         height: 200px;
+         background-image: url('{{ block.settings.background_image | img_url: '500x' }}');
+         background-size: cover;
+         background-position: center;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+         color: {{ section.settings.text_color }};
+         font-size: {{ section.settings.font_size }}px;
+         font-weight: {{ section.settings.font_weight }};
+         border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+         border-radius: {{ section.settings.border_radius }}px;
+         text-decoration: none;
+         transition: all 0.3s ease, transform 0.3s ease;
+       "
+       onmouseover="
+         this.style.color = '{{ section.settings.hover_text_color }}';
+         this.style.transform = 'scale(1.05)';
+       "
+       onmouseout="
+         this.style.color = '{{ section.settings.text_color }}';
+         this.style.transform = 'scale(1)';
+       "
+    >
+      {{ block.settings.button_label }}
+    </a>
+  {% endfor %}
+</div>
+
+<style>
+ .button-nav-section-large {
+  width: 100%;
+}
+ 
+  .big-button {
+    padding: 15px; 
+  }
+    @media screen and (max-width: 749px) {
+    .button-nav-section-large .custom-btn,
+    .button-nav-section-large .big-button {
+      display: block !important;
+      width: 100% !important;
+      max-width: 300px;
+      margin: 0.25rem auto !important; 
+      box-sizing: border-box;
+      height: auto !important;
+      min-height: 70px; 
+      padding: 10px; 
+    }
+  }
+  
+</style>

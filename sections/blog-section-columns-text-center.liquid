@@ -1,0 +1,167 @@
+<div class="custom-two-column-sectionblog" style="text-align: center;">
+  <!-- TÍTULO PRINCIPAL -->
+  <h2 style="font-size: {{ section.settings.heading_size }}px; font-weight: {{ section.settings.heading_weight }}; color: {{ section.settings.heading_color }};">
+    {{ section.settings.heading }}
+  </h2>
+
+  <div class="custom-columns-containerblog">
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="custom-columnblog">
+      <div class="custom-textblog" style="font-size: {{ section.settings.column_text_size }}px; color: {{ section.settings.column_text_color }}; font-weight: {{ section.settings.column_text_weight }};">
+        {{ section.settings.left_text }}
+      </div>
+    </div>
+
+    <!-- ÍCONO O IMAGEN EN EL CENTRO -->
+    <div class="custom-iconblog">
+      {% if section.settings.icon_image != blank %}
+        <img src="{{ section.settings.icon_image | img_url: '200x' }}" alt="Center Icon" style="max-width: {{ section.settings.icon_size }}px;" />
+      {% else %}
+        <span style="font-size: {{ section.settings.icon_size }}px; color: {{ section.settings.icon_color }};">★</span>
+      {% endif %}
+    </div>
+
+    <!-- COLUMNA DERECHA -->
+    <div class="custom-columnblog">
+      <div class="custom-textblog" style="font-size: {{ section.settings.column_text_size }}px; color: {{ section.settings.column_text_color }}; font-weight: {{ section.settings.column_text_weight }};">
+        {{ section.settings.right_text }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-two-column-sectionblog {
+    padding: 60px 20px;
+  }
+
+  .custom-columns-containerblog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    gap: 40px;
+  }
+
+  .custom-columnblog {
+    flex: 1 1 300px;
+    max-width: 400px;
+  }
+
+  .custom-iconblog {
+    flex: 0 0 auto;
+    text-align: center;
+  }
+
+  .custom-textblog {
+    
+    line-height: 2em;
+letter-spacing: 0.5px;
+text-align: justify;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Text-center-columns-ícono",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título Principal",
+      "default": "Nuestro Compromiso"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamaño del Título (px)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Peso del Título",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del Título",
+      "default": "#000000"
+    },
+    {
+      "type": "richtext",
+      "id": "left_text",
+      "label": "Texto Columna Izquierda",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "right_text",
+      "label": "Texto Columna Derecha",
+      "default": "<p>Phasellus sed sapien quis elit blandit congue.</p>"
+    },
+    {
+      "type": "range",
+      "id": "column_text_size",
+      "label": "Tamaño del Texto (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "column_text_weight",
+      "label": "Peso del Texto",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medio" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "column_text_color",
+      "label": "Color del Texto",
+      "default": "#333333"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Ícono o Imagen (opcional)"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño del Ícono o Imagen (px)",
+  "min": 20,
+  "max": 200,
+  "step": 5,
+  "default": 60
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color del Ícono (si no hay imagen)",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text-center-columns e ícono",
+      "category": "Personalizado"
+    }
+  ]
+}
+{% endschema %}

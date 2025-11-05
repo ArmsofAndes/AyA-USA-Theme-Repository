@@ -1,0 +1,362 @@
+<div class="custom-section-wrappersect2">
+  <div class="custom-section-innersect2">
+
+    <!-- Columna izquierda con bloques -->
+    <div class="custom-columnsect2 custom-left-columnsect2" style="text-align: {{ section.settings.left_alignment }};">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'left_heading' %}
+            <h3 class="custom-left-headingsect2"
+                style="font-size: {{ block.settings.font_size | divided_by: 16.0 }}rem!important; font-weight: {{ block.settings.font_weight }}; color: {{ block.settings.color }};">
+              {{ block.settings.text }}
+            </h3>
+          {% when 'left_text' %}
+            <div class="custom-left-richtextsect2 rtesect2"
+       style="font-size: {{ block.settings.font_size | divided_by: 16.0 }}rem!important; font-weight: {{ block.settings.font_weight }}; color: {{ block.settings.color }};">
+    {{ block.settings.richtext }}
+  </div>
+          {% when 'left_image' %}
+            <div class="custom-left-image-blocksect2">
+              <img src="{{ block.settings.image | img_url: '800x' }}" alt="left image" class="custom-left-image" />
+              <p class="custom-left-captionsect2"
+                 style="font-size: {{ block.settings.caption_size | divided_by: 16.0 }}rem!important; font-weight: {{ block.settings.caption_weight }}; color: {{ block.settings.caption_color }};">
+                {{ block.settings.caption }}
+              </p>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="custom-columnsect2 custom-right-columnsect2" style="text-align: {{ section.settings.right_alignment }};">
+      <div class="custom-right-titlesect2 rtesect2"
+     style="font-size: {{ section.settings.right_title_size | divided_by: 16.0 }}rem!important; font-weight: {{ section.settings.right_title_weight }};
+        color: {{ section.settings.right_title_color }};line-height: 1;">
+  {{ section.settings.right_title_richtext }}
+</div>
+
+      {% for block in section.blocks %}
+    {% if block.type == 'right_image_block' %}
+      <div class="custom-right-image-blocksect2" style="position: relative; display: inline-block; margin-bottom: 20px;width: 100%;">
+        {% if block.settings.link != blank %}
+  <a href="{{ block.settings.link }}">
+{% endif %}
+
+<img src="{{ block.settings.image | img_url: '800x' }}"
+     alt="right image"
+     class="custom-right-imagesect2"
+     style="width: 100%; max-width: 100%;" />
+
+{% if block.settings.link != blank %}
+  </a>
+{% endif %}
+        <p class="custom-right-image-captionsect2"
+           style="
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             color: {{ block.settings.caption_color }};
+             font-size: {{ block.settings.caption_size | divided_by: 16.0 }}rem!important;
+             font-weight: {{ block.settings.caption_weight }};
+             margin: 0;line-height: 1;
+             text-align: center; 
+           ">
+          {{ block.settings.caption }}
+        </p>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+  </div>
+</div>
+
+<style>
+  .custom-section-wrappersect2 {
+    padding: 4% 7%;
+  }
+
+  .custom-section-innersect2 {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .custom-columnsect2 {
+    box-sizing: border-box;
+  }
+
+  .custom-left-columnsect2 {
+    flex: 0 0 54%;
+    max-width: 54%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
+  }
+
+  .custom-right-columnsect2 {
+    flex: 0 0 43%;
+     max-width: 43%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  }
+
+  .custom-left-imagesect2 {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+ .custom-right-imagesect2{
+  width: 100%;
+  height: 350px;
+  object-fit: cover;object-position: center center;
+  display: block;
+ }
+.custom-left-richtextsect2{
+  text-align:justify;
+}
+  @media (max-width: 768px) {
+  .custom-section-innersect2 {
+    flex-direction: column;
+  }
+
+  .custom-left-columnsect2 {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .custom-right-columnsect2 {
+    display: none !important;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Sect2-blog-glosary-50",
+  "settings": [
+    {
+      "type": "select",
+      "id": "left_alignment",
+      "label": "Alineación columna izquierda",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+  "type": "richtext",
+  "id": "right_title_richtext",
+  "label": "Título derecho",
+  "default": "<p><strong>Título aquí</strong></p>"
+},
+    {
+      "type": "range",
+      "id": "right_title_size",
+      "label": "Tamaño del título derecho",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "right_title_weight",
+      "label": "Peso del título derecho",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "right_title_color",
+      "label": "Color del título derecho",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "right_alignment",
+      "label": "Alineación columna derecha",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_heading",
+      "name": "Título columna izquierda",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto del título",
+          "default": "Título de la izquierda"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño de fuente",
+          "min": 12,
+          "max": 48,
+          "step": 1,
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "font_weight",
+          "label": "Peso de fuente",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#000000"
+        }
+      ]
+    },
+    {
+      "type": "left_text",
+      "name": "Texto columna izquierda",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": "Contenido de texto"
+        },
+        {
+          "type": "range",
+          "id": "font_size",
+          "label": "Tamaño de fuente",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "font_weight",
+          "label": "Peso de fuente",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#333333"
+        }
+      ]
+    },
+    {
+      "type": "left_image",
+      "name": "Imagen columna izquierda",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Texto de referencia"
+        },
+        {
+          "type": "range",
+          "id": "caption_size",
+          "label": "Tamaño del texto",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "caption_weight",
+          "label": "Peso del texto",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "color",
+          "id": "caption_color",
+          "label": "Color del texto",
+          "default": "#555555"
+        }
+      ]
+    },
+    {
+      "type": "right_image_block",
+      "name": "Imagen derecha",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+         {
+      "type": "url",
+      "id": "link",
+      "label": "Enlace de la imagen"
+    },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Texto centrado sobre la imagen",
+          "default": "Texto de ejemplo"
+        },
+        {
+          "type": "range",
+          "id": "caption_size",
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "default": 14,
+          "label": "Tamaño del texto"
+        },
+        {
+          "type": "range",
+          "id": "caption_weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400,
+          "label": "Peso del texto"
+        },
+        {
+          "type": "color",
+          "id": "caption_color",
+          "label": "Color del texto",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sect2-blog-glosary-50"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,203 @@
+{% schema %}
+{
+  "name": "Custom 3 Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Título de la sección",
+      "default": "Nuestros Productos Recomendados"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Tamaño del título (px)",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Peso del título",
+      "default": "700",
+      "options": [
+        { "label": "Normal", "value": "400" },
+        { "label": "Semi Negrita", "value": "600" },
+        { "label": "Negrita", "value": "700" },
+        { "label": "Extra Negrita", "value": "800" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alineación del título",
+      "default": "center",
+      "options": [
+        { "label": "Izquierda", "value": "left" },
+        { "label": "Centro", "value": "center" },
+        { "label": "Derecha", "value": "right" }
+      ]
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Producto 1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Producto 2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Producto 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom 3 Products",
+      "category": "Productos"
+    }
+  ]
+}
+{% endschema %}
+<style>
+.custom-products-section{
+  margin-left:2%;
+  margin-right:2%;
+}
+.custom-slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.custom-slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  width: 100%;
+}
+
+.product-card-slide {
+  flex: 0 0 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+
+.slider-btn {
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 2;
+}
+
+.slider-btn.prev {
+  position: absolute;
+  left: 0;
+}
+
+.slider-btn.next {
+  position: absolute;
+  right: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .custom-slider-container {
+    justify-content: center;
+  }
+
+  .custom-slider-track {
+    transform: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .product-card-slide {
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding: 10px;
+  }
+
+  .slider-btn {
+    display: none;
+  }
+}
+
+
+</style>
+<div class="custom-products-section section-spacing">
+  <div class="row">
+    <div class="small-12 columns" style="text-align: {{ section.settings.heading_alignment }};">
+      <h2 style="
+        font-size: {{ section.settings.heading_font_size }}px;
+        font-weight: {{ section.settings.heading_font_weight }};
+        color: {{ section.settings.heading_color }};
+        margin-bottom: 30px;
+      ">
+        {{ section.settings.section_heading }}
+      </h2>
+    </div>
+  </div>
+
+  <div class="custom-slider-container">
+    <button class="slider-btn prev">←</button>
+    <div class="custom-slider-track">
+      {% assign product_handles = section.settings.product_1 | append: ',' | append: section.settings.product_2 | append: ',' | append: section.settings.product_3 | split: ',' %}
+      {% for handle in product_handles %}
+        {% assign product = all_products[handle] %}
+        {% if product %}
+          <div class="product-card-slide">
+            {% render 'product-card', product_card_product: product %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="slider-btn next">→</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const track = document.querySelector(".custom-slider-track");
+    const slides = document.querySelectorAll(".product-card-slide");
+    const prevBtn = document.querySelector(".slider-btn.prev");
+    const nextBtn = document.querySelector(".slider-btn.next");
+
+    let index = 0;
+
+    function updateSlider() {
+      const slideWidth = slides[0].offsetWidth;
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (index < slides.length - 1) {
+        index++;
+        updateSlider();
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (index > 0) {
+        index--;
+        updateSlider();
+      }
+    });
+
+    window.addEventListener("resize", updateSlider);
+  });
+</script>

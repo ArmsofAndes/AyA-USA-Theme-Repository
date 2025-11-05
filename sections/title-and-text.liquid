@@ -1,0 +1,468 @@
+<div class="custom-dual-column-section" {% if section.settings.custom_anchor_id != blank %}
+    id="{{ section.settings.custom_anchor_id }}"
+  {% endif %} 
+   style=" {% if section.settings.background_image != blank %}
+  background-image: url({{ section.settings.background_image | img_url: 'master' }}); background-size: cover;
+  background-position: center; background-repeat: no-repeat;{% else %}
+      background-color: white;
+    {% endif %}">
+
+  <div class="custom-dual-column-wrapper">
+    <!-- Columna Izquierda -->
+    <div class="custom-column-left12">
+      {% if section.settings.left_subheading != blank %}
+        <p style="font-size: {{ section.settings.left_subheading_size }}px;
+                  font-weight: {{ section.settings.left_subheading_weight }};
+                  color: {{ section.settings.left_subheading_color }};
+                  text-align: {{ section.settings.left_alignment }};letter-spacing: 1px;">
+          {{ section.settings.left_subheading }}
+        </p>
+      {% endif %}
+      {% if section.settings.left_heading != blank %}
+        <h2 style="font-size: {{ section.settings.left_heading_size }}px;
+                   font-weight: {{ section.settings.left_heading_weight }};
+                   color: {{ section.settings.left_heading_color }};line-height:1.3;
+                   text-align: {{ section.settings.left_alignment }};">
+          {{ section.settings.left_heading }}
+        </h2>
+      {% endif %}
+      {% if section.settings.left_text != blank %}
+        <div class="text-left richtext"style="font-size: {{ section.settings.left_text_size }}px;
+                    font-weight: {{ section.settings.left_text_weight }};
+                    color: {{ section.settings.left_text_color }};
+                    text-align: {{ section.settings.left_alignment }};">
+          {{ section.settings.left_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.left_button_text != blank %}
+  <a class="custom-button {% if section.settings.left_button_outline %}outline{% endif %}"
+     href="{{ section.settings.left_button_link }}"
+     style="
+      font-size: {{ section.settings.left_button_font_size }}px;
+      font-weight: {{ section.settings.left_button_font_weight }};
+      color: {{ section.settings.left_button_text_color }};
+      background-color: {{ section.settings.left_button_background }};
+      border: {{ section.settings.left_button_border_width }}px solid {{ section.settings.left_button_border_color }};
+      border-radius: {{ section.settings.left_button_border_radius }}px;
+      padding: 10px 20px;
+      display: inline-block;
+      text-decoration: none;
+     ">
+    {{ section.settings.left_button_text }}
+  </a>
+{% endif %}
+
+{% assign icon_blocks_left = section.blocks | where: "type", "icon_column_left" %}
+
+{% if icon_blocks_left.size > 0 %}
+  <div class="custom-icons-grid12">
+    {% for block in icon_blocks_left %}
+      <div class="custom-icon-column12">
+        {% if block.settings.icon != blank %}
+          <img src="{{ block.settings.icon | img_url: '80x' }}" alt="{{ block.settings.title | escape }}" class="custom-icon-image12">
+        {% endif %}
+        {% if block.settings.title != blank %}
+          <h3 class="custom-icon-title12" style="font-size: {{ block.settings.title_size }}px; color: {{ block.settings.title_color }}; font-weight: {{ block.settings.title_weight }};">
+            {{ block.settings.title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <div class="custom-icon-text12 rte" style="font-size: {{ block.settings.text_size }}px; color: {{ block.settings.text_color }}; font-weight: {{ block.settings.text_weight }};">
+            {{ block.settings.text }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+      
+    </div>
+
+    <!-- Columna Derecha -->
+    <div class="custom-column-right22">
+      {% if section.settings.right_subheading != blank %}
+        <p style="font-size: {{ section.settings.right_subheading_size | divided_by: 16.0 }}rem;
+                  font-weight: {{ section.settings.right_subheading_weight }};
+                  color: {{ section.settings.right_subheading_color }};
+                  text-align: {{ section.settings.right_alignment }};letter-spacing: 1px;">
+          {{ section.settings.right_subheading }}
+        </p>
+      {% endif %}
+      {% if section.settings.right_heading != blank %}
+        <h2 style="font-size:  {{ section.settings.right_heading_size | divided_by: 16.0 }}rem;
+                   font-weight: {{ section.settings.right_heading_weight }};
+                   color: {{ section.settings.right_heading_color }};line-height:1.3;
+                   text-align: {{ section.settings.right_alignment }};">
+          {{ section.settings.right_heading }}
+        </h2>
+      {% endif %}
+      {% if section.settings.right_text != blank %}
+        <div class="text-right richtext" style="font-size: {{ section.settings.right_text_size | divided_by: 16.0 }}rem;
+                    font-weight: {{ section.settings.right_text_weight }};
+                    color: {{ section.settings.right_text_color }};
+                    text-align: {{ section.settings.right_alignment }};">
+          {{ section.settings.right_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.right_button_text != blank %}
+  <a class="custom-button {% if section.settings.right_button_outline %}outline{% endif %}"
+     href="{{ section.settings.right_button_link }}"
+     style="
+      font-size: {{ section.settings.right_button_font_size | divided_by: 16.0 }}rem;
+      font-weight: {{ section.settings.right_button_font_weight }};
+      color: {{ section.settings.right_button_text_color }};
+      background-color: {{ section.settings.right_button_background }};
+      border: {{ section.settings.right_button_border_width }}px solid {{ section.settings.right_button_border_color }};
+      border-radius: {{ section.settings.right_button_border_radius }}px;
+      padding: 10px 20px;
+      display: inline-block;
+      text-decoration: none;
+     ">
+    {{ section.settings.right_button_text }}
+  </a>
+{% endif %}
+{% assign icon_blocks_right = section.blocks | where: "type", "icon_column_right" %}
+
+{% if icon_blocks_right.size > 0 %}
+  <div class="custom-icons-grid12">
+    {% for block in icon_blocks_right %}
+      <div class="custom-icon-column12">
+        {% if block.settings.icon != blank %}
+          <img src="{{ block.settings.icon | img_url: '80x' }}" alt="{{ block.settings.title | escape }}" class="custom-icon-image12">
+        {% endif %}
+        {% if block.settings.title != blank %}
+          <h3 class="custom-icon-title12" style="font-size: {{ block.settings.title_size | divided_by: 16.0 }}rem; color: {{ block.settings.title_color }}; font-weight: {{ block.settings.title_weight }};">
+            {{ block.settings.title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <div class="custom-icon-text12 rte" style="font-size: {{ block.settings.text_size | divided_by: 16.0 }}rem; color: {{ block.settings.text_color }}; font-weight: {{ block.settings.text_weight }};">
+            {{ block.settings.text }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+ .custom-icons-grid12 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: flex-start;
+}
+
+.custom-icon-column12 {
+  width: calc(25% - 15px); /* 4 columnas */
+  box-sizing: border-box;
+  text-align: center;
+}
+.custom-dual-column-section{
+    margin:8% 8%;
+  }
+.custom-icon-image12 {
+  width: 50px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.custom-icon-title12 {
+  margin: 0 0 5px 0;
+  line-height:1.2;
+}
+
+.custom-icon-text12 {
+ 
+  font-size: 0.875rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .custom-icon-column12 {
+    width: calc(33.33% - 13px); /* 3 columnas en pantallas medianas */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-icons-grid12 {
+    justify-content: center;
+  }
+
+}
+@media screen and (max-width: 640px) {
+  .custom-icon-column12 {
+    flex: 0 1 48%;
+  }
+}
+
+
+  
+ .custom-dual-column-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: nowrap;
+}
+
+  .custom-column-left12, .custom-column-right22 {
+  width: 48%;
+}
+.custom-button.outline {
+  background-color: transparent !important;
+  border-style: solid !important;
+  text-decoration:underline!important;padding:0 !important;
+}
+
+.custom-button.outline:hover {
+  background-color: rgba(0,0,0,0.05); /* efecto sutil al pasar el mouse */
+  
+}
+  @media (max-width: 768px) {
+    .custom-dual-column-wrapper {
+      flex-direction: column;
+    }
+    .custom-column-left12, .custom-column-right22 {
+    width: 100%;
+  }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Dos Column-Texto-Títulos",
+  "settings": [
+{
+  "type": "text",
+  "id": "custom_anchor_id",
+  "label": "ID de anclaje (único, sin espacios)"
+},{
+  "type": "image_picker",
+  "id": "background_image",
+  "label": "Imagen de fondo de la sección"
+},
+
+    // Columna Izquierda
+    { "type": "text", "id": "left_subheading", "label": "Subheading izquierdo", "default": "Subtítulo izquierdo" },
+    { "type": "color", "id": "left_subheading_color", "label": "Color Subheading Izquierdo", "default": "#666666" },
+    { "type": "range", "id": "left_subheading_size", "min": 10, "max": 40, "step": 1, "default": 16, "label": "Tamaño Subheading Izquierdo" },
+    { "type": "range", "id": "left_subheading_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Subheading Izquierdo" },
+
+    { "type": "richtext", "id": "left_heading", "label": "Heading izquierdo", "default": "<p>Título izquierdo</p>" },
+    { "type": "color", "id": "left_heading_color", "label": "Color Heading Izquierdo", "default": "#000000" },
+    { "type": "range", "id": "left_heading_size", "min": 16, "max": 60, "step": 1, "default": 32, "label": "Tamaño Heading Izquierdo" },
+    { "type": "range", "id": "left_heading_weight", "min": 100, "max": 900, "step": 100, "default": 700, "label": "Peso Heading Izquierdo" },
+
+    { "type": "richtext", "id": "left_text", "label": "Texto izquierdo", "default": "<p>Texto de la columna izquierda</p>" },
+    { "type": "color", "id": "left_text_color", "label": "Color Texto Izquierdo", "default": "#000000" },
+    { "type": "range", "id": "left_text_size", "min": 12, "max": 30, "step": 1, "default": 16, "label": "Tamaño Texto Izquierdo" },
+    { "type": "range", "id": "left_text_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Texto Izquierdo" },
+
+    { "type": "select", "id": "left_alignment", "label": "Alineación Columna Izquierda", "options": [
+      { "value": "left", "label": "Izquierda" },
+      { "value": "center", "label": "Centro" },
+      { "value": "right", "label": "Derecha" }
+    ], "default": "left" },
+    
+    { "type": "text", "id": "left_button_text", "label": "Texto del botón izquierdo", "default": "Saber más" },
+{ "type": "url", "id": "left_button_link", "label": "Enlace del botón izquierdo" },
+{ "type": "range", "id": "left_button_font_size", "label": "Tamaño fuente botón", "min": 10, "max": 30, "step": 1, "default": 16 },
+{ "type": "range", "id": "left_button_font_weight", "label": "Peso fuente botón", "min": 100, "max": 900, "step": 100, "default": 600 },
+{ "type": "color", "id": "left_button_text_color", "label": "Color del texto del botón", "default": "#ffffff" },
+{ "type": "color", "id": "left_button_background", "label": "Color de fondo del botón", "default": "#1a1a1a" },
+{ "type": "color", "id": "left_button_border_color", "label": "Color del borde del botón", "default": "#1a1a1a" },
+{ "type": "range", "id": "left_button_border_width", "label": "Grosor del borde", "min": 0, "max": 10, "step": 1, "default": 2 },
+{ "type": "range", "id": "left_button_border_radius", "label": "Bordes redondeados", "min": 0, "max": 50, "step": 1, "default": 8 },
+{ "type": "checkbox", "id": "left_button_outline", "label": "Estilo outline", "default": false },
+
+
+    // Columna Derecha
+    { "type": "text", "id": "right_subheading", "label": "Subheading derecho", "default": "Subtítulo derecho" },
+    { "type": "color", "id": "right_subheading_color", "label": "Color Subheading Derecho", "default": "#666666" },
+    { "type": "range", "id": "right_subheading_size", "min": 10, "max": 40, "step": 1, "default": 16, "label": "Tamaño Subheading Derecho" },
+    { "type": "range", "id": "right_subheading_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Subheading Derecho" },
+
+    { "type": "richtext", "id": "right_heading", "label": "Heading derecho", "default": "<p>Título derecho</p>" },
+    { "type": "color", "id": "right_heading_color", "label": "Color Heading Derecho", "default": "#000000" },
+    { "type": "range", "id": "right_heading_size", "min": 16, "max": 60, "step": 1, "default": 32, "label": "Tamaño Heading Derecho" },
+    { "type": "range", "id": "right_heading_weight", "min": 100, "max": 900, "step": 100, "default": 700, "label": "Peso Heading Derecho" },
+
+    { "type": "richtext", "id": "right_text", "label": "Texto derecho", "default": "<p>Texto de la columna derecha</p>" },
+    { "type": "color", "id": "right_text_color", "label": "Color Texto Derecho", "default": "#000000" },
+    { "type": "range", "id": "right_text_size", "min": 12, "max": 30, "step": 1, "default": 16, "label": "Tamaño Texto Derecho" },
+    { "type": "range", "id": "right_text_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Texto Derecho" },
+
+    { "type": "select", "id": "right_alignment", "label": "Alineación Columna Derecha", "options": [
+      { "value": "left", "label": "Izquierda" },
+      { "value": "center", "label": "Centro" },
+      { "value": "right", "label": "Derecha" }
+    ], "default": "left" },
+    
+    { "type": "text", "id": "right_button_text", "label": "Texto del botón derecho", "default": "Saber más" },
+{ "type": "url", "id": "right_button_link", "label": "Enlace del botón derecho" },
+{ "type": "range", "id": "right_button_font_size", "label": "Tamaño fuente botón", "min": 10, "max": 30, "step": 1, "default": 16 },
+{ "type": "range", "id": "right_button_font_weight", "label": "Peso fuente botón", "min": 100, "max": 900, "step": 100, "default": 600 },
+{ "type": "color", "id": "right_button_text_color", "label": "Color del texto del botón", "default": "#ffffff" },
+{ "type": "color", "id": "right_button_background", "label": "Color de fondo del botón", "default": "#1a1a1a" },
+{ "type": "color", "id": "right_button_border_color", "label": "Color del borde del botón", "default": "#1a1a1a" },
+{ "type": "range", "id": "right_button_border_width", "label": "Grosor del borde", "min": 0, "max": 10, "step": 1, "default": 2 },
+{ "type": "range", "id": "right_button_border_radius", "label": "Bordes redondeados", "min": 0, "max": 50, "step": 1, "default": 8 },
+{ "type": "checkbox", "id": "right_button_outline", "label": "Estilo outline", "default": false }
+
+  ],
+  "blocks": [
+  {
+    "type": "icon_column_left",
+  "name": "Ícono columna izquierda",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Título del ícono"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Peso del título",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Texto descriptivo del ícono</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    }
+  ]
+},
+{
+  "type": "icon_column_right",
+  "name": "Ícono columna derecha",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Título del ícono"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Peso del título",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Texto descriptivo del ícono</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    }
+  ]
+}
+],
+  "presets": [
+    {
+      "name": "2 Columnas con título, subtítulo y texto"
+    }
+  ]
+}
+{% endschema %}

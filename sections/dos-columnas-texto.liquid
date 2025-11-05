@@ -1,0 +1,138 @@
+{% schema %}
+{
+  "name": "Dos columnas de texto",
+  "settings": [
+    {
+      "type": "select",
+      "id": "alineacion_texto",
+      "label": "Alineación del texto",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" },
+        { "value": "justify", "label": "Justificado" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "espaciado_columnas",
+      "label": "Espacio entre columnas (rem)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "color_texto_izquierda",
+      "label": "Color texto columna izquierda",
+      "default": "#0e355e"
+    },
+    {
+      "type": "color",
+      "id": "color_texto_derecha",
+      "label": "Color texto columna derecha",
+      "default": "#333333"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "columna_izquierda",
+      "name": "Columna izquierda",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "texto_izquierda",
+          "label": "Texto columna izquierda"
+        }
+      ]
+    },
+    {
+      "type": "columna_derecha",
+      "name": "Columna derecha",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "texto_derecha",
+          "label": "Texto columna derecha"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "Dos columnas de texto",
+      "blocks": [
+        { "type": "columna_izquierda" },
+        { "type": "columna_derecha" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.dos-columnas-texto {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: {{ section.settings.espaciado_columnas }}rem;
+  margin: auto;
+}
+
+/* Mobile-specific styles */
+  @media (max-width: 768px) {
+  .dos-columnas-texto {
+    margin: 0 1.4rem; /* <-- Adjust this as needed for mobile */
+  }
+}
+
+.columna-texto {
+  flex: 1 1 300px;
+}
+
+.columna-texto .rte {
+  text-align: {{ section.settings.alineacion_texto }};
+}
+
+.columna-izquierda .rte {
+  color: {{ section.settings.color_texto_izquierda }};
+}
+
+.columna-derecha .rte {
+  color: {{ section.settings.color_texto_derecha }};
+}
+
+/* Estilo para los enlaces */
+.columna-texto .rte a {
+  color: #0e355e;
+  font-weight: 500;
+  text-decoration: underline;
+}
+  /*
+  .dos-columnas-texto {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+  */
+</style>
+
+<div class="dos-columnas-texto">
+  {% for block in section.blocks %}
+    {% if block.type == 'columna_izquierda' %}
+      <div class="columna-texto columna-izquierda">
+        <div class="rte">
+          {{ block.settings.texto_izquierda }}
+        </div>
+      </div>
+    {% elsif block.type == 'columna_derecha' %}
+      <div class="columna-texto columna-derecha">
+        <div class="rte">
+          {{ block.settings.texto_derecha }}
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

@@ -1,0 +1,129 @@
+{% schema %}
+{
+  "name": "Sección estilo periódico",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "left_text",
+      "label": "Texto a la izquierda"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Imagen a la izquierda"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "label": "Cantidad de productos relacionados",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "blog_count",
+      "label": "Cantidad de blogs relacionados",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "richtext",
+      "id": "bottom_text",
+      "label": "Texto adicional debajo de la columna derecha"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Imagen adicional debajo de la columna derecha"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Estilo Periódico",
+      "category": "Contenido personalizado"
+    }
+  ]
+}
+{% endschema %}
+
+
+<div class="newspaper-section">
+  <div class="container">
+    <div class="left-column">
+      {% if section.settings.left_image != blank %}
+        <img src="{{ section.settings.left_image | img_url: 'medium' }}" alt="Imagen izquierda">
+      {% endif %}
+      <div class="left-text">
+        {{ section.settings.left_text }}
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="related-products">
+        <h3>Productos relacionados</h3>
+        <ul>
+          {% for product in collections.all.products limit: section.settings.product_count %}
+            <li><a href="{{ product.url }}">{{ product.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="related-blogs">
+        <h3>Entradas del blog</h3>
+        <ul>
+          {% for article in blogs.news.articles limit: section.settings.blog_count %}
+            <li><a href="{{ article.url }}">{{ article.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% if section.settings.bottom_text != blank %}
+        <div class="bottom-text">
+          {{ section.settings.bottom_text }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.bottom_image != blank %}
+        <div class="bottom-image">
+          <img src="{{ section.settings.bottom_image | img_url: 'medium' }}" alt="Imagen inferior derecha">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.newspaper-section .container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.left-column {
+  flex: 1 1 60%;
+}
+.right-column {
+  flex: 1 1 35%;
+}
+.left-text, .bottom-text {
+  margin-top: 10px;
+}
+.related-products ul,
+.related-blogs ul {
+  padding-left: 20px;
+}
+.related-products li,
+.related-blogs li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+.bottom-image img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+</style>
+

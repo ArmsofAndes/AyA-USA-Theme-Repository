@@ -1,0 +1,170 @@
+{% schema %}
+{
+  "name": "Img&text.sustain",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "imagen",
+      "label": "Imagen"
+    },
+    {
+      "type": "text",
+      "id": "titulo",
+      "label": "Título",
+      "default": "Este es el título"
+    },
+    {
+      "type": "range",
+      "id": "titulo_tamano",
+      "label": "Tamaño del título (px)",
+      "min": 14,
+      "max": 64,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "titulo_peso",
+      "label": "Peso del título",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "titulo_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "textarea",
+      "id": "descripcion",
+      "label": "Descripción",
+      "default": "Este es un texto descriptivo."
+    },
+    {
+      "type": "range",
+      "id": "descripcion_tamano",
+      "label": "Tamaño del texto (px)",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "descripcion_peso",
+      "label": "Peso del texto",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "descripcion_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "text",
+      "id": "link_texto",
+      "label": "Texto del link",
+      "default": "Leer más"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "URL del link",
+      "default": "/"
+    },
+    {
+      "type": "range",
+      "id": "link_tamano",
+      "label": "Tamaño del link (px)",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "link_peso",
+      "label": "Peso del link",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color del link",
+      "default": "#007bff"
+    },
+    {
+      "type": "color",
+      "id": "fondo",
+      "label": "Color de fondo de la sección",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Img&textsustain",
+      "category": "Secciones personalizadas"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="image-text-extend" style="background-color: {{ section.settings.fondo }}; padding: 20px 20px;">
+ <div style="
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+">
+   {% if section.settings.imagen %}
+     <div style="flex: 0 0 auto; display: flex; justify-content: center; align-items: center;">
+  <img src="{{ section.settings.imagen | image_url: width: 100, height: 100, crop: 'center' }}" alt="Imagen" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;" />
+</div>
+    {% endif %}
+    <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; align-items: center;">
+
+      <h2 style="
+        font-size: {{ section.settings.titulo_tamano }}px;
+        font-weight: {{ section.settings.titulo_peso }};
+        color: {{ section.settings.titulo_color }};
+        margin-bottom: 12px;
+      ">{{ section.settings.titulo }}</h2>
+      <p style="
+        font-size: {{ section.settings.descripcion_tamano }}px;
+        font-weight: {{ section.settings.descripcion_peso }};
+        color: {{ section.settings.descripcion_color }};
+        margin-bottom: 16px;
+      ">{{ section.settings.descripcion }}</p>
+      <a href="{{ section.settings.link_url }}" style="
+        font-size: {{ section.settings.link_tamano }}px;
+        font-weight: {{ section.settings.link_peso }};
+        color: {{ section.settings.link_color }};
+        text-decoration: underline;
+      ">{{ section.settings.link_texto }}</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,329 @@
+<div class="dual-column-newv02  {% if section.settings.reverse_layout %}reverse-layout{% endif %}"
+   style="background-color: {{ section.settings.background_color }};
+   
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;">
+
+  <div class="newv02-dual-column-wrapper">
+    <!-- Columna Izquierda (solo imagen) -->
+    <div class="column-left-v02-with-img">
+      {% if section.settings.left_image != blank %}
+        <div class="left-image-wrapper">
+          <img src="{{ section.settings.left_image | img_url: '800x' }}" alt="Imagen izquierda" loading="lazy">
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Columna Derecha  -->
+    <div class="custom-column-rightv02">
+      {% if section.settings.right_subheading != blank %}
+        <p style="font-size: {{ section.settings.right_subheading_size | divided_by: 16.0 }}rem;
+                  font-weight: {{ section.settings.right_subheading_weight }};
+                  color: {{ section.settings.right_subheading_color }};
+                  text-align: {{ section.settings.right_alignment }};letter-spacing: 1px;">
+          {{ section.settings.right_subheading }}
+        </p>
+      {% endif %}
+      {% if section.settings.right_heading != blank %}
+        <h2 style="font-size:  {{ section.settings.right_heading_size | divided_by: 16.0 }}rem;
+                   font-weight: {{ section.settings.right_heading_weight }};
+                   color: {{ section.settings.right_heading_color }};line-height:1.3;
+                   text-align: {{ section.settings.right_alignment }};">
+          {{ section.settings.right_heading }}
+        </h2>
+      {% endif %}
+      {% if section.settings.right_text != blank %}
+        <div class="text-rightv02 richtext" style="font-size: {{ section.settings.right_text_size | divided_by: 16.0 }}rem;
+                    font-weight: {{ section.settings.right_text_weight }};
+                    color: {{ section.settings.right_text_color }};
+                    text-align: {{ section.settings.right_alignment }};">
+          {{ section.settings.right_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.right_button_text != blank %}
+  <a class="custom-buttonv02 {% if section.settings.right_button_outline %}outline{% endif %}"
+     href="{{ section.settings.right_button_link }}"
+     style="
+      font-size: {{ section.settings.right_button_font_size | divided_by: 16.0 }}rem;
+      font-weight: {{ section.settings.right_button_font_weight }};
+      color: {{ section.settings.right_button_text_color }};
+      background-color: {{ section.settings.right_button_background }};
+      border: {{ section.settings.right_button_border_width }}px solid {{ section.settings.right_button_border_color }};
+      border-radius: {{ section.settings.right_button_border_radius }}px;
+      padding: 10px 20px;
+      display: inline-block;
+      text-decoration: none;
+     ">
+    {{ section.settings.right_button_text }}
+  </a>
+{% endif %}
+{% assign icon_blocks_right = section.blocks | where: "type", "icon_column_right" %}
+
+{% if icon_blocks_right.size > 0 %}
+  <div class="custom-icons-grid12">
+    {% for block in icon_blocks_right %}
+      <a class="custom-icon-column12" href="{{ block.settings.icon_link }}" class="custom-icon-column12" style="text-decoration: none; color: inherit;">
+        {% if block.settings.icon != blank %}
+          <img src="{{ block.settings.icon | img_url: '80x' }}" alt="{{ block.settings.title | escape }}" class="custom-icon-image12">
+        {% endif %}
+        {% if block.settings.title != blank %}
+          <h3 class="custom-icon-title12" style="font-size: {{ block.settings.title_size | divided_by: 16.0 }}rem; color: {{ block.settings.title_color }}; font-weight: {{ block.settings.title_weight }};">
+            {{ block.settings.title }}
+          </h3>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <div class="custom-icon-text12 rte" style="font-size: {{ block.settings.text_size | divided_by: 16.0 }}rem; color: {{ block.settings.text_color }}; font-weight: {{ block.settings.text_weight }};">
+            {{ block.settings.text }}
+          </div>
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.dual-column-newv02 {
+  background-color: {{ section.settings.background_color }};
+  min-height: 71vh; background: linear-gradient(#d9dbdf, #fff);
+  padding: 4rem 8%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dual-column-newv02.reverse-layout .newv02-dual-column-wrapper {
+  flex-direction: row-reverse;
+}
+
+.newv02-dual-column-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1600px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  height: 100%;
+}
+
+.column-left-v02-with-img,
+.custom-column-rightv02 {
+  flex: 1 1 48%;
+  height: 100%;
+}
+
+.left-image-wrapper {
+ height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:center;/*02-08*/
+}
+
+.left-image-wrapper img {
+ max-height: 600px; /* o el alto que tú determines */
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Columna Derecha */
+.custom-column-rightv02 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Íconos (ya personalizados previamente) */
+.custom-icons-grid12 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.custom-icon-column12 {
+  flex: 1 1 calc(25% - 1rem);
+  text-align: center;
+}
+
+.custom-icon-image12 {
+  width: 50px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .custom-icon-column12 {
+    flex: 1 1 calc(33.33% - 1rem);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .newv02-dual-column-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .column-left-v02-with-img,
+  .custom-column-rightv02 {
+    width: 100%;
+    height: auto;
+  }
+
+  .left-image-wrapper {
+    height: auto;
+  }
+
+  .left-image-wrapper img {
+    height: auto;
+    max-height: 54vh;
+  }
+
+  .custom-icon-column12 {
+    flex: 0 1 48%;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "2 Columnas Img y texto",
+  "settings": [
+    
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo de la sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Imagen de la columna izquierda"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Invertir orden de columnas",
+      "default": false
+    },
+
+    {
+      "type": "text", "id": "right_subheading", "label": "Subheading derecho", "default": "Subtítulo derecho" },
+    { "type": "color", "id": "right_subheading_color", "label": "Color Subheading Derecho", "default": "#666666" },
+    { "type": "range", "id": "right_subheading_size", "min": 10, "max": 40, "step": 1, "default": 16, "label": "Tamaño Subheading Derecho" },
+    { "type": "range", "id": "right_subheading_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Subheading Derecho" },
+
+    { "type": "richtext", "id": "right_heading", "label": "Heading derecho", "default": "<p>Título derecho</p>" },
+    { "type": "color", "id": "right_heading_color", "label": "Color Heading Derecho", "default": "#000000" },
+    { "type": "range", "id": "right_heading_size", "min": 16, "max": 60, "step": 1, "default": 32, "label": "Tamaño Heading Derecho" },
+    { "type": "range", "id": "right_heading_weight", "min": 100, "max": 900, "step": 100, "default": 700, "label": "Peso Heading Derecho" },
+
+    { "type": "richtext", "id": "right_text", "label": "Texto derecho", "default": "<p>Texto de la columna derecha</p>" },
+    { "type": "color", "id": "right_text_color", "label": "Color Texto Derecho", "default": "#000000" },
+    { "type": "range", "id": "right_text_size", "min": 12, "max": 30, "step": 1, "default": 16, "label": "Tamaño Texto Derecho" },
+    { "type": "range", "id": "right_text_weight", "min": 100, "max": 900, "step": 100, "default": 400, "label": "Peso Texto Derecho" },
+
+    { "type": "select", "id": "right_alignment", "label": "Alineación Columna Derecha", "options": [
+      { "value": "left", "label": "Izquierda" },
+      { "value": "center", "label": "Centro" },
+      { "value": "right", "label": "Derecha" }
+    ], "default": "left" },
+
+    { "type": "text", "id": "right_button_text", "label": "Texto del botón derecho", "default": "Saber más" },
+    { "type": "url", "id": "right_button_link", "label": "Enlace del botón derecho" },
+    { "type": "range", "id": "right_button_font_size", "label": "Tamaño fuente botón", "min": 10, "max": 30, "step": 1, "default": 16 },
+    { "type": "range", "id": "right_button_font_weight", "label": "Peso fuente botón", "min": 100, "max": 900, "step": 100, "default": 600 },
+    { "type": "color", "id": "right_button_text_color", "label": "Color del texto del botón", "default": "#ffffff" },
+    { "type": "color", "id": "right_button_background", "label": "Color de fondo del botón", "default": "#1a1a1a" },
+    { "type": "color", "id": "right_button_border_color", "label": "Color del borde del botón", "default": "#1a1a1a" },
+    { "type": "range", "id": "right_button_border_width", "label": "Grosor del borde", "min": 0, "max": 10, "step": 1, "default": 2 },
+    { "type": "range", "id": "right_button_border_radius", "label": "Bordes redondeados", "min": 0, "max": 50, "step": 1, "default": 8 },
+    { "type": "checkbox", "id": "right_button_outline", "label": "Estilo outline", "default": false }],
+  "blocks": [
+ {
+  "type": "icon_column_right",
+  "name": "Ícono columna derecha",
+  "settings": [
+   {
+  "type": "url",
+  "id": "icon_link",
+  "label": "Enlace del ícono"
+},
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Título del ícono"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Peso del título",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Texto descriptivo del ícono</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño del texto",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_weight",
+      "label": "Peso del texto",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    }
+  ]}
+  ],
+  "presets": [
+    {
+      "name": "2 Columnas Img y texto"
+    }
+  ]
+}
+{% endschema %}

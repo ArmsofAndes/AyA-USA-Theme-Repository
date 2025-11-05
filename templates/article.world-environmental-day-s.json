@@ -1,0 +1,496 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "disabled": true,
+      "settings": {}
+    },
+    "main-article": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "article_show_excerpt": true,
+            "excerpt_length": 30,
+            "article_show_sharing": true
+          }
+        },
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_ratio": "medium"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
+        "tags": {
+          "type": "tags",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "featured_image",
+        "content",
+        "tags"
+      ],
+      "disabled": true,
+      "settings": {
+        "article_show_date": true,
+        "article_show_author": true
+      }
+    },
+    "image_with_text_overlay_pJi79Q": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_FUbYV8": {
+          "type": "heading",
+          "settings": {
+            "text": "World Environmental Education Day:<br>Learning Through Hiking and Sustainable Choices",
+            "heading_font_size": 45,
+            "heading_font_weight": "600",
+            "heading_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FUbYV8"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.image-with-text-overlay {min-height: 250px; height: 250px; overflow: hidden; } .image-with-text-overlay--heading {font-size: 25px !important; font-weight: 600 !important; line-height: 1 !important; }}"
+      ],
+      "name": "Image with text overlay",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/DSC00644.webp",
+        "image_parallax": false,
+        "desktop_height": "desktop-height-450",
+        "mobile_height": "mobile-height-350",
+        "content_width": "large",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 15,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_QTXbGJ": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BrMrdF": {
+          "type": "subheading",
+          "settings": {
+            "text": "Published Jan 26, 2025",
+            "color": "#0e355e",
+            "font_size": 17,
+            "font_weight": 500
+          }
+        },
+        "text_yr7Vx4": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Reading time: 4 minutes</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 17,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BrMrdF",
+        "text_yr7Vx4"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {margin-top: 1%; margin-left: 4%; margin-right: 4%;}",
+        ".subheading {letter-spacing: 0; text-transform: capitalize;}",
+        ".rte {margin-top: 0px; line-height: 1; padding-top: 0px;}",
+        "p {line-height: 17px;}",
+        "@media screen and (max-width: 749px) {.rte, .custom-heading {font-size: 12px !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#0e355e",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section1_blog_text_and_contentrelated_NRVrht": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_text_kpHmW4": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<p>Every year on January 26, <strong>World Environmental Education Day</strong> reminds us of the crucial role education plays in shaping a sustainable future. As climate change accelerates, ecosystems deteriorate, and pollution escalates, knowledge becomes one of the most powerful tools for action. However, true environmental education goes beyond classrooms—it thrives in real-world experiences like <strong>hiking, trekking, and outdoor exploration</strong>.<br/></p><p>For outdoor enthusiasts, every hike is an opportunity to <strong>learn from nature, respect it, and minimize our impact</strong>. At Arms of Andes, we believe that embracing nature through adventure and choosing sustainable gear—like alpaca wool clothing—are essential steps toward environmental awareness and conservation.<br/></p><p>Let’s explore how environmental education connects with hiking, sustainable fashion, and responsible choices in the outdoors.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_kpHmW4"
+      ],
+      "custom_css": [
+        ".custom-section-wrapper {padding-bottom: 0px;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "",
+        "right_title_size": 24,
+        "right_title_weight": 600,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_bNLg8J": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_DdEGdh": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_n3xemwn3xemwn3xe.webp",
+            "link": "shopify://blogs/news/composting-wool-clothing-sustainable-choices",
+            "caption": "How to Compost Wool Clothing Sustainably",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_cLcR8k": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/pixelcut-export_1_5282b67d-b727-4451-9636-dd6c177303e4.webp",
+            "link": "shopify://blogs/news/alpaca-better-than-merino-cashmere",
+            "caption": "Alpaca Wool vs Merino vs Cashmere",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_BdJNxG": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_cc6zmgcc6zmgcc6z.webp",
+            "link": "shopify://blogs/news/pfas-in-the-clothes-forever-chemicals",
+            "caption": "PFAS:The \"Forever Chemicals\" Hidden in Your Clothes",
+            "caption_size": 23,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_XjzLYC": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>What is Environmental Education?<br/></h3><p>Environmental education (EE) is more than just learning about recycling or conservation. It is about <a href=\"https://doi.org/10.1080/00139254.1969.10801479\" target=\"_blank\"><strong>understanding the deep connection between human activities and ecosystems</strong></a>—how we impact nature and how nature, in turn, sustains us [1]. EE fosters knowledge, awareness, and action, equipping people with the skills to make <strong>responsible environmental decisions</strong> [2].<br/></p><p>But education doesn’t just happen through books or lectures. Real environmental awareness comes from <strong>hands-on experiences in nature</strong>. Studies show that outdoor learning—such as hiking and trekking—deepens personal connections with the environment and encourages sustainable behaviors [3,4].<br/></p><p>When people immerse themselves in nature, they:<br/></p><ul><li>Develop a sense of responsibility for conservation.</li><li>Understand the importance of protecting fragile ecosystems.</li><li>Feel a stronger emotional bond with the environment, which increases their willingness to take action [4,5].</li></ul><p>This is why hiking, trekking, and outdoor sports are powerful tools for environmental education.<br/></p><h3>Hiking as a Tool for Environmental Awareness<br/></h3><p>A research study explored how hiking contributes to environmental education [4]. The study found that direct exposure to nature <strong>while hiking increases ecological awareness and personal responsibility</strong>.<br/></p><p>During a hike, people observe how the landscape changes, witness the impact of human activity on trails, and experience firsthand the <strong>fragility of ecosystems</strong>. Key insights from the study include:<br/></p><ul><li><strong>Understanding Nature’s Vulnerability<br/></strong>Experiencing different weather conditions (heat, snow, wind) during hikes teaches us how <strong>climate change is affecting ecosystems.</strong></li><li><strong>Recognizing Human Impact<br/></strong>Hikers see trail erosion, litter, and overuse of natural spaces, which increases their understanding of the need for conservation.</li><li><strong>Hiking Builds Environmental Responsibility</strong><br/>The more time we spend outdoors, the more conscious we become of <strong>Leave No Trace</strong> principles—minimizing waste, respecting wildlife, and choosing eco-friendly gear.</li></ul><p>By engaging in outdoor activities, adventurers become active participants in sustainability, rather than passive observers.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_6bkrxL": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/DSC07502-EDITED.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_DdEGdh",
+        "right_image_block_cLcR8k",
+        "right_image_block_BdJNxG",
+        "left_text_XjzLYC",
+        "left_image_6bkrxL"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p><strong>Related content</strong></p>",
+        "right_title_size": 23,
+        "right_title_weight": 600,
+        "right_title_color": "#0e355e",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_e9ifqd": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "right_image_block_ic8aGa": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/MIDlayer_hoodieDSC07913.jpg",
+            "link": "shopify://products/mens-alpaca-wool-hoodie-300-half-zip",
+            "caption": "Men's Alpaca Wool Hoodie 300 LightweightHalf-Zip",
+            "caption_size": 22,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_UnFeiY": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/womensecologicalsweatpantsmidweightcolornavyblue-1658525739222.webp",
+            "link": "shopify://products/womens-alpaca-wool-joggers-300",
+            "caption": "Women's Alpaca Wool Joggers 300 Lightweight",
+            "caption_size": 22,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "right_image_block_Mb9X3A": {
+          "type": "right_image_block",
+          "settings": {
+            "image": "shopify://shop_images/DSC09235-1_2.webp",
+            "link": "shopify://products/mens-alpaca-wool-long-sleeve-tshirt",
+            "caption": "Men's Alpaca Wool Long Sleeve Shirt 160 Ultralight",
+            "caption_size": 22,
+            "caption_weight": 600,
+            "caption_color": "#ffffff"
+          }
+        },
+        "left_text_4BrmCp": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>Fashion: A Silent Contributor to Environmental Damage<br/></h3><p>While hiking teaches us to respect nature, the clothing we wear on our outdoor adventures can either help or harm the environment. The fashion industry is one of the biggest polluters due to:<br/></p><ul><li><a href=\"https://www.ecoaya.com/blogs/sustainability/synthetic-fibers-fashion-industry-polyester\" target=\"_blank\"><strong>Synthetic fabrics</strong></a> like polyester, nylon, and acrylic, which release <a href=\"https://www.ecoaya.com/blogs/sustainability/microplastic-fibers-washing-machines-fashion-clothing-pollution\" target=\"_blank\"><strong>microplastics</strong></a><strong> </strong>into water systems when <a href=\"https://www.ecoaya.com/blogs/sustainability/microplastic-fibers-washing-machines-fashion-clothing-pollution\" target=\"_blank\"><strong>washed</strong></a>.</li><li><strong>High carbon emissions</strong> from fast fashion and long supply chains.</li><li><strong>Use natural options: </strong><a href=\"https://armsofandes.com/blogs/news/biodegradable-vs-compostable-what-is-the-difference-sustainability\" target=\"_blank\"><strong>Biodegradable</strong></a> shampoos, soaps, and detergents are better for the planet.</li><li><strong>Massive textile waste</strong>, with millions of tons of clothing ending up in <a href=\"https://www.ecoaya.com/blogs/sustainability/clothing-landfills-pollution-fast-fashion\" target=\"_blank\"><strong>landfills</strong></a>.</li></ul><h3>Choosing Alpaca Wool: A Sustainable Outdoor Solution</h3><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes</strong></a>, we prioritize environmental education through action—by offering high-performance <a href=\"https://armsofandes.com/blogs/news/alpaca-better-than-merino-cashmere\" target=\"_blank\"><strong>alpaca wool clothing</strong></a> that supports sustainability. <strong>Here’s why alpaca wool is the ideal choice for eco-conscious hikers:</strong><br/></p><ul><li><strong>100% Biodegradable</strong> – Unlike synthetics, alpaca wool naturally decomposes.</li><li><strong>No Microplastics: </strong>Since it’s a natural fiber, it won’t pollute waterways.</li><li><strong>Lightweight & Insulating: </strong>Perfect for hiking, offering warmth without bulk.</li><li><strong>Minimal Washing Required: </strong> Odor-resistant properties reduce water consumption.</li></ul><p>By choosing natural, durable, and responsibly sourced clothing, outdoor enthusiasts <strong>reduce their environmental footprint and become part of the sustainability movement</strong>.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_DwA3WP": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/DSC01443-1.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "right_image_block_ic8aGa",
+        "right_image_block_UnFeiY",
+        "right_image_block_Mb9X3A",
+        "left_text_4BrmCp",
+        "left_image_DwA3WP"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}",
+        ".custom-section-wrapper {padding-bottom: 0px;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<p></p><p></p><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes </strong></a>we make our gear from 100% Royal Alpaca Wool of 18-18.5 microns.</p>",
+        "right_title_size": 16,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "section1_blog_text_and_contentrelated_CE4DCV": {
+      "type": "section1-blog-Text-and-contentrelated",
+      "blocks": {
+        "left_text_XHcXnL": {
+          "type": "left_text",
+          "settings": {
+            "richtext": "<h3>What Can You Do? Practical Steps Toward a Sustainable Outdoor Lifestyle</h3><h3>1. Hike with a Purpose<br/></h3><p>Turn your next hike into an educational experience:<br/></p><ul><li>Learn about local ecosystems, plant life, and wildlife.</li><li>Observe how human activity affects trails and nature.</li><li>Follow <strong>Leave No Trace</strong> principles—pack out what you pack in.</li></ul><h3>2. Choose Sustainable Outdoor Gear<br/></h3><p>When selecting hiking gear, opt for natural fibers like alpaca wool over synthetics.<br/></p><ul><li>Prioritize quality over quantity—invest in durable, long-lasting apparel.</li><li>Support brands that practice ethical sourcing and low-impact production.</li></ul><h3>3. Advocate for Environmental Education</h3><p>Share your knowledge with friends and fellow hikers.<br/></p><ul><li>Support initiatives that promote conservation and sustainability.</li><li>Encourage outdoor brands to adopt more<strong> eco-friendly production methods</strong>.</li></ul><h3>Learning from Nature to Protect It<br/></h3><p>Hiking is more than an adventure—it’s <strong>a classroom without walls</strong>, teaching us about sustainability, responsibility, and conservation. As <strong>World Environmental Education Day</strong> reminds us, education is the key to creating a future where humans and nature coexist harmoniously.<br/></p><p>At <a href=\"https://armsofandes.com/\" target=\"_blank\"><strong>Arms of Andes</strong></a>, we believe that every outdoor journey is an opportunity <strong>to learn, respect, and protect the planet</strong>. That’s why we craft sustainable alpaca wool clothing—so that nature lovers can explore responsibly, leave a lighter footprint, and become ambassadors for change.<br/></p><p>As you gear up for your next adventure, ask yourself: <strong>Are my choices supporting the environment—or harming it?</strong><br/></p><p>Join us in making <strong>education</strong>, <strong>sustainability</strong>, and <strong>ethical outdoor fashion</strong> the new standard.</p>",
+            "font_size": 16,
+            "font_weight": 400,
+            "color": "#000000"
+          }
+        },
+        "left_image_m3R8Bn": {
+          "type": "left_image",
+          "settings": {
+            "image": "shopify://shop_images/DSC00149-1.webp",
+            "caption": "",
+            "caption_size": 12,
+            "caption_weight": 400,
+            "caption_color": "#0e3553"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_XHcXnL",
+        "left_image_m3R8Bn"
+      ],
+      "custom_css": [
+        "a {color: #0e355e; text-decoration: none;}",
+        "h3 {text-align: left;}"
+      ],
+      "name": "Section1-blog-text-contenrelated",
+      "settings": {
+        "left_alignment": "left",
+        "right_title_richtext": "<h3><strong>Glossary keywords</strong></h3><p><strong>Alpaca wool:</strong><br/>A natural, biodegradable fiber known for its insulation, breathability, and sustainability.</p><p><strong>Biodegradable:</strong><br/>Materials that can break down naturally without harming the environment.</p><p><strong>Carbon emissions:</strong><br/>The release of carbon dioxide (CO₂) into the atmosphere, contributing to climate change.</p><p><strong>Conservation:</strong><br/>The protection and preservation of natural environments and wildlife.</p><p><strong>Environmental education:</strong><br/>Learning about the relationship between human activity and nature to promote sustainable behavior.</p><p><strong>Ecosystem:</strong><br/>A biological community of interacting organisms and their physical environment.</p><p><strong>Fast fashion:</strong><br/>A production model that prioritizes cheap, mass-produced clothing, leading to high waste and pollution.</p><p><strong>Hiking:</strong><br/>Walking long distances in nature, often as a recreational or educational activity.</p><p><strong>Microplastics:</strong><br/>Tiny plastic particles released from synthetic materials, polluting water and harming wildlife.</p><p><strong>Sustainability:</strong><br/>Meeting present needs without compromising the ability of future generations to meet theirs.</p><p><strong>Synthetic fabrics:</strong><br/>Man-made textiles, like polyester and nylon, that contribute to pollution and microplastic waste.</p><p><strong>Trail erosion:</strong><br/>The wearing away of hiking trails due to foot traffic and environmental factors. </p>",
+        "right_title_size": 12,
+        "right_title_weight": 400,
+        "right_title_color": "#000000",
+        "right_alignment": "left"
+      }
+    },
+    "rich_text_VtnpKR": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pkidgA": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>References:</strong></p><p>[1] Stapp, W. B. (1969). The concept of environmental education. Environmental Education, 1(1), 30-31. <a href=\"https://doi.org/10.1080/00139254.1969.10801479\" target=\"_blank\">https://doi.org/10.1080/00139254.1969.10801479</a><br/>[2] Ardoin, N. M., & Bowers, A. W. (2020). Early childhood environmental education: A systematic review of the research literature. Educational Research Review, 31, 100353.<br/>[3] Sellmann, D., & Bogner, F. X. (2013). Effects of a 1-day environmental education intervention on environmental attitudes and connectedness with nature. European journal of psychology of education, 28, 1077-1086.<br/>[4] Ferreira, G. (1998). Environmental education through hiking: A qualitative investigation. Environmental Education Research, 4(2), 177-185.<br/>[5] Kossack, A., & Bogner, F. X. (2012). How does a one-day environmental education programme support individual connectedness with nature?. Journal of Biological Education, 46(3), 180-187.<br/></p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 12,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "text_pkidgA"
+      ],
+      "custom_css": [
+        ".rte {line-height: 2em; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 5%; padding-right: 5%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "section_width": "full-width-row-full",
+        "text_width": "grid",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#0e3553",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "featured_blog_AkpzqG": {
+      "type": "featured-blog",
+      "name": "Blog posts",
+      "settings": {
+        "heading": "Latest News",
+        "heading_left": false,
+        "description": "",
+        "full_width": true,
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "show_date": true,
+        "show_excerpt": true,
+        "show_view_all": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "gallery_wpfaf9": {
+      "type": "gallery",
+      "blocks": {
+        "image_4HdV8g": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-4-1637166116239.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP WOMEN'S",
+            "link": "https://armsofandes.com/collections/womens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        },
+        "image_3zjK9m": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/untitled-design-1-1637166025108.webp",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "link_label": "SHOP MEN'S",
+            "link": "https://armsofandes.com/collections/mens-alpaca-wool-clothing",
+            "use_text_button": false,
+            "block_link": "",
+            "product_list": []
+          }
+        }
+      },
+      "block_order": [
+        "image_4HdV8g",
+        "image_3zjK9m"
+      ],
+      "custom_css": [
+        ".gallery__inner {display: grid !important; gap: 1rem;}",
+        ".gallery {padding-left: 1.8rem; padding-right: 1.8rem;}",
+        ".aspect-ratio {--ratio-percent: 49% !important;}",
+        ".gallery.custom-gallery img {object-fit: cover; height: 100%; width: 100%;}",
+        ".button {background-color: rgb(14, 37, 94); color: rgb(255, 255, 255); font-size: 16px; padding: 15px 30px; letter-spacing: 0.3px; font-weight: 700; border: none;}"
+      ],
+      "name": "Gallery",
+      "settings": {
+        "columns_desktop": 2,
+        "section_width": "grid",
+        "mobile_swipe": false,
+        "image_ratio": "adapt",
+        "content_position": "middle-center",
+        "text_alignment": "center",
+        "column_spacing": "small",
+        "heading_size": "h2",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "custom_liquid_46hrCq": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\nh3{\nfont-weight:bold;\n}\n\n</style>",
+        "section_width": "full-width-row"
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-article",
+    "image_with_text_overlay_pJi79Q",
+    "rich_text_QTXbGJ",
+    "section1_blog_text_and_contentrelated_NRVrht",
+    "section1_blog_text_and_contentrelated_bNLg8J",
+    "section1_blog_text_and_contentrelated_e9ifqd",
+    "section1_blog_text_and_contentrelated_CE4DCV",
+    "rich_text_VtnpKR",
+    "featured_blog_AkpzqG",
+    "gallery_wpfaf9",
+    "custom_liquid_46hrCq"
+  ]
+}
