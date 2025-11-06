@@ -15,6 +15,39 @@ if (!customElements.get('image-with-text-overlay')) {
       if (document.body.classList.contains('animations-true') && typeof gsap !== 'undefined') {
         this.prepareAnimations();
       }
+      this.initDropdownTextToggle();
+    }
+    initDropdownTextToggle() {
+      // Find all text dropdowns within this section
+      const textDropdowns = this.querySelectorAll('.text-dropdown');
+      
+      textDropdowns.forEach((details) => {
+        const summary = details.querySelector('.text-dropdown-summary');
+        if (!summary) return;
+        
+        // Store the original and alternate text
+        const closedText = "Creating the World's Healthiest Fashion Brand";
+        const openText = "Created Exclusively With Our 100% Plastic-Free Ingredients";
+        
+        // Normalize initial text (remove extra whitespace)
+        const currentText = summary.textContent.trim();
+        
+        // Set initial text to closed state if it matches the closed text
+        if (currentText.includes("Creating the World's Healthiest Fashion Brand") || 
+            currentText === closedText || 
+            !details.open) {
+          summary.textContent = closedText;
+        }
+        
+        // Listen for toggle event
+        details.addEventListener('toggle', () => {
+          if (details.open) {
+            summary.textContent = openText;
+          } else {
+            summary.textContent = closedText;
+          }
+        });
+      });
     }
     disconnectedCallback() {
       if (document.body.classList.contains('animations-true') && typeof gsap !== 'undefined') {
