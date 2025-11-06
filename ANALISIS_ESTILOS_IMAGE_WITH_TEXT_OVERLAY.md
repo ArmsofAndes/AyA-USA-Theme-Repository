@@ -605,3 +605,5 @@ Idénticos al botón "SHOP WOMEN" - mismos estilos y comportamiento hover.
 5. **Animaciones deshabilitadas**: Por diseño, se desactivan todas las animaciones del componente
 6. **Posicionamiento contenido**: Bottom-center (contenido alineado abajo, centrado horizontalmente)
 
+
+

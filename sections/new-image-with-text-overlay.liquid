@@ -252,24 +252,58 @@
 /* Responsive heading adjustments */
 @media only screen and (max-width: 767px) {
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
-    font-size: 2.2rem !important;
+    font-size: 1.536rem !important;
     line-height: 3rem !important;
   }
   
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte {
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte:not(.description-size--medium) {
     font-size: 1rem;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    gap: 0.5rem;
+    gap: 10px;
+    width: 100%;
+    /* justify-content: center; */
+    flex-wrap: wrap;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
     margin: 0 !important;
+    flex: 1;
+    min-width: 0;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    width: 100%;
     margin: 0 !important;
+  }
+  
+  /* Override button CSS variables for mobile - must have higher specificity than block-specific styles */
+  {% for block in section.blocks %}
+    {%- if block.type == 'button' -%}
+      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
+        --btn-font-size: 15px;
+        --btn-font-weight: 400;
+      }
+      /* Direct style override for mobile buttons to ensure font-size and font-weight are applied */
+      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
+        font-size: 15px !important;
+        font-weight: 400 !important;
+      }
+    {%- endif -%}
+  {% endfor %}
+  
+  /* Ensure p elements inside description-size--medium have correct font size in mobile */
+  #shopify-section-{{ section.id }} .rte.description-size--medium p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte.description-size--medium p {
+    font-size: 0.688rem !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Override font-weight for description-size--medium in mobile - must override block-specific styles */
+  #shopify-section-{{ section.id }} .rte.description-size--medium,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte.description-size--medium {
+    font-weight: 400 !important;
   }
 }
 

@@ -19,6 +19,12 @@
   }
 }
 
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay {
+    padding: 94px 0;
+  }
+}
+
 /* ============================================
    BACKGROUND IMAGE
    ============================================ */
@@ -50,6 +56,21 @@
   z-index: 11;
   background-color: rgba(var(--color-overlay-rgb), var(--overlay-opacity));
   pointer-events: none;
+}
+
+/* Gradient shadow from bottom (25% of image) - Mobile only */
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--bg:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    z-index: 12;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    pointer-events: none;
+  }
 }
 
 /* Desktop image positioning */
@@ -122,6 +143,12 @@
 .image-with-text-overlay--content.content-bottom-center {
   justify-content: flex-start;
   align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--content.content-bottom-center {
+    align-items: flex-end;
+  }
 }
 
 .image-with-text-overlay--content.content-bottom-right {
@@ -213,6 +240,12 @@
   }
 }
 
+@media only screen and (max-width: 767px) {
+  .block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
+    font-size: 1.536rem !important;
+  }
+}
+
 @media only screen and (min-width: 485px) {
   .image-with-text-overlay--heading:not(.block-wrapper *) {
     font-size: 35px;
@@ -260,10 +293,27 @@
   width: 100%;
 }
 
+.block-wrapper[data-block-type="text"].text-dropdown-wrapper {
+  padding-right: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .block-wrapper[data-block-type="text"].text-dropdown-wrapper {
+    padding-right: 12%;
+  }
+}
+
 .text-dropdown {
   border: none;
   margin: 0;
   padding: 0 4%;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
 }
 
 .text-dropdown summary {
@@ -284,6 +334,13 @@
   border-bottom: 0.5px solid #ffffff;
   user-select: none;
   -webkit-user-select: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown summary {
+    font-size: 0.938rem;
+    line-height: 20px;
+  }
 }
 
 .text-dropdown summary::-webkit-details-marker {
@@ -347,6 +404,24 @@
   }
 }
 
+/* Mobile styles for description-size--medium - must override .text-dropdown-content .rte */
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--content .rte.description-size--medium,
+  .text-dropdown-content .rte.description-size--medium,
+  .block-wrapper[data-block-type="text"] .rte.description-size--medium {
+    font-size: 0.688rem !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Ensure p elements inside description-size--medium also have correct font size */
+  .image-with-text-overlay--content .rte.description-size--medium p,
+  .text-dropdown-content .rte.description-size--medium p,
+  .block-wrapper[data-block-type="text"] .rte.description-size--medium p {
+    font-size: 0.688rem !important;
+    font-weight: 400 !important;
+  }
+}
+
 .image-with-text-overlay--content .rte.description-size--large:not(.block-wrapper *) {
   font-size: 1.5rem;
 }
@@ -382,9 +457,31 @@
 
 @media only screen and (max-width: 767px) {
   .buttons-grid-wrapper {
-    flex-direction: column;
-    gap: 0.5rem;
+    display: flex;
+    gap: 10px;
     width: 100%;
+    margin: 0 auto;
+    /* justify-content: center; */
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 14%;
+  }
+  
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
+    flex: 1;
+    min-width: 0;
+    --btn-font-size: 15px;
+    --btn-font-weight: 400;
+  }
+  
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    width: 100%;
+  }
+  
+  /* Ensure mobile button styles use the CSS variables */
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button[class*="custom-btn"] {
+    font-size: var(--btn-font-size) !important;
+    font-weight: var(--btn-font-weight) !important;
   }
 }
 
@@ -414,6 +511,11 @@
   border-radius: var(--btn-border-radius);
   padding: 0.6em 1.5em;
   line-height: 1.2;
+}
+
+/* Buttons inside buttons-grid-wrapper - specific color override */
+.buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button[class*="custom-btn"] {
+  background-color: #01264a !important;
 }
 
 .block-wrapper[data-block-type="button"] .button[class*="custom-btn"]:hover {

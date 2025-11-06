@@ -247,6 +247,19 @@
     top: 0;
     z-index: 9999; /* para que quede por encima */
   }
+
+  /* Estilos fijos para announcement-bar--item - Aplicado a todos los dispositivos */
+  .announcement-bar--item {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    --hover-bg: #333333 !important;
+    --hover-text: #ffffff !important;
+  }
+
+  .announcement-bar--item:hover {
+    background-color: var(--hover-bg) !important;
+    color: var(--hover-text) !important;
+  }
 </style>
 
 

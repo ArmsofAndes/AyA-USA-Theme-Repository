@@ -1,6 +1,7 @@
 <div class="thb-header-mobile-left">
 	{% render 'header-mobile-toggle', header_settings: header_settings, blocks: blocks %}
 </div>
+{% render 'header-full-menu', menu: header_settings.menu, blocks: blocks %}
 <div class="menu-logo-container">
 	{% if header_settings.logo %}
 		<a class="logolink" href="{{ routes.root_url }}">
@@ -31,6 +32,5 @@
 			{{ shop.name }}
 		</a>
 	{% endif %}
-	{% render 'header-full-menu', menu: header_settings.menu, blocks: blocks %}
 </div>
 {% render 'header-secondary-area', header_settings: header_settings %}
