@@ -144,7 +144,7 @@
         "full_width": false,
         "subheading": "ADD A SUBHEADER",
         "heading": "BACKGROUND VIDEO",
-        "text": "The lightweight gel-cream formula has a pillowy, bouncy feel that blends seamlessly and leaves cheeks dewy, not streaky or chalky",
+        "text": "<p>The lightweight gel-cream formula has a pillowy, bouncy feel that blends seamlessly and leaves cheeks dewy, not streaky or chalky</p>",
         "lightbox_button": false,
         "video": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
         "overlay_opacity": 25,
@@ -260,7 +260,7 @@
           "settings": {
             "subheading": "Add a tagline",
             "title": "Column",
-            "text": "Pair text with an image to focus on your chosen image",
+            "text": "<p>Pair text with an image to focus on your chosen image</p>",
             "link_label": "Explore",
             "link": "",
             "use_text_button": false,
@@ -272,7 +272,7 @@
           "settings": {
             "subheading": "Add a tagline",
             "title": "Column",
-            "text": "Pair text with an image to focus on your chosen image",
+            "text": "<p>Pair text with an image to focus on your chosen image</p>",
             "link_label": "Explore",
             "link": "",
             "use_text_button": false,
@@ -284,7 +284,7 @@
           "settings": {
             "subheading": "Add a tagline",
             "title": "Column",
-            "text": "Pair text with an image to focus on your chosen image",
+            "text": "<p>Pair text with an image to focus on your chosen image</p>",
             "link_label": "Explore",
             "link": "",
             "use_text_button": false,
@@ -318,7 +318,7 @@
         "template--17027745677627__1d9ac32d-5b10-41c7-89b8-56067807f786-16698862613e3a24a1-0": {
           "type": "text",
           "settings": {
-            "text": "YOU ARE A NEW BEAUTY",
+            "text": "<p>YOU ARE A NEW BEAUTY<\/p>",
             "link": "",
             "outline_text": false
           }
@@ -326,7 +326,7 @@
         "template--17027745677627__1d9ac32d-5b10-41c7-89b8-56067807f786-16698862613e3a24a1-1": {
           "type": "text",
           "settings": {
-            "text": "AGE FLAWLESSLY",
+            "text": "<p>AGE FLAWLESSLY<\/p>",
             "link": "",
             "outline_text": false
           }
@@ -334,7 +334,7 @@
         "template--17027745677627__1d9ac32d-5b10-41c7-89b8-56067807f786-16698862613e3a24a1-2": {
           "type": "text",
           "settings": {
-            "text": "BE YOU EVERY DAY",
+            "text": "<p>BE YOU EVERY DAY<\/p>",
             "link": "",
             "outline_text": false
           }
