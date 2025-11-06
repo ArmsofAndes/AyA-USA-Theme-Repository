@@ -1,1 +1,1159 @@
-{"sections":{"custom_liquid_fLM8Gg":{"type":"custom-liquid","name":"Custom liquid","settings":{"custom_liquid":"<style>\n@media only screen and (max-width: 767px) {\n    .mobile-height-500 {\n        min-height: 620px;\n    }\n}\n.image-with-text-overlay--content-inner .button:before, input[type=\"submit\"]:before {\n    transition: none!important;\nbackground:none;\n}\n\n.image-with-text-overlay--bg img,\n.image-with-text-overlay--bg svg,\n.image-with-text-overlay--bg picture {\n  display: block;\n  vertical-align: middle;\n  line-height: 0;\n}\n\n\n.image-with-text-overlay--bg {\n  background-color: transparent !important;\n}\n\n\/* Evitar que un pixel extra aparezca por overflow *\/\n.image-with-text-overlay--bg {\n  overflow: hidden;\n}\n\n\n.image-with-text-overlay {\n  background-color: transparent !important;\n  border: none !important;\n}\n@media screen and (min-width: 1600px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: 815px!important;\n  }\n}\n\n@media screen and (max-width: 1599.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: calc(100vh - 115px)!important;\n    min-height: 570px!important;\n  }\n}\n\n@media screen and (max-width: 989.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: calc(100vh - 110px)!important;\n  }\n}\n\n@media screen and (max-width: 749.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: 620px !important; \n    min-height: 620px !important;\n    \n  }\n.image-with-text-overlay--bg img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover!important;\n  }\n.image-with-text-overlay--desktop {\n    display: none !important;\n  }\n}\n\/* altura fija para desktop para arriba *\/\n@media screen and (min-width: 1600px) {\n  .image-with-text-overlay--bg,\n  .image-with-text-overlay {\n    height: 825px !important;\n    min-height: 825px !important;\n  }\n}\n.image-with-text-overlay--bg.parallax--true {\ntop:0%;}\n<\/style>","section_width":"full-width-row"}},"custom_liquid_jzQjfa":{"type":"custom-liquid","name":"Custom liquid","settings":{"custom_liquid":"<script>\n(function run() {\n  function italicize(container) {\n    container.querySelectorAll('.scrolling-text--item span').forEach(span => {\n      const txt = (span.textContent || '').trim();\n      if (!txt.includes('-')) return;\n      const parts = txt.split('-');\n      const before = parts.shift().trim();\n      const after = parts.join('-').trim();\n      span.innerHTML = before ? (before + ' - <i>' + after + '<\/i>') : ('<i>' + after + '<\/i>');\n    });\n  }\n\n  \/\/ Ejecuta en carga\n  const containers = document.querySelectorAll('.section-scrolling-text, .scrolling-text');\n  containers.forEach(italicize);\n\n  \/\/ Re-ejecuta cuando Shopify recarga secciones en el editor\n  document.addEventListener('shopify:section:load', (e) => {\n    const el = e.target;\n    if (el && (el.classList.contains('section-scrolling-text') || el.querySelector('.scrolling-text'))) {\n      italicize(el);\n    }\n  });\n})();\n<\/script>","section_width":"full-width-row"}},"custom_liquid_7eCQ4K":{"type":"custom-liquid","name":"Custom liquid","settings":{"custom_liquid":"<script>\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const video = document.querySelector(\".video-section video\");\n\n  if (video) {\n    video.addEventListener(\"play\", () => {\n      \/\/ Ahora no bloquea nada al reproducirse\n      console.log(\"El video está reproduciéndose, pero sin bloquear el scroll.\");\n    });\n  }\n});\n<\/script>","section_width":"full-width-row"}},"new_image_with_text_overlay_NJ3xWp":{"type":"new-image-with-text-overlay","blocks":{"heading_QdDkF8":{"type":"heading","settings":{"text":"Fashion for a Non-Toxic Life","heading_font_size":3.7,"heading_font_weight":"700","heading_color":"#ffffff","margin_top":0,"margin_bottom":0}},"text_nTJahJ":{"type":"text","settings":{"text":"<p>Regenerative Organic Pima Cotton <\/p><p>Copper Zippers on Cotton Tape <\/p><p>Tree Rubber Elastic Bands<\/p><p>Mother of Pearl Buttons<\/p><p>Free Ranging Alpacas<\/p><p>Cotton Threads<\/p><p>Cotton Labels<\/p>","description_size":"medium","text_font_size":1.2,"text_font_weight":"700","line_height":1.8,"text_color":"#ffffff","margin_top":0,"margin_bottom":2}},"button_rU3H7E":{"type":"button","settings":{"button_text":"SHOP WOMEN","button_link":"shopify:\/\/collections\/all-womens","button_font_size":16,"button_font_weight":"600","button_color":"#ffffff","button_background_color":"#242c48","button_border_color":"#ffffff","button_border_width":2,"button_border_radius":25,"button_border_style":"solid","button_outline":false,"hover_text_color":"#242c48","hover_background_color":"#ffffff","hover_border_color":"#242c48"}},"button_Bknaza":{"type":"button","settings":{"button_text":"SHOP MEN","button_link":"shopify:\/\/collections\/all-mens","button_font_size":16,"button_font_weight":"600","button_color":"#ffffff","button_background_color":"#242c48","button_border_color":"#ffffff","button_border_width":2,"button_border_radius":25,"button_border_style":"solid","button_outline":false,"hover_text_color":"#242c48","hover_background_color":"#ffffff","hover_border_color":"#242c48"}}},"block_order":["heading_QdDkF8","text_nTJahJ","button_rU3H7E","button_Bknaza"],"custom_css":[".button {width: 175.3px;}","p {margin-bottom: 0px;}","@media screen and (max-width: 767px) {.image-with-text-overlay--content-inner {padding-left: 4%; padding-right: 4%; } .button {margin: 4px; } .image-with-text-overlay--heading {font-size: 2.2rem !important; line-height: 3rem !important; } p {font-size: 1rem; }}"],"name":"Image with text overlay new","settings":{"use_global_font":true,"font_family":"roboto","section_width":"full-width-row-full","image":"shopify:\/\/shop_images\/DSC06777_2_6.webp","mobile_image":"shopify:\/\/shop_images\/Untitled-2_2.webp","image_parallax":false,"desktop_vh_height":85,"desktop_height":"desktop-height-750","mobile_height":"mobile-height-500","content_width":"medium","content_position":"bottom-center","text_alignment":"center","overlay_color":"#000000","overlay_opacity":3,"disable_top_spacing":true,"disable_bottom_spacing":true}},"section_steps_content_main_BUHzF3":{"type":"section-steps-content-main","blocks":{"row_cgAa8D":{"type":"row","settings":{"title":"Step One","anchor_link":"step-1","title_url":"","title_italic":true,"title_color":"#717171","title_size":16,"title_weight":"400","text":"<p>*100% Plastic-Free: We now use ZERO petro-chemical derived plastics in all products.<\/p>","text_color":"#333333","text_size":16,"text_weight":"600"}},"row_iKHdgt":{"type":"row","settings":{"title":"Step Two","anchor_link":"step-2","title_url":"","title_italic":true,"title_color":"#717171","title_size":16,"title_weight":"300","text":"<p>100% Non-Toxic: We are currently eliminating all petro-chemicals.<\/p>","text_color":"#333333","text_size":16,"text_weight":"600"}}},"block_order":["row_cgAa8D","row_iKHdgt"],"custom_css":[".two-rows-section {display: grid; gap: 12px !important;}","p {margin-bottom: 0px !important;}","@media (min-width: 980px) {.two-rows-section {max-height: 155px; }}"],"name":"2 filas + Texto editable Main","settings":{"background_image":"shopify:\/\/shop_images\/Fondo_Texturizado_2_Textura_aumentada_3.webp","background_color":"#ffffff","row_spacing":0,"title_text_spacing":0}},"rich_text_dwzBWy":{"type":"rich-text","blocks":{"subheading_BcNJTP":{"type":"subheading","settings":{"text":"Shop Best Sellers","color":"","font_size":22,"font_weight":500}},"heading_6yzCKU":{"type":"heading","disabled":true,"settings":{"text":"OUR CLOTHES","color":"","font_size":24,"font_weight":400}},"text_Mpj7jY":{"type":"text","disabled":true,"settings":{"text":"<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>","custom_liquid":"","color":"","font_size":24,"font_weight":400}},"button_HpAp8z":{"type":"button","disabled":true,"settings":{"link_label":"Learn More","link":"","button_outline":false,"button_color":"","button_text_color":"","button_hover_color":"","button_hover_text_color":"","font_size":16,"font_weight":400}}},"block_order":["subheading_BcNJTP","heading_6yzCKU","text_Mpj7jY","button_HpAp8z"],"custom_css":[".row {max-width: 100%;}",".subheading {letter-spacing: 0.2em; margin-top: 20px;}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"baskerville","custom_anchor_id":"","background_image":"shopify:\/\/shop_images\/Fondo_Texturizado_2_Textura_aumentada_3.webp","section_width":"grid","text_width":"medium","text_position":"center","text_alignment":"center","color_bg":"rgba(0,0,0,0)","color_text":"#151515","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"custom8product_eApXHc":{"type":"custom8product","custom_css":[".product-card-swatches .product-card-swatch:after {border: 1px solid rgba(255, 255, 255, 0.1);}"],"name":"Custom 8 Products","settings":{"product_1":"womens-organic-pima-cotton-long-sleeve-shirt","product_2":"organic-cotton-face-cloth-gots-certified","product_3":"organic-pima-cotton-boxer-briefs","product_4":"mens-organic-pima-cotton-t-shirt","product_5":"womens-pima-cotton-classic-shirt","product_6":"mens-organic-pima-cotton-chino-shorts","product_7":"womens-alpaca-wool-leggings-420-midweight","product_8":"womens-organic-pima-cotton-tank-top","autoplay_mobile":true,"autoplay_speed":5}},"rich_text_quote_nrnyXT":{"type":"rich-text-quote","blocks":{"quote_heading_hyjFyx":{"type":"quote_heading","settings":{"text":"What you guys are doing, it’s great! I’m very happy that you got rid of these petroleum-based polymers.","link":"https:\/\/www.youtube.com\/watch?v=4WDNzyCWikc","color":"#151515","font_size":34,"font_weight":400}},"text_LEBL3b":{"type":"text","settings":{"text":"<p>Professor Dick Vethaak<\/p><p>Discoverer of Microplastics in Human Blood<\/p>","custom_liquid":"<style>\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner {\n  display: flex;\n  flex-direction: column;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte {\n  \/*background-color: #3868a0;*\/\n  \/*color: #fff;*\/\n  padding: 0.4rem 1rem;\n  font-size: 18px;\n  margin-left: auto;\n  text-align: right;\n  width: fit-content;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p:first-of-type {\n  font-size: 25px;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p {\n  margin: 0;\n  line-height: 1.3;\n}\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p:nth-of-type(2) {\n  color:#717171;\n}\n\n<\/style>","color":"","font_size":18,"font_weight":400}}},"block_order":["quote_heading_hyjFyx","text_LEBL3b"],"custom_css":[".row {max-width: 100%;}",".rte {padding: 0rem; text-align: right;}",".rte p {margin-bottom: 5px; font-family: \"Baskervville\", serif;}",".custom-heading {margin-top: 8px;}",".rich-text__inner {margin: auto; max-width: 1000px; padding-top: 28px;}","@media (max-width: 768px) {.rte {padding: 0 !important; } h3 {font-size: 1.4rem !important; margin-bottom: 1rem; } p {font-size: 1rem; margin-bottom: 0px !important; } .rich-text__inner {padding: 20px 20px 0px 20px; }}"],"name":"Rich text with Quote","settings":{"use_global_font":false,"font_family":"montserrat","custom_anchor_id":"","background_image":"shopify:\/\/shop_images\/Fondo_Texturizado_2_Textura_aumentada_3.webp","color_bg":"rgba(0,0,0,0)","color_text":"#151515","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"text_3video_main_YDQfU4":{"type":"text-3video-main","blocks":{"video_xekCKY":{"type":"video","settings":{"video":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","video_hosted":"shopify:\/\/files\/videos\/12.mp4"}},"video_nTXpej":{"type":"video","settings":{"video":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","video_hosted":"shopify:\/\/files\/videos\/14.mp4"}},"video_full_k4M3jm":{"type":"video_full","settings":{"video_full":"https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc","video_hosted_full":"shopify:\/\/files\/videos\/17 II_4002f204-9377-468e-957d-e5194649cf10.mp4"}}},"block_order":["video_xekCKY","video_nTXpej","video_full_k4M3jm"],"custom_css":[],"name":"Texto con 3 videos Main","settings":{"use_global_font":true,"font_family":"montserrat","main_text":"<h3>Made with Nature,<br\/>Not Plastic<\/h3><p>At Aya, we're reimagining clothing for a non-toxic, plastic-free future.<\/p><p>Crafted exclusively from 100% regenerative organic Pima cotton, our garments are designed to be the natural evolution of fashion. From seed to stitch, sown without synthetic chemicals, and constructed free from plastics—every piece honors the earth.<\/p><p>Our clothing is timeless and versatile: soft yet durable, elegant yet functional. Unlike conventional apparel, it is always free from microplastics, petroleum-based fibers, and harmful additives like BPA and PFAS.<\/p><p>Gentle on skin. Gentle on the planet. Clothing for the next generation.<\/p>","text_color":"#000000","text_weight":"normal","text_size":16}},"4video_1textcolumns_krbkxX":{"type":"4video-1textcolumns","blocks":{"video_YhyJrp":{"type":"video","settings":{"video_url":"","video_file":"shopify:\/\/files\/videos\/3.mp4"}},"video_VLK8i9":{"type":"video","settings":{"video_url":"","video_file":"shopify:\/\/files\/videos\/20_03179712-V2.mp4"}},"video_pF9i9F":{"type":"video","settings":{"video_url":"","video_file":"shopify:\/\/files\/videos\/1.mp4"}},"video_4jGexz":{"type":"video","settings":{"video_url":"","video_file":"shopify:\/\/files\/videos\/11a.mp4"}}},"block_order":["video_YhyJrp","video_VLK8i9","video_pF9i9F","video_4jGexz"],"custom_css":[".videos-with-text__text {text-align: left;}","p {margin-bottom: 0px;}"],"name":"Videos con texto 4+1","settings":{"use_global_font":true,"font_family":"helvetica","text_title_1":"This is what","title_color_1":"#000000","title_weight_1":"bold","title_size_1":16,"title_align_1":"left","text_title_2":"Creating a Plastic Free World","title_color_2":"#000000","title_weight_2":"bold","title_size_2":20,"title_align_2":"left","text_title_3":"looks like...","title_color_3":"#000000","title_weight_3":"bold","title_size_3":16,"title_align_3":"left","text_color":"#000000","text_weight":"normal","text_size":16,"text_align":"left","richtext_content":"<p>We achieve what most consider impossible:<\/p><p>The first and only brand to remove all plastics. This isn’t a slogan or a marketing claim — it’s our reality. Through innovation, rigorous testing, and an unshakeable belief that fashion can be better, we are transforming the future of sustainability.<\/p><p><strong>We’re here to lead the way.<\/strong><\/p>"}},"rich_text_JpMw4m":{"type":"rich-text","blocks":{"heading_b7eiQy":{"type":"heading","settings":{"text":"Our Exclusive Collections","color":"","font_size":36,"font_weight":500}}},"block_order":["heading_b7eiQy"],"custom_css":[".richtext-full-bg {padding: 0 7%;}",".richtext-full-bg {display: none !important;}",".rte {padding: 0rem;}","@media (max-width: 768px) {h3 {font-size: 26px !important; text-align: center; } .rte {padding: 0 !important; } .richtext-full-bg {display: block !important; } .rich-text__inner {padding: 0px; }}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"helvetica","custom_anchor_id":"","section_width":"grid","text_width":"xlarge","text_position":"left","text_alignment":"left","color_bg":"rgba(0,0,0,0)","color_text":"#151515","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"five_imagens_main_H4PgVe":{"type":"five-imagens-main","custom_css":[".five-images {padding: 0 7.87%; display: none !important;}","@media (max-width: 768px) {.five-images {display: block !important; }}"],"name":"Five Images Layout Main","settings":{"image_1":"shopify:\/\/shop_images\/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png","link_1":"shopify:\/\/collections\/chemical-free-clothes","image_2":"shopify:\/\/shop_images\/Coleccion_4.webp","link_2":"shopify:\/\/collections\/alpaca-wool-clothing","image_3":"shopify:\/\/shop_images\/Coleccion_3.webp","link_3":"shopify:\/\/collections\/organic-cotton-bundles","image_4":"shopify:\/\/shop_images\/Coleccion_5.webp","link_4":"shopify:\/\/collections\/household","image_5":"shopify:\/\/shop_images\/Coleccion_2.webp","link_5":"shopify:\/\/collections\/organic-pima-cotton-underwear"}},"botons_column_G4Ri44":{"type":"botons-column","blocks":{"button_twxqdk":{"type":"button","settings":{"button_text":"SHOP WOMEN","button_link":"shopify:\/\/collections\/all-womens","text_color":"#000000","font_size":16,"font_weight":"600","background_color":"#ffffff","border_radius":25,"border_color":"#000000","border_width":2,"hover_text_color":"#ffffff","hover_background_color":"#151515","hover_border_color":"#000000"}},"button_QdT6HW":{"type":"button","settings":{"button_text":"SHOP MEN","button_link":"shopify:\/\/collections\/all-mens","text_color":"#000000","font_size":16,"font_weight":"600","background_color":"#ffffff","border_radius":25,"border_color":"#151515","border_width":2,"hover_text_color":"#ffffff","hover_background_color":"#000000","hover_border_color":"#000000"}}},"block_order":["button_twxqdk","button_QdT6HW"],"custom_css":[".custom-btn {width: 282px;}"],"name":"Botons-column","settings":{"background_color":"#ffffff","button_layout":"row","hide_on_desktop":true,"hide_on_mobile":false}},"4sections_text_RgMkLN":{"type":"4sections-text","blocks":{"text_block_6kpwQy":{"type":"text_block","settings":{"title":"Organic Pima Cotton","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Pima Cotton grows the longest & finest cotton fibers in the world, and our Organic Pima Cotton is sown on regenerative soils. A species native to Peru, its modern variant was selectively bred across the world to achieve its luxurious softness.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_iqGUca":{"type":"text_block","settings":{"title":"Free Ranging Alpacas","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Our Alpaca fabric is knit from the finest Alpaca fibers, 19 microns, softer than Baby Alpaca. These rare fibers are hand-sheared annually by andean communities & essential for the health of the free-ranging Alpacas.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_tURjRf":{"type":"text_block","settings":{"title":"Natural Dyes","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>We use plant-based dyes and cochineal rooted in ancestral techniques. These pigments are biodegradable, safe for skin, and free from synthetic colorants.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_DnHwGT":{"type":"text_block","settings":{"title":"Ecoprint","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Each EcoPrint garment is unique. Leaves and flowers are imprinted directly on the fabric, creating patterns that will never repeat. Nature becomes the designer.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_3UEp6C":{"type":"text_block","settings":{"title":"Zero Waste Clothes","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Although difficult due to Alpaca's smooth & flat scales, Alpaca felts create a unique and durable fabric. Our artisanal felts make our products zero-waste, as all leftover fabrics are given new life.  <\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"spacer_KrejVD":{"type":"spacer","settings":{"space_height":30}},"text_block_wUbmdM":{"type":"text_block","settings":{"title":"No Microplastics","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Aya clothing does not shed a single micro or nano fiber. They return only what nature created.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_yYpacL":{"type":"text_block","settings":{"title":"No Synthetic Fibers","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Every garment comes only from nature. No polyester, no nylon, no acrylic, no elastane, no blends.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_Rr6jx9":{"type":"text_block","disabled":true,"settings":{"title":"No PFAS, BPA, Phthalates","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>No dangerous hormone disruptors—no PFAS, no Phthalates, no BPA, no BPS, no BPF.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_MQ7B7m":{"type":"text_block","disabled":true,"settings":{"title":"Non-Toxic","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>We reject petrochemical finishes and coatings. Our garments are safe for skin and the environment.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}},"text_block_8zWJda":{"type":"text_block","settings":{"title":"No Greenwashing","title_underline":false,"title_color":"#ffffff","title_weight":"normal","title_size":48,"text":"<p>Pushing the limits of sustainability is a work in progress. We promise to be transparent about our current limitations and the steps we are taking towards a completely plastic free future.<\/p>","text_color":"#ffffff","text_weight":"normal","text_size":16}}},"block_order":["text_block_6kpwQy","text_block_iqGUca","text_block_tURjRf","text_block_DnHwGT","text_block_3UEp6C","spacer_KrejVD","text_block_wUbmdM","text_block_yYpacL","text_block_Rr6jx9","text_block_MQ7B7m","text_block_8zWJda"],"custom_css":[".section-4-text {padding: 5% 3% 6% 3%;}","p {margin-bottom: 0 !important;}"],"name":"Bloques título + texto","settings":{"use_global_font":true,"font_family":"helvetica","custom_anchor_id":"","background_image":"shopify:\/\/shop_images\/AdobeStock_127785030_2.webp","background_color":"#ffffff","overlay_color":"#000000","overlay_opacity":0.3}},"video_BE67UD":{"type":"video","custom_css":[],"name":"Video","settings":{"heading":"","heading_left":false,"description":"","section_width":"full-width-row-full","video":"","video_hosted":"shopify:\/\/files\/videos\/AYA Video presentación horizontal.mp4","video_autoplay":false,"aspect_ratio":"16-9","disable_top_spacing":false,"disable_bottom_spacing":false}},"rich_text_efMz3Q":{"type":"rich-text","blocks":{"heading_Qh9yU6":{"type":"heading","settings":{"text":"Our Exclusive Collections","color":"","font_size":36,"font_weight":500}}},"block_order":["heading_Qh9yU6"],"custom_css":[".richtext-full-bg {padding: 0 7%;}",".rte {padding: 0rem;}","@media (max-width: 768px) {.rte {padding: 0 !important; } .richtext-full-bg {display: none !important; }}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"helvetica","custom_anchor_id":"","section_width":"grid","text_width":"xlarge","text_position":"left","text_alignment":"left","color_bg":"rgba(0,0,0,0)","color_text":"#151515","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"five_imagens_main_Q3yXVC":{"type":"five-imagens-main","custom_css":[".five-images {padding: 0 7.87%;}","@media (max-width: 768px) {.five-images {display: none !important; }}"],"name":"Five Images Layout Main","settings":{"image_1":"shopify:\/\/shop_images\/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png","link_1":"shopify:\/\/collections\/chemical-free-clothes","image_2":"shopify:\/\/shop_images\/Coleccion_4.webp","link_2":"shopify:\/\/collections\/alpaca-wool-clothing","image_3":"shopify:\/\/shop_images\/Coleccion_3.webp","link_3":"shopify:\/\/collections\/organic-cotton-bundles","image_4":"shopify:\/\/shop_images\/Coleccion_5.webp","link_4":"shopify:\/\/collections\/household","image_5":"shopify:\/\/shop_images\/Coleccion_2.webp","link_5":"shopify:\/\/collections\/organic-pima-cotton-underwear"}},"botons_column_tDqht7":{"type":"botons-column","blocks":{"button_eLGNNh":{"type":"button","settings":{"button_text":"SHOP WOMEN","button_link":"shopify:\/\/collections\/all-womens","text_color":"#000000","font_size":16,"font_weight":"600","background_color":"#ffffff","border_radius":25,"border_color":"#000000","border_width":2,"hover_text_color":"#ffffff","hover_background_color":"#151515","hover_border_color":"#000000"}},"button_xUiYxd":{"type":"button","settings":{"button_text":"SHOP MEN","button_link":"shopify:\/\/collections\/all-mens","text_color":"#000000","font_size":16,"font_weight":"600","background_color":"#ffffff","border_radius":25,"border_color":"#151515","border_width":2,"hover_text_color":"#ffffff","hover_background_color":"#000000","hover_border_color":"#000000"}}},"block_order":["button_eLGNNh","button_xUiYxd"],"custom_css":[".custom-btn {width: 282px;}"],"name":"Botons-column","settings":{"background_color":"#ffffff","button_layout":"row","hide_on_desktop":false,"hide_on_mobile":true}},"rich_text_qLgEka":{"type":"rich-text","blocks":{"heading_MbRirK":{"type":"heading","settings":{"text":"Our Mission","color":"","font_size":36,"font_weight":500}}},"block_order":["heading_MbRirK"],"custom_css":[".richtext-full-bg {padding: 0 7%;}",".rte {padding: 0rem;}","@media (max-width: 768px) {.rte {padding: 0 !important; }}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"arimo","custom_anchor_id":"","section_width":"full-width-row-full","text_width":"xlarge","text_position":"left","text_alignment":"left","color_bg":"rgba(0,0,0,0)","color_text":"#151515","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"rich_text_afTaNx":{"type":"rich-text","blocks":{"heading_RW7Nbn":{"type":"heading","settings":{"text":"OUR MISSION","color":"","font_size":80,"font_weight":600}},"text_cU9nTa":{"type":"text","disabled":true,"settings":{"text":"<p>We are on a mission to redefine what true sustainability means in fashion. Not through empty claims or greenwashing, but through radical honesty, responsibility, and progress that can be measured in every thread we create.<\/p><p>Aya is constructed to perfection: every piece is made from regenerative organic Pima cotton or our sister brand, Arms of Andes, 100% Alpaca. Everything is free from plastics, designed to honor both the planet and the people who wear it. Our vision is to become the world’s most sustainable brand — transparent in our process, uncompromising in our standards, and relentless in our pursuit of a plastic-free future.<\/p><p>This is not just about clothing; it is about shaping a life free of hidden toxins, microplastics, and false promises. We invite you to be part of this journey — join us in creating a plastic-free life.<\/p>","custom_liquid":"","color":"","font_size":15,"font_weight":400}}},"block_order":["heading_RW7Nbn","text_cU9nTa"],"disabled":true,"custom_css":[".custom-heading {padding-bottom: 25px;}",".rte {text-align: center;}",".custom-heading {transition: all 0.6s ease; transform: scale(1);}",".custom-heading.animate {transform: scale(1.2); font-weight: 700 !important;}","@media (max-width: 768px) {.custom-heading {font-size: 2.5rem !important; }}","h3 {font-weight: 200 !important;}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"helvetica","custom_anchor_id":"mision-vision","section_width":"full-width-row-full","text_width":"xlarge","text_position":"center","text_alignment":"left","color_bg":"#ffffff","color_text":"#151515","color_links":"#151515","disable_top_spacing":false,"disable_bottom_spacing":true}},"collapsible_content_tx8hNA":{"type":"collapsible-content","blocks":{"collapsible_tab_ti4xUq":{"type":"collapsible_tab","settings":{"heading":"Step 1:  100% Plastic Free","open":false,"content":"<p>Removing all plastics from our clothes isn't just symbolic, <strong>it’s removing the biggest contaminant of microplastics…<\/strong><\/p><p>“Microfibers are the predominant type of plastic that we find in the environment” <\/p><p>-Abby Barrows, Microplastics Research Scientist<\/p><p>We have completed our first step. We have successfully removed all plastics from all of our products:  <\/p><ol><li>All plastics from our fabrics, like polyester blends and especially elastane.<\/li><li>All nylon and other synthetics from our buttons, labels, threads, elastic bands, zippers.<\/li><li>All polyurethane varnishes and lacquer from our metals zippers and wood household items. <\/li><\/ol><p><strong>None<\/strong> of our products release any microplastics<br\/><br\/><\/p>","page":"","custom_liquid":""}},"collapsible_tab_ntMbW7":{"type":"collapsible_tab","settings":{"heading":"Step 2: 100% Non-Toxic","open":false,"content":"<p>Removing all plastics from our products is a big first step. But it’s not enough. <\/p><p>Our current goal is to remove all petrochemicals:<\/p><ol><li>All petrochemical dyes from our fabrics<\/li><li>All petroleum derived surfactants in silicone softeners from our fabrics<\/li><li>All petrochemical dyes from our threads and cotton elastic bands<\/li><li>All petroleum-based dye ink from our clothing labels and bag labels<\/li><li>All petroleum bioplastics from our packaging<\/li><\/ol><p>We do not add to our fabric: <\/p><p>Anti fungal, anti-static, flame-retardants, formaldehyde, or other fabric finishing petrochemicals.<\/p><p>We currently still use low-impact reactive fabric dyes and silicones (fabric softeners). This is all we add to our fabric, no other petrochemical is added. Reactive dyes and silicone softeners are the current industry standard, even if companies do not mention it.<\/p><p>Nature is made of chemicals and our natural dyes use them as well. Our specific goal is to remove all <span style=\"text-decoration:underline\">petroleum-based<\/span> chemicals.<\/p><p>We are incredibly happy to announce that we have a <strong>100% Non-toxic<\/strong> catalog that includes products that are not only plastic-free, but also do not use petroleum based dyes or silicone softeners, meaning the fabric is 100% petrochemical free!<br\/><br\/>This catalog is growing, although it is currently small we are putting all our effort into reimagining clothing from the inside out. Natural dyeing, natural softening, ecoprints, are all incredibly difficult large-scale, but it is a challenge we accept!<br\/><br\/><\/p>","page":"","custom_liquid":""}},"collapsible_tab_yXtjF3":{"type":"collapsible_tab","settings":{"heading":"Step 3: Join Our Journey","open":false,"content":"<p>What we wear must be as safe as it is beautiful, as clean as it is enduring. We must design clothes that protect not only our bodies, but the planet we walk on.<\/p><p>Our biggest goal is to help spread this information, for all brands to take positive steps, creating a community that guides one another. There are many mistakes that we at AYA have to improve upon. To push the limits of sustainability, we will need everyone’s support.<\/p><p>To Join our Journey follow us on ….<\/p>","page":"","custom_liquid":""}}},"block_order":["collapsible_tab_ti4xUq","collapsible_tab_ntMbW7","collapsible_tab_yXtjF3"],"disabled":true,"custom_css":["@media (max-width: 768px) {.row {padding: 0 7% !important; margin: 2px; } .collapsible__content {padding: 0rem !important; }}","summary {text-align: center; text-transform: none;}",".row {padding: 0 6% !important; max-width: 100% !important;}",".collapsible-content__inner {max-width: 100% !important;}",".collapsible-content__inner > collapsible-row.accordion:first-child {border-top: none !important;}"],"name":"Collapsible content","settings":{"heading":"","description":"","uppercase_heading":true,"disable_top_spacing":true,"disable_bottom_spacing":true,"heading_font_size":18,"content_font_size":16}},"collapsible_content_main_pGjeAD":{"type":"collapsible-content-main","blocks":{"collapsible_tab_CikNnL":{"type":"collapsible_tab","settings":{"heading":"Step 1:  100% Plastic Free","anchor_id":"step-1","open":false,"content":"<p>Removing all plastics from our clothes isn't just symbolic, <strong>it’s removing the biggest contaminant of microplastics…<\/strong><\/p><p>“Microfibers are the predominant type of plastic that we find in the environment” <\/p><p>-Abby Barrows, Microplastics Research Scientist<\/p><p>We have completed our first step. We have successfully removed all plastics from all of our products:  <\/p><ol><li>All plastics from our fabrics, like polyester blends and especially elastane.<\/li><li>All nylon and other synthetics from our buttons, labels, threads, elastic bands, zippers.<\/li><li>All polyurethane varnishes and lacquer from our metals zippers and wood household items. <\/li><\/ol><p><strong>None<\/strong> of our products release any microplastics<br\/><br\/><\/p>","page":"","custom_liquid":""}},"collapsible_tab_DFxiAp":{"type":"collapsible_tab","settings":{"heading":"Step 2: 100% Non-Toxic","anchor_id":"step-2","open":false,"content":"<p>Removing all plastics from our products is a big first step. But it’s not enough. <\/p><p>Our current goal is to remove all petrochemicals:<\/p><ol><li>All petrochemical dyes from our fabrics<\/li><li>All petroleum derived surfactants in silicone softeners from our fabrics<\/li><li>All petrochemical dyes from our threads and cotton elastic bands<\/li><li>All petroleum-based dye ink from our clothing labels and bag labels<\/li><li>All petroleum bioplastics from our packaging<\/li><\/ol><p>We do not add to our fabric: <\/p><p>Anti fungal, anti-static, flame-retardants, formaldehyde, or other fabric finishing petrochemicals.<\/p><p>We currently still use low-impact reactive fabric dyes and silicones (fabric softeners). This is all we add to our fabric, no other petrochemical is added. Reactive dyes and silicone softeners are the current industry standard, even if companies do not mention it.<\/p><p>Nature is made of chemicals and our natural dyes use them as well. Our specific goal is to remove all <span style=\"text-decoration:underline\">petroleum-based<\/span> chemicals.<\/p><p>We are incredibly happy to announce that we have a <strong>100% Non-toxic<\/strong> catalog that includes products that are not only plastic-free, but also do not use petroleum based dyes or silicone softeners, meaning the fabric is 100% petrochemical free!<br\/><br\/>This catalog is growing, although it is currently small we are putting all our effort into reimagining clothing from the inside out. Natural dyeing, natural softening, ecoprints, are all incredibly difficult large-scale, but it is a challenge we accept!<br\/><br\/><\/p>","page":"","custom_liquid":""}},"collapsible_tab_PdQzDF":{"type":"collapsible_tab","settings":{"heading":"Step 3: The Path Ahead","anchor_id":"","open":false,"content":"<p>What we wear must be as safe as it is beautiful, as clean as it is enduring. We must design clothes that protect not only our bodies, but the planet we walk on.<\/p><p>Our biggest goal is to help spread this information, for all brands to take positive steps, creating a community that guides one another. There are many mistakes that we at AYA have to improve upon. To push the limits of sustainability, we will need everyone’s support.<\/p><p>To Join our Journey follow us on ….<\/p>","page":"","custom_liquid":""}}},"block_order":["collapsible_tab_CikNnL","collapsible_tab_DFxiAp","collapsible_tab_PdQzDF"],"custom_css":["@media (max-width: 768px) {.row {padding: 0 7% !important; margin: 2px; } .collapsible__content {padding: 0rem !important; } .rte {padding: 0 2rem !important; }}","summary {text-align: center; text-transform: none;}",".row {padding: 0 6% !important; max-width: 100% !important;}",".collapsible-content__inner {max-width: 100% !important;}",".collapsible-content__inner > collapsible-row.accordion:first-child {border-top: none !important;}"],"name":"Collapsible content main","settings":{"heading":"","description":"","uppercase_heading":true,"disable_top_spacing":true,"disable_bottom_spacing":true,"heading_font_size":18,"content_font_size":16}},"gallery_img_text_main_tzDXVY":{"type":"gallery-img-text-main","blocks":{"image_text_pahWG6":{"type":"image_text","settings":{"image":"shopify:\/\/shop_images\/Mom-Mama-Marcela-Familia.webp","title":"Family Company","title_color":"#000000","title_font_size":18,"title_font_weight":"600","text":"<p>   My mother’s stories of growing up in an Andean mountain village still fascinate my brother and I. As kids we saw glimpses of this world on our visits to Peru, a world with less opportunity but more connection with nature… Our father motivated us to take a deeper look at Peru, to create something unique that we could bring to the rest of the world. Creating a bridge between a modernized mindset and the disorganized, often dangerous, infrastructure of a developing country has been challenging. Underneath this chaos, we found a vast culture of textile traditions going back millennia. I am grateful for experiencing the positives and negatives of both worlds, for taking this journey with the support of my family. <\/p>","text_color":"#000000","font_size":16,"font_weight":"400"}},"image_text_RPt7aX":{"type":"image_text","settings":{"image":"shopify:\/\/shop_images\/Family_company.webp","title":"Original Brand Manufacturer","title_color":"#000000","title_font_size":18,"title_font_weight":"600","text":"<p>   A major difficulty with sustainability in fashion is that many brands only design their clothes. To create something new a brand has to coordinate with a yarn maker, then a knitting factory, and then with a cut and sew facility. All spread apart in different countries, speaking different languages, makes testing new ideas in real-time impossible. Although risky, our decision to manufacture our clothes gives us a unique opportunity to analyze details that are rarely published on websites, like the elastane hidden in “non toxic” fabric. We decided to be a part of the creation of our clothes; know that we care about every detail of what you are wearing.<\/p>","text_color":"#000000","font_size":16,"font_weight":"400"}},"image_text_q8Mm7q":{"type":"image_text","settings":{"image":"shopify:\/\/shop_images\/Single_origin_production_2.webp","title":"Single Origin Supply Chain","title_color":"#000000","title_font_size":18,"title_font_weight":"600","text":"<p>   When a clothing label says Made in China, what it really means is that only the sewing was done in China. The textile supply chain really begins by creating the fiber. Let’s take Polyester: Its supply chain may begin with extracting petroleum off-shore, then refining hydrocarbons in The Gulf countries, polymerizing them in China, spinning the fibers into yarn in India, knitting and sewing in Cambodia, and finally sending them to the U.S. All of our production from spinning, knitting, fabric finishing, cutting, and up to garment making is done entirely, in Peru. At the moment a few of our notions, like the button shells, are imported. Having all of our production done here greatly lowers our carbon footprint. Not only that, we can easily take a short trip to visit communities and providers, maximizing our transparency.<\/p>","text_color":"#000000","font_size":16,"font_weight":"400"}}},"block_order":["image_text_pahWG6","image_text_RPt7aX","image_text_q8Mm7q"],"custom_css":["@media (max-width: 768px) {.image-grid-container {grid-template-columns: 1fr; gap: 30px; } .image-grid-text {font-size: 14px !important; margin-top: 6px; }}","p {text-align: justify;}"],"name":"Galería imágenes + texto Main","settings":{"use_global_font":true,"font_family":"helvetica","background_color":"#ffffff"}},"pagefly-home":{"type":"pagefly-home","settings":{}}},"order":["custom_liquid_fLM8Gg","custom_liquid_jzQjfa","custom_liquid_7eCQ4K","new_image_with_text_overlay_NJ3xWp","section_steps_content_main_BUHzF3","rich_text_dwzBWy","custom8product_eApXHc","rich_text_quote_nrnyXT","text_3video_main_YDQfU4","4video_1textcolumns_krbkxX","rich_text_JpMw4m","five_imagens_main_H4PgVe","botons_column_G4Ri44","4sections_text_RgMkLN","video_BE67UD","rich_text_efMz3Q","five_imagens_main_Q3yXVC","botons_column_tDqht7","rich_text_qLgEka","rich_text_afTaNx","collapsible_content_tx8hNA","collapsible_content_main_pGjeAD","gallery_img_text_main_tzDXVY","pagefly-home"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_fLM8Gg": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<style>\n@media only screen and (max-width: 767px) {\n    .mobile-height-500 {\n        min-height: 620px;\n    }\n}\n.image-with-text-overlay--content-inner .button:before, input[type=\"submit\"]:before {\n    transition: none!important;\nbackground:none;\n}\n\n.image-with-text-overlay--bg img,\n.image-with-text-overlay--bg svg,\n.image-with-text-overlay--bg picture {\n  display: block;\n  vertical-align: middle;\n  line-height: 0;\n}\n\n\n.image-with-text-overlay--bg {\n  background-color: transparent !important;\n}\n\n/* Evitar que un pixel extra aparezca por overflow */\n.image-with-text-overlay--bg {\n  overflow: hidden;\n}\n\n\n.image-with-text-overlay {\n  background-color: transparent !important;\n  border: none !important;\n}\n@media screen and (min-width: 1600px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: 815px!important;\n  }\n}\n\n@media screen and (max-width: 1599.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: calc(100vh - 115px)!important;\n    min-height: 570px!important;\n  }\n}\n\n@media screen and (max-width: 989.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: calc(100vh - 110px)!important;\n  }\n}\n\n@media screen and (max-width: 749.98px) {\n  .image-with-text-overlay--bg, .image-with-text-overlay {\n    height: 620px !important; \n    min-height: 620px !important;\n    \n  }\n.image-with-text-overlay--bg img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover!important;\n  }\n.image-with-text-overlay--desktop {\n    display: none !important;\n  }\n}\n/* altura fija para desktop para arriba */\n@media screen and (min-width: 1600px) {\n  .image-with-text-overlay--bg,\n  .image-with-text-overlay {\n    height: 825px !important;\n    min-height: 825px !important;\n  }\n}\n.image-with-text-overlay--bg.parallax--true {\ntop:0%;}\n</style>",
+        "section_width": "full-width-row"
+      }
+    },
+    "custom_liquid_jzQjfa": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<script>\n(function run() {\n  function italicize(container) {\n    container.querySelectorAll('.scrolling-text--item span').forEach(span => {\n      const txt = (span.textContent || '').trim();\n      if (!txt.includes('-')) return;\n      const parts = txt.split('-');\n      const before = parts.shift().trim();\n      const after = parts.join('-').trim();\n      span.innerHTML = before ? (before + ' - <i>' + after + '</i>') : ('<i>' + after + '</i>');\n    });\n  }\n\n  // Ejecuta en carga\n  const containers = document.querySelectorAll('.section-scrolling-text, .scrolling-text');\n  containers.forEach(italicize);\n\n  // Re-ejecuta cuando Shopify recarga secciones en el editor\n  document.addEventListener('shopify:section:load', (e) => {\n    const el = e.target;\n    if (el && (el.classList.contains('section-scrolling-text') || el.querySelector('.scrolling-text'))) {\n      italicize(el);\n    }\n  });\n})();\n</script>",
+        "section_width": "full-width-row"
+      }
+    },
+    "custom_liquid_7eCQ4K": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<script>\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n  const video = document.querySelector(\".video-section video\");\n\n  if (video) {\n    video.addEventListener(\"play\", () => {\n      // Ahora no bloquea nada al reproducirse\n      console.log(\"El video está reproduciéndose, pero sin bloquear el scroll.\");\n    });\n  }\n});\n</script>",
+        "section_width": "full-width-row"
+      }
+    },
+    "new_image_with_text_overlay_NJ3xWp": {
+      "type": "new-image-with-text-overlay",
+      "blocks": {
+        "heading_QdDkF8": {
+          "type": "heading",
+          "settings": {
+            "text": "Fashion for a Non-Toxic Life",
+            "heading_font_size": 3.7,
+            "heading_line_height": 3.7,
+            "heading_font_weight": "700",
+            "heading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "text_nTJahJ": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Regenerative Organic Pima Cotton </p><p>Copper Zippers on Cotton Tape </p><p>Tree Rubber Elastic Bands</p><p>Mother of Pearl Buttons</p><p>Free Ranging Alpacas</p><p>Cotton Threads</p><p>Cotton Labels</p>",
+            "description_size": "medium",
+            "text_font_size": 1.2,
+            "text_font_weight": "700",
+            "line_height": 1.8,
+            "text_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 2
+          }
+        },
+        "button_rU3H7E": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP WOMEN",
+            "button_link": "shopify://collections/all-womens",
+            "button_font_size": 16,
+            "button_font_weight": "600",
+            "button_color": "#ffffff",
+            "button_background_color": "#242c48",
+            "button_border_color": "#ffffff",
+            "button_border_width": 2,
+            "button_border_radius": 25,
+            "button_border_style": "solid",
+            "button_outline": false,
+            "hover_text_color": "#242c48",
+            "hover_background_color": "#ffffff",
+            "hover_border_color": "#242c48"
+          }
+        },
+        "button_Bknaza": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP MEN",
+            "button_link": "shopify://collections/all-mens",
+            "button_font_size": 16,
+            "button_font_weight": "600",
+            "button_color": "#ffffff",
+            "button_background_color": "#242c48",
+            "button_border_color": "#ffffff",
+            "button_border_width": 2,
+            "button_border_radius": 25,
+            "button_border_style": "solid",
+            "button_outline": false,
+            "hover_text_color": "#242c48",
+            "hover_background_color": "#ffffff",
+            "hover_border_color": "#242c48"
+          }
+        }
+      },
+      "block_order": [
+        "heading_QdDkF8",
+        "text_nTJahJ",
+        "button_rU3H7E",
+        "button_Bknaza"
+      ],
+      "custom_css": [
+        ".button {width: 175.3px;}",
+        "p {margin-bottom: 0px;}",
+        "@media screen and (max-width: 767px) {.image-with-text-overlay--content-inner {padding-left: 4%; padding-right: 4%; } .button {margin: 4px; } .image-with-text-overlay--heading {font-size: 2.2rem !important; line-height: 3rem !important; } p {font-size: 1rem; }}"
+      ],
+      "name": "Image with text overlay new",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "roboto",
+        "section_width": "full-width-row-full",
+        "image": "shopify://shop_images/7c9fd686feb0f547c22b6b94456491131544def6_1.jpg",
+        "mobile_image": "shopify://shop_images/Untitled-2_2.webp",
+        "image_parallax": false,
+        "desktop_vh_height": 95,
+        "desktop_height": "desktop-height-750",
+        "mobile_height": "mobile-height-500",
+        "content_width": "medium",
+        "content_position": "bottom-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 3,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "section_steps_content_main_BUHzF3": {
+      "type": "section-steps-content-main",
+      "blocks": {
+        "row_cgAa8D": {
+          "type": "row",
+          "settings": {
+            "title": "Step One",
+            "anchor_link": "step-1",
+            "title_url": "",
+            "title_italic": true,
+            "title_color": "#717171",
+            "title_size": 16,
+            "title_weight": "400",
+            "text": "<p>*100% Plastic-Free: We now use ZERO petro-chemical derived plastics in all products.</p>",
+            "text_color": "#333333",
+            "text_size": 16,
+            "text_weight": "600"
+          }
+        },
+        "row_iKHdgt": {
+          "type": "row",
+          "settings": {
+            "title": "Step Two",
+            "anchor_link": "step-2",
+            "title_url": "",
+            "title_italic": true,
+            "title_color": "#717171",
+            "title_size": 16,
+            "title_weight": "300",
+            "text": "<p>100% Non-Toxic: We are currently eliminating all petro-chemicals.</p>",
+            "text_color": "#333333",
+            "text_size": 16,
+            "text_weight": "600"
+          }
+        }
+      },
+      "block_order": [
+        "row_cgAa8D",
+        "row_iKHdgt"
+      ],
+      "custom_css": [
+        ".two-rows-section {display: grid; gap: 12px !important;}",
+        "p {margin-bottom: 0px !important;}",
+        "@media (min-width: 980px) {.two-rows-section {max-height: 155px; }}"
+      ],
+      "name": "2 filas + Texto editable Main",
+      "settings": {
+        "background_image": "shopify://shop_images/Fondo_Texturizado_2_Textura_aumentada_3.webp",
+        "background_color": "#ffffff",
+        "row_spacing": 0,
+        "title_text_spacing": 0
+      }
+    },
+    "rich_text_dwzBWy": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_BcNJTP": {
+          "type": "subheading",
+          "settings": {
+            "text": "Shop Best Sellers",
+            "color": "",
+            "font_size": 22,
+            "font_weight": 500
+          }
+        },
+        "heading_6yzCKU": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "OUR CLOTHES",
+            "color": "",
+            "font_size": 24,
+            "font_weight": 400
+          }
+        },
+        "text_Mpj7jY": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 24,
+            "font_weight": 400
+          }
+        },
+        "button_HpAp8z": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "link_label": "Learn More",
+            "link": "",
+            "button_outline": false,
+            "button_color": "",
+            "button_text_color": "",
+            "button_hover_color": "",
+            "button_hover_text_color": "",
+            "font_size": 16,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_BcNJTP",
+        "heading_6yzCKU",
+        "text_Mpj7jY",
+        "button_HpAp8z"
+      ],
+      "custom_css": [
+        ".row {max-width: 100%;}",
+        ".subheading {letter-spacing: 0.2em; margin-top: 20px;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "baskerville",
+        "custom_anchor_id": "",
+        "background_image": "shopify://shop_images/Fondo_Texturizado_2_Textura_aumentada_3.webp",
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "custom8product_eApXHc": {
+      "type": "custom8product",
+      "custom_css": [
+        ".product-card-swatches .product-card-swatch:after {border: 1px solid rgba(255, 255, 255, 0.1);}"
+      ],
+      "name": "Custom 8 Products",
+      "settings": {
+        "product_1": "womens-organic-pima-cotton-long-sleeve-shirt",
+        "product_2": "organic-cotton-face-cloth-gots-certified",
+        "product_3": "organic-pima-cotton-boxer-briefs",
+        "product_4": "mens-organic-pima-cotton-t-shirt",
+        "product_5": "womens-pima-cotton-classic-shirt",
+        "product_6": "mens-organic-pima-cotton-chino-shorts",
+        "product_7": "womens-alpaca-wool-leggings-420-midweight",
+        "product_8": "womens-organic-pima-cotton-tank-top",
+        "autoplay_mobile": true,
+        "autoplay_speed": 5
+      }
+    },
+    "rich_text_quote_nrnyXT": {
+      "type": "rich-text-quote",
+      "blocks": {
+        "quote_heading_hyjFyx": {
+          "type": "quote_heading",
+          "settings": {
+            "text": "What you guys are doing, it’s great! I’m very happy that you got rid of these petroleum-based polymers.",
+            "link": "https://www.youtube.com/watch?v=4WDNzyCWikc",
+            "color": "#151515",
+            "font_size": 34,
+            "font_weight": 400
+          }
+        },
+        "text_LEBL3b": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Professor Dick Vethaak</p><p>Discoverer of Microplastics in Human Blood</p>",
+            "custom_liquid": "<style>\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner {\n  display: flex;\n  flex-direction: column;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte {\n  /*background-color: #3868a0;*/\n  /*color: #fff;*/\n  padding: 0.4rem 1rem;\n  font-size: 18px;\n  margin-left: auto;\n  text-align: right;\n  width: fit-content;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p:first-of-type {\n  font-size: 25px;\n}\n\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p {\n  margin: 0;\n  line-height: 1.3;\n}\n#shopify-section-template--20121650331894__rich_text_quote_nrnyXT .rich-text__inner .rte p:nth-of-type(2) {\n  color:#717171;\n}\n\n</style>",
+            "color": "",
+            "font_size": 18,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "quote_heading_hyjFyx",
+        "text_LEBL3b"
+      ],
+      "custom_css": [
+        ".row {max-width: 100%;}",
+        ".rte {padding: 0rem; text-align: right;}",
+        ".rte p {margin-bottom: 5px; font-family: \"Baskervville\", serif;}",
+        ".custom-heading {margin-top: 8px;}",
+        ".rich-text__inner {margin: auto; max-width: 1000px; padding-top: 28px;}",
+        "@media (max-width: 768px) {.rte {padding: 0 !important; } h3 {font-size: 1.4rem !important; margin-bottom: 1rem; } p {font-size: 1rem; margin-bottom: 0px !important; } .rich-text__inner {padding: 20px 20px 0px 20px; }}"
+      ],
+      "name": "Rich text with Quote",
+      "settings": {
+        "use_global_font": false,
+        "font_family": "montserrat",
+        "custom_anchor_id": "",
+        "background_image": "shopify://shop_images/Fondo_Texturizado_2_Textura_aumentada_3.webp",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "text_3video_main_YDQfU4": {
+      "type": "text-3video-main",
+      "blocks": {
+        "video_xekCKY": {
+          "type": "video",
+          "settings": {
+            "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_hosted": "shopify://files/videos/12.mp4"
+          }
+        },
+        "video_nTXpej": {
+          "type": "video",
+          "settings": {
+            "video": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_hosted": "shopify://files/videos/14.mp4"
+          }
+        },
+        "video_full_k4M3jm": {
+          "type": "video_full",
+          "settings": {
+            "video_full": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+            "video_hosted_full": "shopify://files/videos/17 II_4002f204-9377-468e-957d-e5194649cf10.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "video_xekCKY",
+        "video_nTXpej",
+        "video_full_k4M3jm"
+      ],
+      "custom_css": [],
+      "name": "Texto con 3 videos Main",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "montserrat",
+        "main_text": "<h3>Made with Nature,<br/>Not Plastic</h3><p>At Aya, we're reimagining clothing for a non-toxic, plastic-free future.</p><p>Crafted exclusively from 100% regenerative organic Pima cotton, our garments are designed to be the natural evolution of fashion. From seed to stitch, sown without synthetic chemicals, and constructed free from plastics—every piece honors the earth.</p><p>Our clothing is timeless and versatile: soft yet durable, elegant yet functional. Unlike conventional apparel, it is always free from microplastics, petroleum-based fibers, and harmful additives like BPA and PFAS.</p><p>Gentle on skin. Gentle on the planet. Clothing for the next generation.</p>",
+        "text_color": "#000000",
+        "text_weight": "normal",
+        "text_size": 16
+      }
+    },
+    "4video_1textcolumns_krbkxX": {
+      "type": "4video-1textcolumns",
+      "blocks": {
+        "video_YhyJrp": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "video_file": "shopify://files/videos/3.mp4"
+          }
+        },
+        "video_VLK8i9": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "video_file": "shopify://files/videos/20_03179712-V2.mp4"
+          }
+        },
+        "video_pF9i9F": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "video_file": "shopify://files/videos/1.mp4"
+          }
+        },
+        "video_4jGexz": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "video_file": "shopify://files/videos/11a.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "video_YhyJrp",
+        "video_VLK8i9",
+        "video_pF9i9F",
+        "video_4jGexz"
+      ],
+      "custom_css": [
+        ".videos-with-text__text {text-align: left;}",
+        "p {margin-bottom: 0px;}"
+      ],
+      "name": "Videos con texto 4+1",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "text_title_1": "This is what",
+        "title_color_1": "#000000",
+        "title_weight_1": "bold",
+        "title_size_1": 16,
+        "title_align_1": "left",
+        "text_title_2": "Creating a Plastic Free World",
+        "title_color_2": "#000000",
+        "title_weight_2": "bold",
+        "title_size_2": 20,
+        "title_align_2": "left",
+        "text_title_3": "looks like...",
+        "title_color_3": "#000000",
+        "title_weight_3": "bold",
+        "title_size_3": 16,
+        "title_align_3": "left",
+        "text_color": "#000000",
+        "text_weight": "normal",
+        "text_size": 16,
+        "text_align": "left",
+        "richtext_content": "<p>We achieve what most consider impossible:</p><p>The first and only brand to remove all plastics. This isn’t a slogan or a marketing claim — it’s our reality. Through innovation, rigorous testing, and an unshakeable belief that fashion can be better, we are transforming the future of sustainability.</p><p><strong>We’re here to lead the way.</strong></p>"
+      }
+    },
+    "rich_text_JpMw4m": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_b7eiQy": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Exclusive Collections",
+            "color": "",
+            "font_size": 36,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_b7eiQy"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding: 0 7%;}",
+        ".richtext-full-bg {display: none !important;}",
+        ".rte {padding: 0rem;}",
+        "@media (max-width: 768px) {h3 {font-size: 26px !important; text-align: center; } .rte {padding: 0 !important; } .richtext-full-bg {display: block !important; } .rich-text__inner {padding: 0px; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "custom_anchor_id": "",
+        "section_width": "grid",
+        "text_width": "xlarge",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "five_imagens_main_H4PgVe": {
+      "type": "five-imagens-main",
+      "custom_css": [
+        ".five-images {padding: 0 7.87%; display: none !important;}",
+        "@media (max-width: 768px) {.five-images {display: block !important; }}"
+      ],
+      "name": "Five Images Layout Main",
+      "settings": {
+        "image_1": "shopify://shop_images/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png",
+        "link_1": "shopify://collections/chemical-free-clothes",
+        "image_2": "shopify://shop_images/Coleccion_4.webp",
+        "link_2": "shopify://collections/alpaca-wool-clothing",
+        "image_3": "shopify://shop_images/Coleccion_3.webp",
+        "link_3": "shopify://collections/organic-cotton-bundles",
+        "image_4": "shopify://shop_images/Coleccion_5.webp",
+        "link_4": "shopify://collections/household",
+        "image_5": "shopify://shop_images/Coleccion_2.webp",
+        "link_5": "shopify://collections/organic-pima-cotton-underwear"
+      }
+    },
+    "botons_column_G4Ri44": {
+      "type": "botons-column",
+      "blocks": {
+        "button_twxqdk": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP WOMEN",
+            "button_link": "shopify://collections/all-womens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#000000",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#151515",
+            "hover_border_color": "#000000"
+          }
+        },
+        "button_QdT6HW": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP MEN",
+            "button_link": "shopify://collections/all-mens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#151515",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#000000",
+            "hover_border_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "button_twxqdk",
+        "button_QdT6HW"
+      ],
+      "custom_css": [
+        ".custom-btn {width: 282px;}"
+      ],
+      "name": "Botons-column",
+      "settings": {
+        "background_color": "#ffffff",
+        "button_layout": "row",
+        "hide_on_desktop": true,
+        "hide_on_mobile": false
+      }
+    },
+    "4sections_text_RgMkLN": {
+      "type": "4sections-text",
+      "blocks": {
+        "text_block_6kpwQy": {
+          "type": "text_block",
+          "settings": {
+            "title": "Organic Pima Cotton",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Pima Cotton grows the longest & finest cotton fibers in the world, and our Organic Pima Cotton is sown on regenerative soils. A species native to Peru, its modern variant was selectively bred across the world to achieve its luxurious softness.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_iqGUca": {
+          "type": "text_block",
+          "settings": {
+            "title": "Free Ranging Alpacas",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Our Alpaca fabric is knit from the finest Alpaca fibers, 19 microns, softer than Baby Alpaca. These rare fibers are hand-sheared annually by andean communities & essential for the health of the free-ranging Alpacas.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_tURjRf": {
+          "type": "text_block",
+          "settings": {
+            "title": "Natural Dyes",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>We use plant-based dyes and cochineal rooted in ancestral techniques. These pigments are biodegradable, safe for skin, and free from synthetic colorants.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_DnHwGT": {
+          "type": "text_block",
+          "settings": {
+            "title": "Ecoprint",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Each EcoPrint garment is unique. Leaves and flowers are imprinted directly on the fabric, creating patterns that will never repeat. Nature becomes the designer.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_3UEp6C": {
+          "type": "text_block",
+          "settings": {
+            "title": "Zero Waste Clothes",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Although difficult due to Alpaca's smooth & flat scales, Alpaca felts create a unique and durable fabric. Our artisanal felts make our products zero-waste, as all leftover fabrics are given new life.  </p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "spacer_KrejVD": {
+          "type": "spacer",
+          "settings": {
+            "space_height": 30
+          }
+        },
+        "text_block_wUbmdM": {
+          "type": "text_block",
+          "settings": {
+            "title": "No Microplastics",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Aya clothing does not shed a single micro or nano fiber. They return only what nature created.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_yYpacL": {
+          "type": "text_block",
+          "settings": {
+            "title": "No Synthetic Fibers",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Every garment comes only from nature. No polyester, no nylon, no acrylic, no elastane, no blends.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_Rr6jx9": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "title": "No PFAS, BPA, Phthalates",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>No dangerous hormone disruptors—no PFAS, no Phthalates, no BPA, no BPS, no BPF.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_MQ7B7m": {
+          "type": "text_block",
+          "disabled": true,
+          "settings": {
+            "title": "Non-Toxic",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>We reject petrochemical finishes and coatings. Our garments are safe for skin and the environment.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        },
+        "text_block_8zWJda": {
+          "type": "text_block",
+          "settings": {
+            "title": "No Greenwashing",
+            "title_underline": false,
+            "title_color": "#ffffff",
+            "title_weight": "normal",
+            "title_size": 48,
+            "text": "<p>Pushing the limits of sustainability is a work in progress. We promise to be transparent about our current limitations and the steps we are taking towards a completely plastic free future.</p>",
+            "text_color": "#ffffff",
+            "text_weight": "normal",
+            "text_size": 16
+          }
+        }
+      },
+      "block_order": [
+        "text_block_6kpwQy",
+        "text_block_iqGUca",
+        "text_block_tURjRf",
+        "text_block_DnHwGT",
+        "text_block_3UEp6C",
+        "spacer_KrejVD",
+        "text_block_wUbmdM",
+        "text_block_yYpacL",
+        "text_block_Rr6jx9",
+        "text_block_MQ7B7m",
+        "text_block_8zWJda"
+      ],
+      "custom_css": [
+        ".section-4-text {padding: 5% 3% 6% 3%;}",
+        "p {margin-bottom: 0 !important;}"
+      ],
+      "name": "Bloques título + texto",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "custom_anchor_id": "",
+        "background_image": "shopify://shop_images/AdobeStock_127785030_2.webp",
+        "background_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.3
+      }
+    },
+    "video_BE67UD": {
+      "type": "video",
+      "custom_css": [],
+      "name": "Video",
+      "settings": {
+        "heading": "",
+        "heading_left": false,
+        "description": "",
+        "section_width": "full-width-row-full",
+        "video": "",
+        "video_hosted": "shopify://files/videos/AYA Video presentación horizontal.mp4",
+        "video_autoplay": false,
+        "aspect_ratio": "16-9",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "rich_text_efMz3Q": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Qh9yU6": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Exclusive Collections",
+            "color": "",
+            "font_size": 36,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_Qh9yU6"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding: 0 7%;}",
+        ".rte {padding: 0rem;}",
+        "@media (max-width: 768px) {.rte {padding: 0 !important; } .richtext-full-bg {display: none !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "custom_anchor_id": "",
+        "section_width": "grid",
+        "text_width": "xlarge",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "five_imagens_main_Q3yXVC": {
+      "type": "five-imagens-main",
+      "custom_css": [
+        ".five-images {padding: 0 7.87%;}",
+        "@media (max-width: 768px) {.five-images {display: none !important; }}"
+      ],
+      "name": "Five Images Layout Main",
+      "settings": {
+        "image_1": "shopify://shop_images/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png",
+        "link_1": "shopify://collections/chemical-free-clothes",
+        "image_2": "shopify://shop_images/Coleccion_4.webp",
+        "link_2": "shopify://collections/alpaca-wool-clothing",
+        "image_3": "shopify://shop_images/Coleccion_3.webp",
+        "link_3": "shopify://collections/organic-cotton-bundles",
+        "image_4": "shopify://shop_images/Coleccion_5.webp",
+        "link_4": "shopify://collections/household",
+        "image_5": "shopify://shop_images/Coleccion_2.webp",
+        "link_5": "shopify://collections/organic-pima-cotton-underwear"
+      }
+    },
+    "botons_column_tDqht7": {
+      "type": "botons-column",
+      "blocks": {
+        "button_eLGNNh": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP WOMEN",
+            "button_link": "shopify://collections/all-womens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#000000",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#151515",
+            "hover_border_color": "#000000"
+          }
+        },
+        "button_xUiYxd": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP MEN",
+            "button_link": "shopify://collections/all-mens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#151515",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#000000",
+            "hover_border_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "button_eLGNNh",
+        "button_xUiYxd"
+      ],
+      "custom_css": [
+        ".custom-btn {width: 282px;}"
+      ],
+      "name": "Botons-column",
+      "settings": {
+        "background_color": "#ffffff",
+        "button_layout": "row",
+        "hide_on_desktop": false,
+        "hide_on_mobile": true
+      }
+    },
+    "rich_text_qLgEka": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_MbRirK": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Mission",
+            "color": "",
+            "font_size": 36,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_MbRirK"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding: 0 7%;}",
+        ".rte {padding: 0rem;}",
+        "@media (max-width: 768px) {.rte {padding: 0 !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "arimo",
+        "custom_anchor_id": "",
+        "section_width": "full-width-row-full",
+        "text_width": "xlarge",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_afTaNx": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_RW7Nbn": {
+          "type": "heading",
+          "settings": {
+            "text": "OUR MISSION",
+            "color": "",
+            "font_size": 80,
+            "font_weight": 600
+          }
+        },
+        "text_cU9nTa": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>We are on a mission to redefine what true sustainability means in fashion. Not through empty claims or greenwashing, but through radical honesty, responsibility, and progress that can be measured in every thread we create.</p><p>Aya is constructed to perfection: every piece is made from regenerative organic Pima cotton or our sister brand, Arms of Andes, 100% Alpaca. Everything is free from plastics, designed to honor both the planet and the people who wear it. Our vision is to become the world’s most sustainable brand — transparent in our process, uncompromising in our standards, and relentless in our pursuit of a plastic-free future.</p><p>This is not just about clothing; it is about shaping a life free of hidden toxins, microplastics, and false promises. We invite you to be part of this journey — join us in creating a plastic-free life.</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 15,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "heading_RW7Nbn",
+        "text_cU9nTa"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".custom-heading {padding-bottom: 25px;}",
+        ".rte {text-align: center;}",
+        ".custom-heading {transition: all 0.6s ease; transform: scale(1);}",
+        ".custom-heading.animate {transform: scale(1.2); font-weight: 700 !important;}",
+        "@media (max-width: 768px) {.custom-heading {font-size: 2.5rem !important; }}",
+        "h3 {font-weight: 200 !important;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "custom_anchor_id": "mision-vision",
+        "section_width": "full-width-row-full",
+        "text_width": "xlarge",
+        "text_position": "center",
+        "text_alignment": "left",
+        "color_bg": "#ffffff",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "collapsible_content_tx8hNA": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_tab_ti4xUq": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 1:  100% Plastic Free",
+            "open": false,
+            "content": "<p>Removing all plastics from our clothes isn't just symbolic, <strong>it’s removing the biggest contaminant of microplastics…</strong></p><p>“Microfibers are the predominant type of plastic that we find in the environment” </p><p>-Abby Barrows, Microplastics Research Scientist</p><p>We have completed our first step. We have successfully removed all plastics from all of our products:  </p><ol><li>All plastics from our fabrics, like polyester blends and especially elastane.</li><li>All nylon and other synthetics from our buttons, labels, threads, elastic bands, zippers.</li><li>All polyurethane varnishes and lacquer from our metals zippers and wood household items. </li></ol><p><strong>None</strong> of our products release any microplastics<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_ntMbW7": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 2: 100% Non-Toxic",
+            "open": false,
+            "content": "<p>Removing all plastics from our products is a big first step. But it’s not enough. </p><p>Our current goal is to remove all petrochemicals:</p><ol><li>All petrochemical dyes from our fabrics</li><li>All petroleum derived surfactants in silicone softeners from our fabrics</li><li>All petrochemical dyes from our threads and cotton elastic bands</li><li>All petroleum-based dye ink from our clothing labels and bag labels</li><li>All petroleum bioplastics from our packaging</li></ol><p>We do not add to our fabric: </p><p>Anti fungal, anti-static, flame-retardants, formaldehyde, or other fabric finishing petrochemicals.</p><p>We currently still use low-impact reactive fabric dyes and silicones (fabric softeners). This is all we add to our fabric, no other petrochemical is added. Reactive dyes and silicone softeners are the current industry standard, even if companies do not mention it.</p><p>Nature is made of chemicals and our natural dyes use them as well. Our specific goal is to remove all <span style=\"text-decoration:underline\">petroleum-based</span> chemicals.</p><p>We are incredibly happy to announce that we have a <strong>100% Non-toxic</strong> catalog that includes products that are not only plastic-free, but also do not use petroleum based dyes or silicone softeners, meaning the fabric is 100% petrochemical free!<br/><br/>This catalog is growing, although it is currently small we are putting all our effort into reimagining clothing from the inside out. Natural dyeing, natural softening, ecoprints, are all incredibly difficult large-scale, but it is a challenge we accept!<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_yXtjF3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 3: Join Our Journey",
+            "open": false,
+            "content": "<p>What we wear must be as safe as it is beautiful, as clean as it is enduring. We must design clothes that protect not only our bodies, but the planet we walk on.</p><p>Our biggest goal is to help spread this information, for all brands to take positive steps, creating a community that guides one another. There are many mistakes that we at AYA have to improve upon. To push the limits of sustainability, we will need everyone’s support.</p><p>To Join our Journey follow us on ….</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_ti4xUq",
+        "collapsible_tab_ntMbW7",
+        "collapsible_tab_yXtjF3"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "@media (max-width: 768px) {.row {padding: 0 7% !important; margin: 2px; } .collapsible__content {padding: 0rem !important; }}",
+        "summary {text-align: center; text-transform: none;}",
+        ".row {padding: 0 6% !important; max-width: 100% !important;}",
+        ".collapsible-content__inner {max-width: 100% !important;}",
+        ".collapsible-content__inner > collapsible-row.accordion:first-child {border-top: none !important;}"
+      ],
+      "name": "Collapsible content",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "uppercase_heading": true,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "heading_font_size": 18,
+        "content_font_size": 16
+      }
+    },
+    "collapsible_content_main_pGjeAD": {
+      "type": "collapsible-content-main",
+      "blocks": {
+        "collapsible_tab_CikNnL": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 1:  100% Plastic Free",
+            "anchor_id": "step-1",
+            "open": false,
+            "content": "<p>Removing all plastics from our clothes isn't just symbolic, <strong>it’s removing the biggest contaminant of microplastics…</strong></p><p>“Microfibers are the predominant type of plastic that we find in the environment” </p><p>-Abby Barrows, Microplastics Research Scientist</p><p>We have completed our first step. We have successfully removed all plastics from all of our products:  </p><ol><li>All plastics from our fabrics, like polyester blends and especially elastane.</li><li>All nylon and other synthetics from our buttons, labels, threads, elastic bands, zippers.</li><li>All polyurethane varnishes and lacquer from our metals zippers and wood household items. </li></ol><p><strong>None</strong> of our products release any microplastics<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_DFxiAp": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 2: 100% Non-Toxic",
+            "anchor_id": "step-2",
+            "open": false,
+            "content": "<p>Removing all plastics from our products is a big first step. But it’s not enough. </p><p>Our current goal is to remove all petrochemicals:</p><ol><li>All petrochemical dyes from our fabrics</li><li>All petroleum derived surfactants in silicone softeners from our fabrics</li><li>All petrochemical dyes from our threads and cotton elastic bands</li><li>All petroleum-based dye ink from our clothing labels and bag labels</li><li>All petroleum bioplastics from our packaging</li></ol><p>We do not add to our fabric: </p><p>Anti fungal, anti-static, flame-retardants, formaldehyde, or other fabric finishing petrochemicals.</p><p>We currently still use low-impact reactive fabric dyes and silicones (fabric softeners). This is all we add to our fabric, no other petrochemical is added. Reactive dyes and silicone softeners are the current industry standard, even if companies do not mention it.</p><p>Nature is made of chemicals and our natural dyes use them as well. Our specific goal is to remove all <span style=\"text-decoration:underline\">petroleum-based</span> chemicals.</p><p>We are incredibly happy to announce that we have a <strong>100% Non-toxic</strong> catalog that includes products that are not only plastic-free, but also do not use petroleum based dyes or silicone softeners, meaning the fabric is 100% petrochemical free!<br/><br/>This catalog is growing, although it is currently small we are putting all our effort into reimagining clothing from the inside out. Natural dyeing, natural softening, ecoprints, are all incredibly difficult large-scale, but it is a challenge we accept!<br/><br/></p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        },
+        "collapsible_tab_PdQzDF": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Step 3: The Path Ahead",
+            "anchor_id": "",
+            "open": false,
+            "content": "<p>What we wear must be as safe as it is beautiful, as clean as it is enduring. We must design clothes that protect not only our bodies, but the planet we walk on.</p><p>Our biggest goal is to help spread this information, for all brands to take positive steps, creating a community that guides one another. There are many mistakes that we at AYA have to improve upon. To push the limits of sustainability, we will need everyone’s support.</p><p>To Join our Journey follow us on ….</p>",
+            "page": "",
+            "custom_liquid": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_tab_CikNnL",
+        "collapsible_tab_DFxiAp",
+        "collapsible_tab_PdQzDF"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.row {padding: 0 7% !important; margin: 2px; } .collapsible__content {padding: 0rem !important; } .rte {padding: 0 2rem !important; }}",
+        "summary {text-align: center; text-transform: none;}",
+        ".row {padding: 0 6% !important; max-width: 100% !important;}",
+        ".collapsible-content__inner {max-width: 100% !important;}",
+        ".collapsible-content__inner > collapsible-row.accordion:first-child {border-top: none !important;}"
+      ],
+      "name": "Collapsible content main",
+      "settings": {
+        "heading": "",
+        "description": "",
+        "uppercase_heading": true,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true,
+        "heading_font_size": 18,
+        "content_font_size": 16
+      }
+    },
+    "gallery_img_text_main_tzDXVY": {
+      "type": "gallery-img-text-main",
+      "blocks": {
+        "image_text_pahWG6": {
+          "type": "image_text",
+          "settings": {
+            "image": "shopify://shop_images/Mom-Mama-Marcela-Familia.webp",
+            "title": "Family Company",
+            "title_color": "#000000",
+            "title_font_size": 18,
+            "title_font_weight": "600",
+            "text": "<p>   My mother’s stories of growing up in an Andean mountain village still fascinate my brother and I. As kids we saw glimpses of this world on our visits to Peru, a world with less opportunity but more connection with nature… Our father motivated us to take a deeper look at Peru, to create something unique that we could bring to the rest of the world. Creating a bridge between a modernized mindset and the disorganized, often dangerous, infrastructure of a developing country has been challenging. Underneath this chaos, we found a vast culture of textile traditions going back millennia. I am grateful for experiencing the positives and negatives of both worlds, for taking this journey with the support of my family. </p>",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "400"
+          }
+        },
+        "image_text_RPt7aX": {
+          "type": "image_text",
+          "settings": {
+            "image": "shopify://shop_images/Family_company.webp",
+            "title": "Original Brand Manufacturer",
+            "title_color": "#000000",
+            "title_font_size": 18,
+            "title_font_weight": "600",
+            "text": "<p>   A major difficulty with sustainability in fashion is that many brands only design their clothes. To create something new a brand has to coordinate with a yarn maker, then a knitting factory, and then with a cut and sew facility. All spread apart in different countries, speaking different languages, makes testing new ideas in real-time impossible. Although risky, our decision to manufacture our clothes gives us a unique opportunity to analyze details that are rarely published on websites, like the elastane hidden in “non toxic” fabric. We decided to be a part of the creation of our clothes; know that we care about every detail of what you are wearing.</p>",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "400"
+          }
+        },
+        "image_text_q8Mm7q": {
+          "type": "image_text",
+          "settings": {
+            "image": "shopify://shop_images/Single_origin_production_2.webp",
+            "title": "Single Origin Supply Chain",
+            "title_color": "#000000",
+            "title_font_size": 18,
+            "title_font_weight": "600",
+            "text": "<p>   When a clothing label says Made in China, what it really means is that only the sewing was done in China. The textile supply chain really begins by creating the fiber. Let’s take Polyester: Its supply chain may begin with extracting petroleum off-shore, then refining hydrocarbons in The Gulf countries, polymerizing them in China, spinning the fibers into yarn in India, knitting and sewing in Cambodia, and finally sending them to the U.S. All of our production from spinning, knitting, fabric finishing, cutting, and up to garment making is done entirely, in Peru. At the moment a few of our notions, like the button shells, are imported. Having all of our production done here greatly lowers our carbon footprint. Not only that, we can easily take a short trip to visit communities and providers, maximizing our transparency.</p>",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "400"
+          }
+        }
+      },
+      "block_order": [
+        "image_text_pahWG6",
+        "image_text_RPt7aX",
+        "image_text_q8Mm7q"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.image-grid-container {grid-template-columns: 1fr; gap: 30px; } .image-grid-text {font-size: 14px !important; margin-top: 6px; }}",
+        "p {text-align: justify;}"
+      ],
+      "name": "Galería imágenes + texto Main",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "background_color": "#ffffff"
+      }
+    },
+    "pagefly-home": {
+      "type": "pagefly-home",
+      "settings": {}
+    }
+  },
+  "order": [
+    "custom_liquid_fLM8Gg",
+    "custom_liquid_jzQjfa",
+    "custom_liquid_7eCQ4K",
+    "new_image_with_text_overlay_NJ3xWp",
+    "section_steps_content_main_BUHzF3",
+    "rich_text_dwzBWy",
+    "custom8product_eApXHc",
+    "rich_text_quote_nrnyXT",
+    "text_3video_main_YDQfU4",
+    "4video_1textcolumns_krbkxX",
+    "rich_text_JpMw4m",
+    "five_imagens_main_H4PgVe",
+    "botons_column_G4Ri44",
+    "4sections_text_RgMkLN",
+    "video_BE67UD",
+    "rich_text_efMz3Q",
+    "five_imagens_main_Q3yXVC",
+    "botons_column_tDqht7",
+    "rich_text_qLgEka",
+    "rich_text_afTaNx",
+    "collapsible_content_tx8hNA",
+    "collapsible_content_main_pGjeAD",
+    "gallery_img_text_main_tzDXVY",
+    "pagefly-home"
+  ]
+}
