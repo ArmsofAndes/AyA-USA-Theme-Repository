@@ -26,8 +26,8 @@ if (!customElements.get('image-with-text-overlay')) {
         if (!summary) return;
         
         // Get texts from data attributes (set by Shopify schema)
-        const closedText = summary.getAttribute('data-summary-closed') || "Creating the World's Healthiest Fashion Brand";
-        const openText = summary.getAttribute('data-summary-open') || "Created With Plastic-Free Ingredients";
+        const closedText = summary.getAttribute('data-summary-closed') || "Creating the World's Healthiest Fashion";
+        const openText = summary.getAttribute('data-summary-open') || "Creating the World's Healthiest Fashion";
         
         // Set initial text based on dropdown state
         if (!details.open) {

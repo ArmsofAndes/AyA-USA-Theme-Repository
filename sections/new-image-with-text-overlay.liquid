@@ -130,9 +130,9 @@
                                                 data-block-id="{{ block.id }}"
                                                 {% if block.settings.dropdown_initially_open %}open{% endif %}>
                                         <summary class="text-dropdown-summary" 
-                                                 data-summary-closed="{% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed | escape }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}"
-                                                 data-summary-open="{% if block.settings.summary_text_open != blank %}{{ block.settings.summary_text_open | escape }}{% else %}Created With Plastic-Free Ingredients{% endif %}">
-                                          {% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}
+                                                 data-summary-closed="{% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed | escape }}{% else %}Creating the World's Healthiest Fashion{% endif %}"
+                                                 data-summary-open="{% if block.settings.summary_text_open != blank %}{{ block.settings.summary_text_open | escape }}{% else %}Creating the World's Healthiest Fashion{% endif %}">
+                                          {% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed }}{% else %}Creating the World's Healthiest Fashion{% endif %}
                                         </summary>
                                         <div class="text-dropdown-content">
                                           <div id="richtext-{{ block.id }}" class="rte description-size--{{ block.settings.description_size }}">
@@ -742,14 +742,14 @@
             "type": "text",
             "id": "summary_text_closed",
             "label": "Texto del summary (cerrado)",
-            "default": "Creating the World's Healthiest Fashion Brand",
+            "default": "Creating the World's Healthiest Fashion",
             "info": "Texto que se muestra cuando el dropdown está cerrado"
           },
           {
             "type": "text",
             "id": "summary_text_open",
             "label": "Texto del summary (abierto)",
-            "default": "Created With Plastic-Free Ingredients",
+            "default": "Creating the World's Healthiest Fashion",
             "info": "Texto que se muestra cuando el dropdown está abierto"
           },
           {

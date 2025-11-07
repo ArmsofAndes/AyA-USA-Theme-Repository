@@ -350,12 +350,22 @@
   color: #ffffff;
   padding: 0.5rem 0;
   position: relative;
-  padding-right: 2rem;
+  padding-left: 0;
+  padding-right: 0;
   padding-bottom: 0.5rem;
   border-bottom: 0.5px solid #ffffff;
   user-select: none;
   -webkit-user-select: none;
   margin-bottom: 0;
+  min-width: 250px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 @media only screen and (max-width: 767px) {
@@ -371,19 +381,20 @@
 
 .text-dropdown summary::after {
   content: '+';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(0deg);
   font-size: 1.5rem;
   line-height: 1;
+  margin-left: auto;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.3s ease;
 }
 
 .text-dropdown[open] summary::after {
   content: '−';
-  transform: translateY(-50%) rotate(0deg);
+  transform: rotate(0deg);
 }
 
 /* Desktop - enhanced icon rotation */
@@ -394,7 +405,7 @@
   }
 
   .text-dropdown[open] summary::after {
-    transform: translateY(-50%) rotate(180deg);
+    transform: rotate(180deg);
   }
 }
 
@@ -859,7 +870,7 @@
     /* justify-content: center; */
     align-items: center;
     flex-wrap: wrap;
-    padding-right: 14%;
+    padding-right: 0%;
   }
   
   .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
