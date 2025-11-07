@@ -126,9 +126,13 @@
                                        data-block-type="text"
                                        id="richtext-wrapper-{{ block.id }}"
                                        {{ block.shopify_attributes }}>
-                                      <details class="text-dropdown">
-                                        <summary class="text-dropdown-summary">
-                                          Creating the World's Healthiest Fashion Brand
+                                      <details class="text-dropdown{% unless block.settings.enable_dropdown_animations_desktop %} dropdown-animations-disabled-desktop{% endunless %}{% unless block.settings.enable_dropdown_animations_mobile %} dropdown-animations-disabled-mobile{% endunless %}" 
+                                                data-block-id="{{ block.id }}"
+                                                {% if block.settings.dropdown_initially_open %}open{% endif %}>
+                                        <summary class="text-dropdown-summary" 
+                                                 data-summary-closed="{% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed | escape }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}"
+                                                 data-summary-open="{% if block.settings.summary_text_open != blank %}{{ block.settings.summary_text_open | escape }}{% else %}Created With Plastic-Free Ingredients{% endif %}">
+                                          {% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}
                                         </summary>
                                         <div class="text-dropdown-content">
                                           <div id="richtext-{{ block.id }}" class="rte description-size--{{ block.settings.description_size }}">
@@ -251,14 +255,37 @@
 
 /* Responsive heading adjustments */
 @media only screen and (max-width: 767px) {
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
-    font-size: 1.536rem !important;
-    line-height: 3rem !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'heading' -%}
+      {%- if block.settings.heading_font_size_mobile and block.settings.heading_font_size_mobile > 0 -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading {
+          font-size: {{ block.settings.heading_font_size_mobile }}rem !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading {
+          font-size: 1.5rem !important;
+        }
+      {%- endif -%}
+    {%- endif -%}
+  {% endfor %}
   
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte:not(.description-size--medium) {
     font-size: 1rem;
   }
+  
+  {% for block in section.blocks %}
+    {%- if block.type == 'text' -%}
+      {%- if block.settings.text_font_size_mobile and block.settings.text_font_size_mobile > 0 -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
+          font-size: {{ block.settings.text_font_size_mobile }}rem !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
+          font-size: 0.7rem !important;
+        }
+      {%- endif -%}
+    {%- endif -%}
+  {% endfor %}
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
     gap: 10px;
@@ -281,22 +308,33 @@
   /* Override button CSS variables for mobile - must have higher specificity than block-specific styles */
   {% for block in section.blocks %}
     {%- if block.type == 'button' -%}
-      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
-        --btn-font-size: 15px;
-        --btn-font-weight: 400;
-      }
-      /* Direct style override for mobile buttons to ensure font-size and font-weight are applied */
-      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
-        font-size: 15px !important;
-        font-weight: 400 !important;
-      }
+      {%- assign mobile_font_size = block.settings.button_font_size_mobile | default: 15 -%}
+      {%- if mobile_font_size > 0 -%}
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
+          --btn-font-size: {{ mobile_font_size }}px;
+          --btn-font-weight: 400;
+        }
+        /* Direct style override for mobile buttons to ensure font-size and font-weight are applied */
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
+          font-size: {{ mobile_font_size }}px !important;
+          font-weight: 400 !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
+          --btn-font-size: 15px;
+          --btn-font-weight: 400;
+        }
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
+          font-size: 15px !important;
+          font-weight: 400 !important;
+        }
+      {%- endif -%}
     {%- endif -%}
   {% endfor %}
   
   /* Ensure p elements inside description-size--medium have correct font size in mobile */
   #shopify-section-{{ section.id }} .rte.description-size--medium p,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte.description-size--medium p {
-    font-size: 0.688rem !important;
     font-weight: 400 !important;
   }
   
@@ -610,14 +648,33 @@
                         "default": "Image with text overlay"
                     },
                     {
+                      "type": "header",
+                      "content": "Desktop Settings"
+                    },
+                    {
                       "type": "range",
                       "id": "heading_font_size",
-                      "label": "Tamaño de fuente (rem)",
+                      "label": "Tamaño de fuente Desktop (rem)",
                       "min": 1,
                       "max": 10,
                       "step": 0.1,
                       "unit": "rem",
                       "default": 3.2
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Settings"
+                    },
+                    {
+                      "type": "range",
+                      "id": "heading_font_size_mobile",
+                      "label": "Tamaño de fuente Mobile (rem)",
+                      "min": 0.5,
+                      "max": 5,
+                      "step": 0.1,
+                      "unit": "rem",
+                      "default": 1.5,
+                      "info": "Si está en 0, usará el tamaño de desktop"
                     },
                     {
                       "type": "range",
@@ -678,6 +735,34 @@
                 "limit": 1,
         "settings": [
           {
+            "type": "header",
+            "content": "Dropdown Summary"
+          },
+          {
+            "type": "text",
+            "id": "summary_text_closed",
+            "label": "Texto del summary (cerrado)",
+            "default": "Creating the World's Healthiest Fashion Brand",
+            "info": "Texto que se muestra cuando el dropdown está cerrado"
+          },
+          {
+            "type": "text",
+            "id": "summary_text_open",
+            "label": "Texto del summary (abierto)",
+            "default": "Created With Plastic-Free Ingredients",
+            "info": "Texto que se muestra cuando el dropdown está abierto"
+          },
+          {
+            "type": "checkbox",
+            "id": "dropdown_initially_open",
+            "label": "Abrir dropdown inicialmente",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "Dropdown Content"
+          },
+          {
             "type": "richtext",
             "id": "text",
             "label": "Content",
@@ -704,14 +789,49 @@
                         "default": "medium"
                     },
           {
+            "type": "header",
+            "content": "Desktop Settings"
+          },
+          {
             "type": "range",
             "id": "text_font_size",
-            "label": "Tamaño de fuente (rem)",
+            "label": "Tamaño de fuente Desktop (rem)",
             "min": 1,
             "max": 5,
             "step": 0.1,
             "unit": "rem",
             "default": 1.6
+          },
+          {
+            "type": "header",
+            "content": "Mobile Settings"
+          },
+          {
+            "type": "range",
+            "id": "text_font_size_mobile",
+            "label": "Tamaño de fuente Mobile (rem)",
+            "min": 0.5,
+            "max": 3,
+            "step": 0.1,
+            "unit": "rem",
+            "default": 0.7,
+            "info": "Si está en 0, usará el tamaño de desktop"
+          },
+          {
+            "type": "header",
+            "content": "Dropdown Animations"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_dropdown_animations_desktop",
+            "label": "Activar animaciones del dropdown en Desktop",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_dropdown_animations_mobile",
+            "label": "Activar animaciones del dropdown en Mobile",
+            "default": true
           },
     {
       "type": "select",
@@ -781,11 +901,25 @@
                         "label": "Button link"
                     },
           {
+      "type": "header",
+      "content": "Desktop Settings"
+    },
+    {
       "type": "number",
       "id": "button_font_size",
-      "label": "Tamaño de fuente del botón (px)",
+      "label": "Tamaño de fuente Desktop (px)",
       "default": 16
-
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "number",
+      "id": "button_font_size_mobile",
+      "label": "Tamaño de fuente Mobile (px)",
+      "default": 15,
+      "info": "Si está en 0, usará el tamaño de desktop"
     },
     {
       "type": "select",

@@ -149,7 +149,7 @@
   .image-with-text-overlay--content.content-bottom-center {
     max-width: 1570px;
     margin: 0 auto;
-    padding-top: 252px;
+    padding-top: 189px;
     align-items: flex-start;
   }
 }
@@ -410,8 +410,44 @@
   }
 }
 
+/* Disable animations for dropdowns when animations are disabled via schema */
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content,
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content .rte,
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content .rte p,
+.text-dropdown.dropdown-animations-disabled-desktop summary {
+  transition: none !important;
+  animation: none !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content,
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content .rte,
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content .rte p,
+  .text-dropdown.dropdown-animations-disabled-mobile summary {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
 /* Desktop animation - smooth slide down with minimal upward movement */
 @media only screen and (min-width: 768px) {
+  /* Skip animations if disabled */
+  .text-dropdown.dropdown-animations-disabled-desktop:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    transition: none !important;
+  }
+
+  .text-dropdown.dropdown-animations-disabled-desktop[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
   .text-dropdown:not([open]) .text-dropdown-content {
     max-height: 0 !important;
     padding-top: 0 !important;
@@ -563,6 +599,23 @@
 
 /* Mobile - animations similar to desktop */
 @media only screen and (max-width: 767px) {
+  /* Skip animations if disabled */
+  .text-dropdown.dropdown-animations-disabled-mobile:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    transition: none !important;
+  }
+
+  .text-dropdown.dropdown-animations-disabled-mobile[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
   /* Dropdown content container - closing */
   .text-dropdown:not([open]) .text-dropdown-content {
     max-height: 0 !important;

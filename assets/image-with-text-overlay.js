@@ -25,18 +25,15 @@ if (!customElements.get('image-with-text-overlay')) {
         const summary = details.querySelector('.text-dropdown-summary');
         if (!summary) return;
         
-        // Store the original and alternate text
-        const closedText = "Creating the World's Healthiest Fashion Brand";
-        const openText = "Created With Plastic-Free Ingredients";
+        // Get texts from data attributes (set by Shopify schema)
+        const closedText = summary.getAttribute('data-summary-closed') || "Creating the World's Healthiest Fashion Brand";
+        const openText = summary.getAttribute('data-summary-open') || "Created With Plastic-Free Ingredients";
         
-        // Normalize initial text (remove extra whitespace)
-        const currentText = summary.textContent.trim();
-        
-        // Set initial text to closed state if it matches the closed text
-        if (currentText.includes("Creating the World's Healthiest Fashion Brand") || 
-            currentText === closedText || 
-            !details.open) {
+        // Set initial text based on dropdown state
+        if (!details.open) {
           summary.textContent = closedText;
+        } else {
+          summary.textContent = openText;
         }
         
         // Listen for toggle event
