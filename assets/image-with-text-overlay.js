@@ -27,7 +27,7 @@ if (!customElements.get('image-with-text-overlay')) {
         
         // Store the original and alternate text
         const closedText = "Creating the World's Healthiest Fashion Brand";
-        const openText = "Created Exclusively With Our 100% Plastic-Free Ingredients";
+        const openText = "Created With Plastic-Free Ingredients";
         
         // Normalize initial text (remove extra whitespace)
         const currentText = summary.textContent.trim();
