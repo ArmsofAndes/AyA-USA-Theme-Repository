@@ -40,3 +40,18 @@ padding: 0;
 .rich-text .columns {
   padding: 0 !important;
 }
+
+/* Override background color from #536191 to #01264a */
+.richtext-full-bg[style*="536191"],
+.richtext-full-bg[style*="#536191"],
+.rich-text[style*="--color-bg: #536191"],
+.rich-text[style*="--color-bg:#536191"] {
+  background-color: #01264a !important;
+}
+
+.rich-text[style*="--color-bg: #536191"],
+.rich-text[style*="--color-bg:#536191"] {
+  --color-bg: #01264a !important;
+  --bg-body: #01264a !important;
+  background-color: #01264a !important;
+}

@@ -39,7 +39,7 @@
 		{% unless sticky_header %}
 		.header-section {
 			position: static !important;
-           margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+			margin-bottom: {% if section.settings.margin_bottom > 0 %}{{ section.settings.margin_bottom }}px{% else %}0px{% endif %};
 		}
 		{%- endunless -%}
       
@@ -49,15 +49,19 @@
 {{- 'header.js' | asset_url | script_tag -}}
 <style>
 .thb-secondary-area-item.thb-secondary-eu {
-  font-size: 16px; /* match icon size */
-  font-weight: 500; /* bold for visibility */
+  font-size: {{ section.settings.secondary_area_font_size | default: 16 }}px;
+  font-weight: {{ section.settings.secondary_area_font_weight | default: 500 }};
   display: inline-flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: {{ section.settings.secondary_area_margin_right | default: 10 }}px;
 }
 @media screen and (max-width: 767px) {
   .thb-secondary-area-item.thb-secondary-eu {
+    {% if section.settings.secondary_area_hide_mobile %}
     display: none !important;
+    {% else %}
+    display: inline-flex !important;
+    {% endif %}
   }
 }
 
@@ -76,13 +80,13 @@ div.mega-menu-container{
  
 }
 .mega-menu-promotion {
-  width: 210px;
-  height: 200px;
+  width: {{ section.settings.mega_menu_promo_width | default: 210 }}px;
+  height: {{ section.settings.mega_menu_promo_height | default: 200 }}px;
   position: relative;
   overflow: hidden;
   display: inline-block;
-  margin-bottom: 2%;
-   margin-top: 3%;
+  margin-bottom: {{ section.settings.mega_menu_promo_margin_bottom | default: 2 }}%;
+  margin-top: {{ section.settings.mega_menu_promo_margin_top | default: 3 }}%;
 }
 
 .mega-menu-promotion img {
@@ -107,21 +111,23 @@ div.mega-menu-container{
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
   text-align: center;
-  padding-top: 30px;    /* más espacio arriba */
-  padding-bottom: 2% 3% 2% 3%; /* menos espacio abajo */
+  padding-top: {{ section.settings.mega_menu_promo_padding_top | default: 30 }}px;
+  padding-bottom: {{ section.settings.mega_menu_promo_padding_bottom | default: 2 }}%;
+  padding-left: {{ section.settings.mega_menu_promo_padding_left | default: 3 }}%;
+  padding-right: {{ section.settings.mega_menu_promo_padding_right | default: 3 }}%;
 }
 
 .mega-menu-promotion--cover .heading-font {
-  font-weight: bold;
-  font-size: 0.875rem; /* 14px */
+  font-weight: {% if section.settings.mega_menu_promo_heading_weight == 'bold' %}bold{% elsif section.settings.mega_menu_promo_heading_weight != blank %}{{ section.settings.mega_menu_promo_heading_weight }}{% else %}bold{% endif %};
+  font-size: {{ section.settings.mega_menu_promo_heading_size | default: 0.9 }}rem;
   margin: 0;
 }
 
 .mega-menu-promotion--cover .text-button {
-  margin-top: 6px;
-  padding: 0 5px;
-  border-radius: 20px;
-  font-size: 1.3125rem;     /* 21px */
+  margin-top: {{ section.settings.mega_menu_promo_button_margin_top | default: 6 }}px;
+  padding: 0 {{ section.settings.mega_menu_promo_button_padding | default: 5 }}px;
+  border-radius: {{ section.settings.mega_menu_promo_button_border_radius | default: 20 }}px;
+  font-size: {{ section.settings.mega_menu_promo_button_font_size | default: 1.3 }}rem;
   pointer-events: auto;
   cursor: pointer;
 }
@@ -133,8 +139,8 @@ ul.mega-menu-columns > li > a.mega-menu-columns__heading {
   font-weight: {{ section.settings.parent_link_font_weight }};
   color: {{ section.settings.parent_link_color }};
   background-color: {{ section.settings.parent_link_bg }};
-  padding: 10px 14px;
-  border-radius: 4px;
+  padding: {{ section.settings.parent_link_padding_vertical | default: 10 }}px {{ section.settings.parent_link_padding_horizontal | default: 14 }}px;
+  border-radius: {{ section.settings.parent_link_border_radius | default: 4 }}px;
   text-decoration: none;
   display: inline-block;
   transition: all 0.3s ease;
@@ -158,8 +164,8 @@ ul.mega-menu-columns ul[role="menu"] > li > a.thb-full-menu--link {
   font-weight: {{ section.settings.child_link_font_weight }};
   color: {{ section.settings.child_link_color }};
   background-color: {{ section.settings.child_link_bg }};
-  padding: 8px 12px;
-  border-radius: 3px;
+  padding: {{ section.settings.child_link_padding_vertical | default: 8 }}px {{ section.settings.child_link_padding_horizontal | default: 12 }}px;
+  border-radius: {{ section.settings.child_link_border_radius | default: 3 }}px;
   text-decoration: none;
   display: inline-block;
   transition: all 0.3s ease;
@@ -184,8 +190,8 @@ ul.mega-menu-columns ul[role="menu"] ul[role="menu"] > li > a.thb-full-menu--lin
   font-weight: {{ section.settings.grandchild_link_font_weight }};
   color: {{ section.settings.grandchild_link_color }};
   background-color: {{ section.settings.grandchild_link_bg }};
-  padding: 6px 10px;
-  border-radius: 3px;
+  padding: {{ section.settings.grandchild_link_padding_vertical | default: 6 }}px {{ section.settings.grandchild_link_padding_horizontal | default: 10 }}px;
+  border-radius: {{ section.settings.grandchild_link_border_radius | default: 3 }}px;
   text-decoration: none;
   display: inline-block;
   transition: all 0.3s ease;
@@ -663,6 +669,303 @@ ul.mega-menu-columns ul[role="menu"] ul[role="menu"] > li > a.thb-full-menu--lin
     { "value": "500", "label": "Medio" },
     { "value": "700", "label": "Negrita" }
   ]
+},
+{
+  "type": "header",
+  "content": "Padding & Border Radius"
+},
+{
+  "type": "range",
+  "id": "parent_link_padding_vertical",
+  "label": "Parent Links - Padding Vertical (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 10
+},
+{
+  "type": "range",
+  "id": "parent_link_padding_horizontal",
+  "label": "Parent Links - Padding Horizontal (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 14
+},
+{
+  "type": "range",
+  "id": "parent_link_border_radius",
+  "label": "Parent Links - Border Radius (px)",
+  "min": 0,
+  "max": 20,
+  "step": 1,
+  "unit": "px",
+  "default": 4
+},
+{
+  "type": "range",
+  "id": "child_link_padding_vertical",
+  "label": "Child Links - Padding Vertical (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 8
+},
+{
+  "type": "range",
+  "id": "child_link_padding_horizontal",
+  "label": "Child Links - Padding Horizontal (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 12
+},
+{
+  "type": "range",
+  "id": "child_link_border_radius",
+  "label": "Child Links - Border Radius (px)",
+  "min": 0,
+  "max": 20,
+  "step": 1,
+  "unit": "px",
+  "default": 3
+},
+{
+  "type": "range",
+  "id": "grandchild_link_padding_vertical",
+  "label": "Grandchild Links - Padding Vertical (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 6
+},
+{
+  "type": "range",
+  "id": "grandchild_link_padding_horizontal",
+  "label": "Grandchild Links - Padding Horizontal (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 10
+},
+{
+  "type": "range",
+  "id": "grandchild_link_border_radius",
+  "label": "Grandchild Links - Border Radius (px)",
+  "min": 0,
+  "max": 20,
+  "step": 1,
+  "unit": "px",
+  "default": 3
+},
+{
+  "type": "header",
+  "content": "Mega Menu Promotions"
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_width",
+  "label": "Promotion Width (px)",
+  "min": 100,
+  "max": 400,
+  "step": 10,
+  "unit": "px",
+  "default": 210
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_height",
+  "label": "Promotion Height (px)",
+  "min": 100,
+  "max": 400,
+  "step": 10,
+  "unit": "px",
+  "default": 200
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_margin_top",
+  "label": "Promotion Margin Top (%)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "unit": "%",
+  "default": 3
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_margin_bottom",
+  "label": "Promotion Margin Bottom (%)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "unit": "%",
+  "default": 2
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_padding_top",
+  "label": "Promotion Cover - Padding Top (px)",
+  "min": 0,
+  "max": 60,
+  "step": 1,
+  "unit": "px",
+  "default": 30
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_padding_bottom",
+  "label": "Promotion Cover - Padding Bottom (%)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "unit": "%",
+  "default": 2
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_padding_left",
+  "label": "Promotion Cover - Padding Left (%)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "unit": "%",
+  "default": 3
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_padding_right",
+  "label": "Promotion Cover - Padding Right (%)",
+  "min": 0,
+  "max": 10,
+  "step": 1,
+  "unit": "%",
+  "default": 3
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_heading_size",
+  "label": "Promotion Heading - Font Size (rem)",
+  "min": 0.5,
+  "max": 2,
+  "step": 0.1,
+  "unit": "rem",
+  "default": 0.9
+},
+{
+  "type": "select",
+  "id": "mega_menu_promo_heading_weight",
+  "label": "Promotion Heading - Font Weight",
+  "default": "bold",
+  "options": [
+    { "value": "normal", "label": "Normal (400)" },
+    { "value": "bold", "label": "Bold" },
+    { "value": "600", "label": "Semi Bold (600)" },
+    { "value": "700", "label": "Extra Bold (700)" }
+  ]
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_button_font_size",
+  "label": "Promotion Button - Font Size (rem)",
+  "min": 0.5,
+  "max": 2.5,
+  "step": 0.1,
+  "unit": "rem",
+  "default": 1.3
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_button_padding",
+  "label": "Promotion Button - Padding Horizontal (px)",
+  "min": 0,
+  "max": 20,
+  "step": 1,
+  "unit": "px",
+  "default": 5
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_button_border_radius",
+  "label": "Promotion Button - Border Radius (px)",
+  "min": 0,
+  "max": 50,
+  "step": 1,
+  "unit": "px",
+  "default": 20
+},
+{
+  "type": "range",
+  "id": "mega_menu_promo_button_margin_top",
+  "label": "Promotion Button - Margin Top (px)",
+  "min": 0,
+  "max": 20,
+  "step": 1,
+  "unit": "px",
+  "default": 6
+},
+{
+  "type": "header",
+  "content": "Secondary Area"
+},
+{
+  "type": "range",
+  "id": "secondary_area_font_size",
+  "label": "Secondary Area Font Size (px)",
+  "min": 10,
+  "max": 24,
+  "step": 1,
+  "unit": "px",
+  "default": 16
+},
+{
+  "type": "select",
+  "id": "secondary_area_font_weight",
+  "label": "Secondary Area Font Weight",
+  "default": "500",
+  "options": [
+    { "value": "400", "label": "Normal" },
+    { "value": "500", "label": "Medium" },
+    { "value": "600", "label": "Semi Bold" },
+    { "value": "700", "label": "Bold" }
+  ]
+},
+{
+  "type": "range",
+  "id": "secondary_area_margin_right",
+  "label": "Secondary Area Margin Right (px)",
+  "min": 0,
+  "max": 30,
+  "step": 1,
+  "unit": "px",
+  "default": 10
+},
+{
+  "type": "checkbox",
+  "id": "secondary_area_hide_mobile",
+  "label": "Hide Secondary Area on Mobile",
+  "default": true
+},
+{
+  "type": "header",
+  "content": "Header Spacing"
+},
+{
+  "type": "range",
+  "id": "margin_bottom",
+  "label": "Margin Bottom (px)",
+  "min": 0,
+  "max": 100,
+  "step": 1,
+  "unit": "px",
+  "default": 0,
+  "info": "Only applies when sticky header is disabled"
 }
 	],
 	"blocks": [

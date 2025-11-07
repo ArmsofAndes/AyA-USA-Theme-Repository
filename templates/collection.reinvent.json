@@ -6,7 +6,7 @@
         "template--17027745972539__9de27e1e-9c24-4334-982b-86e9980a73bd-1669829603416565ad-0": {
           "type": "text",
           "settings": {
-            "text": "{{ collection.title }}",
+            "text": "<p>{{ collection.title }}<\/p>",
             "link": "",
             "outline_text": false
           }
@@ -14,7 +14,7 @@
         "template--17027745972539__9de27e1e-9c24-4334-982b-86e9980a73bd-1669829603416565ad-1": {
           "type": "text",
           "settings": {
-            "text": "{{ collection.title }}",
+            "text": "<p>{{ collection.title }}<\/p>",
             "link": "",
             "outline_text": false
           }
@@ -22,7 +22,7 @@
         "template--17027745972539__9de27e1e-9c24-4334-982b-86e9980a73bd-1669829603416565ad-2": {
           "type": "text",
           "settings": {
-            "text": "{{ collection.title }}",
+            "text": "<p>{{ collection.title }}<\/p>",
             "link": "",
             "outline_text": false
           }

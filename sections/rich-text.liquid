@@ -6,6 +6,9 @@
   assign text_alignment = section.settings.text_alignment
 
   assign color_bg = section.settings.color_bg | downcase
+  if color_bg == '#536191' or color_bg == '536191'
+    assign color_bg = '#01264a'
+  endif
   assign color_text = section.settings.color_text
   assign color_links = section.settings.color_links
 

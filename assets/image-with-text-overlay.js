@@ -15,6 +15,36 @@ if (!customElements.get('image-with-text-overlay')) {
       if (document.body.classList.contains('animations-true') && typeof gsap !== 'undefined') {
         this.prepareAnimations();
       }
+      this.initDropdownTextToggle();
+    }
+    initDropdownTextToggle() {
+      // Find all text dropdowns within this section
+      const textDropdowns = this.querySelectorAll('.text-dropdown');
+      
+      textDropdowns.forEach((details) => {
+        const summary = details.querySelector('.text-dropdown-summary');
+        if (!summary) return;
+        
+        // Get texts from data attributes (set by Shopify schema)
+        const closedText = summary.getAttribute('data-summary-closed') || "Creating the World's Healthiest Fashion Brand";
+        const openText = summary.getAttribute('data-summary-open') || "Created With Plastic-Free Ingredients";
+        
+        // Set initial text based on dropdown state
+        if (!details.open) {
+          summary.textContent = closedText;
+        } else {
+          summary.textContent = openText;
+        }
+        
+        // Listen for toggle event
+        details.addEventListener('toggle', () => {
+          if (details.open) {
+            summary.textContent = openText;
+          } else {
+            summary.textContent = closedText;
+          }
+        });
+      });
     }
     disconnectedCallback() {
       if (document.body.classList.contains('animations-true') && typeof gsap !== 'undefined') {

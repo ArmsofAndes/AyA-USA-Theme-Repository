@@ -48,7 +48,7 @@
 
     <div class="small-12 columns">
         <image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
-          style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};height: {{ section.settings.desktop_vh_height }}vh;">
+          style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};">
             
             <div class="image-with-text-overlay--bg parallax--{{ image_parallax }}">
                 {% if image %}
@@ -83,82 +83,102 @@
 
             <div class="image-with-text-overlay--content content-{{ content_position }}">
                 <div class="image-with-text-overlay--content-inner content-width-{{ content_width }}">
+                    {%- liquid
+                        assign button_group_started = false
+                        assign button_count = 0
+                    -%}
                     {% for block in section.blocks %}
                         {%- case block.type -%}
                             {%- when 'subheading' -%}
-                                <p class="subheading"
-                                   style="font-size: {{ block.settings.subheading_font_size | divided_by: 16.0 }}rem!important;
-                                          font-weight: {{ block.settings.subheading_font_weight }};
-                                          color: {{ block.settings.subheading_color }};
-                                          font-family: var(--section-font-family, inherit);
-                                          margin-top: {{ block.settings.margin_top }}rem;
-                                          margin-bottom: {{ block.settings.margin_bottom }}rem;"
-                                   {{ block.shopify_attributes }}>
-                                  {{ block.settings.text }}
-                                </p>
+                                {% if button_group_started %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                {% endif %}
+                                <div class="block-wrapper block-{{ block.id }}" 
+                                     data-block-type="subheading"
+                                     {{ block.shopify_attributes }}>
+                                    <p class="subheading">
+                                      {{ block.settings.text }}
+                                    </p>
+                                </div>
                             {%- when 'heading' -%}
-                                <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading"
-                                   style="font-family: var(--section-font-family, inherit);
-                                          font-size: {{ block.settings.heading_font_size }}rem;
-                                          font-weight: {{ block.settings.heading_font_weight }};
-                                          color: {{ block.settings.heading_color }};
-                                          line-height: {{ block.settings.heading_font_size }}rem;
-                                          overflow: visible;
-                                          margin-top: {{ block.settings.margin_top }}rem;
-                                          margin-bottom: {{ block.settings.margin_bottom }}rem;"
-                                   {{ block.shopify_attributes }}>
-                                  {{ block.settings.text | newline_to_br }}
-                                </{{ heading_tag }}>
+                                {% if button_group_started %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                {% endif %}
+                                <div class="block-wrapper block-{{ block.id }}" 
+                                     data-block-type="heading"
+                                     {{ block.shopify_attributes }}>
+                                    <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
+                                      {{ block.settings.text | newline_to_br }}
+                                    </{{ heading_tag }}>
+                                </div>
                             {%- when 'text' -%}
+                                {% if button_group_started %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                {% endif %}
                                 {%- if block.settings.text != blank -%}
-                                  <div id="richtext-{{ block.id }}" class="rte description-size--{{ block.settings.description_size }}"
-                                       style="font-size: {{ block.settings.text_font_size }}rem;
-                                              font-weight: {{ block.settings.text_font_weight }};
-                                              color: {{ block.settings.text_color }};
-                                              font-family: var(--section-font-family, inherit);
-                                              margin-top: {{ block.settings.margin_top }}rem;
-                                              margin-bottom: {{ block.settings.margin_bottom }}rem;"
-                                              {{ block.shopify_attributes }}>
-                                    {{ block.settings.text }}
+                                  <div class="block-wrapper block-{{ block.id }} text-dropdown-wrapper" 
+                                       data-block-type="text"
+                                       id="richtext-wrapper-{{ block.id }}"
+                                       {{ block.shopify_attributes }}>
+                                      <details class="text-dropdown{% unless block.settings.enable_dropdown_animations_desktop %} dropdown-animations-disabled-desktop{% endunless %}{% unless block.settings.enable_dropdown_animations_mobile %} dropdown-animations-disabled-mobile{% endunless %}" 
+                                                data-block-id="{{ block.id }}"
+                                                {% if block.settings.dropdown_initially_open %}open{% endif %}>
+                                        <summary class="text-dropdown-summary" 
+                                                 data-summary-closed="{% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed | escape }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}"
+                                                 data-summary-open="{% if block.settings.summary_text_open != blank %}{{ block.settings.summary_text_open | escape }}{% else %}Created With Plastic-Free Ingredients{% endif %}">
+                                          {% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed }}{% else %}Creating the World's Healthiest Fashion Brand{% endif %}
+                                        </summary>
+                                        <div class="text-dropdown-content">
+                                          <div id="richtext-{{ block.id }}" class="rte description-size--{{ block.settings.description_size }}">
+                                            {{ block.settings.text }}
+                                          </div>
+                                        </div>
+                                      </details>
                                   </div>
-                                  <style>
-                                    #richtext-{{ block.id }} p {
-                                      line-height: {{ block.settings.line_height }};
-                                    }
-                                  </style>
                                 {%- endif -%}
                             {%- when 'button' -%}
                                 {% if block.settings.button_text != blank %}
-                                <a class="button custom-btn-{{ block.id }}{% if block.settings.button_outline %} outline{% endif %}"
-                                   href="{{ block.settings.button_link }}"
-                                   role="button"
-                                   style="font-size: {{ block.settings.button_font_size }}px;
-                                          font-weight: {{ block.settings.button_font_weight }};
-                                          color: {{ block.settings.button_color }};
-                                          background-color: {{ block.settings.button_background_color }};
-                                          padding: 0.6em 1.5em;
-                                          line-height: 1.2;
-                                          border: {{ block.settings.button_border_width | default: 0 }}px {{ block.settings.button_border_style | default: 'solid' }} {{ block.settings.button_border_color | default: '#000000' }};
-                                          border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
-                                          font-family: var(--section-font-family, inherit);"
-                                   {{ block.shopify_attributes }}>
-                                  {{ block.settings.button_text }}
-                                </a>
-                                <style>
-                                  .custom-btn-{{ block.id }} {
-                                    transition: all 0.3s ease !important;
-                                  }
-                                  .custom-btn-{{ block.id }}:hover {
-                                    color: {{ block.settings.hover_text_color }} !important;
-                                    background-color: {{ block.settings.hover_background_color }} !important;
-                                    border-color: {{ block.settings.hover_border_color }} !important;
-                                  }
-                                </style>
+                                  {% if button_count == 0 %}
+                                    <div class="buttons-grid-wrapper">
+                                    {% assign button_group_started = true %}
+                                  {% endif %}
+                                  {% assign button_count = button_count | plus: 1 %}
+                                  <div class="block-wrapper block-{{ block.id }}" 
+                                       data-block-type="button"
+                                       {{ block.shopify_attributes }}>
+                                      <a class="button custom-btn-{{ block.id }}{% if block.settings.button_outline %} outline{% endif %}"
+                                         href="{{ block.settings.button_link }}"
+                                         role="button">
+                                        {{ block.settings.button_text }}
+                                      </a>
+                                  </div>
+                                  {% assign next_block = section.blocks[forloop.index] %}
+                                  {% if next_block.type != 'button' or forloop.last %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                  {% endif %}
                                 {% endif %}
                             {%- when 'space' -%}
-                                <div style="height: {{ block.settings.height | append: 'px' }}" {{ block.shopify_attributes }}></div>
+                                {% if button_group_started %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                {% endif %}
+                                <div class="block-wrapper block-space block-{{ block.id }}" 
+                                     data-block-type="space"
+                                     {{ block.shopify_attributes }}></div>
                         {%- endcase -%}
                     {% endfor %}
+                    {% if button_group_started %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -169,45 +189,165 @@
 <script src="{{ 'image-with-text-overlay.js' | asset_url }}" defer="defer"></script>
 
 <style>
-/* Tipografías */
-.font-helvetica { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-.font-arimo { font-family: 'Arimo', sans-serif; }
-.font-roboto { font-family: 'Roboto', sans-serif; }
-.font-poppins { font-family: 'Poppins', sans-serif; font-weight: 300; }
-.font-source-sans { font-family: 'Source Sans Pro', sans-serif; }
-.font-montserrat { font-family: 'Montserrat', sans-serif; }
+/* ============================================
+   SECTION-SPECIFIC DYNAMIC STYLES
+   CSS custom properties defined here, no inline styles
+   ============================================ */
 
-.image-with-text-overlay--content,
-.image-with-text-overlay--content * {
-  font-family: var(--section-font-family, inherit) !important;
+#shopify-section-{{ section.id }} {
+  --section-desktop-height: {{ section.settings.desktop_vh_height }}vh;
 }
 
- /* hasta aqui las tipografias*/
-    a.button {
-  border: none;
-}
-  .image-with-text-overlay--content *:not([class*="custom-btn"]),
-.image-with-text-overlay--content-inner *:not([class*="custom-btn"]) {
-  animation: none !important;
-  transition: none !important;
-  opacity: 1 !important;
-  transform: none !important;
-}
-   .thb-parallax-image,
-  .image-with-text-overlay--bg {
-    animation: none !important;
-    transform: none !important;
-    transition: none !important;
+/* Block-specific CSS custom properties */
+{% for block in section.blocks %}
+  {%- case block.type -%}
+    {%- when 'subheading' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --block-font-size: {{ block.settings.subheading_font_size | divided_by: 16.0 }}rem;
+        --block-font-weight: {{ block.settings.subheading_font_weight }};
+        --block-color: {{ block.settings.subheading_color }};
+        --block-margin-top: {{ block.settings.margin_top }}rem;
+        --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
+      }
+    {%- when 'heading' -%}
+      {%- if block.settings.heading_line_height > 0 -%}
+        {%- assign heading_line_height = block.settings.heading_line_height -%}
+      {%- else -%}
+        {%- assign heading_line_height = block.settings.heading_font_size -%}
+      {%- endif -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --block-font-size: {{ block.settings.heading_font_size }}rem;
+        --block-font-weight: {{ block.settings.heading_font_weight }};
+        --block-color: {{ block.settings.heading_color }};
+        --block-line-height: {{ heading_line_height }}rem;
+        --block-margin-top: {{ block.settings.margin_top }}rem;
+        --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
+      }
+    {%- when 'text' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --block-font-size: {{ block.settings.text_font_size }}rem;
+        --block-font-weight: {{ block.settings.text_font_weight }};
+        --block-color: {{ block.settings.text_color }};
+        --block-margin-top: {{ block.settings.margin_top }}rem;
+        --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
+        --block-line-height: {{ block.settings.line_height }};
+      }
+    {%- when 'button' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --btn-font-size: {{ block.settings.button_font_size }}px;
+        --btn-font-weight: {{ block.settings.button_font_weight }};
+        --btn-color: {{ block.settings.button_color }};
+        --btn-bg-color: {{ block.settings.button_background_color }};
+        --btn-border-width: {{ block.settings.button_border_width | default: 0 }}px;
+        --btn-border-style: {{ block.settings.button_border_style | default: 'solid' }};
+        --btn-border-color: {{ block.settings.button_border_color | default: '#000000' }};
+        --btn-border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
+        --btn-hover-color: {{ block.settings.hover_text_color }};
+        --btn-hover-bg-color: {{ block.settings.hover_background_color }};
+        --btn-hover-border-color: {{ block.settings.hover_border_color }};
+      }
+    {%- when 'space' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --space-height: {{ block.settings.height }}px;
+      }
+  {%- endcase -%}
+{% endfor %}
+
+/* Responsive heading adjustments */
+@media only screen and (max-width: 767px) {
+  {% for block in section.blocks %}
+    {%- if block.type == 'heading' -%}
+      {%- if block.settings.heading_font_size_mobile and block.settings.heading_font_size_mobile > 0 -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading {
+          font-size: {{ block.settings.heading_font_size_mobile }}rem !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading {
+          font-size: 1.5rem !important;
+        }
+      {%- endif -%}
+    {%- endif -%}
+  {% endfor %}
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte:not(.description-size--medium) {
+    font-size: 1rem;
   }
-@media only screen and (min-width: 1024px) {
-  .image-with-text-overlay--bg img {
-    object-position: center top !important;
+  
+  {% for block in section.blocks %}
+    {%- if block.type == 'text' -%}
+      {%- if block.settings.text_font_size_mobile and block.settings.text_font_size_mobile > 0 -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
+          font-size: {{ block.settings.text_font_size_mobile }}rem !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
+          font-size: 0.7rem !important;
+        }
+      {%- endif -%}
+    {%- endif -%}
+  {% endfor %}
+  
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
+    gap: 10px;
+    width: 100%;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+  }
+  
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
+    margin: 0 !important;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    width: 100%;
+    margin: 0 !important;
+  }
+  
+  /* Override button CSS variables for mobile - must have higher specificity than block-specific styles */
+  {% for block in section.blocks %}
+    {%- if block.type == 'button' -%}
+      {%- assign mobile_font_size = block.settings.button_font_size_mobile | default: 15 -%}
+      {%- if mobile_font_size > 0 -%}
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
+          --btn-font-size: {{ mobile_font_size }}px;
+          --btn-font-weight: 400;
+        }
+        /* Direct style override for mobile buttons to ensure font-size and font-weight are applied */
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
+          font-size: {{ mobile_font_size }}px !important;
+          font-weight: 400 !important;
+        }
+      {%- else -%}
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
+          --btn-font-size: 15px;
+          --btn-font-weight: 400;
+        }
+        #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
+          font-size: 15px !important;
+          font-weight: 400 !important;
+        }
+      {%- endif -%}
+    {%- endif -%}
+  {% endfor %}
+  
+  /* Ensure p elements inside description-size--medium have correct font size in mobile */
+  #shopify-section-{{ section.id }} .rte.description-size--medium p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte.description-size--medium p {
+    font-weight: 400 !important;
+  }
+  
+  /* Override font-weight for description-size--medium in mobile - must override block-specific styles */
+  #shopify-section-{{ section.id }} .rte.description-size--medium,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte.description-size--medium {
+    font-weight: 400 !important;
   }
 }
-@media only screen and (max-width: 749px) {
-  .image-with-text-overlay {
-    height: 620px !important;
-  }
+
+/* Section-specific overrides */
+#shopify-section-{{ section.id }} p {
+  margin-bottom: 0;
 }
 </style>
 {% schema %}
@@ -508,14 +648,44 @@
                         "default": "Image with text overlay"
                     },
                     {
+                      "type": "header",
+                      "content": "Desktop Settings"
+                    },
+                    {
                       "type": "range",
                       "id": "heading_font_size",
-                      "label": "Tamaño de fuente (rem)",
+                      "label": "Tamaño de fuente Desktop (rem)",
                       "min": 1,
                       "max": 10,
                       "step": 0.1,
                       "unit": "rem",
                       "default": 3.2
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Settings"
+                    },
+                    {
+                      "type": "range",
+                      "id": "heading_font_size_mobile",
+                      "label": "Tamaño de fuente Mobile (rem)",
+                      "min": 0.5,
+                      "max": 5,
+                      "step": 0.1,
+                      "unit": "rem",
+                      "default": 1.5,
+                      "info": "Si está en 0, usará el tamaño de desktop"
+                    },
+                    {
+                      "type": "range",
+                      "id": "heading_line_height",
+                      "label": "Line Height (rem) - opcional, usa font-size si está en 0",
+                      "min": 0,
+                      "max": 10,
+                      "step": 0.1,
+                      "unit": "rem",
+                      "default": 3.7,
+                      "info": "Deja en 0 para usar el mismo valor que font-size"
                     },
     {
       "type": "select",
@@ -565,6 +735,34 @@
                 "limit": 1,
         "settings": [
           {
+            "type": "header",
+            "content": "Dropdown Summary"
+          },
+          {
+            "type": "text",
+            "id": "summary_text_closed",
+            "label": "Texto del summary (cerrado)",
+            "default": "Creating the World's Healthiest Fashion Brand",
+            "info": "Texto que se muestra cuando el dropdown está cerrado"
+          },
+          {
+            "type": "text",
+            "id": "summary_text_open",
+            "label": "Texto del summary (abierto)",
+            "default": "Created With Plastic-Free Ingredients",
+            "info": "Texto que se muestra cuando el dropdown está abierto"
+          },
+          {
+            "type": "checkbox",
+            "id": "dropdown_initially_open",
+            "label": "Abrir dropdown inicialmente",
+            "default": false
+          },
+          {
+            "type": "header",
+            "content": "Dropdown Content"
+          },
+          {
             "type": "richtext",
             "id": "text",
             "label": "Content",
@@ -591,14 +789,49 @@
                         "default": "medium"
                     },
           {
+            "type": "header",
+            "content": "Desktop Settings"
+          },
+          {
             "type": "range",
             "id": "text_font_size",
-            "label": "Tamaño de fuente (rem)",
+            "label": "Tamaño de fuente Desktop (rem)",
             "min": 1,
             "max": 5,
             "step": 0.1,
             "unit": "rem",
             "default": 1.6
+          },
+          {
+            "type": "header",
+            "content": "Mobile Settings"
+          },
+          {
+            "type": "range",
+            "id": "text_font_size_mobile",
+            "label": "Tamaño de fuente Mobile (rem)",
+            "min": 0.5,
+            "max": 3,
+            "step": 0.1,
+            "unit": "rem",
+            "default": 0.7,
+            "info": "Si está en 0, usará el tamaño de desktop"
+          },
+          {
+            "type": "header",
+            "content": "Dropdown Animations"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_dropdown_animations_desktop",
+            "label": "Activar animaciones del dropdown en Desktop",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_dropdown_animations_mobile",
+            "label": "Activar animaciones del dropdown en Mobile",
+            "default": true
           },
     {
       "type": "select",
@@ -668,11 +901,25 @@
                         "label": "Button link"
                     },
           {
+      "type": "header",
+      "content": "Desktop Settings"
+    },
+    {
       "type": "number",
       "id": "button_font_size",
-      "label": "Tamaño de fuente del botón (px)",
+      "label": "Tamaño de fuente Desktop (px)",
       "default": 16
-
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "number",
+      "id": "button_font_size_mobile",
+      "label": "Tamaño de fuente Mobile (px)",
+      "default": 15,
+      "info": "Si está en 0, usará el tamaño de desktop"
     },
     {
       "type": "select",
