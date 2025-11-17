@@ -1,6 +1,45 @@
 <div id="ProductInfo-{{ section.id }}" class="product-information--inner{% if section.settings.enable_sticky_info %} production-information--sticky{% endif %}">
   {%- assign product_form_id = 'product-form-' | append: section.id -%}
   {%- assign outline_button = false -%}
+  {%- comment -%} Detectar collection de origen para persistir descuento exclusivo {%- endcomment -%}
+  {%- liquid
+    assign source_collection_handle = ''
+    assign discount_collections = product.metafields.custom.discount_collection.value
+    
+    # Verificar si el referrer o la URL contiene una collection con descuento exclusivo
+    if discount_collections != blank
+      # Verificar referrer (si el usuario viene de una collection)
+      if request.headers.referer != blank
+        for discount_collection in discount_collections
+          assign collection_url = '/collections/' | append: discount_collection.handle
+          if request.headers.referer contains collection_url
+            assign source_collection_handle = discount_collection.handle
+            break
+          endif
+        endfor
+      endif
+      
+      # Verificar query string (si hay parámetro de collection)
+      if source_collection_handle == blank and request.query_string != blank
+        for discount_collection in discount_collections
+          if request.query_string contains discount_collection.handle
+            assign source_collection_handle = discount_collection.handle
+            break
+          endif
+        endfor
+      endif
+      
+      # Verificar collection actual (si estamos en una collection page)
+      if source_collection_handle == blank and collection != blank
+        for discount_collection in discount_collections
+          if collection.handle == discount_collection.handle
+            assign source_collection_handle = discount_collection.handle
+            break
+          endif
+        endfor
+      endif
+    endif
+  -%}
   {% for block in section.blocks %}
     {%- case block.type -%}
     {%- when '@app' -%}
@@ -56,7 +95,7 @@
       
         <div class="product-price-container">
           <div class="no-js-hidden" id="price-{{ section.id }}" aria-live="polite">
-            {% render 'product-price', product: product, use_variant: true, show_badges: true, show_custom_badges: block.settings.show_custom_badges %}
+            {% render 'product-price', product: product, use_variant: true, show_badges: true, show_custom_badges: block.settings.show_custom_badges, source_collection_handle: source_collection_handle %}
           </div>
           {%- if section.settings.show_taxes_included != blank -%}
             {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
@@ -714,7 +753,7 @@
   {% endfor %}
 </div>
 {%- if section.settings.enable_sticky_add_to_cart -%}
-{% render 'product-add-to-cart-sticky', product: product, media: first_image, color_picker: color_picker, picker_type: picker_type, form: form, is_disabled: is_disabled, outline_button: outline_button %}
+{% render 'product-add-to-cart-sticky', product: product, media: first_image, color_picker: color_picker, picker_type: picker_type, form: form, is_disabled: is_disabled, outline_button: outline_button, source_collection_handle: source_collection_handle %}
 {%- endif -%}
 
 {{ sizing_popup }}
