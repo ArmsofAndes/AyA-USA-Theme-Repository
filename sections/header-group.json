@@ -1,1 +1,393 @@
-{"type":"header","name":"Header group","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"text_Vh99jf":{"type":"text","settings":{"icon":"none","text":"Not a Single Drop of Plastic is Used in any of our Clothes*","link":"","item_bg_color":"#242c48","item_text_color":"#ffffff","item_hover_bg_color":"#333333","item_hover_text_color":"#ffffff","hide_on_desktop":false,"hide_on_mobile":false}},"text_7h8AFx":{"type":"text","disabled":true,"settings":{"icon":"none","text":"Free Shipping on U.S. Orders Over $100","link":"","item_bg_color":"#536191","item_text_color":"#ffffff","item_hover_bg_color":"rgba(0,0,0,0)","item_hover_text_color":"rgba(0,0,0,0)","hide_on_desktop":false,"hide_on_mobile":false}}},"block_order":["text_Vh99jf","text_7h8AFx"],"custom_css":[],"settings":{"sticky_announcement-bar":true,"announcement_bar":true,"announcement_bar_homepage_only":false,"announcement_bar_layout":"stacked","direction":"left","speed":"20s","autoplay":true,"autoplay_length":5,"announcement_bg":"#242c48","announcement_text":"#ffffff"}},"rich_text_yTy93w":{"type":"rich-text","blocks":{"subheading_CPcgxU":{"type":"subheading","disabled":true,"settings":{"text":"Subheading for this section","color":"","font_size":24,"font_weight":400}},"heading_ga6pWF":{"type":"heading","disabled":true,"settings":{"text":"","color":"","font_size":16,"font_weight":200}},"text_EWwLYn":{"type":"text","disabled":true,"settings":{"text":"<p>NOT A SINGLE DROP OF PLASTIC IS USED IN ANY OF OUR PRODUCTS*<\/p>","custom_liquid":"","color":"","font_size":14,"font_weight":400}}},"block_order":["subheading_CPcgxU","heading_ga6pWF","text_EWwLYn"],"disabled":true,"custom_css":[".row {max-width: 100%;}"],"name":"Rich text","settings":{"use_global_font":false,"font_family":"roboto","custom_anchor_id":"","section_width":"grid","text_width":"medium","text_position":"center","text_alignment":"center","color_bg":"#242c48","color_text":"#ffffff","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"rich_text_d9fWEy":{"type":"rich-text","blocks":{"subheading_dJCcCh":{"type":"subheading","disabled":true,"settings":{"text":"Subheading for this section","color":"","font_size":24,"font_weight":400}},"heading_AVkBQR":{"type":"heading","disabled":true,"settings":{"text":"","color":"","font_size":16,"font_weight":200}},"text_R6NJYt":{"type":"text","settings":{"text":"<p>Free Shipping: Orders $100+<\/p>","custom_liquid":"","color":"#ffffff","font_size":14,"font_weight":100}}},"block_order":["subheading_dJCcCh","heading_AVkBQR","text_R6NJYt"],"custom_css":[".rte {margin-bottom: 0px;}","p {padding: 0.4em 20px;}"],"name":"Rich text","settings":{"use_global_font":true,"font_family":"baskerville","custom_anchor_id":"","section_width":"full-width-row","text_width":"xlarge","text_position":"center","text_alignment":"center","color_bg":"#536191","color_text":"#ffffff","color_links":"#151515","disable_top_spacing":true,"disable_bottom_spacing":true}},"header":{"type":"header","blocks":{"megamenu_sidebar_8t6eMy":{"type":"megamenu_sidebar","settings":{"position":"1","show_manual_products":true,"product_1":"organic-pima-cotton-boxer-briefs","product_2":"mens-organic-pima-cotton-long-sleeve-shirt","product_3":"organic-pima-cotton-gloves","product_4":"","content_collection_image":false,"content_product_image":false}},"megamenu_sidebar_BeV3tN":{"type":"megamenu_sidebar","settings":{"position":"2","show_manual_products":true,"product_1":"organic-pima-cotton-panties","product_2":"organic-pima-cotton-bralette","product_3":"womens-organic-pima-cotton-long-sleeve-shirt","product_4":"","content_collection_image":false,"content_product_image":false}},"megamenu_sidebar_ybU99W":{"type":"megamenu_sidebar","settings":{"position":"3","show_manual_products":true,"product_1":"babys-organic-tee","product_2":"baby-girl-organic-flutter-sleeve-dress","product_3":"babys-organic-shorts","product_4":"","content_collection_image":false,"content_product_image":false}},"megamenu_sidebar_LfgGp3":{"type":"megamenu_sidebar","settings":{"position":"4","show_manual_products":true,"product_1":"paiche-fish-skin-slim-wallet","product_2":"pottery-large-vase-sea-stones","product_3":"sustainable-wood-chopping-serving-board","product_4":"","content_collection_image":true,"content_product_image":true}},"megamenu_sidebar_NRM4CY":{"type":"megamenu_sidebar","disabled":true,"settings":{"position":"5","show_manual_products":true,"product_1":"womens-pima-cotton-classic-shirt-lightweight","product_2":"unisex-waterproof-hooded-rain-poncho","product_3":"","product_4":"womens-organic-pima-cotton-chino-shorts","content_collection_image":false,"content_product_image":true}},"megamenu_sidebar_Yf79PD":{"type":"megamenu_sidebar","settings":{"position":"5","show_manual_products":true,"product_1":"womens-organic-pima-cotton-chino-shorts","product_2":"mens-pima-cotton-classic-shirt-heavyweight","product_3":"","product_4":"womens-pima-cotton-classic-shirt-lightweight","content_collection_image":true,"content_product_image":true}},"menu_badge_DMFXrB":{"type":"menu_badge","disabled":true,"settings":{"badge_position":"6","text":"20% OFF","color_bg":"#ee3b45","color_text":"#ffffff"}},"megamenu_rTGA3y":{"type":"megamenu","disabled":true,"settings":{"position":"6","promo_1_image":"shopify:\/\/shop_images\/AYA-MENU-001.webp","promo_1_heading":"","promo_1_link_label":"","promo_1_link":"","promo_2_image":"shopify:\/\/shop_images\/AYA-MENU-002.webp","promo_2_heading":"","promo_2_link_label":"","promo_2_link":"","promo_3_image":"shopify:\/\/shop_images\/AYA-MENU-003.webp","promo_3_heading":"","promo_3_link_label":"","promo_3_link":"","promo_4_heading":"","promo_4_link_label":"","promo_4_link":""}}},"block_order":["megamenu_sidebar_8t6eMy","megamenu_sidebar_BeV3tN","megamenu_sidebar_ybU99W","megamenu_sidebar_LfgGp3","megamenu_sidebar_NRM4CY","megamenu_sidebar_Yf79PD","menu_badge_DMFXrB","megamenu_rTGA3y"],"custom_css":[],"settings":{"sticky_header":false,"logo":"shopify:\/\/shop_images\/AYA-logo.png","logo_height_range":30,"logo_height_range_mobile":30,"style":"style2","header_shadow":"header--shadow-medium","menu":"menu-aya-v02","cart_icon":"bag","use_icon_account":true,"transparent_header":false,"transparent_header_border":true,"transparent_header_background":false,"transparent_header_background_gradient":"linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.01) 60%)","show_language_switcher":false,"show_currency_switcher":false,"mobile_secondary_menu":"","mobile_promo_heading":"Promotion heading","mobile_promo_link_label":"Shop","mobile_promo_link":"","parent_link_color":"#1e1e1e","parent_link_bg":"#ffffff","parent_link_font_size":14,"parent_link_font_weight":"400","parent_link_underline":false,"parent_link_hover_color":"#1e1e1e","parent_link_hover_bg":"#ffffff","parent_link_hover_font_size":14,"parent_link_hover_font_weight":"400","child_link_color":"#1e1e1e","child_link_bg":"rgba(0,0,0,0)","child_link_font_size":14,"child_link_font_weight":"400","child_link_underline":false,"child_link_hover_color":"#1e1e1e","child_link_hover_bg":"#ffffff","child_link_hover_font_size":14,"child_link_hover_font_weight":"400","grandchild_link_color":"#1e1e1e","grandchild_link_bg":"rgba(0,0,0,0)","grandchild_link_font_size":14,"grandchild_link_font_weight":"400","grandchild_link_underline":false,"grandchild_link_hover_color":"#333333","grandchild_link_hover_bg":"#f5f5f5","grandchild_link_hover_font_size":14,"grandchild_link_hover_font_weight":"400"}}},"order":["announcement-bar","rich_text_yTy93w","rich_text_d9fWEy","header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "text_Vh99jf": {
+          "type": "text",
+          "settings": {
+            "icon": "none",
+            "text": "Not a Single Drop of Plastic is Used in any of our Clothes*",
+            "link": "",
+            "item_bg_color": "#242c48",
+            "item_text_color": "#ffffff",
+            "item_hover_bg_color": "#333333",
+            "item_hover_text_color": "#ffffff",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false
+          }
+        },
+        "text_7h8AFx": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "text": "Free Shipping on U.S. Orders Over $100",
+            "link": "",
+            "item_bg_color": "#536191",
+            "item_text_color": "#ffffff",
+            "item_hover_bg_color": "rgba(0,0,0,0)",
+            "item_hover_text_color": "rgba(0,0,0,0)",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "text_Vh99jf",
+        "text_7h8AFx"
+      ],
+      "custom_css": [],
+      "settings": {
+        "sticky_announcement-bar": true,
+        "announcement_bar": true,
+        "announcement_bar_homepage_only": false,
+        "announcement_bar_layout": "stacked",
+        "direction": "left",
+        "speed": "20s",
+        "autoplay": true,
+        "autoplay_length": 5,
+        "announcement_bg": "#242c48",
+        "announcement_text": "#ffffff"
+      }
+    },
+    "rich_text_yTy93w": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_CPcgxU": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading for this section",
+            "color": "",
+            "font_size": 24,
+            "font_weight": 400
+          }
+        },
+        "heading_ga6pWF": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "color": "",
+            "font_size": 16,
+            "font_weight": 200
+          }
+        },
+        "text_EWwLYn": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>NOT A SINGLE DROP OF PLASTIC IS USED IN ANY OF OUR PRODUCTS*</p>",
+            "custom_liquid": "",
+            "color": "",
+            "font_size": 14,
+            "font_weight": 400
+          }
+        }
+      },
+      "block_order": [
+        "subheading_CPcgxU",
+        "heading_ga6pWF",
+        "text_EWwLYn"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".row {max-width: 100%;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": false,
+        "font_family": "roboto",
+        "custom_anchor_id": "",
+        "section_width": "grid",
+        "text_width": "medium",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "#242c48",
+        "color_text": "#ffffff",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "rich_text_d9fWEy": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_dJCcCh": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading for this section",
+            "color": "",
+            "font_size": 24,
+            "font_weight": 400
+          }
+        },
+        "heading_AVkBQR": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "",
+            "color": "",
+            "font_size": 16,
+            "font_weight": 200
+          }
+        },
+        "text_R6NJYt": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Free Shipping: Orders $100+</p>",
+            "custom_liquid": "",
+            "color": "#ffffff",
+            "font_size": 14,
+            "font_weight": 100
+          }
+        }
+      },
+      "block_order": [
+        "subheading_dJCcCh",
+        "heading_AVkBQR",
+        "text_R6NJYt"
+      ],
+      "custom_css": [
+        ".rte {margin-bottom: 0px;}",
+        "p {padding: 0.4em 20px;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "baskerville",
+        "custom_anchor_id": "",
+        "section_width": "full-width-row",
+        "text_width": "xlarge",
+        "text_position": "center",
+        "text_alignment": "center",
+        "color_bg": "#536191",
+        "color_text": "#ffffff",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "megamenu_sidebar_8t6eMy": {
+          "type": "megamenu_sidebar",
+          "settings": {
+            "position": "1",
+            "show_manual_products": true,
+            "product_1": "organic-pima-cotton-boxer-briefs",
+            "product_2": "mens-organic-pima-cotton-long-sleeve-shirt",
+            "product_3": "organic-pima-cotton-gloves",
+            "product_4": "",
+            "content_collection_image": false,
+            "content_product_image": false
+          }
+        },
+        "megamenu_sidebar_BeV3tN": {
+          "type": "megamenu_sidebar",
+          "settings": {
+            "position": "2",
+            "show_manual_products": true,
+            "product_1": "organic-pima-cotton-panties",
+            "product_2": "organic-pima-cotton-bralette",
+            "product_3": "womens-organic-pima-cotton-long-sleeve-shirt",
+            "product_4": "",
+            "content_collection_image": false,
+            "content_product_image": false
+          }
+        },
+        "megamenu_sidebar_ybU99W": {
+          "type": "megamenu_sidebar",
+          "settings": {
+            "position": "3",
+            "show_manual_products": true,
+            "product_1": "babys-organic-tee",
+            "product_2": "baby-girl-organic-flutter-sleeve-dress",
+            "product_3": "babys-organic-shorts",
+            "product_4": "",
+            "content_collection_image": false,
+            "content_product_image": false
+          }
+        },
+        "megamenu_sidebar_LfgGp3": {
+          "type": "megamenu_sidebar",
+          "settings": {
+            "position": "4",
+            "show_manual_products": true,
+            "product_1": "paiche-fish-skin-slim-wallet",
+            "product_2": "pottery-large-vase-sea-stones",
+            "product_3": "sustainable-wood-chopping-serving-board",
+            "product_4": "",
+            "content_collection_image": true,
+            "content_product_image": true
+          }
+        },
+        "megamenu_sidebar_NRM4CY": {
+          "type": "megamenu_sidebar",
+          "disabled": true,
+          "settings": {
+            "position": "5",
+            "show_manual_products": true,
+            "product_1": "womens-pima-cotton-classic-shirt-lightweight",
+            "product_2": "unisex-waterproof-hooded-rain-poncho",
+            "product_3": "",
+            "product_4": "womens-organic-pima-cotton-chino-shorts",
+            "content_collection_image": false,
+            "content_product_image": true
+          }
+        },
+        "megamenu_sidebar_Yf79PD": {
+          "type": "megamenu_sidebar",
+          "settings": {
+            "position": "5",
+            "show_manual_products": true,
+            "product_1": "womens-organic-pima-cotton-chino-shorts",
+            "product_2": "mens-pima-cotton-classic-shirt-heavyweight",
+            "product_3": "",
+            "product_4": "womens-pima-cotton-classic-shirt-lightweight",
+            "content_collection_image": true,
+            "content_product_image": true
+          }
+        },
+        "menu_badge_DMFXrB": {
+          "type": "menu_badge",
+          "settings": {
+            "badge_position": "5",
+            "text": "15% OFF",
+            "color_bg": "#ee3b45",
+            "color_text": "#ffffff"
+          }
+        },
+        "megamenu_rTGA3y": {
+          "type": "megamenu",
+          "disabled": true,
+          "settings": {
+            "position": "6",
+            "promo_1_image": "shopify://shop_images/AYA-MENU-001.webp",
+            "promo_1_heading": "",
+            "promo_1_link_label": "",
+            "promo_1_link": "",
+            "promo_2_image": "shopify://shop_images/AYA-MENU-002.webp",
+            "promo_2_heading": "",
+            "promo_2_link_label": "",
+            "promo_2_link": "",
+            "promo_3_image": "shopify://shop_images/AYA-MENU-003.webp",
+            "promo_3_heading": "",
+            "promo_3_link_label": "",
+            "promo_3_link": "",
+            "promo_4_heading": "",
+            "promo_4_link_label": "",
+            "promo_4_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "megamenu_sidebar_8t6eMy",
+        "megamenu_sidebar_BeV3tN",
+        "megamenu_sidebar_ybU99W",
+        "megamenu_sidebar_LfgGp3",
+        "megamenu_sidebar_NRM4CY",
+        "megamenu_sidebar_Yf79PD",
+        "menu_badge_DMFXrB",
+        "megamenu_rTGA3y"
+      ],
+      "custom_css": [],
+      "settings": {
+        "sticky_header": false,
+        "logo": "shopify://shop_images/AYA-logo.png",
+        "logo_height_range": 30,
+        "logo_height_range_mobile": 30,
+        "style": "style2",
+        "header_shadow": "header--shadow-medium",
+        "menu": "menu-aya-black-friday",
+        "cart_icon": "bag",
+        "use_icon_account": true,
+        "transparent_header": false,
+        "transparent_header_border": true,
+        "transparent_header_background": false,
+        "transparent_header_background_gradient": "linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.01) 60%)",
+        "show_language_switcher": false,
+        "show_currency_switcher": false,
+        "mobile_secondary_menu": "",
+        "mobile_promo_heading": "Promotion heading",
+        "mobile_promo_link_label": "Shop",
+        "mobile_promo_link": "",
+        "parent_link_color": "#1e1e1e",
+        "parent_link_bg": "#ffffff",
+        "parent_link_font_size": 14,
+        "parent_link_font_weight": "400",
+        "parent_link_underline": false,
+        "parent_link_hover_color": "#1e1e1e",
+        "parent_link_hover_bg": "#ffffff",
+        "parent_link_hover_font_size": 14,
+        "parent_link_hover_font_weight": "400",
+        "child_link_color": "#1e1e1e",
+        "child_link_bg": "rgba(0,0,0,0)",
+        "child_link_font_size": 14,
+        "child_link_font_weight": "400",
+        "child_link_underline": false,
+        "child_link_hover_color": "#1e1e1e",
+        "child_link_hover_bg": "#ffffff",
+        "child_link_hover_font_size": 14,
+        "child_link_hover_font_weight": "400",
+        "grandchild_link_color": "#1e1e1e",
+        "grandchild_link_bg": "rgba(0,0,0,0)",
+        "grandchild_link_font_size": 14,
+        "grandchild_link_font_weight": "400",
+        "grandchild_link_underline": false,
+        "grandchild_link_hover_color": "#333333",
+        "grandchild_link_hover_bg": "#f5f5f5",
+        "grandchild_link_hover_font_size": 14,
+        "grandchild_link_hover_font_weight": "400",
+        "parent_link_padding_vertical": 10,
+        "parent_link_padding_horizontal": 14,
+        "parent_link_border_radius": 4,
+        "child_link_padding_vertical": 8,
+        "child_link_padding_horizontal": 12,
+        "child_link_border_radius": 3,
+        "grandchild_link_padding_vertical": 6,
+        "grandchild_link_padding_horizontal": 10,
+        "grandchild_link_border_radius": 3,
+        "mega_menu_promo_width": 210,
+        "mega_menu_promo_height": 200,
+        "mega_menu_promo_margin_top": 3,
+        "mega_menu_promo_margin_bottom": 2,
+        "mega_menu_promo_padding_top": 30,
+        "mega_menu_promo_padding_bottom": 2,
+        "mega_menu_promo_padding_left": 3,
+        "mega_menu_promo_padding_right": 3,
+        "mega_menu_promo_heading_size": 0.9,
+        "mega_menu_promo_heading_weight": "bold",
+        "mega_menu_promo_button_font_size": 1.3,
+        "mega_menu_promo_button_padding": 5,
+        "mega_menu_promo_button_border_radius": 20,
+        "mega_menu_promo_button_margin_top": 6,
+        "secondary_area_font_size": 16,
+        "secondary_area_font_weight": "500",
+        "secondary_area_margin_right": 10,
+        "secondary_area_hide_mobile": true,
+        "margin_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "rich_text_yTy93w",
+    "rich_text_d9fWEy",
+    "header"
+  ]
+}
