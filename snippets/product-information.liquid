@@ -6,9 +6,14 @@
     assign source_collection_handle = ''
     assign discount_collections = product.metafields.custom.discount_collection.value
     
-    # Verificar si el referrer o la URL contiene una collection con descuento exclusivo
-    if discount_collections != blank
-      # Verificar referrer (si el usuario viene de una collection)
+    # Prioridad 1: Verificar si hay source_collection_handle en el query string (desde JavaScript fetch)
+    if request.query_parameters.source_collection_handle != blank
+      assign source_collection_handle = request.query_parameters.source_collection_handle
+    endif
+    
+    # Si no hay en query string, verificar otras fuentes
+    if source_collection_handle == blank and discount_collections != blank
+      # Prioridad 2: Verificar referrer (si el usuario viene de una collection)
       if request.headers.referer != blank
         for discount_collection in discount_collections
           assign collection_url = '/collections/' | append: discount_collection.handle
@@ -19,7 +24,7 @@
         endfor
       endif
       
-      # Verificar query string (si hay parámetro de collection)
+      # Prioridad 3: Verificar query string (si hay parámetro de collection en formato antiguo)
       if source_collection_handle == blank and request.query_string != blank
         for discount_collection in discount_collections
           if request.query_string contains discount_collection.handle
@@ -29,7 +34,7 @@
         endfor
       endif
       
-      # Verificar collection actual (si estamos en una collection page)
+      # Prioridad 4: Verificar collection actual (si estamos en una collection page)
       if source_collection_handle == blank and collection != blank
         for discount_collection in discount_collections
           if collection.handle == discount_collection.handle
@@ -150,6 +155,7 @@
         data-section="{{ section.id }}"
         data-url="{{ product.url }}"
         data-is-disabled="{{ is_disabled }}"
+        data-source-collection-handle="{{ source_collection_handle }}"
       >
         <div class="variations" {{ block.shopify_attributes }}>
           {%- for option in product.options_with_values -%}
