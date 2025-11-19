@@ -17,7 +17,7 @@
 	</button>
 	<div class="product-add-to-cart-sticky--content">
 		{%- unless product.has_only_default_variant -%}
-		<variant-selects id="variant-selects-{{ section.id }}--sticky" class="no-js-hidden variant-selects--sticky" data-section="{{ section.id }}" data-url="{{ product.url }}" data-sticky="1" data-is-disabled="{{ is_disabled }}" {% if source_collection_handle != blank %}data-source-collection-handle="{{ source_collection_handle }}"{% endif %}>
+		<variant-selects id="variant-selects-{{ section.id }}--sticky" class="no-js-hidden variant-selects--sticky" data-section="{{ section.id }}" data-url="{{ product.url }}" data-sticky="1" data-is-disabled="{{ is_disabled }}" data-source-collection-handle="{{ source_collection_handle }}">
 			<div class="variations">
 				{%- for option in product.options_with_values -%}
 					{%- liquid

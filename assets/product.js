@@ -271,10 +271,10 @@ if (!customElements.get('variant-selects')) {
     renderProductInfo() {
       let sections = this.getSectionsToRender();
       
-      // Incluir source_collection_handle si está disponible para mantener el descuento de collection
+      // Incluir source_collection_handle en la URL si está disponible
       let url = `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
       if (this.dataset.sourceCollectionHandle) {
-        url += `&source_collection_handle=${this.dataset.sourceCollectionHandle}`;
+        url += `&source_collection_handle=${encodeURIComponent(this.dataset.sourceCollectionHandle)}`;
       }
 
       fetch(url)
