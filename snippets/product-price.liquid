@@ -1,12 +1,15 @@
 {% comment %}
     Renders a list of product's price (regular, sale)
     Accepts:
-    - product: {Object} Product Liquid object (optional)
+    - product: {Object} Product Liquid object (required)
     - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
     - price_class: {String} Adds a price class to the price element (optional)
-		- show_custom_badges:  {Boolean} Renders custom badges
+    - show_badges: {Boolean} Renders badges (sale, out-of-stock, pre-order) next to the price (optional)
+    - show_custom_badges: {Boolean} Renders custom badges based on product tags (optional)
+    - current_collection_handle: {String} Collection handle for detecting collection-specific discounts (optional)
+    - source_collection_handle: {String} Collection handle from user's origin to persist discount (optional)
     Usage:
-    {% render 'price', product: product %}
+    {% render 'product-price', product: product %}
 {% endcomment %}
 {%- liquid
 	if use_variant
@@ -36,25 +39,66 @@
 		endif
 	endunless
 -%}
-{%- comment %} Cálculo del descuento por etiqueta (como en Dawn) {% endcomment %}
-{%- assign original_price = target.price -%}
-{%- assign discount_tag = null -%}
-{%- for tag in product.tags -%}
-  {%- if tag contains '%' -%}
-    {%- assign discount_tag = tag -%}
-  {%- endif -%}
-{%- endfor -%}
+{%- comment %} Sistema de descuentos basado en metafields {% endcomment %}
+{%- liquid
+  # Leer metafields de descuento
+  assign discount_general = product.metafields.custom.discount_general_percent.value | default: 0 | plus: 0
+  assign discount_collection_percent = product.metafields.custom.discount_collection_percent.value | default: 0 | plus: 0
+  assign discount_collections = product.metafields.custom.discount_collection.value
 
-{%- if discount_tag -%}
-  {%- assign discount_percentage = discount_tag | remove: '%' | plus: 0 -%}
-  {%- assign discount_amount = original_price | times: discount_percentage | divided_by: 100 -%}
-  {%- assign price = original_price | minus: discount_amount -%}
-  {%- assign money_price = price | money -%}
-  {%- if settings.currency_code_enabled -%}
-    {%- assign money_price = price | money_with_currency -%}
-  {%- endif -%}
-  {%- assign compare_at_price = original_price -%}
-{%- endif -%}
+  # Detectar collection actual (prioridad: source_collection_handle > current_collection_handle)
+  assign active_collection_handle = source_collection_handle
+  if active_collection_handle == blank
+    assign active_collection_handle = current_collection_handle
+  endif
+
+  # Verificar si la collection actual está en la lista de collections con descuento exclusivo
+  assign is_collection_discount_active = false
+  if discount_collections != blank and discount_collection_percent > 0
+    for discount_collection in discount_collections
+      if discount_collection.handle == active_collection_handle
+        assign is_collection_discount_active = true
+        break
+      endif
+    endfor
+  endif
+
+  # Aplicar lógica de prioridad: collection exclusivo reemplaza general
+  assign discount_applied = false
+  assign discount_percent = 0
+  if is_collection_discount_active
+    assign discount_percent = discount_collection_percent
+    assign discount_applied = true
+  elsif discount_general > 0
+    assign discount_percent = discount_general
+    assign discount_applied = true
+  endif
+
+  # Calcular precio con descuento si aplica
+  assign original_price = target.price
+  if discount_applied and discount_percent > 0
+    assign discount_amount = original_price | times: discount_percent | divided_by: 100
+    assign discounted_price_raw = original_price | minus: discount_amount
+    
+    # Redondeo hacia arriba con último decimal en 0
+    assign rounding_unit = 10
+    assign remainder = discounted_price_raw | modulo: rounding_unit
+    if remainder > 0
+      assign discounted_price = discounted_price_raw | minus: remainder | plus: rounding_unit
+    else
+      assign discounted_price = discounted_price_raw
+    endif
+    
+    assign price = discounted_price
+    assign compare_at_price = original_price
+    
+    # Actualizar money_price con el nuevo precio
+    assign money_price = price | money
+    if settings.currency_code_enabled
+      assign money_price = price | money_with_currency
+    endif
+  endif
+-%}
 
 <span class="price">
 	{%- unless product.price_varies == false and product.compare_at_price_varies %}

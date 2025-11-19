@@ -420,6 +420,16 @@
   .product-card .star-rating {
     margin-top: 7px;
     font-size: 0.875rem; }
+  .product-card .price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px; }
+    .product-card .price .badges {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px; }
   @media (hover: hover) {
     .product-card:hover .product-secondary-images-nav {
       opacity: 1; } }

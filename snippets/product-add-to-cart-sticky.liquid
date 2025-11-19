@@ -1,4 +1,5 @@
 {%- assign product_form_id = 'product-form-' | append: section.id -%}
+{%- assign source_collection_handle = source_collection_handle | default: '' -%}
 <product-add-to-cart-sticky class="product-add-to-cart-sticky no-js-hidden" data-section="{{ section.id }}">
 	<button class="product-add-to-cart-sticky--inner">
 		<div class="product-add-to-cart-sticky--image" id="product-image-{{ section.id }}--sticky">
@@ -9,7 +10,7 @@
 		<div class="product-add-to-cart-sticky--info">
 			<div class="product-add-to-cart-sticky--title">{{ product.title }}</div>
 			<div id="price-{{ section.id }}--sticky">
-				{% render 'product-price', product: product, use_variant: true, show_badges: false %}
+				{% render 'product-price', product: product, use_variant: true, show_badges: false, source_collection_handle: source_collection_handle %}
 			</div>
 		</div>
 		<span class="plus"></span>
