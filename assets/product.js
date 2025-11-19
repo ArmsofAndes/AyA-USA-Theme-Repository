@@ -270,8 +270,14 @@ if (!customElements.get('variant-selects')) {
 
     renderProductInfo() {
       let sections = this.getSectionsToRender();
+      
+      // Incluir source_collection_handle si está disponible para mantener el descuento de collection
+      let url = `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
+      if (this.dataset.sourceCollectionHandle) {
+        url += `&source_collection_handle=${this.dataset.sourceCollectionHandle}`;
+      }
 
-      fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+      fetch(url)
         .then((response) => response.text())
         .then((responseText) => {
           const html = new DOMParser().parseFromString(responseText, 'text/html');
