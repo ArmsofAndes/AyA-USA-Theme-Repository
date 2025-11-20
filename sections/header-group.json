@@ -267,7 +267,7 @@
           "type": "menu_badge",
           "settings": {
             "badge_position": "5",
-            "text": "15% OFF",
+            "text": "Up to 15% OFF",
             "color_bg": "#ee3b45",
             "color_text": "#ffffff"
           }
