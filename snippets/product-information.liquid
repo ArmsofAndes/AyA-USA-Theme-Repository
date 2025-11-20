@@ -1,24 +1,127 @@
 <div id="ProductInfo-{{ section.id }}" class="product-information--inner{% if section.settings.enable_sticky_info %} production-information--sticky{% endif %}">
   {%- assign product_form_id = 'product-form-' | append: section.id -%}
   {%- assign outline_button = false -%}
-  {%- comment -%} Detectar collection de origen para persistir descuento exclusivo {%- endcomment -%}
+  {%- comment -%} 
+    Detectar collection de origen para persistir descuento exclusivo
+    Lógica:
+    - discount_general_percent: Descuento para TODAS las páginas
+    - discount_collection_percent: Descuento exclusivo para collections específicas
+    - discount_collection: Lista de collections con descuento exclusivo
+    - Si usuario viene de una collection en discount_collection → aplicar discount_collection_percent (reemplaza general)
+    - Si NO viene de esa collection → aplicar discount_general_percent
+  {%- endcomment -%}
   {%- liquid
     assign source_collection_handle = ''
     assign discount_collections = product.metafields.custom.discount_collection.value
     
     # Prioridad 1: Verificar si hay source_collection_handle en el query string (desde JavaScript fetch)
+    # Esto es CRÍTICO para mantener el descuento al cambiar de variante o swatch
+    # IMPORTANTE: Esta es la PRIMERA prioridad porque cuando se hace fetch desde JavaScript,
+    # el referrer puede cambiar a la página del producto actual, perdiendo el origen de la collection
+    assign query_source_handle = ''
+    
+    # Método 1: Intentar obtener desde query_parameters (Shopify moderno)
+    # Esto funciona cuando Shopify parsea automáticamente los parámetros de la URL
     if request.query_parameters.source_collection_handle != blank
-      assign source_collection_handle = request.query_parameters.source_collection_handle
+      assign query_source_handle = request.query_parameters.source_collection_handle | strip
     endif
     
-    # Si no hay en query string, verificar otras fuentes
+    # Método 2: Si no está disponible, parsear manualmente desde query_string
+    # Esto es necesario porque query_parameters puede no estar disponible en todas las versiones
+    # También puede ser necesario si el parámetro viene en formato diferente
+    # CRÍTICO: Cuando Shopify renderiza una sección con ?section_id=XXX, el query_string puede contener todos los parámetros
+    # IMPORTANTE: Verificar tanto request.query_string como request.url para máxima compatibilidad
+    if query_source_handle == blank
+      # Intentar desde query_string primero
+      if request.query_string != blank and request.query_string contains 'source_collection_handle'
+        # Dividir por & para obtener cada parámetro
+        assign query_parts = request.query_string | split: '&'
+        for part in query_parts
+          # Verificar si esta parte contiene el parámetro (debe tener el =)
+          if part contains 'source_collection_handle='
+            # Extraer el valor después del = usando remove_first para evitar problemas con valores que contengan =
+            assign part_value = part | remove_first: 'source_collection_handle='
+            # Decodificar URL encoding (puede tener %20 para espacios, %2F para /, etc.)
+            # IMPORTANTE: url_decode puede no estar disponible en todas las versiones, usar split como fallback
+            assign query_source_handle = part_value | url_decode
+            # Si url_decode no funcionó, intentar sin decodificar
+            if query_source_handle == part_value or query_source_handle == blank
+              assign query_source_handle = part_value
+            endif
+            # Limpiar espacios en blanco al inicio y final
+            assign query_source_handle = query_source_handle | strip
+            # Si encontramos el valor, salir del loop
+            if query_source_handle != blank
+              break
+            endif
+          endif
+        endfor
+      endif
+      
+      # Si aún no está disponible, intentar desde request.url (último recurso)
+      if query_source_handle == blank and request.url != blank and request.url contains 'source_collection_handle='
+        # Extraer el query string desde la URL completa
+        if request.url contains '?'
+          assign url_query_part = request.url | split: '?' | last
+          if url_query_part contains 'source_collection_handle='
+            assign query_parts = url_query_part | split: '&'
+            for part in query_parts
+              if part contains 'source_collection_handle='
+                assign part_value = part | remove_first: 'source_collection_handle='
+                assign query_source_handle = part_value | url_decode
+                if query_source_handle == part_value or query_source_handle == blank
+                  assign query_source_handle = part_value
+                endif
+                assign query_source_handle = query_source_handle | strip
+                if query_source_handle != blank
+                  break
+                endif
+              endif
+            endfor
+          endif
+        endif
+      endif
+    endif
+    
+    # Si hay un handle en el query string, validar que sea una collection válida con descuento exclusivo
+    # CRÍTICO: Esta validación es necesaria para mantener el descuento exclusivo al cambiar de variante
+    # IMPORTANTE: Si el handle viene del query string (desde JavaScript fetch), tiene máxima prioridad
+    # porque significa que el usuario ya estaba en una collection con descuento exclusivo
+    if query_source_handle != blank
+      # Si hay discount_collections configuradas, validar que el handle esté en la lista
+      if discount_collections != blank
+        assign handle_found = false
+        for discount_collection in discount_collections
+          # Comparar handles (asegurarse de que ambos estén en el mismo formato)
+          assign collection_handle = discount_collection.handle | strip
+          assign query_handle = query_source_handle | strip
+          if collection_handle == query_handle
+            assign source_collection_handle = query_handle
+            assign handle_found = true
+            break
+          endif
+        endfor
+        # Si el handle no está en la lista pero viene del query string, aún así lo asignamos
+        # Esto es importante para mantener la consistencia cuando se cambia de variante
+        if handle_found == false
+          assign source_collection_handle = query_source_handle
+        endif
+      else
+        # Si no hay discount_collections configuradas pero hay un handle en el query string,
+        # aún así lo asignamos para mantener la consistencia
+        assign source_collection_handle = query_source_handle
+      endif
+    endif
+    
+    # Si no hay en query string, verificar otras fuentes (solo si hay discount_collections configuradas)
     if source_collection_handle == blank and discount_collections != blank
       # Prioridad 2: Verificar referrer (si el usuario viene de una collection)
+      # CRÍTICO: Esta es la detección inicial cuando el usuario viene de una collection page
       if request.headers.referer != blank
         for discount_collection in discount_collections
           assign collection_url = '/collections/' | append: discount_collection.handle
           if request.headers.referer contains collection_url
-            assign source_collection_handle = discount_collection.handle
+            assign source_collection_handle = discount_collection.handle | strip
             break
           endif
         endfor

@@ -28,6 +28,15 @@ if (!customElements.get('variant-selects')) {
       this.updateMasterId();
       this.setDisabled();
       this.setImageSet();
+      
+      // CRÍTICO: Asegurar que el source_collection_handle se mantenga durante toda la sesión
+      // Si el handle ya está establecido, preservarlo para futuras actualizaciones
+      const currentHandle = this.dataset.sourceCollectionHandle || this.getAttribute('data-source-collection-handle');
+      if (currentHandle && currentHandle.trim() !== '') {
+        // Asegurar que el dataset esté actualizado
+        this.dataset.sourceCollectionHandle = currentHandle.trim();
+        console.log('[Discount Debug] Preserved source_collection_handle on connectedCallback:', currentHandle.trim());
+      }
     }
 
     onVariantChange() {
@@ -271,16 +280,81 @@ if (!customElements.get('variant-selects')) {
     renderProductInfo() {
       let sections = this.getSectionsToRender();
       
-      // Incluir source_collection_handle en la URL si está disponible
-      let url = `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
-      if (this.dataset.sourceCollectionHandle) {
-        url += `&source_collection_handle=${encodeURIComponent(this.dataset.sourceCollectionHandle)}`;
+      // CRÍTICO: Construir la URL correcta preservando la collection si viene de una collection page
+      // El problema es que product.url siempre devuelve la URL canónica sin collection
+      // Necesitamos detectar si la URL actual tiene /collections/ y preservarla
+      let baseUrl = this.dataset.url; // Ejemplo: /products/mens-organic-pima-cotton-tank-top
+      
+      // Intentar obtener source_collection_handle de múltiples formas para máxima compatibilidad
+      // CRÍTICO: Esto es necesario para mantener el descuento de collection exclusivo
+      let sourceCollectionHandle = this.dataset.sourceCollectionHandle;
+      if (!sourceCollectionHandle || sourceCollectionHandle.trim() === '') {
+        sourceCollectionHandle = this.getAttribute('data-source-collection-handle');
+      }
+      // Si aún no está disponible, intentar obtenerlo del otro variant-selects (principal o sticky)
+      if ((!sourceCollectionHandle || sourceCollectionHandle.trim() === '') && this.other.length > 0) {
+        const otherHandle = this.other[0].dataset.sourceCollectionHandle || this.other[0].getAttribute('data-source-collection-handle');
+        if (otherHandle && otherHandle.trim() !== '') {
+          sourceCollectionHandle = otherHandle;
+        }
+      }
+      
+      // CRÍTICO: Si hay source_collection_handle, construir la URL con la collection
+      // Esto preserva la URL de collection cuando se cambia de variante
+      // Ejemplo: /collections/exclusive-black-friday/products/mens-organic-pima-cotton-tank-top
+      if (sourceCollectionHandle && sourceCollectionHandle.trim() !== '') {
+        // Construir la URL con la collection: /collections/{handle}/products/{product.handle}
+        // baseUrl viene de product.url que es algo como: /products/mens-organic-pima-cotton-tank-top
+        let productHandle = baseUrl.replace('/products/', '').split('?')[0]; // Extraer el handle del producto
+        // Limpiar cualquier trailing slash o espacios
+        productHandle = productHandle.replace(/\/$/, '').trim();
+        baseUrl = `/collections/${sourceCollectionHandle.trim()}/products/${productHandle}`;
+        console.log('[Discount Debug] URL reconstructed with collection:', baseUrl);
+      } else {
+        // Si no hay source_collection_handle, verificar si la URL actual tiene collection
+        // Esto es útil para la carga inicial cuando aún no se ha detectado el handle
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('/collections/') && currentPath.includes('/products/')) {
+          // Preservar la URL actual con la collection
+          const pathWithoutQuery = currentPath.split('?')[0];
+          baseUrl = pathWithoutQuery;
+          console.log('[Discount Debug] Preserved current URL with collection:', baseUrl);
+        }
+      }
+      
+      // Construir la URL completa con variant y section_id
+      let url = `${baseUrl}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
+      
+      // DEBUG: Log para verificar que se está leyendo correctamente
+      console.log('[Discount Debug] source_collection_handle from data attribute:', sourceCollectionHandle);
+      console.log('[Discount Debug] variant-selects element:', this);
+      console.log('[Discount Debug] dataset.sourceCollectionHandle:', this.dataset.sourceCollectionHandle);
+      console.log('[Discount Debug] getAttribute result:', this.getAttribute('data-source-collection-handle'));
+      
+      // CRÍTICO: Incluir source_collection_handle en la URL SIEMPRE que esté disponible
+      // Esto asegura que el servidor pueda detectarlo cuando se renderiza desde el fetch
+      if (sourceCollectionHandle && sourceCollectionHandle.trim() !== '') {
+        const encodedHandle = encodeURIComponent(sourceCollectionHandle.trim());
+        url += `&source_collection_handle=${encodedHandle}`;
+        console.log('[Discount Debug] URL with source_collection_handle:', url);
+      } else {
+        console.warn('[Discount Debug] WARNING: source_collection_handle is empty or not found!');
+        console.log('[Discount Debug] All data attributes:', Array.from(this.attributes).map(attr => `${attr.name}="${attr.value}"`));
       }
 
       fetch(url)
         .then((response) => response.text())
         .then((responseText) => {
           const html = new DOMParser().parseFromString(responseText, 'text/html');
+          
+          // CRÍTICO: Mantener el source_collection_handle en el variant-selects después de actualizar
+          // Esto asegura que el descuento de collection exclusivo se mantenga al cambiar de variante
+          const preservedSourceHandle = sourceCollectionHandle && sourceCollectionHandle.trim() !== '' 
+            ? sourceCollectionHandle.trim() 
+            : null;
+          
+          console.log('[Discount Debug] Preserved source_collection_handle:', preservedSourceHandle);
+          
           sections.forEach((id) => {
             const destination = document.getElementById(id);
             const source = html.getElementById(id);
@@ -294,8 +368,39 @@ if (!customElements.get('variant-selects')) {
             if (price_fixed) price_fixed.classList.remove('visibility-hidden');
 
           });
+          
+          // CRÍTICO: Restaurar el source_collection_handle en el variant-selects SIEMPRE
+          // Esto asegura que el descuento de collection exclusivo se mantenga durante toda la sesión
+          // en la página de producto, independientemente de si viene del servidor o no
+          if (preservedSourceHandle) {
+            const variantSelects = document.getElementById(`variant-selects-${this.dataset.section}`);
+            const variantSelectsSticky = document.getElementById(`variant-selects-${this.dataset.section}--sticky`);
+            
+            console.log('[Discount Debug] Restoring source_collection_handle to variant-selects:', preservedSourceHandle);
+            console.log('[Discount Debug] variant-selects found:', !!variantSelects);
+            console.log('[Discount Debug] variant-selects-sticky found:', !!variantSelectsSticky);
+            
+            // SIEMPRE restaurar el handle, incluso si ya existe, para asegurar que se mantenga
+            if (variantSelects) {
+              variantSelects.setAttribute('data-source-collection-handle', preservedSourceHandle);
+              // También actualizar el dataset para que esté disponible inmediatamente
+              variantSelects.dataset.sourceCollectionHandle = preservedSourceHandle;
+              console.log('[Discount Debug] Restored handle to variant-selects:', preservedSourceHandle);
+            }
+            
+            if (variantSelectsSticky) {
+              variantSelectsSticky.setAttribute('data-source-collection-handle', preservedSourceHandle);
+              // También actualizar el dataset para que esté disponible inmediatamente
+              variantSelectsSticky.dataset.sourceCollectionHandle = preservedSourceHandle;
+              console.log('[Discount Debug] Restored handle to variant-selects-sticky:', preservedSourceHandle);
+            }
+          }
+          
           this.toggleAddButton(!this.currentVariant.available, window.theme.variantStrings.soldOut);
 
+        })
+        .catch((error) => {
+          console.error('[Discount Debug] Error fetching product info:', error);
         });
     }
 

@@ -39,7 +39,19 @@
 		endif
 	endunless
 -%}
-{%- comment %} Sistema de descuentos basado en metafields {% endcomment %}
+{%- comment %} 
+  Sistema de descuentos basado en metafields
+  
+  Lógica según especificaciones:
+  - discount_general_percent: Descuento para TODAS las páginas EXCEPTO para visitantes que vienen de discount_collection
+  - discount_collection_percent: Porcentaje de descuento exclusivo para collections específicas
+  - discount_collection: Lista de collections con descuento exclusivo
+  
+  Reglas:
+  1. Si el usuario viene de una collection en discount_collection → aplicar discount_collection_percent (REEMPLAZA al general)
+  2. Si NO viene de esa collection → aplicar discount_general_percent
+  3. Si no hay descuentos configurados → precio normal
+{%- endcomment -%}
 {%- liquid
   # Leer metafields de descuento
   assign discount_general = product.metafields.custom.discount_general_percent.value | default: 0 | plus: 0
@@ -47,35 +59,57 @@
   assign discount_collections = product.metafields.custom.discount_collection.value
 
   # Detectar collection actual (prioridad: source_collection_handle > current_collection_handle)
+  # source_collection_handle viene de product-information.liquid y persiste el origen del usuario
+  # CRÍTICO: Si source_collection_handle está en blanco, el descuento exclusivo no se aplicará
   assign active_collection_handle = source_collection_handle
   if active_collection_handle == blank
     assign active_collection_handle = current_collection_handle
   endif
 
   # Verificar si la collection actual está en la lista de collections con descuento exclusivo
+  # CRÍTICO: Esta verificación determina si se aplica el descuento exclusivo o el general
   assign is_collection_discount_active = false
-  if discount_collections != blank and discount_collection_percent > 0
+  if discount_collections != blank and discount_collection_percent > 0 and active_collection_handle != blank
+    assign active_handle_clean = active_collection_handle | strip
     for discount_collection in discount_collections
-      if discount_collection.handle == active_collection_handle
+      assign collection_handle_clean = discount_collection.handle | strip
+      if collection_handle_clean == active_handle_clean
         assign is_collection_discount_active = true
         break
       endif
     endfor
   endif
 
-  # Aplicar lógica de prioridad: collection exclusivo reemplaza general
+  # Aplicar lógica de prioridad según especificaciones:
+  # 1. Si viene de collection exclusiva → aplicar discount_collection_percent (reemplaza general)
+  # 2. Si NO viene de collection exclusiva → aplicar discount_general_percent
   assign discount_applied = false
   assign discount_percent = 0
   if is_collection_discount_active
+    # Usuario viene de collection exclusiva → aplicar descuento exclusivo
     assign discount_percent = discount_collection_percent
     assign discount_applied = true
   elsif discount_general > 0
+    # Usuario NO viene de collection exclusiva → aplicar descuento general
     assign discount_percent = discount_general
     assign discount_applied = true
   endif
 
   # Calcular precio con descuento si aplica
+  # IMPORTANTE: Solo aplicar descuento de metafields si no hay compare_at_price nativo de Shopify
+  # O si el descuento de metafield es diferente al descuento nativo
   assign original_price = target.price
+  assign original_compare_at_price = target.compare_at_price
+  
+  # Verificar si hay un descuento nativo de Shopify
+  assign has_native_discount = false
+  if original_compare_at_price != null and original_compare_at_price > 0 and original_compare_at_price > original_price
+    assign has_native_discount = true
+  endif
+  
+  # Aplicar descuento de metafields solo si:
+  # 1. Hay un descuento configurado en metafields
+  # 2. Y no hay descuento nativo, O el descuento de metafield debe reemplazarlo
   if discount_applied and discount_percent > 0
     assign discount_amount = original_price | times: discount_percent | divided_by: 100
     assign discounted_price_raw = original_price | minus: discount_amount
@@ -89,6 +123,7 @@
       assign discounted_price = discounted_price_raw
     endif
     
+    # Aplicar descuento de metafield (reemplaza cualquier descuento nativo)
     assign price = discounted_price
     assign compare_at_price = original_price
     
