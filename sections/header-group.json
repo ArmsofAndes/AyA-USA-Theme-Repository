@@ -199,7 +199,6 @@
         },
         "megamenu_sidebar_8t6eMy": {
           "type": "megamenu_sidebar",
-          "disabled": true,
           "settings": {
             "position": "2",
             "show_manual_products": true,
