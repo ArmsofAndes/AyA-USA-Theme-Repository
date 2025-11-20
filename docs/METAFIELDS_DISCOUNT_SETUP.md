@@ -198,52 +198,32 @@ Si se detecta que el usuario viene de una collection con descuento exclusivo, es
 
 **Cambios principales:**
 - Eliminada lógica hardcodeada de `bf25_collection_handle` y `bf25_promo_active`
-- Implementada detección dinámica de collection de origen
+- Implementada detección dinámica de collection de origen con múltiples métodos
+- Prioridad al query string desde JavaScript fetch para mantener el descuento al cambiar de variante
 - Actualizada llamada a `product-price` para pasar `source_collection_handle`
 - Actualizada llamada a `product-add-to-cart-sticky` para pasar `source_collection_handle`
+- **NUEVO**: `data-source-collection-handle` siempre se establece en `variant-selects` (incluso si está vacío) para que JavaScript pueda preservarlo
 
 **Lógica de detección implementada:**
 
+La detección sigue este orden de prioridad:
+1. **Query String (desde JavaScript fetch)**: Máxima prioridad para mantener el descuento al cambiar de variante
+2. **HTTP Referrer**: Detección inicial cuando el usuario viene de una collection page
+3. **Query String (formato antiguo)**: Fallback para compatibilidad
+4. **Collection Context**: Si estamos navegando desde una collection page
+
+**Atributo `data-source-collection-handle`:**
+
 ```liquid
-{%- comment -%} Detectar collection de origen para persistir descuento exclusivo {%- endcomment -%}
-{%- liquid
-  assign source_collection_handle = ''
-  assign discount_collections = product.metafields.custom.discount_collection.value
-  
-  # Verificar si el referrer o la URL contiene una collection con descuento exclusivo
-  if discount_collections != blank
-    # Verificar referrer (si el usuario viene de una collection)
-    if request.headers.referer != blank
-      for discount_collection in discount_collections
-        assign collection_url = '/collections/' | append: discount_collection.handle
-        if request.headers.referer contains collection_url
-          assign source_collection_handle = discount_collection.handle
-          break
-        endif
-      endfor
-    endif
-    
-    # Verificar query string (si hay parámetro de collection)
-    if source_collection_handle == blank and request.query_string != blank
-      for discount_collection in discount_collections
-        if request.query_string contains discount_collection.handle
-          assign source_collection_handle = discount_collection.handle
-          break
-        endif
-      endfor
-    endif
-    
-    # Verificar collection actual (si estamos en una collection page)
-    if source_collection_handle == blank and collection != blank
-      for discount_collection in discount_collections
-        if collection.handle == discount_collection.handle
-          assign source_collection_handle = discount_collection.handle
-          break
-        endif
-      endfor
-    endif
-  endif
--%}
+<variant-selects
+  id="variant-selects-{{ section.id }}"
+  class="no-js-hidden"
+  data-update-url="{{ update_url }}"
+  data-section="{{ section.id }}"
+  data-url="{{ product.url }}"
+  data-is-disabled="{{ is_disabled }}"
+  data-source-collection-handle="{{ source_collection_handle }}"
+>
 ```
 
 **Llamadas actualizadas:**
@@ -276,6 +256,7 @@ Si se detecta que el usuario viene de una collection con descuento exclusivo, es
 - Añadido parámetro `source_collection_handle`
 - Actualizada llamada a `product-price` para pasar `source_collection_handle`
 - Eliminado atributo `data-promo-discount` de `variant-selects`
+- **NUEVO**: `data-source-collection-handle` siempre se establece en `variant-selects` (incluso si está vacío)
 
 **Código actualizado:**
 
@@ -288,7 +269,89 @@ Si se detecta que el usuario viene de una collection con descuento exclusivo, es
   use_variant: true,
   show_badges: false,
   source_collection_handle: source_collection_handle %}
+
+<variant-selects 
+  id="variant-selects-{{ section.id }}--sticky" 
+  class="no-js-hidden variant-selects--sticky" 
+  data-section="{{ section.id }}" 
+  data-url="{{ product.url }}" 
+  data-sticky="1" 
+  data-is-disabled="{{ is_disabled }}" 
+  data-source-collection-handle="{{ source_collection_handle }}"
+>
 ```
+
+### 5. `assets/product.js`
+
+**Cambios principales:**
+- **NUEVO**: Preservación de `source_collection_handle` durante toda la sesión en la página de producto
+- **NUEVO**: Construcción de URL con collection cuando se cambia de variante (preserva `/collections/{handle}/products/{product-handle}`)
+- **NUEVO**: Inclusión de `source_collection_handle` en el query string del fetch para que el servidor lo detecte
+- **NUEVO**: Restauración automática del `data-source-collection-handle` después de cada actualización del DOM
+- **NUEVO**: Preservación del handle en `connectedCallback()` para mantenerlo durante toda la sesión
+
+**Lógica implementada:**
+
+```javascript
+renderProductInfo() {
+  let baseUrl = this.dataset.url; // Ejemplo: /products/mens-organic-pima-cotton-tank-top
+  
+  // Obtener source_collection_handle de múltiples formas
+  let sourceCollectionHandle = this.dataset.sourceCollectionHandle;
+  if (!sourceCollectionHandle || sourceCollectionHandle.trim() === '') {
+    sourceCollectionHandle = this.getAttribute('data-source-collection-handle');
+  }
+  
+  // Si hay source_collection_handle, construir la URL con la collection
+  // Esto preserva la URL de collection cuando se cambia de variante
+  if (sourceCollectionHandle && sourceCollectionHandle.trim() !== '') {
+    let productHandle = baseUrl.replace('/products/', '').split('?')[0];
+    productHandle = productHandle.replace(/\/$/, '').trim();
+    baseUrl = `/collections/${sourceCollectionHandle.trim()}/products/${productHandle}`;
+  }
+  
+  // Construir la URL completa con variant, section_id y source_collection_handle
+  let url = `${baseUrl}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`;
+  if (sourceCollectionHandle && sourceCollectionHandle.trim() !== '') {
+    url += `&source_collection_handle=${encodeURIComponent(sourceCollectionHandle.trim())}`;
+  }
+  
+  fetch(url)
+    .then((response) => response.text())
+    .then((responseText) => {
+      // ... actualizar DOM ...
+      
+      // CRÍTICO: Restaurar el source_collection_handle después de actualizar
+      if (preservedSourceHandle) {
+        const variantSelects = document.getElementById(`variant-selects-${this.dataset.section}`);
+        const variantSelectsSticky = document.getElementById(`variant-selects-${this.dataset.section}--sticky`);
+        
+        if (variantSelects) {
+          variantSelects.setAttribute('data-source-collection-handle', preservedSourceHandle);
+          variantSelects.dataset.sourceCollectionHandle = preservedSourceHandle;
+        }
+        
+        if (variantSelectsSticky) {
+          variantSelectsSticky.setAttribute('data-source-collection-handle', preservedSourceHandle);
+          variantSelectsSticky.dataset.sourceCollectionHandle = preservedSourceHandle;
+        }
+      }
+    });
+}
+
+connectedCallback() {
+  // Preservar el handle cuando el componente se conecta al DOM
+  const currentHandle = this.dataset.sourceCollectionHandle || this.getAttribute('data-source-collection-handle');
+  if (currentHandle && currentHandle.trim() !== '') {
+    this.dataset.sourceCollectionHandle = currentHandle.trim();
+  }
+}
+```
+
+**Características clave:**
+- **Preservación de URL**: La URL se mantiene con la collection cuando se cambia de variante
+- **Persistencia del handle**: El `source_collection_handle` se mantiene durante toda la sesión
+- **Restauración automática**: Después de cada actualización del DOM, el handle se restaura automáticamente
 
 ### 5. `sections/main-collection-product-grid.liquid`
 
@@ -391,9 +454,15 @@ Todos los descuentos aplican el mismo algoritmo de redondeo:
 
 El sistema detecta el origen del usuario en este orden de prioridad:
 
-1. **HTTP Referrer**: Verifica si `request.headers.referer` contiene una URL de collection con descuento exclusivo
-2. **Query String**: Verifica si `request.query_string` contiene el handle de una collection con descuento exclusivo
-3. **Collection Context**: Verifica si `collection.handle` coincide con una collection con descuento exclusivo
+1. **Query String (desde JavaScript fetch)**: **MÁXIMA PRIORIDAD** - Verifica si `request.query_parameters.source_collection_handle` o `request.query_string` contiene el handle de una collection con descuento exclusivo. Esto es crítico para mantener el descuento al cambiar de variante.
+2. **HTTP Referrer**: Verifica si `request.headers.referer` contiene una URL de collection con descuento exclusivo (detección inicial).
+3. **Query String (formato antiguo)**: Verifica si `request.query_string` contiene el handle de una collection con descuento exclusivo.
+4. **Collection Context**: Verifica si `collection.handle` coincide con una collection con descuento exclusivo.
+
+**Características clave:**
+- **Persistencia durante toda la sesión**: Una vez detectado que el usuario viene de una collection con descuento exclusivo, ese descuento se mantiene durante toda la sesión en la página de producto.
+- **Preservación de URL**: La URL se mantiene con la collection cuando se cambia de variante (ej: `/collections/exclusive-black-friday/products/product-handle?variant=...`).
+- **Múltiples métodos de detección**: El sistema intenta detectar el handle desde `request.query_parameters`, `request.query_string`, y `request.url` para máxima compatibilidad.
 
 **Código de detección:**
 
@@ -401,33 +470,62 @@ El sistema detecta el origen del usuario en este orden de prioridad:
 assign source_collection_handle = ''
 assign discount_collections = product.metafields.custom.discount_collection.value
 
-if discount_collections != blank
-  # Prioridad 1: Referrer
+# Prioridad 1: Query String (desde JavaScript fetch)
+# CRÍTICO: Esta es la PRIMERA prioridad porque cuando se hace fetch desde JavaScript,
+# el referrer puede cambiar a la página del producto actual, perdiendo el origen de la collection
+assign query_source_handle = ''
+
+# Método 1: Intentar obtener desde query_parameters (Shopify moderno)
+if request.query_parameters.source_collection_handle != blank
+  assign query_source_handle = request.query_parameters.source_collection_handle | strip
+endif
+
+# Método 2: Si no está disponible, parsear manualmente desde query_string
+if query_source_handle == blank and request.query_string != blank
+  if request.query_string contains 'source_collection_handle'
+    assign query_parts = request.query_string | split: '&'
+    for part in query_parts
+      if part contains 'source_collection_handle='
+        assign part_value = part | remove_first: 'source_collection_handle='
+        assign query_source_handle = part_value | url_decode
+        if query_source_handle == part_value or query_source_handle == blank
+          assign query_source_handle = part_value
+        endif
+        assign query_source_handle = query_source_handle | strip
+        if query_source_handle != blank
+          break
+        endif
+      endif
+    endfor
+  endif
+endif
+
+# Validar y asignar el handle del query string
+if query_source_handle != blank
+  if discount_collections != blank
+    assign handle_found = false
+    for discount_collection in discount_collections
+      if discount_collection.handle | strip == query_source_handle | strip
+        assign source_collection_handle = query_source_handle
+        assign handle_found = true
+        break
+      endif
+    endfor
+    if handle_found == false
+      assign source_collection_handle = query_source_handle
+    endif
+  else
+    assign source_collection_handle = query_source_handle
+  endif
+endif
+
+# Prioridad 2: Referrer (si no hay en query string)
+if source_collection_handle == blank and discount_collections != blank
   if request.headers.referer != blank
     for discount_collection in discount_collections
       assign collection_url = '/collections/' | append: discount_collection.handle
       if request.headers.referer contains collection_url
-        assign source_collection_handle = discount_collection.handle
-        break
-      endif
-    endfor
-  endif
-  
-  # Prioridad 2: Query String
-  if source_collection_handle == blank and request.query_string != blank
-    for discount_collection in discount_collections
-      if request.query_string contains discount_collection.handle
-        assign source_collection_handle = discount_collection.handle
-        break
-      endif
-    endfor
-  endif
-  
-  # Prioridad 3: Collection Context
-  if source_collection_handle == blank and collection != blank
-    for discount_collection in discount_collections
-      if collection.handle == discount_collection.handle
-        assign source_collection_handle = discount_collection.handle
+        assign source_collection_handle = discount_collection.handle | strip
         break
       endif
     endfor
@@ -690,6 +788,38 @@ discount_collection: early-access-to-bf-25, summer-sale-2025, black-friday-2025
 
 ---
 
+---
+
+## 🔄 Mejoras Implementadas (Versión 1.1)
+
+### Persistencia del Descuento Durante Toda la Sesión
+
+**Problema resuelto**: El descuento de collection exclusivo se perdía al cambiar de variante o swatch.
+
+**Solución implementada**:
+1. **Detección mejorada**: El `source_collection_handle` se detecta desde el query string con máxima prioridad cuando viene de un fetch de JavaScript.
+2. **Preservación en JavaScript**: El handle se preserva en el `data-source-collection-handle` del `variant-selects` y se restaura después de cada actualización del DOM.
+3. **URL preservada**: La URL se mantiene con la collection cuando se cambia de variante (ej: `/collections/exclusive-black-friday/products/product-handle?variant=...`).
+
+### Preservación de URL con Collection
+
+**Problema resuelto**: Cuando se cambiaba de variante, la URL cambiaba de `/collections/{handle}/products/{product-handle}` a `/products/{product-handle}`, perdiendo el contexto de la collection.
+
+**Solución implementada**:
+- Si hay un `source_collection_handle`, JavaScript construye la URL con la collection: `/collections/{handle}/products/{product-handle}`
+- Si no hay handle pero la URL actual tiene collection, se preserva la URL actual
+- El `source_collection_handle` se incluye en el query string del fetch para que el servidor lo detecte
+
+### Múltiples Métodos de Detección
+
+**Mejora implementada**:
+- Detección desde `request.query_parameters` (Shopify moderno)
+- Detección desde `request.query_string` (parsing manual)
+- Detección desde `request.url` (último recurso)
+- Validación del handle contra la lista de `discount_collections`
+
+---
+
 **Última actualización**: Diciembre 2024  
-**Versión**: 1.0  
+**Versión**: 1.1  
 **Branch**: `feature/bf-collection-page-2025`
