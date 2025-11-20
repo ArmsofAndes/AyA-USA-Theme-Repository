@@ -186,6 +186,7 @@
       "blocks": {
         "megamenu_sidebar_8t6eMy": {
           "type": "megamenu_sidebar",
+          "disabled": true,
           "settings": {
             "position": "1",
             "show_manual_products": true,
