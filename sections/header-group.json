@@ -184,28 +184,28 @@
     "header": {
       "type": "header",
       "blocks": {
-        "megamenu_sidebar_8t6eMy": {
+        "megamenu_sidebar_BeV3tN": {
           "type": "megamenu_sidebar",
-          "disabled": true,
           "settings": {
             "position": "1",
             "show_manual_products": true,
-            "product_1": "organic-pima-cotton-boxer-briefs",
-            "product_2": "mens-organic-pima-cotton-long-sleeve-shirt",
-            "product_3": "organic-pima-cotton-gloves",
+            "product_1": "organic-pima-cotton-panties",
+            "product_2": "organic-pima-cotton-bralette",
+            "product_3": "womens-organic-pima-cotton-long-sleeve-shirt",
             "product_4": "",
             "content_collection_image": false,
             "content_product_image": false
           }
         },
-        "megamenu_sidebar_BeV3tN": {
+        "megamenu_sidebar_8t6eMy": {
           "type": "megamenu_sidebar",
+          "disabled": true,
           "settings": {
             "position": "2",
             "show_manual_products": true,
-            "product_1": "organic-pima-cotton-panties",
-            "product_2": "organic-pima-cotton-bralette",
-            "product_3": "womens-organic-pima-cotton-long-sleeve-shirt",
+            "product_1": "organic-pima-cotton-boxer-briefs",
+            "product_2": "mens-organic-pima-cotton-long-sleeve-shirt",
+            "product_3": "organic-pima-cotton-gloves",
             "product_4": "",
             "content_collection_image": false,
             "content_product_image": false
@@ -297,8 +297,8 @@
         }
       },
       "block_order": [
-        "megamenu_sidebar_8t6eMy",
         "megamenu_sidebar_BeV3tN",
+        "megamenu_sidebar_8t6eMy",
         "megamenu_sidebar_ybU99W",
         "megamenu_sidebar_LfgGp3",
         "megamenu_sidebar_NRM4CY",
