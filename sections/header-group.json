@@ -266,7 +266,7 @@
         "menu_badge_DMFXrB": {
           "type": "menu_badge",
           "settings": {
-            "badge_position": "5",
+            "badge_position": "6",
             "text": "Up to 15% OFF",
             "color_bg": "#ee3b45",
             "color_text": "#ffffff"
