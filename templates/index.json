@@ -40,7 +40,7 @@
           "type": "heading",
           "settings": {
             "text": "Luxuriously Soft Pima & Alpaca",
-            "heading_font_size": 3,
+            "heading_font_size": 3.7,
             "heading_font_size_mobile": 1.5,
             "heading_line_height": 3.7,
             "heading_font_weight": "700",
@@ -199,7 +199,7 @@
         "subheading_BcNJTP": {
           "type": "subheading",
           "settings": {
-            "text": "Shop Best Sellers",
+            "text": "Shop Non-Toxic Essentials",
             "color": "",
             "font_size": 22,
             "font_weight": 500
