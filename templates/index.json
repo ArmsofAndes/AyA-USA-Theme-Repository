@@ -39,7 +39,7 @@
         "heading_QdDkF8": {
           "type": "heading",
           "settings": {
-            "text": "Fashion for a Non-Toxic Life",
+            "text": "Luxuriously Soft Pima & Alpaca",
             "heading_font_size": 3.7,
             "heading_font_size_mobile": 1.5,
             "heading_line_height": 3.7,
@@ -504,6 +504,116 @@
         "link_5": "shopify://collections/organic-pima-cotton-underwear"
       }
     },
+    "rich_text_efMz3Q": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Qh9yU6": {
+          "type": "heading",
+          "settings": {
+            "text": "Our Exclusive Collections",
+            "color": "",
+            "font_size": 36,
+            "font_weight": 500
+          }
+        }
+      },
+      "block_order": [
+        "heading_Qh9yU6"
+      ],
+      "custom_css": [
+        ".richtext-full-bg {padding: 0 7%;}",
+        ".rte {padding: 0rem;}",
+        "@media (max-width: 768px) {.rte {padding: 0 !important; } .richtext-full-bg {display: none !important; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "use_global_font": true,
+        "font_family": "helvetica",
+        "custom_anchor_id": "",
+        "section_width": "grid",
+        "text_width": "xlarge",
+        "text_position": "left",
+        "text_alignment": "left",
+        "color_bg": "rgba(0,0,0,0)",
+        "color_text": "#151515",
+        "color_links": "#151515",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "five_imagens_main_Q3yXVC": {
+      "type": "five-imagens-main",
+      "custom_css": [
+        ".five-images {padding: 0 7.87%;}",
+        "@media (max-width: 768px) {.five-images {display: none !important; }}"
+      ],
+      "name": "Five Images Layout Main",
+      "settings": {
+        "image_1": "shopify://shop_images/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png",
+        "link_1": "shopify://collections/chemical-free-clothes",
+        "image_2": "shopify://shop_images/Coleccion_4.webp",
+        "link_2": "shopify://collections/alpaca-wool-clothing",
+        "image_3": "shopify://shop_images/Coleccion_3.webp",
+        "link_3": "shopify://collections/organic-cotton-bundles",
+        "image_4": "shopify://shop_images/Coleccion_5.webp",
+        "link_4": "shopify://collections/household",
+        "image_5": "shopify://shop_images/Coleccion_2.webp",
+        "link_5": "shopify://collections/organic-pima-cotton-underwear"
+      }
+    },
+    "botons_column_tDqht7": {
+      "type": "botons-column",
+      "blocks": {
+        "button_eLGNNh": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP WOMEN",
+            "button_link": "shopify://collections/all-womens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#000000",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#151515",
+            "hover_border_color": "#000000"
+          }
+        },
+        "button_xUiYxd": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP MEN",
+            "button_link": "shopify://collections/all-mens",
+            "text_color": "#000000",
+            "font_size": 16,
+            "font_weight": "600",
+            "background_color": "#ffffff",
+            "border_radius": 25,
+            "border_color": "#151515",
+            "border_width": 2,
+            "hover_text_color": "#ffffff",
+            "hover_background_color": "#000000",
+            "hover_border_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "button_eLGNNh",
+        "button_xUiYxd"
+      ],
+      "custom_css": [
+        ".custom-btn {width: 282px;}"
+      ],
+      "name": "Botons-column",
+      "settings": {
+        "background_color": "#ffffff",
+        "button_layout": "row",
+        "hide_on_desktop": false,
+        "hide_on_mobile": true
+      }
+    },
     "botons_column_G4Ri44": {
       "type": "botons-column",
       "blocks": {
@@ -752,116 +862,6 @@
         "aspect_ratio": "16-9",
         "disable_top_spacing": false,
         "disable_bottom_spacing": false
-      }
-    },
-    "rich_text_efMz3Q": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_Qh9yU6": {
-          "type": "heading",
-          "settings": {
-            "text": "Our Exclusive Collections",
-            "color": "",
-            "font_size": 36,
-            "font_weight": 500
-          }
-        }
-      },
-      "block_order": [
-        "heading_Qh9yU6"
-      ],
-      "custom_css": [
-        ".richtext-full-bg {padding: 0 7%;}",
-        ".rte {padding: 0rem;}",
-        "@media (max-width: 768px) {.rte {padding: 0 !important; } .richtext-full-bg {display: none !important; }}"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "use_global_font": true,
-        "font_family": "helvetica",
-        "custom_anchor_id": "",
-        "section_width": "grid",
-        "text_width": "xlarge",
-        "text_position": "left",
-        "text_alignment": "left",
-        "color_bg": "rgba(0,0,0,0)",
-        "color_text": "#151515",
-        "color_links": "#151515",
-        "disable_top_spacing": true,
-        "disable_bottom_spacing": true
-      }
-    },
-    "five_imagens_main_Q3yXVC": {
-      "type": "five-imagens-main",
-      "custom_css": [
-        ".five-images {padding: 0 7.87%;}",
-        "@media (max-width: 768px) {.five-images {display: none !important; }}"
-      ],
-      "name": "Five Images Layout Main",
-      "settings": {
-        "image_1": "shopify://shop_images/Coleccion_1_df3d551c-9fce-42c0-85d9-df359fdd56ee.png",
-        "link_1": "shopify://collections/chemical-free-clothes",
-        "image_2": "shopify://shop_images/Coleccion_4.webp",
-        "link_2": "shopify://collections/alpaca-wool-clothing",
-        "image_3": "shopify://shop_images/Coleccion_3.webp",
-        "link_3": "shopify://collections/organic-cotton-bundles",
-        "image_4": "shopify://shop_images/Coleccion_5.webp",
-        "link_4": "shopify://collections/household",
-        "image_5": "shopify://shop_images/Coleccion_2.webp",
-        "link_5": "shopify://collections/organic-pima-cotton-underwear"
-      }
-    },
-    "botons_column_tDqht7": {
-      "type": "botons-column",
-      "blocks": {
-        "button_eLGNNh": {
-          "type": "button",
-          "settings": {
-            "button_text": "SHOP WOMEN",
-            "button_link": "shopify://collections/all-womens",
-            "text_color": "#000000",
-            "font_size": 16,
-            "font_weight": "600",
-            "background_color": "#ffffff",
-            "border_radius": 25,
-            "border_color": "#000000",
-            "border_width": 2,
-            "hover_text_color": "#ffffff",
-            "hover_background_color": "#151515",
-            "hover_border_color": "#000000"
-          }
-        },
-        "button_xUiYxd": {
-          "type": "button",
-          "settings": {
-            "button_text": "SHOP MEN",
-            "button_link": "shopify://collections/all-mens",
-            "text_color": "#000000",
-            "font_size": 16,
-            "font_weight": "600",
-            "background_color": "#ffffff",
-            "border_radius": 25,
-            "border_color": "#151515",
-            "border_width": 2,
-            "hover_text_color": "#ffffff",
-            "hover_background_color": "#000000",
-            "hover_border_color": "#000000"
-          }
-        }
-      },
-      "block_order": [
-        "button_eLGNNh",
-        "button_xUiYxd"
-      ],
-      "custom_css": [
-        ".custom-btn {width: 282px;}"
-      ],
-      "name": "Botons-column",
-      "settings": {
-        "background_color": "#ffffff",
-        "button_layout": "row",
-        "hide_on_desktop": false,
-        "hide_on_mobile": true
       }
     },
     "rich_text_qLgEka": {
