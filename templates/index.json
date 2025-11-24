@@ -36,10 +36,21 @@
     "new_image_with_text_overlay_NJ3xWp": {
       "type": "new-image-with-text-overlay",
       "blocks": {
+        "subheading_r7FGyJ": {
+          "type": "subheading",
+          "settings": {
+            "text": "Luxuriously Soft Pima & Alpaca",
+            "subheading_font_size": 16,
+            "subheading_font_weight": "400",
+            "subheading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 1
+          }
+        },
         "heading_QdDkF8": {
           "type": "heading",
           "settings": {
-            "text": "Luxuriously Soft Pima & Alpaca",
+            "text": "OUR BIGGEST SALE EVER",
             "heading_font_size": 3.7,
             "heading_font_size_mobile": 1.5,
             "heading_line_height": 3.7,
@@ -110,6 +121,7 @@
         }
       },
       "block_order": [
+        "subheading_r7FGyJ",
         "heading_QdDkF8",
         "text_nTJahJ",
         "button_rU3H7E",
