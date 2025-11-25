@@ -36,17 +36,6 @@
     "new_image_with_text_overlay_NJ3xWp": {
       "type": "new-image-with-text-overlay",
       "blocks": {
-        "subheading_r7FGyJ": {
-          "type": "subheading",
-          "settings": {
-            "text": "Luxuriously Soft Pima & Alpaca",
-            "subheading_font_size": 16,
-            "subheading_font_weight": "400",
-            "subheading_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 0.5
-          }
-        },
         "heading_QdDkF8": {
           "type": "heading",
           "settings": {
@@ -58,6 +47,17 @@
             "heading_color": "#ffffff",
             "margin_top": 0,
             "margin_bottom": 0
+          }
+        },
+        "subheading_r7FGyJ": {
+          "type": "subheading",
+          "settings": {
+            "text": "Luxuriously Soft Pima & Alpaca",
+            "subheading_font_size": 16,
+            "subheading_font_weight": "400",
+            "subheading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 0.5
           }
         },
         "button_rU3H7E": {
@@ -118,7 +118,7 @@
         "font_family": "roboto",
         "section_width": "full-width-row-full",
         "image": "shopify://shop_images/7c9fd686feb0f547c22b6b94456491131544def6_1.jpg",
-        "mobile_image": "shopify://shop_images/FOTO_MOBILE.webp",
+        "mobile_image": "shopify://shop_images/FOTO_MOBILE_1_3f9c071b-e59a-4ec6-8fe4-4869594c6bda.jpg",
         "image_parallax": false,
         "desktop_vh_height": 95,
         "desktop_height": "desktop-height-750",
