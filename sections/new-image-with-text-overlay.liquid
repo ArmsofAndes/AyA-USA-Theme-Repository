@@ -368,22 +368,17 @@
    Styles apply to blocks containing specific classes (bf-yellow, bf-white, bf-discount, bf-sitewide)
    ============================================ */
 
-/* Remove padding-top and center vertically */
-#shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
-  padding-top: 0 !important;
-  align-items: center !important;
-}
-
-/* Make content-inner cover 100% height */
+/* Make content-inner cover 100% height - applies to all screen sizes */
 #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
   height: 100%;
   min-height: 100%;
   gap: 0;
 }
 
-/* Desktop: Center content-inner vertically */
+/* Desktop and Laptop: Remove padding-top and center vertically */
 @media only screen and (min-width: 768px) {
   #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
+    padding-top: 0 !important;
     align-items: center !important;
   }
   #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
