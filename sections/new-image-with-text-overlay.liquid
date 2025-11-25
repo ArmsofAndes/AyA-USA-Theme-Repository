@@ -112,7 +112,11 @@
                                      data-block-type="heading"
                                      {{ block.shopify_attributes }}>
                                     <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
-                                      {{ block.settings.text | newline_to_br }}
+                                      {% if block.settings.text contains '<' %}
+                                        {{ block.settings.text }}
+                                      {% else %}
+                                        {{ block.settings.text | newline_to_br }}
+                                      {% endif %}
                                     </{{ heading_tag }}>
                                 </div>
                             {%- when 'text' -%}
@@ -209,6 +213,15 @@
         --block-margin-top: {{ block.settings.margin_top }}rem;
         --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
       }
+      {%- if block.id == 'subheading_r7FGyJ' -%}
+        #shopify-section-{{ section.id }} .block-subheading_r7FGyJ {
+          --block-font-size: 1.0rem;
+          --block-font-weight: 400;
+          --block-color: #ffffff;
+          --block-margin-top: 0rem;
+          --block-margin-bottom: 2rem;
+        }
+      {%- endif -%}
     {%- when 'heading' -%}
       {%- if block.settings.heading_line_height > 0 -%}
         {%- assign heading_line_height = block.settings.heading_line_height -%}
@@ -348,6 +361,221 @@
 /* Section-specific overrides */
 #shopify-section-{{ section.id }} p {
   margin-bottom: 0;
+}
+
+/* ============================================
+   BLACK FRIDAY BANNER SPECIFIC STYLES
+   Styles apply to blocks containing specific classes (bf-yellow, bf-white, bf-discount, bf-sitewide)
+   ============================================ */
+
+/* Remove padding-top and center vertically */
+#shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
+  padding-top: 0 !important;
+  align-items: center !important;
+}
+
+/* Make content-inner cover 100% height */
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
+  height: 100%;
+  min-height: 100%;
+  gap: 0;
+}
+
+/* Desktop: Center content-inner vertically */
+@media only screen and (min-width: 768px) {
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
+    align-items: center !important;
+  }
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Mobile: Add padding and position blocks */
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .image-with-text-overlay {
+    padding: 30px 0 !important;
+  }
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 100%;
+    gap: 0;
+    padding-left: 8% !important;
+    padding-right: 8% !important;
+  }
+  /* Heading at the top */
+  #shopify-section-{{ section.id }} .block-heading_QdDkF8 {
+    order: 1;
+    align-self: flex-start;
+    margin-bottom: 0 !important;
+    width: 100%;
+    margin-top: -25px;
+  }
+  /* Group subheading and buttons at the bottom with 15px gap between them */
+  #shopify-section-{{ section.id }} .block-subheading_r7FGyJ {
+    order: 2;
+    margin-top: auto;
+    margin-bottom: 0 !important;
+  }
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
+    order: 3;
+    margin-top: 15px !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 768px) {
+  /* BLACK FRIDAY OUR BIGGEST SALE EVER! - Desktop */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
+    font-family: 'Roboto', sans-serif !important;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow-bf,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-white {
+    font-size: 40px !important;
+    font-weight: 800 !important;
+    line-height: 46px !important;
+  }
+  #shopify-section-{{ section.id }} .bf-group-left {
+    display: block;
+    margin-top: -0.5rem;
+  }
+  #shopify-section-{{ section.id }} .bf-yellow-bf {
+    color: #FD0 !important;
+    letter-spacing: 25.2px;
+  }
+  #shopify-section-{{ section.id }} .bf-yellow {
+    color: #FD0 !important;
+    letter-spacing: 3.2px;
+  }
+  #shopify-section-{{ section.id }} .bf-white {
+    color: #FFF !important;
+    letter-spacing: 3.2px;
+  }
+  /* 25% OFF SITEWIDE - Desktop */
+  #shopify-section-{{ section.id }} .bf-discount {
+    display: block;
+    font-size: 96px !important;
+    font-weight: 900 !important;
+    color: #FFF !important;
+    letter-spacing: 19.2px;
+    line-height: 90px !important;
+    font-family: 'Roboto', sans-serif !important;
+    margin-top: 1rem;
+  }
+  #shopify-section-{{ section.id }} .bf-sitewide {
+    display: block;
+    font-size: 96px !important;
+    font-weight: 800 !important;
+    color: #FFF !important;
+    letter-spacing: 19.2px;
+    line-height: 90px !important;
+    font-family: 'Roboto', sans-serif !important;
+    margin-top: 10px;
+  }
+  /* Remove text-align from these elements */
+  #shopify-section-{{ section.id }} .bf-discount,
+  #shopify-section-{{ section.id }} .bf-sitewide,
+  #shopify-section-{{ section.id }} .bf-group-left {
+    text-align: inherit;
+  }
+  /* Luxuriously Soft Pima & Alpaca - Desktop - Target first subheading block */
+  #shopify-section-{{ section.id }} .block-wrapper.block-subheading_r7FGyJ[data-block-type="subheading"] .subheading,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"]:first-of-type .subheading {
+    color: #FFF !important;
+    font-family: 'Baskervville', serif !important;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 40px !important;
+    text-align: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 767px) {
+  /* BLACK FRIDAY OUR BIGGEST SALE EVER! - Mobile */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow-bf,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-white {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    line-height: 25px !important;
+    letter-spacing: 3px !important;
+  }
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .bf-group-left {
+    display: block;
+    margin-top: -1.3rem;
+  }
+  #shopify-section-{{ section.id }} .bf-yellow-bf {
+    color: #FD0 !important;
+    letter-spacing: 3px;
+  }
+  #shopify-section-{{ section.id }} .bf-yellow {
+    color: #FD0 !important;
+    letter-spacing: 3px;
+  }
+  #shopify-section-{{ section.id }} .bf-white {
+    color: #FFF !important;
+    letter-spacing: 3px;
+  }
+  /* 25% OFF SITEWIDE - Mobile */
+  #shopify-section-{{ section.id }} .bf-discount {
+    display: block;
+    font-size: 40px !important;
+    font-weight: 900 !important;
+    color: #FFF !important;
+    letter-spacing: 6px;
+    line-height: 28px !important;
+    font-family: 'Roboto', sans-serif !important;
+  }
+  #shopify-section-{{ section.id }} .bf-sitewide {
+    display: block;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    color: #FFF !important;
+    letter-spacing: 3px;
+    line-height: 28px !important;
+    font-family: 'Roboto', sans-serif !important;
+    margin-top: 10px;
+  }
+  /* Remove text-align from these elements in mobile */
+  #shopify-section-{{ section.id }} .bf-discount,
+  #shopify-section-{{ section.id }} .bf-sitewide,
+  #shopify-section-{{ section.id }} .bf-group-left {
+    text-align: inherit;
+  }
+  /* Luxuriously Soft Pima & Alpaca - Mobile - Target first subheading block */
+  #shopify-section-{{ section.id }} .block-wrapper.block-subheading_r7FGyJ[data-block-type="subheading"] .subheading,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"]:first-of-type .subheading {
+    font-family: 'Baskervville', serif !important;
+    font-size: 35px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 40px !important;
+    letter-spacing: 2.1px !important;
+    text-align: center !important;
+    color: #FFF !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    text-transform: none !important;
+  }
 }
 </style>
 {% schema %}
