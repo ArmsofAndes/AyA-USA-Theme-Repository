@@ -83,7 +83,7 @@
           "type": "button",
           "settings": {
             "button_text": "SHOP WOMEN",
-            "button_link": "shopify://collections/all-womens",
+            "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "button_font_size": 16,
             "button_font_size_mobile": 15,
             "button_font_weight": "600",
@@ -580,7 +580,7 @@
           "type": "button",
           "settings": {
             "button_text": "SHOP WOMEN",
-            "button_link": "shopify://collections/all-womens",
+            "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "text_color": "#000000",
             "font_size": 16,
             "font_weight": "600",
@@ -633,7 +633,7 @@
           "type": "button",
           "settings": {
             "button_text": "SHOP WOMEN",
-            "button_link": "shopify://collections/all-womens",
+            "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "text_color": "#000000",
             "font_size": 16,
             "font_weight": "600",
