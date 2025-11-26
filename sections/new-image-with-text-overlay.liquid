@@ -1,6 +1,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 {{- 'image-with-text-overlay.css' | asset_url | stylesheet_tag -}}
 {%- liquid
@@ -86,6 +86,7 @@
                     {%- liquid
                         assign button_group_started = false
                         assign button_count = 0
+                        assign bottom_section_started = false
                     -%}
                     {% for block in section.blocks %}
                         {%- case block.type -%}
@@ -95,6 +96,12 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
+                                {%- if block.id == 'subheading_r7FGyJ' -%}
+                                    {% unless bottom_section_started %}
+                                        <div class="bf-bottom-section">
+                                        {% assign bottom_section_started = true %}
+                                    {% endunless %}
+                                {%- endif -%}
                                 <div class="block-wrapper block-{{ block.id }}" 
                                      data-block-type="subheading"
                                      {{ block.shopify_attributes }}>
@@ -167,6 +174,10 @@
                                     </div>
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
+                                    {%- if bottom_section_started -%}
+                                        </div>
+                                        {% assign bottom_section_started = false %}
+                                    {%- endif -%}
                                   {% endif %}
                                 {% endif %}
                             {%- when 'space' -%}
@@ -175,6 +186,10 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
+                                {%- if bottom_section_started -%}
+                                    </div>
+                                    {% assign bottom_section_started = false %}
+                                {%- endif -%}
                                 <div class="block-wrapper block-space block-{{ block.id }}" 
                                      data-block-type="space"
                                      {{ block.shopify_attributes }}></div>
@@ -183,6 +198,9 @@
                     {% if button_group_started %}
                         </div>
                     {% endif %}
+                    {%- if bottom_section_started -%}
+                        </div>
+                    {%- endif -%}
                 </div>
             </div>
 
@@ -417,7 +435,13 @@
   gap: 0;
 }
 
-/* Desktop/Laptop Layout (768px+) */
+/* Desktop/Laptop Layout (768px+) 
+   This breakpoint covers:
+   - Tablets in landscape mode (768px+)
+   - Small laptops (1024px+)
+   - Standard laptops (1366px+)
+   - Desktop monitors (1920px+)
+   All desktop/laptop sizes use the same styles for consistency */
 @media only screen and (min-width: 768px) {
   /* Content container positioning */
   #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
@@ -449,51 +473,123 @@
 
 /* Mobile Layout (max-width: 767px) */
 @media only screen and (max-width: 767px) {
+  /* Reset content container - remove any default padding/margin */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: flex-end !important;
+  }
+  
   #shopify-section-{{ section.id }} .image-with-text-overlay {
     padding: var(--bf-section-padding-mobile) 0 !important;
   }
   
+  /* Content inner - flex container with two sections: heading top, subheading+buttons bottom */
   #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
     min-height: 100%;
-    gap: 0;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
-  /* Block ordering for mobile */
+  /* Reset all block-wrapper margins in mobile to avoid conflicts */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .block-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Section 1: Heading - Order 1, stick to top */
   #shopify-section-{{ section.id }} .block-heading_QdDkF8 {
     order: 1;
     align-self: flex-start;
-    margin-bottom: 0 !important;
     width: 100%;
-    margin-top: -1.5625rem; /* -25px */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
   
-  #shopify-section-{{ section.id }} .block-subheading_r7FGyJ {
+  /* Heading container - remove all margins and padding (mobile only) */
+  #shopify-section-{{ section.id }} .block-heading_QdDkF8 .image-with-text-overlay--heading {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Remove all margins from elements inside heading */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--heading * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Bottom section wrapper - groups subheading and buttons together (mobile only) */
+  #shopify-section-{{ section.id }} .bf-bottom-section {
     order: 2;
-    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: auto !important;
     margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    width: 100%;
   }
   
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    order: 3;
-    margin-top: 0.9375rem !important; /* 15px */
+  /* Hide bottom section wrapper in desktop */
+  @media only screen and (min-width: 768px) {
+    #shopify-section-{{ section.id }} .bf-bottom-section {
+      display: contents; /* Remove wrapper in desktop, let elements flow normally */
+    }
+  }
+  
+  /* Subheading - part of bottom section */
+  #shopify-section-{{ section.id }} .bf-bottom-section .block-subheading_r7FGyJ {
+    margin-top: 0 !important;
     margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Reset subheading internal margins */
+  #shopify-section-{{ section.id }} .bf-bottom-section .block-subheading_r7FGyJ .subheading {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Buttons wrapper - part of bottom section, directly below subheading */
+  #shopify-section-{{ section.id }} .bf-bottom-section .buttons-grid-wrapper {
+    margin-top: 0.9375rem !important; /* 15px gap from subheading */
+    margin-bottom: 0 !important;
+    margin-right: var(--bf-buttons-margin-right) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     padding-left: 10%;
     padding-right: 10%;
+  }
+  
+  /* Reset button wrapper internal margins */
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 }
 
 /* ============================================
    TYPOGRAPHY STYLES - DESKTOP/LAPTOP
+   Applies consistently from 768px and above
+   (covers all laptop and desktop sizes)
    ============================================ */
 
 @media only screen and (min-width: 768px) {
   /* Base heading reset */
   #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     text-align: left !important;
     margin-bottom: 2rem !important;
     font-size: inherit !important;
@@ -509,7 +605,7 @@
     font-size: var(--bf-heading-font-size-desktop) !important;
     font-weight: 800 !important;
     line-height: var(--bf-heading-line-height-desktop) !important;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
   }
   
   /* Group left alignment */
@@ -539,11 +635,11 @@
   #shopify-section-{{ section.id }} .bf-discount {
     display: block !important;
     font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 900 !important;
+    font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-discount) !important;
     line-height: var(--bf-discount-line-height-desktop) !important;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     margin-top: 1rem !important;
     text-align: left !important;
   }
@@ -552,11 +648,11 @@
   #shopify-section-{{ section.id }} .bf-sitewide {
     display: block !important;
     font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-discount) !important;
     line-height: var(--bf-discount-line-height-desktop) !important;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     margin-top: 0.625rem !important; /* 10px */
     text-align: left !important;
   }
@@ -583,10 +679,14 @@
     gap: var(--bf-buttons-gap-desktop) !important;
     width: auto !important;
     margin: 0 5rem !important;
-    margin-right: var(--bf-buttons-margin-right) !important;
     justify-content: center !important;
     align-items: center !important;
     flex-wrap: wrap !important;
+  }
+  
+  /* Button width for desktop */
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .button {
+    width: 160px;
   }
 }
 
@@ -599,20 +699,55 @@
   #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow-bf,
   #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow,
   #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-white {
-    font-family: 'Roboto', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     font-size: var(--bf-heading-font-size-mobile) !important;
     font-weight: 800 !important;
     line-height: var(--bf-heading-line-height-mobile) !important;
     letter-spacing: var(--bf-letter-spacing-mobile) !important;
   }
   
+  /* Heading container - use gap for spacing instead of margins */
+  #shopify-section-{{ section.id }} .block-heading_QdDkF8 .image-with-text-overlay--heading {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0.20rem;
+    align-items: center;
+  }
+  
   #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
     text-align: center;
   }
   
+  /* Group left - reduce size to match other elements, no margin (gap handles spacing) */
   #shopify-section-{{ section.id }} .bf-group-left {
     display: block;
-    margin-top: -1.8rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    font-size: var(--bf-heading-font-size-mobile) !important; /* Match other heading elements */
+    line-height: var(--bf-heading-line-height-mobile) !important;
+  }
+  
+  /* bf-yellow-bf - no margin (gap handles spacing) */
+  #shopify-section-{{ section.id }} .bf-yellow-bf {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  /* Reset all internal text element margins in mobile (gap handles spacing) */
+  #shopify-section-{{ section.id }} .bf-yellow,
+  #shopify-section-{{ section.id }} .bf-white,
+  #shopify-section-{{ section.id }} .bf-discount,
+  #shopify-section-{{ section.id }} .bf-sitewide {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
   
   /* Letter spacing for mobile */
@@ -635,24 +770,26 @@
   #shopify-section-{{ section.id }} .bf-discount {
     display: block;
     font-size: var(--bf-discount-font-size-mobile) !important;
-    font-weight: 900 !important;
+    font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-discount-mobile);
     line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Roboto', sans-serif !important;
-    margin-top: -0.5rem;
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
   
   /* Sitewide text */
   #shopify-section-{{ section.id }} .bf-sitewide {
     display: block;
     font-size: var(--bf-sitewide-font-size-mobile) !important;
-    font-weight: 900 !important;
+    font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-mobile);
     line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Roboto', sans-serif !important;
-    margin-top: 0.3125rem; /* 5px */
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
   
   /* Remove text-align inheritance in mobile */
@@ -663,7 +800,7 @@
   }
   
   /* Subheading: "Luxuriously Soft Pima & Alpaca" */
-  /* High specificity to override base styles */
+  /* High specificity to override base styles - reset all spacing */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"] .subheading {
     font-family: 'Baskervville', serif !important;
     font-size: var(--bf-subheading-font-size-mobile) !important;
@@ -675,6 +812,8 @@
     color: #FFF !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     text-transform: none !important;
   }
 }
