@@ -43,7 +43,7 @@
   {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
 {%- endif -%}
 <div class="row {{ section_width }}"
-	style="--section-font-family: "Baskervville", serif;">
+	style="--section-font-family: 'Baskervville', serif;">
 	<div class="small-12 columns">
 		<image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}" 
           style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};height: {{ section.settings.desktop_vh_height }}vh;">

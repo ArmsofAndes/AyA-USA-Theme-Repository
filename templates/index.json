@@ -36,6 +36,19 @@
     "new_image_with_text_overlay_NJ3xWp": {
       "type": "new-image-with-text-overlay",
       "blocks": {
+        "heading_QdDkF8": {
+          "type": "heading",
+          "settings": {
+            "text": "<span class=\"bf-yellow-bf\">BLACK FRIDAY</span><span class=\"bf-group-left\"><span class=\"bf-white\">OUR</span> <span class=\"bf-yellow\">BIGGEST</span> <span class=\"bf-white\">SALE EVER!</span></span><span class=\"bf-discount\">25% OFF</span> <span class=\"bf-sitewide\">SITEWIDE</span>",
+            "heading_font_size": 3.7,
+            "heading_font_size_mobile": 1.5,
+            "heading_line_height": 3.7,
+            "heading_font_weight": "800",
+            "heading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
         "subheading_r7FGyJ": {
           "type": "subheading",
           "settings": {
@@ -45,38 +58,6 @@
             "subheading_color": "#ffffff",
             "margin_top": 0,
             "margin_bottom": 0.5
-          }
-        },
-        "heading_QdDkF8": {
-          "type": "heading",
-          "settings": {
-            "text": "OUR BIGGEST SALE EVER",
-            "heading_font_size": 3.7,
-            "heading_font_size_mobile": 1.5,
-            "heading_line_height": 3.7,
-            "heading_font_weight": "700",
-            "heading_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "text_nTJahJ": {
-          "type": "text",
-          "settings": {
-            "summary_text_closed": "Creating the World's Healthiest Fashion",
-            "summary_text_open": "Created with Plastic-Free Ingredients",
-            "dropdown_initially_open": false,
-            "text": "<p>Regenerative Organic Pima Cotton </p><p>Copper Zippers on Cotton Tape </p><p>Tree Rubber Elastic Bands</p><p>Mother of Pearl Buttons</p><p>Free Ranging Alpacas</p><p>Cotton Threads</p><p>Cotton Labels</p>",
-            "description_size": "medium",
-            "text_font_size": 1.2,
-            "text_font_size_mobile": 0.7,
-            "enable_dropdown_animations_desktop": true,
-            "enable_dropdown_animations_mobile": true,
-            "text_font_weight": "700",
-            "line_height": 1.8,
-            "text_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 2
           }
         },
         "button_rU3H7E": {
@@ -121,16 +102,15 @@
         }
       },
       "block_order": [
-        "subheading_r7FGyJ",
         "heading_QdDkF8",
-        "text_nTJahJ",
+        "subheading_r7FGyJ",
         "button_rU3H7E",
         "button_Bknaza"
       ],
       "custom_css": [
         ".button {width: 175.3px;}",
         "p {margin-bottom: 0px;}",
-        "@media screen and (max-width: 767px) {.image-with-text-overlay--content-inner {padding-left: 4%; padding-right: 4%; } .button {margin: 4px; } .image-with-text-overlay--heading {font-size: 2.2rem !important; line-height: 3rem !important; } p {font-size: 1rem; }}"
+        "@media screen and (max-width: 767px) {.image-with-text-overlay--content-inner {padding-left: 4%; padding-right: 4%; } .button {margin: 4px; } p {font-size: 1rem; }}"
       ],
       "name": "Image with text overlay new",
       "settings": {
@@ -138,7 +118,7 @@
         "font_family": "roboto",
         "section_width": "full-width-row-full",
         "image": "shopify://shop_images/7c9fd686feb0f547c22b6b94456491131544def6_1.jpg",
-        "mobile_image": "shopify://shop_images/FOTO_MOBILE.webp",
+        "mobile_image": "shopify://shop_images/FOTO_MOBILE_1_3f9c071b-e59a-4ec6-8fe4-4869594c6bda.jpg",
         "image_parallax": false,
         "desktop_vh_height": 95,
         "desktop_height": "desktop-height-750",
