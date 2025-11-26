@@ -411,9 +411,9 @@
             "title": "",
             "text": "",
             "link_label": "Shop Women's",
-            "link": "shopify://collections/all-womens",
+            "link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "use_text_button": false,
-            "block_link": "shopify://collections/all-womens",
+            "block_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "product_list": []
           }
         },
