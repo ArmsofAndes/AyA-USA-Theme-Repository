@@ -23,6 +23,7 @@
   {%- if show_announcement_bar -%}
     {{- 'announcement-bar.css' | asset_url | stylesheet_tag -}}
 
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-section {% if sticky_announcement_bar %}announcement-bar-section--sticky{% endif %}">
     <div class="announcement-bar {% if sticky_announcement_bar %}announcement-bar--fixed{% endif %}"
          role="region"
          aria-label="Announcement bar"
@@ -78,6 +79,7 @@
         {%- endif -%}
       </div>
     </div>
+    </div>
 
     <style>
       /* Eliminar espacio blanco - remover padding-top del body */
@@ -86,7 +88,7 @@
       }
 
       /* Barra sticky - aplicar al contenedor de la sección */
-      .announcement-bar-section:has(.announcement-bar--fixed) {
+      .announcement-bar-section--sticky {
         position: sticky !important;
         top: 0 !important;
         z-index: 52 !important;
@@ -108,12 +110,34 @@
       }
 
       /* ajustes visuales */
-      .announcement-bar { padding: 0.6em 0; }
+      .announcement-bar {
+        background: var(--color-announcement-bar-bg, var(--color-accent));
+        color: var(--color-announcement-bar-text, #fff);
+        line-height: 1;
+      }
+      
+      /* Desktop styles */
+      @media (min-width: 769px) {
+        .announcement-bar {
+          background: var(--color-announcement-bar-bg, var(--color-accent));
+          color: var(--color-announcement-bar-text, #fff);
+          line-height: 1;
+          padding: 4px 0;
+        }
+      }
+      
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .announcement-bar {
+          padding: 6px 0;
+        }
+      }
+      
       .announcement-bar .announcement-bar--inner { display:flex; align-items:center; }
       
       /* Eliminar padding cuando es Stacked para que no se vea el fondo */
       .announcement-bar--stacked { padding: 0 !important; }
-      .announcement-bar:has(.announcement-bar--stacked) { padding: 0 !important; }
+      .announcement-bar.announcement-bar--stacked-parent { padding: 0 !important; }
       .announcement-bar a { color: inherit; text-decoration: none; }
 
       /* Eliminar padding cuando es layout Stacked */
@@ -121,7 +145,7 @@
         padding: 0 !important; 
       }
       
-      body:has(.announcement-bar--stacked) .announcement-bar {
+      .announcement-bar-section--stacked .announcement-bar {
         padding: 0 !important;
       }
 
@@ -149,14 +173,21 @@
       }
 
       /* Hover effect para items con link en layout Stacked */
-      .announcement-bar--stacked .announcement-bar--item:has(a):hover {
+      .announcement-bar--stacked .announcement-bar--item a:hover {
         background-color: var(--hover-bg) !important;
         color: var(--hover-text) !important;
         transition: background-color 0.3s ease, color 0.3s ease;
         cursor: pointer;
       }
 
-      .announcement-bar--stacked .announcement-bar--item:has(a):hover a {
+      .announcement-bar--stacked .announcement-bar--item:hover {
+        background-color: var(--hover-bg) !important;
+        color: var(--hover-text) !important;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
+      }
+
+      .announcement-bar--stacked .announcement-bar--item:hover a {
         color: var(--hover-text) !important;
         text-decoration: none;
       }

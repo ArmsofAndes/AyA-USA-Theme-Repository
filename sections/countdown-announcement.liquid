@@ -159,10 +159,12 @@
   }
 
   /* Asegurar que el contenedor de la sección announcement-bar tenga sticky */
-  .announcement-bar-section:has(.announcement-bar--fixed) {
+  .announcement-bar-section--sticky,
+  [id*="announcement-bar"]:not([id*="countdown"]) {
     position: sticky !important;
     top: 0 !important;
     z-index: 52 !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -173,63 +175,24 @@
     z-index: 1;
   }
 
-  /* Sobrescribir estilos del header de app.css */
-  #shopify-section-sections--20495161753846__header.header-section {
+  /* Sobrescribir estilos del header de app.css - usar selectores más genéricos */
+  .header-section {
     position: sticky !important;
-    top: 0 !important;
     z-index: 50 !important;
     width: 100% !important;
   }
 
-  #shopify-section-sections--20495161753846__header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 50 !important;
-    width: 100% !important;
-  }
-
-  #shopify-section-sections--20495161753846__announcement-bar-countdown {
+  /* Aplicar sticky al countdown - usar múltiples selectores para compatibilidad */
+  [id*="announcement-bar-countdown"],
+  .announcement-bar-countdown-section {
     position: sticky !important;
     z-index: 51 !important;
     width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* Desktop y Mobile: Aplicar sticky */
-  @media (min-width: 769px) {
-    .announcement-bar.announcement-bar--fixed {
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 52 !important;
-    }
-
-    #shopify-section-sections--20495161753846__header {
-      position: sticky !important;
-      z-index: 50 !important;
-    }
-
-    #shopify-section-sections--20495161753846__announcement-bar-countdown {
-      position: sticky !important;
-      z-index: 51 !important;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .announcement-bar.announcement-bar--fixed {
-      position: sticky !important;
-      top: 0 !important;
-      z-index: 52 !important;
-    }
-
-    #shopify-section-sections--20495161753846__header {
-      position: sticky !important;
-      z-index: 50 !important;
-    }
-
-    #shopify-section-sections--20495161753846__announcement-bar-countdown {
-      position: sticky !important;
-      z-index: 51 !important;
-    }
-  }
+  /* Desktop y Mobile: Aplicar sticky - estilos base ya aplicados arriba */
 
   /* Eliminar bordes y márgenes del contenedor de sección */
   #shopify-section-{{ section.id }} {
@@ -240,15 +203,18 @@
 
   /* Sticky positioning - se actualiza dinámicamente por JavaScript */
   .announcement-bar-countdown-section {
-    position: sticky;
-    z-index: 51;
-    width: 100%;
+    position: sticky !important;
+    z-index: 51 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .announcement-bar-countdown {
-    height: 42.3px;
-    max-height: 42.3px;
-    overflow: hidden;
+    min-height: 42.3px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
     box-sizing: border-box;
   }
 
@@ -256,7 +222,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: 100%;
+    height: auto;
     padding: 0 15px;
     max-width: 1440px;
     margin: 0 auto;
@@ -277,6 +244,18 @@
     align-items: center;
     justify-content: flex-end;
     flex-shrink: 0;
+    overflow: visible;
+    height: auto;
+    min-height: auto;
+  }
+
+  /* Asegurar que los wrappers del timer no recorten el contenido */
+  .countdown-timer-1-wrapper,
+  .countdown-timer-2-wrapper {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
   }
 
   .countdown-announcement-timer .countdown-timer {
@@ -295,27 +274,30 @@
   .countdown-announcement-timer .countdown-timer--column--number {
     font-size: 1.5rem;
     font-weight: bold;
-    line-height: 1;
+    line-height: 1.2;
   }
 
   .countdown-announcement-timer .countdown-timer--label {
     font-size: 0.75rem;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.2;
   }
 
   /* Desktop styles (min-width: 769px) */
   @media (min-width: 769px) {
     .announcement-bar-countdown {
-      height: 42.3px;
-      max-height: 42.3px;
+      min-height: 42.3px;
+      height: auto;
+      max-height: none;
+      overflow: visible;
     }
 
     .announcement-bar-countdown .announcement-bar--inner {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      min-height: 100%;
+      height: auto;
       padding: 0 15px;
       max-width: 1440px;
       margin: 0 auto;
@@ -328,7 +310,8 @@
   @media (max-width: 767px) {
     .announcement-bar-countdown {
       max-height: none;
-      padding: 10px 0;
+      padding-top: 0px;
+      padding-bottom: 0px;
       min-height: auto;
     }
 
@@ -398,11 +381,19 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Calcular alturas para sticky positioning en cascada
       function updateStickyPositions() {
-        // Buscar el contenedor de la sección announcement-bar, no solo el elemento interno
-        const announcementBarSection = document.querySelector('.announcement-bar-section:has(.announcement-bar--fixed)');
+        // Buscar el contenedor de la sección announcement-bar usando múltiples selectores
+        const announcementBarSection = document.querySelector('.announcement-bar-section--sticky')
+          || document.querySelector('[id*="announcement-bar"]:not([id*="countdown"])')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar')
+          || document.querySelector('.announcement-bar-section');
         const announcementBar = document.querySelector('.announcement-bar.announcement-bar--fixed');
-        const countdownSection = document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
-        const headerSection = document.querySelector('#shopify-section-sections--20495161753846__header');
+        // Usar múltiples selectores para encontrar las secciones
+        const countdownSection = document.querySelector('[id*="announcement-bar-countdown"]') 
+          || document.querySelector('.announcement-bar-countdown-section')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
+        const headerSection = document.querySelector('.header-section') 
+          || document.querySelector('[id*="header"]')
+          || document.querySelector('#shopify-section-sections--20495161753846__header');
 
         if (!announcementBarSection && !announcementBar) return;
 
@@ -411,31 +402,52 @@
           announcementBarSection.style.setProperty('position', 'sticky', 'important');
           announcementBarSection.style.setProperty('top', '0', 'important');
           announcementBarSection.style.setProperty('z-index', '52', 'important');
+          announcementBarSection.style.setProperty('width', '100%', 'important');
           announcementBarSection.style.setProperty('margin', '0', 'important');
           announcementBarSection.style.setProperty('padding', '0', 'important');
+        } else if (announcementBar) {
+          // Si no encontramos el contenedor, aplicar sticky directamente al elemento
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            parentSection.style.setProperty('position', 'sticky', 'important');
+            parentSection.style.setProperty('top', '0', 'important');
+            parentSection.style.setProperty('z-index', '52', 'important');
+            parentSection.style.setProperty('width', '100%', 'important');
+            parentSection.style.setProperty('margin', '0', 'important');
+            parentSection.style.setProperty('padding', '0', 'important');
+          }
         }
 
+        // Calcular alturas usando el contenedor de la sección
+        let announcementHeight = 0;
+        if (announcementBarSection) {
+          announcementHeight = Math.ceil(announcementBarSection.offsetHeight || 0);
+        } else if (announcementBar) {
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            announcementHeight = Math.ceil(parentSection.offsetHeight || 0);
+          } else {
+            announcementHeight = Math.ceil(announcementBar.offsetHeight || 0);
+          }
+        }
+        
+        // Configurar countdown con sticky y top
         if (countdownSection) {
           countdownSection.style.setProperty('position', 'sticky', 'important');
           countdownSection.style.setProperty('z-index', '51', 'important');
+          countdownSection.style.setProperty('width', '100%', 'important');
+          countdownSection.style.setProperty('margin', '0', 'important');
+          countdownSection.style.setProperty('padding', '0', 'important');
+          countdownSection.style.setProperty('top', announcementHeight + 'px', 'important');
         }
 
         if (headerSection) {
           headerSection.style.setProperty('position', 'sticky', 'important');
           headerSection.style.setProperty('z-index', '50', 'important');
         }
-
-        // Calcular alturas usando el contenedor de la sección
-        const announcementHeight = announcementBarSection 
-          ? Math.ceil(announcementBarSection.offsetHeight || 0)
-          : (announcementBar ? Math.ceil(announcementBar.offsetHeight || 0) : 0);
         
+        // Calcular altura del countdown después de aplicar el top
         const countdownHeight = countdownSection ? Math.ceil(countdownSection.offsetHeight || 0) : 0;
-        
-        // Aplicar top al countdown
-        if (countdownSection) {
-          countdownSection.style.setProperty('top', announcementHeight + 'px', 'important');
-        }
         
         // Aplicar top al header (después de announcement + countdown)
         if (headerSection) {
@@ -455,16 +467,26 @@
       window.addEventListener('resize', updateStickyPositions);
 
       if (window.ResizeObserver) {
-        const announcementBarSection = document.querySelector('.announcement-bar-section:has(.announcement-bar--fixed)');
+        const announcementBarSection = document.querySelector('.announcement-bar-section--sticky')
+          || document.querySelector('[id*="announcement-bar"]:not([id*="countdown"])')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar');
         const announcementBar = document.querySelector('.announcement-bar.announcement-bar--fixed');
-        const countdownSection = document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
+        const countdownSection = document.querySelector('[id*="announcement-bar-countdown"]') 
+          || document.querySelector('.announcement-bar-countdown-section')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
         
         if (announcementBarSection) {
           const ro = new ResizeObserver(updateStickyPositions);
           ro.observe(announcementBarSection);
         } else if (announcementBar) {
-          const ro = new ResizeObserver(updateStickyPositions);
-          ro.observe(announcementBar);
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            const ro = new ResizeObserver(updateStickyPositions);
+            ro.observe(parentSection);
+          } else {
+            const ro = new ResizeObserver(updateStickyPositions);
+            ro.observe(announcementBar);
+          }
         }
         if (countdownSection) {
           const ro2 = new ResizeObserver(updateStickyPositions);
