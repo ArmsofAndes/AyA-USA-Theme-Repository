@@ -132,6 +132,25 @@
         "disable_bottom_spacing": true
       }
     },
+    "countdown_slim_YkLP8P": {
+      "type": "countdown-slim",
+      "name": "Countdown slim",
+      "settings": {
+        "heading": "Black Friday’s Final Hours for Luxurious Softness",
+        "content": "",
+        "color_bg": "#ffffff",
+        "color_text": "#000000",
+        "heading_font_size": 28,
+        "content_font_size": 16,
+        "counter_number_size": 32,
+        "counter_text_size": 14,
+        "timer_year": 2025,
+        "timer_month": "11",
+        "timer_day": "29",
+        "timer_hour": "00",
+        "timer_minute": "00"
+      }
+    },
     "section_steps_content_main_BUHzF3": {
       "type": "section-steps-content-main",
       "blocks": {
@@ -1136,6 +1155,7 @@
     "custom_liquid_jzQjfa",
     "custom_liquid_7eCQ4K",
     "new_image_with_text_overlay_NJ3xWp",
+    "countdown_slim_YkLP8P",
     "section_steps_content_main_BUHzF3",
     "rich_text_dwzBWy",
     "custom8product_eApXHc",
