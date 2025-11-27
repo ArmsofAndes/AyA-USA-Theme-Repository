@@ -124,6 +124,7 @@
     },
     "rich_text_d9fWEy": {
       "type": "rich-text",
+      "disabled": true,
       "blocks": {
         "subheading_dJCcCh": {
           "type": "subheading",
@@ -179,6 +180,28 @@
         "color_links": "#151515",
         "disable_top_spacing": true,
         "disable_bottom_spacing": true
+      }
+    },
+    "announcement-bar-countdown": {
+      "type": "countdown-announcement",
+      "settings": {
+        "enable_countdown": true,
+        "show_on_homepage_only": false,
+        "text_1": "Limited Time Offer",
+        "text_2": "",
+        "color_bg": "#0e355e",
+        "color_text": "#ffffff",
+        "timezone": "auto",
+        "timer_year": 2025,
+        "timer_month": "01",
+        "timer_day": "01",
+        "timer_hour": "00",
+        "timer_minute": "00",
+        "timer_2_year": null,
+        "timer_2_month": "",
+        "timer_2_day": "",
+        "timer_2_hour": "",
+        "timer_2_minute": ""
       }
     },
     "header": {
@@ -388,6 +411,7 @@
     "announcement-bar",
     "rich_text_yTy93w",
     "rich_text_d9fWEy",
+    "announcement-bar-countdown",
     "header"
   ]
 }
