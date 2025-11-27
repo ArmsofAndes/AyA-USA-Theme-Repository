@@ -1,0 +1,1002 @@
+{{ 'countdown-banner.css' | asset_url | stylesheet_tag }}
+{{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign enable_countdown = section.settings.enable_countdown
+  assign show_on_homepage_only = section.settings.show_on_homepage_only
+  
+  if show_on_homepage_only
+    if template != 'index'
+      assign enable_countdown = false
+    endif
+  endif
+  
+  if enable_countdown
+    assign color_bg = section.settings.color_bg
+    assign color_text = section.settings.color_text
+    assign text_1 = section.settings.text_1
+    assign text_2 = section.settings.text_2
+    
+    assign timer_year = section.settings.timer_year
+    assign timer_month = section.settings.timer_month
+    assign timer_day = section.settings.timer_day
+    assign timer_hour = section.settings.timer_hour
+    assign timer_minute = section.settings.timer_minute
+    
+    assign timer_2_year = section.settings.timer_2_year
+    assign timer_2_month = section.settings.timer_2_month
+    assign timer_2_day = section.settings.timer_2_day
+    assign timer_2_hour = section.settings.timer_2_hour
+    assign timer_2_minute = section.settings.timer_2_minute
+    
+    assign timezone_setting = section.settings.timezone
+    if timezone_setting == 'auto' or timezone_setting == blank
+      assign timezone = 1 | date: '%z'
+    else
+      assign timezone = timezone_setting
+    endif
+
+    capture date
+      echo timer_day | append: '-' | append: timer_month | append: '-' | append: timer_year
+    endcapture
+
+    capture time
+      echo timer_hour | append: ':' | append: timer_minute
+    endcapture
+    
+    capture date_2
+      echo timer_2_day | append: '-' | append: timer_2_month | append: '-' | append: timer_2_year
+    endcapture
+
+    capture time_2
+      echo timer_2_hour | append: ':' | append: timer_2_minute
+    endcapture
+    
+    assign has_timer_2 = false
+    if timer_2_year != blank and timer_2_month != blank and timer_2_day != blank
+      assign has_timer_2 = true
+    endif
+  endif
+-%}
+
+{%- if enable_countdown -%}
+<div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section" style="background-color: {{ color_bg }}; color: {{ color_text }};">
+  <div class="announcement-bar announcement-bar-countdown">
+    <div class="announcement-bar--inner">
+      
+      <!-- Texto Timer 1 -->
+      <div class="countdown-announcement-text countdown-text-1">
+        <span>{{ text_1 }}</span>
+      </div>
+      
+      <!-- Timer 1 -->
+      <div class="countdown-announcement-timer countdown-timer-1-wrapper">
+        <countdown-timer 
+          class="countdown-timer countdown-timer-1" 
+          data-date="{{ date }}" 
+          data-time="{{ time }}" 
+          data-timezone="{{ timezone }}">
+          
+          <span class="countdown-announcement-item days">
+            <span class="countdown-timer--column--number">0</span>
+            <span class="countdown-timer--label">{{ 'sections.countdown_banner.days' | t }}</span>
+          </span>
+          
+          <span class="countdown-announcement-item hours">
+            <span class="countdown-timer--column--number">0</span>
+            <span class="countdown-timer--label">{{ 'sections.countdown_banner.hours' | t }}</span>
+          </span>
+          
+          <span class="countdown-announcement-item minutes">
+            <span class="countdown-timer--column--number">0</span>
+            <span class="countdown-timer--label">{{ 'sections.countdown_banner.minutes' | t }}</span>
+          </span>
+          
+          <span class="countdown-announcement-item seconds">
+            <span class="countdown-timer--column--number">0</span>
+            <span class="countdown-timer--label">{{ 'sections.countdown_banner.seconds' | t }}</span>
+          </span>
+        </countdown-timer>
+      </div>
+      
+      <!-- Timer 2 (oculto inicialmente) -->
+      {% if has_timer_2 %}
+        <div class="countdown-announcement-text countdown-text-2" style="display: none;">
+          <span>{{ text_2 }}</span>
+        </div>
+        <div class="countdown-announcement-timer countdown-timer-2-wrapper" style="display: none;">
+          <countdown-timer 
+            class="countdown-timer countdown-timer-2" 
+            data-date="{{ date_2 }}" 
+            data-time="{{ time_2 }}" 
+            data-timezone="{{ timezone }}">
+            
+            <span class="countdown-announcement-item days">
+              <span class="countdown-timer--column--number">0</span>
+              <span class="countdown-timer--label">{{ 'sections.countdown_banner.days' | t }}</span>
+            </span>
+            
+            <span class="countdown-announcement-item hours">
+              <span class="countdown-timer--column--number">0</span>
+              <span class="countdown-timer--label">{{ 'sections.countdown_banner.hours' | t }}</span>
+            </span>
+            
+            <span class="countdown-announcement-item minutes">
+              <span class="countdown-timer--column--number">0</span>
+              <span class="countdown-timer--label">{{ 'sections.countdown_banner.minutes' | t }}</span>
+            </span>
+            
+            <span class="countdown-announcement-item seconds">
+              <span class="countdown-timer--column--number">0</span>
+              <span class="countdown-timer--label">{{ 'sections.countdown_banner.seconds' | t }}</span>
+            </span>
+          </countdown-timer>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Ocultar el elemento rich_text_d9fWEy */
+  #shopify-section-sections--20495161753846__rich_text_d9fWEy {
+    display: none !important;
+  }
+
+  /* Sticky positioning para elementos en conjunto */
+  .announcement-bar.announcement-bar--fixed {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 52 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Eliminar espacio blanco al inicio */
+  body {
+    padding-top: 0 !important;
+  }
+
+  /* Asegurar que el contenedor de la sección announcement-bar tenga sticky */
+  .announcement-bar-section--sticky,
+  [id*="announcement-bar"]:not([id*="countdown"]) {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 52 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Asegurar que el contenedor interno se mueva con el sticky */
+  .announcement-bar--fixed .announcement-bar--inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Sobrescribir estilos del header de app.css - usar selectores más genéricos */
+  .header-section {
+    position: sticky !important;
+    z-index: 50 !important;
+    width: 100% !important;
+  }
+
+  /* Aplicar sticky al countdown - usar múltiples selectores para compatibilidad */
+  [id*="announcement-bar-countdown"],
+  .announcement-bar-countdown-section {
+    position: sticky !important;
+    z-index: 51 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Desktop y Mobile: Aplicar sticky - estilos base ya aplicados arriba */
+
+  /* Eliminar bordes y márgenes del contenedor de sección */
+  #shopify-section-{{ section.id }} {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  /* Sticky positioning - se actualiza dinámicamente por JavaScript */
+  .announcement-bar-countdown-section {
+    position: sticky !important;
+    z-index: 51 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .announcement-bar-countdown {
+    min-height: 42.3px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .announcement-bar-countdown .announcement-bar--inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    height: auto;
+    padding: 0 15px;
+    max-width: 1440px;
+    margin: 0 auto;
+    gap: 1rem;
+    box-sizing: border-box;
+  }
+
+  .countdown-announcement-text {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+
+  .countdown-announcement-timer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    overflow: visible;
+    height: auto;
+    min-height: auto;
+  }
+
+  /* Asegurar que los wrappers del timer no recorten el contenido */
+  .countdown-timer-1-wrapper,
+  .countdown-timer-2-wrapper {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+
+  .countdown-announcement-timer .countdown-timer {
+    display: flex;
+    align-items: center;
+    gap: 1.875rem;
+  }
+
+  .countdown-announcement-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .countdown-announcement-timer .countdown-timer--column--number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .countdown-announcement-timer .countdown-timer--label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  /* Desktop styles (min-width: 769px) */
+  @media (min-width: 769px) {
+    .announcement-bar-countdown {
+      min-height: 42.3px;
+      height: auto;
+      max-height: none;
+      overflow: visible;
+      padding: 4px 0;
+    }
+
+    .announcement-bar-countdown .announcement-bar--inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      height: auto;
+      padding: 0 15px;
+      max-width: 1440px;
+      margin: 0 auto;
+      gap: 1rem;
+      box-sizing: border-box;
+    }
+  }
+
+  /* Mobile styles (max-width: 767px) */
+  @media (max-width: 767px) {
+    .announcement-bar-countdown {
+      max-height: none;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      min-height: auto;
+    }
+
+    .announcement-bar-countdown .announcement-bar--inner {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+    }
+
+    .countdown-announcement-text {
+      order: 1;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .countdown-announcement-timer {
+      order: 2;
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .countdown-announcement-timer .countdown-timer {
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .countdown-announcement-item {
+      gap: 0.1rem;
+      flex-direction: row;
+      align-items: center;
+      display: flex;
+    }
+
+    .countdown-announcement-timer .countdown-timer.countdown-timer-1 .countdown-timer--column--number,
+    .countdown-announcement-timer .countdown-timer.countdown-timer-2 .countdown-timer--column--number {
+      font-size: 1em !important;
+      line-height: 1;
+    }
+
+    .countdown-announcement-timer .countdown-timer.countdown-timer-1 .countdown-timer--label,
+    .countdown-announcement-timer .countdown-timer.countdown-timer-2 .countdown-timer--label {
+      font-size: 0.7em !important;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .countdown-announcement-timer .countdown-timer {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<script src="{{ 'countdown-banner.js' | asset_url }}" defer="defer"></script>
+
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Calcular alturas para sticky positioning en cascada
+      function updateStickyPositions() {
+        // Buscar el contenedor de la sección announcement-bar usando múltiples selectores
+        const announcementBarSection = document.querySelector('.announcement-bar-section--sticky')
+          || document.querySelector('[id*="announcement-bar"]:not([id*="countdown"])')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar')
+          || document.querySelector('.announcement-bar-section');
+        const announcementBar = document.querySelector('.announcement-bar.announcement-bar--fixed');
+        // Usar múltiples selectores para encontrar las secciones
+        const countdownSection = document.querySelector('[id*="announcement-bar-countdown"]') 
+          || document.querySelector('.announcement-bar-countdown-section')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
+        const headerSection = document.querySelector('.header-section') 
+          || document.querySelector('[id*="header"]')
+          || document.querySelector('#shopify-section-sections--20495161753846__header');
+
+        if (!announcementBarSection && !announcementBar) return;
+
+        // Asegurar que el contenedor de la sección tenga sticky
+        if (announcementBarSection) {
+          announcementBarSection.style.setProperty('position', 'sticky', 'important');
+          announcementBarSection.style.setProperty('top', '0', 'important');
+          announcementBarSection.style.setProperty('z-index', '52', 'important');
+          announcementBarSection.style.setProperty('width', '100%', 'important');
+          announcementBarSection.style.setProperty('margin', '0', 'important');
+          announcementBarSection.style.setProperty('padding', '0', 'important');
+        } else if (announcementBar) {
+          // Si no encontramos el contenedor, aplicar sticky directamente al elemento
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            parentSection.style.setProperty('position', 'sticky', 'important');
+            parentSection.style.setProperty('top', '0', 'important');
+            parentSection.style.setProperty('z-index', '52', 'important');
+            parentSection.style.setProperty('width', '100%', 'important');
+            parentSection.style.setProperty('margin', '0', 'important');
+            parentSection.style.setProperty('padding', '0', 'important');
+          }
+        }
+
+        // Calcular alturas usando el contenedor de la sección
+        let announcementHeight = 0;
+        if (announcementBarSection) {
+          announcementHeight = Math.ceil(announcementBarSection.offsetHeight || 0);
+        } else if (announcementBar) {
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            announcementHeight = Math.ceil(parentSection.offsetHeight || 0);
+          } else {
+            announcementHeight = Math.ceil(announcementBar.offsetHeight || 0);
+          }
+        }
+        
+        // Configurar countdown con sticky y top
+        if (countdownSection) {
+          countdownSection.style.setProperty('position', 'sticky', 'important');
+          countdownSection.style.setProperty('z-index', '51', 'important');
+          countdownSection.style.setProperty('width', '100%', 'important');
+          countdownSection.style.setProperty('margin', '0', 'important');
+          countdownSection.style.setProperty('padding', '0', 'important');
+          countdownSection.style.setProperty('top', announcementHeight + 'px', 'important');
+        }
+
+        if (headerSection) {
+          headerSection.style.setProperty('position', 'sticky', 'important');
+          headerSection.style.setProperty('z-index', '50', 'important');
+        }
+        
+        // Calcular altura del countdown después de aplicar el top
+        const countdownHeight = countdownSection ? Math.ceil(countdownSection.offsetHeight || 0) : 0;
+        
+        // Aplicar top al header (después de announcement + countdown)
+        if (headerSection) {
+          const headerTop = announcementHeight + countdownHeight;
+          headerSection.style.setProperty('top', headerTop + 'px', 'important');
+        }
+      }
+
+      // Ejecutar múltiples veces para asegurar que los elementos estén renderizados
+      updateStickyPositions();
+      setTimeout(updateStickyPositions, 50);
+      setTimeout(updateStickyPositions, 100);
+      setTimeout(updateStickyPositions, 300);
+      setTimeout(updateStickyPositions, 500);
+      setTimeout(updateStickyPositions, 1000);
+      
+      window.addEventListener('resize', updateStickyPositions);
+
+      if (window.ResizeObserver) {
+        const announcementBarSection = document.querySelector('.announcement-bar-section--sticky')
+          || document.querySelector('[id*="announcement-bar"]:not([id*="countdown"])')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar');
+        const announcementBar = document.querySelector('.announcement-bar.announcement-bar--fixed');
+        const countdownSection = document.querySelector('[id*="announcement-bar-countdown"]') 
+          || document.querySelector('.announcement-bar-countdown-section')
+          || document.querySelector('#shopify-section-sections--20495161753846__announcement-bar-countdown');
+        
+        if (announcementBarSection) {
+          const ro = new ResizeObserver(updateStickyPositions);
+          ro.observe(announcementBarSection);
+        } else if (announcementBar) {
+          const parentSection = announcementBar.closest('[id^="shopify-section"]');
+          if (parentSection) {
+            const ro = new ResizeObserver(updateStickyPositions);
+            ro.observe(parentSection);
+          } else {
+            const ro = new ResizeObserver(updateStickyPositions);
+            ro.observe(announcementBar);
+          }
+        }
+        if (countdownSection) {
+          const ro2 = new ResizeObserver(updateStickyPositions);
+          ro2.observe(countdownSection);
+        }
+      }
+
+      const countdownAnnouncement = document.querySelector('.announcement-bar-countdown-section');
+      
+      if (!countdownAnnouncement) return;
+      
+      const timer1 = countdownAnnouncement.querySelector('.countdown-timer-1');
+      const timer1Wrapper = countdownAnnouncement.querySelector('.countdown-timer-1-wrapper');
+      const timer2Wrapper = countdownAnnouncement.querySelector('.countdown-timer-2-wrapper');
+      const timer2 = timer2Wrapper ? timer2Wrapper.querySelector('.countdown-timer-2') : null;
+      const text1 = countdownAnnouncement.querySelector('.countdown-text-1');
+      const text2 = countdownAnnouncement.querySelector('.countdown-text-2');
+      
+      if (!timer1) return;
+      
+      if (!timer2) {
+        return;
+      }
+      
+      function parseTimerDate(timer) {
+        const dateStr = timer.dataset.date;
+        const timeStr = timer.dataset.time;
+        const timezone = timer.dataset.timezone;
+        
+        if (!dateStr || !timeStr) return null;
+        
+        const [day, month, year] = dateStr.split('-');
+        const [hour, minute] = timeStr.split(':');
+        
+        const dateString = month + '/' + day + '/' + year + ' ' + hour + ':' + minute + ' GMT' + timezone;
+        return new Date(dateString).getTime();
+      }
+      
+      function updateTimerVisibility() {
+        const now = Date.now();
+        const date1 = parseTimerDate(timer1);
+        const date2 = parseTimerDate(timer2);
+        
+        if (!date1) return;
+        if (!date2) {
+          if (text1) text1.style.display = '';
+          if (text2) text2.style.display = 'none';
+          if (timer1Wrapper) timer1Wrapper.style.display = '';
+          if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+          return;
+        }
+        
+        const distance1 = date1 - now;
+        const distance2 = date2 - now;
+        
+        if (distance2 > 0 && distance2 < distance1) {
+          if (text1) text1.style.display = 'none';
+          if (text2) text2.style.display = '';
+          if (timer1Wrapper) timer1Wrapper.style.display = 'none';
+          if (timer2Wrapper) timer2Wrapper.style.display = '';
+        } else if (distance1 > 0) {
+          if (text1) text1.style.display = '';
+          if (text2) text2.style.display = 'none';
+          if (timer1Wrapper) timer1Wrapper.style.display = '';
+          if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+        } else {
+          if (text1) text1.style.display = '';
+          if (text2) text2.style.display = 'none';
+          if (timer1Wrapper) timer1Wrapper.style.display = '';
+          if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+        }
+      }
+      
+      updateTimerVisibility();
+      
+      const activeTimer = countdownAnnouncement.querySelector('.countdown-timer-1-wrapper[style*="display: none"]') ? timer2 : timer1;
+      
+      if (activeTimer) {
+        setInterval(function() {
+          updateTimerVisibility();
+        }, 1000);
+      }
+    });
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Countdown Announcement",
+  "class": "announcement-bar-countdown-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_countdown",
+      "label": "Enable countdown",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_homepage_only",
+      "label": "Show on homepage only",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Text 1",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Text 2",
+      "info": "Text for second timer (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Background color",
+      "default": "#0e355e"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Timer 1"
+    },
+    {
+      "type": "select",
+      "id": "timezone",
+      "label": "Timezone",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto (Server Timezone)" },
+        { "value": "-1200", "label": "UTC-12:00" },
+        { "value": "-1100", "label": "UTC-11:00" },
+        { "value": "-1000", "label": "UTC-10:00" },
+        { "value": "-0900", "label": "UTC-09:00" },
+        { "value": "-0800", "label": "UTC-08:00" },
+        { "value": "-0700", "label": "UTC-07:00" },
+        { "value": "-0600", "label": "UTC-06:00" },
+        { "value": "-0500", "label": "UTC-05:00" },
+        { "value": "-0400", "label": "UTC-04:00" },
+        { "value": "-0300", "label": "UTC-03:00" },
+        { "value": "-0200", "label": "UTC-02:00" },
+        { "value": "-0100", "label": "UTC-01:00" },
+        { "value": "+0000", "label": "UTC+00:00" },
+        { "value": "+0100", "label": "UTC+01:00" },
+        { "value": "+0200", "label": "UTC+02:00" },
+        { "value": "+0300", "label": "UTC+03:00" },
+        { "value": "+0400", "label": "UTC+04:00" },
+        { "value": "+0500", "label": "UTC+05:00" },
+        { "value": "+0600", "label": "UTC+06:00" },
+        { "value": "+0700", "label": "UTC+07:00" },
+        { "value": "+0800", "label": "UTC+08:00" },
+        { "value": "+0900", "label": "UTC+09:00" },
+        { "value": "+1000", "label": "UTC+10:00" },
+        { "value": "+1100", "label": "UTC+11:00" },
+        { "value": "+1200", "label": "UTC+12:00" }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "timer_year",
+      "label": "Year",
+      "default": 2025
+    },
+    {
+      "type": "select",
+      "id": "timer_month",
+      "label": "Month",
+      "options": [
+        { "value": "01", "label": "January" },
+        { "value": "02", "label": "February" },
+        { "value": "03", "label": "March" },
+        { "value": "04", "label": "April" },
+        { "value": "05", "label": "May" },
+        { "value": "06", "label": "June" },
+        { "value": "07", "label": "July" },
+        { "value": "08", "label": "August" },
+        { "value": "09", "label": "September" },
+        { "value": "10", "label": "October" },
+        { "value": "11", "label": "November" },
+        { "value": "12", "label": "December" }
+      ],
+      "default": "01"
+    },
+    {
+      "type": "select",
+      "id": "timer_day",
+      "label": "Day",
+      "options": [
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" },
+        { "value": "24", "label": "24" },
+        { "value": "25", "label": "25" },
+        { "value": "26", "label": "26" },
+        { "value": "27", "label": "27" },
+        { "value": "28", "label": "28" },
+        { "value": "29", "label": "29" },
+        { "value": "30", "label": "30" },
+        { "value": "31", "label": "31" }
+      ],
+      "default": "01"
+    },
+    {
+      "type": "select",
+      "id": "timer_hour",
+      "label": "Hour",
+      "options": [
+        { "value": "00", "label": "00" },
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" }
+      ],
+      "default": "00"
+    },
+    {
+      "type": "select",
+      "id": "timer_minute",
+      "label": "Minute",
+      "options": [
+        { "value": "00", "label": "00" },
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" },
+        { "value": "24", "label": "24" },
+        { "value": "25", "label": "25" },
+        { "value": "26", "label": "26" },
+        { "value": "27", "label": "27" },
+        { "value": "28", "label": "28" },
+        { "value": "29", "label": "29" },
+        { "value": "30", "label": "30" },
+        { "value": "31", "label": "31" },
+        { "value": "32", "label": "32" },
+        { "value": "33", "label": "33" },
+        { "value": "34", "label": "34" },
+        { "value": "35", "label": "35" },
+        { "value": "36", "label": "36" },
+        { "value": "37", "label": "37" },
+        { "value": "38", "label": "38" },
+        { "value": "39", "label": "39" },
+        { "value": "40", "label": "40" },
+        { "value": "41", "label": "41" },
+        { "value": "42", "label": "42" },
+        { "value": "43", "label": "43" },
+        { "value": "44", "label": "44" },
+        { "value": "45", "label": "45" },
+        { "value": "46", "label": "46" },
+        { "value": "47", "label": "47" },
+        { "value": "48", "label": "48" },
+        { "value": "49", "label": "49" },
+        { "value": "50", "label": "50" },
+        { "value": "51", "label": "51" },
+        { "value": "52", "label": "52" },
+        { "value": "53", "label": "53" },
+        { "value": "54", "label": "54" },
+        { "value": "55", "label": "55" },
+        { "value": "56", "label": "56" },
+        { "value": "57", "label": "57" },
+        { "value": "58", "label": "58" },
+        { "value": "59", "label": "59" }
+      ],
+      "default": "00"
+    },
+    {
+      "type": "header",
+      "content": "Timer 2 (Optional)"
+    },
+    {
+      "type": "number",
+      "id": "timer_2_year",
+      "label": "Year (Timer 2)"
+    },
+    {
+      "type": "select",
+      "id": "timer_2_month",
+      "label": "Month (Timer 2)",
+      "options": [
+        { "value": "01", "label": "January" },
+        { "value": "02", "label": "February" },
+        { "value": "03", "label": "March" },
+        { "value": "04", "label": "April" },
+        { "value": "05", "label": "May" },
+        { "value": "06", "label": "June" },
+        { "value": "07", "label": "July" },
+        { "value": "08", "label": "August" },
+        { "value": "09", "label": "September" },
+        { "value": "10", "label": "October" },
+        { "value": "11", "label": "November" },
+        { "value": "12", "label": "December" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "timer_2_day",
+      "label": "Day (Timer 2)",
+      "options": [
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" },
+        { "value": "24", "label": "24" },
+        { "value": "25", "label": "25" },
+        { "value": "26", "label": "26" },
+        { "value": "27", "label": "27" },
+        { "value": "28", "label": "28" },
+        { "value": "29", "label": "29" },
+        { "value": "30", "label": "30" },
+        { "value": "31", "label": "31" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "timer_2_hour",
+      "label": "Hour (Timer 2)",
+      "options": [
+        { "value": "00", "label": "00" },
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "timer_2_minute",
+      "label": "Minute (Timer 2)",
+      "options": [
+        { "value": "00", "label": "00" },
+        { "value": "01", "label": "01" },
+        { "value": "02", "label": "02" },
+        { "value": "03", "label": "03" },
+        { "value": "04", "label": "04" },
+        { "value": "05", "label": "05" },
+        { "value": "06", "label": "06" },
+        { "value": "07", "label": "07" },
+        { "value": "08", "label": "08" },
+        { "value": "09", "label": "09" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" },
+        { "value": "13", "label": "13" },
+        { "value": "14", "label": "14" },
+        { "value": "15", "label": "15" },
+        { "value": "16", "label": "16" },
+        { "value": "17", "label": "17" },
+        { "value": "18", "label": "18" },
+        { "value": "19", "label": "19" },
+        { "value": "20", "label": "20" },
+        { "value": "21", "label": "21" },
+        { "value": "22", "label": "22" },
+        { "value": "23", "label": "23" },
+        { "value": "24", "label": "24" },
+        { "value": "25", "label": "25" },
+        { "value": "26", "label": "26" },
+        { "value": "27", "label": "27" },
+        { "value": "28", "label": "28" },
+        { "value": "29", "label": "29" },
+        { "value": "30", "label": "30" },
+        { "value": "31", "label": "31" },
+        { "value": "32", "label": "32" },
+        { "value": "33", "label": "33" },
+        { "value": "34", "label": "34" },
+        { "value": "35", "label": "35" },
+        { "value": "36", "label": "36" },
+        { "value": "37", "label": "37" },
+        { "value": "38", "label": "38" },
+        { "value": "39", "label": "39" },
+        { "value": "40", "label": "40" },
+        { "value": "41", "label": "41" },
+        { "value": "42", "label": "42" },
+        { "value": "43", "label": "43" },
+        { "value": "44", "label": "44" },
+        { "value": "45", "label": "45" },
+        { "value": "46", "label": "46" },
+        { "value": "47", "label": "47" },
+        { "value": "48", "label": "48" },
+        { "value": "49", "label": "49" },
+        { "value": "50", "label": "50" },
+        { "value": "51", "label": "51" },
+        { "value": "52", "label": "52" },
+        { "value": "53", "label": "53" },
+        { "value": "54", "label": "54" },
+        { "value": "55", "label": "55" },
+        { "value": "56", "label": "56" },
+        { "value": "57", "label": "57" },
+        { "value": "58", "label": "58" },
+        { "value": "59", "label": "59" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown Announcement"
+    }
+  ]
+}
+{% endschema %}
+
