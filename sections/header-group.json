@@ -124,7 +124,6 @@
     },
     "rich_text_d9fWEy": {
       "type": "rich-text",
-      "disabled": true,
       "blocks": {
         "subheading_dJCcCh": {
           "type": "subheading",
@@ -162,6 +161,7 @@
         "heading_AVkBQR",
         "text_R6NJYt"
       ],
+      "disabled": true,
       "custom_css": [
         ".rte {margin-bottom: 0px;}",
         "p {padding: 0.4em 20px;}"
@@ -187,18 +187,18 @@
       "settings": {
         "enable_countdown": true,
         "show_on_homepage_only": false,
-        "text_1": "Limited Time Offer",
-        "text_2": "",
+        "text_1": "Black Friday’s Final Hours for Luxurious Softness",
+        "text_2": "Black Friday Overtime. Luxurious Softness Awaits",
         "color_bg": "#0e355e",
         "color_text": "#ffffff",
         "timezone": "auto",
         "timer_year": 2025,
-        "timer_month": "01",
-        "timer_day": "01",
+        "timer_month": "11",
+        "timer_day": "29",
         "timer_hour": "00",
         "timer_minute": "00",
-        "timer_2_year": null,
-        "timer_2_month": "",
+        "timer_2_year": 2025,
+        "timer_2_month": "12",
         "timer_2_day": "",
         "timer_2_hour": "",
         "timer_2_minute": ""
