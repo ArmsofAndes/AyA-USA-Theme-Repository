@@ -59,6 +59,8 @@
 }
 
 /* Gradient shadow from bottom (25% of image) - Mobile only */
+/* HIDDEN: Temporarily disabled to remove darkening effect */
+/*
 @media only screen and (max-width: 767px) {
   .image-with-text-overlay--bg:before {
     content: "";
@@ -72,6 +74,7 @@
     pointer-events: none;
   }
 }
+*/
 
 /* Desktop image positioning */
 @media only screen and (min-width: 1024px) {
