@@ -188,7 +188,7 @@
         "enable_countdown": true,
         "show_on_homepage_only": false,
         "text_1": "Black Friday Overtime. Luxurious Softness Awaits",
-        "text_2": "Black Friday Overtime. Luxurious Softness Awaits",
+        "text_2": "Cyber Monday: Last Chance for Luxurious Softness",
         "color_bg": "#0e355e",
         "color_text": "#ffffff",
         "timezone": "-0800",
@@ -199,7 +199,7 @@
         "timer_minute": "00",
         "timer_2_year": 2025,
         "timer_2_month": "12",
-        "timer_2_day": "",
+        "timer_2_day": "03",
         "timer_2_hour": "",
         "timer_2_minute": ""
       }
