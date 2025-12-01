@@ -16,6 +16,7 @@
     assign overlay_opacity = section.settings.overlay_opacity
     assign disable_top_spacing = section.settings.disable_top_spacing
     assign disable_bottom_spacing = section.settings.disable_bottom_spacing
+    assign free_sleeve_text = section.settings.free_sleeve_text | default: "*Orders over $200 unlock a free Alpaca Arm Sleeve."
 
     case mobile_height
         when 'mobile-height-350'
@@ -145,7 +146,7 @@
                                       {%- elsif block.settings.text contains '<' -%}
                                         {{ block.settings.text }}
                                       {%- else -%}
-                                        {{ block.settings.text | newline_to_br }}
+                                      {{ block.settings.text | newline_to_br }}
                                       {%- endif -%}
                                     </{{ heading_tag }}>
                                 </div>
@@ -225,6 +226,12 @@
                         </div>
                     {%- endif -%}
                 </div>
+                
+                {% if free_sleeve_text != blank %}
+                <div class="bf-overlay--free-sleeve-text">
+                    {{ free_sleeve_text }}
+                </div>
+                {% endif %}
             </div>
 
         </image-with-text-overlay>
@@ -342,9 +349,11 @@
   {% endfor %}
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
+    display: flex;
     gap: 10px;
     width: 100%;
-    /* justify-content: center; */
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
   }
   
@@ -553,7 +562,7 @@
     order: 2;
     display: flex;
     flex-direction: column;
-    margin-top: auto !important;
+    margin-top: 70% !important;
     margin-bottom: 0 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -585,9 +594,13 @@
   
   /* Buttons wrapper - part of bottom section, directly below subheading */
   #shopify-section-{{ section.id }} .bf-bottom-section .buttons-grid-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     margin-top: 0.9375rem !important; /* 15px gap from subheading */
     margin-bottom: 0 !important;
-    margin-right: var(--bf-buttons-margin-right) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     padding-left: 10%;
@@ -918,6 +931,44 @@
     padding-bottom: 0 !important;
     text-transform: none !important;
   }
+  
+  /* Mobile Free Sleeve Text */
+  #shopify-section-{{ section.id }} .bf-overlay--free-sleeve-text {
+    position: absolute;
+    /* bottom: 1rem; */
+    left: 0;
+    width: 100%;
+    color: #CCC;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 40px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+/* Desktop Free Sleeve Text */
+@media only screen and (min-width: 768px) {
+  #shopify-section-{{ section.id }} .bf-overlay--free-sleeve-text {
+    position: absolute;
+    left: 0;
+    bottom: 2rem;
+    margin-bottom: 1rem;
+    color: #CCC;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6875rem; /* 27px */
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2.5rem; /* 40px - 148.148% */
+    z-index: 10;
+    pointer-events: none;
+  }
 }
 </style>
 {% schema %}
@@ -1108,6 +1159,13 @@
                 ],
                 "default": "center",
                 "label": "Content alignment"
+            },
+            {
+                "type": "text",
+                "id": "free_sleeve_text",
+                "label": "Free sleeve text",
+                "default": "*Orders over $200 unlock a free Alpaca Arm Sleeve.",
+                "info": "Text displayed at the bottom left of the overlay"
             },
             {
         "type": "header",
