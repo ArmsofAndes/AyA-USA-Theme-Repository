@@ -119,11 +119,35 @@
                                      data-block-type="heading"
                                      {{ block.shopify_attributes }}>
                                     <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
-                                      {% if block.settings.text contains '<' %}
+                                      {%- if block.settings.sale_line_1 != blank or block.settings.sale_line_2_prefix != blank or block.settings.sale_line_2_yellow != blank or block.settings.sale_line_2_suffix != blank or block.settings.sale_line_3_discount != blank -%}
+                                        {%- assign line_1 = block.settings.sale_line_1 | default: "CYBER MONDAY" -%}
+                                        {%- assign line_2_prefix = block.settings.sale_line_2_prefix | default: "FINAL HOURS OF THE" -%}
+                                        {%- assign line_2_yellow = block.settings.sale_line_2_yellow | default: "YEAR'S BEST" -%}
+                                        {%- assign line_2_suffix = block.settings.sale_line_2_suffix | default: "DEALS!" -%}
+                                        {%- assign line_3_discount = block.settings.sale_line_3_discount | default: "25% OFF SITEWIDE" -%}
+                                        {%- if line_3_discount contains 'SITEWIDE' -%}
+                                          {%- assign discount_first = line_3_discount | remove: 'SITEWIDE' | strip -%}
+                                          {%- assign discount_second = "SITEWIDE" -%}
+                                        {%- elsif line_3_discount contains 'OFF' -%}
+                                          {%- assign discount_parts = line_3_discount | split: 'OFF' -%}
+                                          {%- assign discount_first = discount_parts[0] | append: 'OFF' | strip -%}
+                                          {%- assign discount_second = discount_parts[1] | strip | default: "" -%}
+                                        {%- else -%}
+                                          {%- assign discount_parts = line_3_discount | split: ' ' -%}
+                                          {%- if discount_parts.size >= 3 -%}
+                                            {%- assign discount_first = discount_parts[0] | append: ' ' | append: discount_parts[1] | strip -%}
+                                            {%- assign discount_second = discount_parts | slice: 2, 10 | join: ' ' | strip -%}
+                                          {%- else -%}
+                                            {%- assign discount_first = discount_parts[0] | default: "25% OFF" -%}
+                                            {%- assign discount_second = discount_parts | slice: 1, 10 | join: ' ' | strip | default: "SITEWIDE" -%}
+                                          {%- endif -%}
+                                        {%- endif -%}
+                                        <span class="bf-yellow-bf">{{ line_1 }}</span><span class="bf-group-left"><span class="bf-white">{{ line_2_prefix }}</span> <span class="bf-yellow">{{ line_2_yellow }}</span> <span class="bf-white">{{ line_2_suffix }}</span></span><div class="bf-line-3-wrapper"><span class="bf-discount">{{ discount_first }}</span> <span class="bf-sitewide">{{ discount_second }}</span></div>
+                                      {%- elsif block.settings.text contains '<' -%}
                                         {{ block.settings.text }}
-                                      {% else %}
-                                      {{ block.settings.text | newline_to_br }}
-                                      {% endif %}
+                                      {%- else -%}
+                                        {{ block.settings.text | newline_to_br }}
+                                      {%- endif -%}
                                     </{{ heading_tag }}>
                                 </div>
                             {%- when 'text' -%}
@@ -631,29 +655,64 @@
     letter-spacing: var(--bf-letter-spacing-yellow-white) !important;
   }
   
+  /* Line 3 wrapper - flexbox container for discount and sitewide */
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 0.5rem !important;
+    text-align: left !important;
+  }
+  
   /* Discount text: "25% OFF" */
-  #shopify-section-{{ section.id }} .bf-discount {
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-discount {
     display: block !important;
     font-size: var(--bf-discount-font-size-desktop) !important;
     font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: var(--bf-discount-line-height-desktop) !important;
+    line-height: 0.75 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    text-align: left !important;
+  }
+  
+  /* Sitewide text */
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-sitewide {
+    display: block !important;
+    font-size: var(--bf-discount-font-size-desktop) !important;
+    font-weight: 700 !important;
+    color: #FFF !important;
+    letter-spacing: var(--bf-letter-spacing-discount) !important;
+    line-height: 0.75 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0 !important;
+    text-align: left !important;
+  }
+  
+  /* Fallback for old structure (without wrapper) */
+  #shopify-section-{{ section.id }} .bf-discount:not(.bf-line-3-wrapper .bf-discount) {
+    display: block !important;
+    font-size: var(--bf-discount-font-size-desktop) !important;
+    font-weight: 700 !important;
+    color: #FFF !important;
+    letter-spacing: var(--bf-letter-spacing-discount) !important;
+    line-height: 0.75 !important;
     font-family: 'Open Sans', sans-serif !important;
     margin-top: 1rem !important;
     text-align: left !important;
   }
   
-  /* Sitewide text */
-  #shopify-section-{{ section.id }} .bf-sitewide {
+  #shopify-section-{{ section.id }} .bf-sitewide:not(.bf-line-3-wrapper .bf-sitewide) {
     display: block !important;
     font-size: var(--bf-discount-font-size-desktop) !important;
     font-weight: 700 !important;
     color: #FFF !important;
     letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: var(--bf-discount-line-height-desktop) !important;
+    line-height: 0.75 !important;
     font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0.625rem !important; /* 10px */
+    margin-top: 0.625rem !important;
     text-align: left !important;
   }
   
@@ -766,8 +825,16 @@
     color: #FFF !important;
   }
   
-  /* Discount text: "25% OFF" */
-  #shopify-section-{{ section.id }} .bf-discount {
+  /* Line 3 wrapper - flexbox container for discount and sitewide (mobile) */
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 0.5rem !important;
+    text-align: center !important;
+  }
+  
+  /* Discount text: "25% OFF" (mobile) */
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-discount {
     display: block;
     font-size: var(--bf-discount-font-size-mobile) !important;
     font-weight: 700 !important;
@@ -779,8 +846,33 @@
     margin-bottom: 0 !important;
   }
   
-  /* Sitewide text */
-  #shopify-section-{{ section.id }} .bf-sitewide {
+  /* Sitewide text (mobile) */
+  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-sitewide {
+    display: block;
+    font-size: var(--bf-sitewide-font-size-mobile) !important;
+    font-weight: 700 !important;
+    color: #FFF !important;
+    letter-spacing: var(--bf-letter-spacing-mobile);
+    line-height: var(--bf-discount-line-height-mobile) !important;
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 0.5rem !important; /* Increased vertical spacing for mobile */
+    margin-bottom: 0 !important;
+  }
+  
+  /* Fallback for old structure (mobile) */
+  #shopify-section-{{ section.id }} .bf-discount:not(.bf-line-3-wrapper .bf-discount) {
+    display: block;
+    font-size: var(--bf-discount-font-size-mobile) !important;
+    font-weight: 700 !important;
+    color: #FFF !important;
+    letter-spacing: var(--bf-letter-spacing-discount-mobile);
+    line-height: var(--bf-discount-line-height-mobile) !important;
+    font-family: 'Open Sans', sans-serif !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  #shopify-section-{{ section.id }} .bf-sitewide:not(.bf-line-3-wrapper .bf-sitewide) {
     display: block;
     font-size: var(--bf-sitewide-font-size-mobile) !important;
     font-weight: 700 !important;
@@ -1114,6 +1206,40 @@
                         "id": "text",
                         "label": "Text",
                         "default": "Image with text overlay"
+                    },
+                    {
+                      "type": "header",
+                      "content": "Sale Text"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sale_line_1",
+                        "label": "Line 1 (Event Name)",
+                        "default": "CYBER MONDAY"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sale_line_2_prefix",
+                        "label": "Line 2 - Prefix",
+                        "default": "FINAL HOURS OF THE"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sale_line_2_yellow",
+                        "label": "Line 2 - Biggest (Yellow)",
+                        "default": "YEAR'S BEST"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sale_line_2_suffix",
+                        "label": "Line 2 - Suffix",
+                        "default": "DEALS!"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sale_line_3_discount",
+                        "label": "Line 3 (Discount)",
+                        "default": "25% OFF SITEWIDE"
                     },
                     {
                       "type": "header",
