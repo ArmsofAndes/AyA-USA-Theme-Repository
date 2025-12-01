@@ -532,6 +532,8 @@
         const date2 = parseTimerDate(timer2);
         
         if (!date1) return;
+        
+        // Si no hay Timer 2, mostrar siempre Timer 1
         if (!date2) {
           if (text1) text1.style.display = '';
           if (text2) text2.style.display = 'none';
@@ -543,33 +545,53 @@
         const distance1 = date1 - now;
         const distance2 = date2 - now;
         
-        if (distance2 > 0 && distance2 < distance1) {
-          if (text1) text1.style.display = 'none';
-          if (text2) text2.style.display = '';
-          if (timer1Wrapper) timer1Wrapper.style.display = 'none';
-          if (timer2Wrapper) timer2Wrapper.style.display = '';
-        } else if (distance1 > 0) {
+        // Determinar cuál timer mostrar basándose en cuál fecha es la más cercana
+        // Si ambas están en el futuro, mostrar la más cercana
+        // Si una expiró, mostrar la otra
+        // Si ambas expiraron, mostrar Timer 1 por defecto
+        
+        let showTimer1 = true;
+        let showTimer2 = false;
+        
+        if (distance1 > 0 && distance2 > 0) {
+          // Ambas están en el futuro: mostrar la más cercana
+          showTimer1 = distance1 <= distance2;
+          showTimer2 = distance2 < distance1;
+        } else if (distance1 > 0 && distance2 <= 0) {
+          // Timer 1 está en el futuro, Timer 2 expiró: mostrar Timer 1
+          showTimer1 = true;
+          showTimer2 = false;
+        } else if (distance1 <= 0 && distance2 > 0) {
+          // Timer 1 expiró, Timer 2 está en el futuro: mostrar Timer 2
+          showTimer1 = false;
+          showTimer2 = true;
+        } else {
+          // Ambas expiraron: mostrar Timer 1 por defecto
+          showTimer1 = true;
+          showTimer2 = false;
+        }
+        
+        // Aplicar visibilidad según la decisión
+        if (showTimer1) {
           if (text1) text1.style.display = '';
           if (text2) text2.style.display = 'none';
           if (timer1Wrapper) timer1Wrapper.style.display = '';
           if (timer2Wrapper) timer2Wrapper.style.display = 'none';
         } else {
-          if (text1) text1.style.display = '';
-          if (text2) text2.style.display = 'none';
-          if (timer1Wrapper) timer1Wrapper.style.display = '';
-          if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+          if (text1) text1.style.display = 'none';
+          if (text2) text2.style.display = '';
+          if (timer1Wrapper) timer1Wrapper.style.display = 'none';
+          if (timer2Wrapper) timer2Wrapper.style.display = '';
         }
       }
       
+      // Inicializar visibilidad
       updateTimerVisibility();
       
-      const activeTimer = countdownAnnouncement.querySelector('.countdown-timer-1-wrapper[style*="display: none"]') ? timer2 : timer1;
-      
-      if (activeTimer) {
-        setInterval(function() {
-          updateTimerVisibility();
-        }, 1000);
-      }
+      // Actualizar cada segundo para detectar cambios automáticos entre timers
+      setInterval(function() {
+        updateTimerVisibility();
+      }, 1000);
     });
   })();
 </script>
