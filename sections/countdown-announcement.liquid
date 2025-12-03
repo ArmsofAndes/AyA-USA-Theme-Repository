@@ -16,6 +16,7 @@
     assign color_text = section.settings.color_text
     assign text_1 = section.settings.text_1
     assign text_2 = section.settings.text_2
+    assign text_3 = section.settings.text_3
     
     assign timer_year = section.settings.timer_year
     assign timer_month = section.settings.timer_month
@@ -44,6 +45,13 @@
       echo timer_hour | append: ':' | append: timer_minute
     endcapture
     
+    if timer_2_hour == blank
+      assign timer_2_hour = '00'
+    endif
+    if timer_2_minute == blank
+      assign timer_2_minute = '00'
+    endif
+    
     capture date_2
       echo timer_2_day | append: '-' | append: timer_2_month | append: '-' | append: timer_2_year
     endcapture
@@ -53,7 +61,7 @@
     endcapture
     
     assign has_timer_2 = false
-    if timer_2_year != blank and timer_2_month != blank and timer_2_day != blank
+    if timer_2_year != blank and timer_2_year > 0 and timer_2_month != blank and timer_2_day != blank
       assign has_timer_2 = true
     endif
   endif
@@ -131,6 +139,13 @@
               <span class="countdown-timer--label">{{ 'sections.countdown_banner.seconds' | t }}</span>
             </span>
           </countdown-timer>
+        </div>
+      {% endif %}
+      
+      <!-- Texto 3 (cuando no hay countdown activo) -->
+      {% if text_3 != blank %}
+        <div class="countdown-announcement-text countdown-text-3" style="display: none;">
+          <span>{{ text_3 }}</span>
         </div>
       {% endif %}
     </div>
@@ -237,6 +252,54 @@
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 0;
+    transition: color 0.3s ease;
+  }
+
+  /* Animación de parpadeo cuando queda 1 hora o menos */
+  .countdown-announcement-text.urgent-blink {
+    animation: blinkText 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blinkText {
+    0%, 100% {
+      color: inherit;
+      opacity: 1;
+    }
+    50% {
+      color: #ff6b6b;
+      opacity: 1;
+    }
+  }
+
+  /* Estilos para el texto 3 (cuando no hay countdown activo) */
+  .countdown-text-3 {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    display: none;
+  }
+
+  /* Cuando el texto 3 está visible, centrar todo el contenido */
+  .announcement-bar-countdown.show-text-3 {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .announcement-bar-countdown.show-text-3 .announcement-bar--inner {
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+  }
+
+  .announcement-bar-countdown.show-text-3 .countdown-text-3 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100%;
+    text-align: center;
+    margin: 0;
   }
 
   .countdown-announcement-timer {
@@ -304,6 +367,33 @@
       margin: 0 auto;
       gap: 1rem;
       box-sizing: border-box;
+    }
+
+    /* Estilos específicos para cuando el texto 3 está visible en desktop */
+    .announcement-bar-countdown.show-text-3 {
+      height: 42.3px !important;
+      min-height: 42.3px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .announcement-bar-countdown.show-text-3 .announcement-bar--inner {
+      height: 100% !important;
+      min-height: 100% !important;
+      align-items: center !important;
+      justify-content: center !important;
+      display: flex !important;
+    }
+
+    .announcement-bar-countdown.show-text-3 .countdown-text-3 {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      line-height: 1.5;
     }
   }
 
@@ -499,46 +589,105 @@
       
       if (!countdownAnnouncement) return;
       
+      const announcementBarCountdown = countdownAnnouncement.querySelector('.announcement-bar-countdown');
       const timer1 = countdownAnnouncement.querySelector('.countdown-timer-1');
       const timer1Wrapper = countdownAnnouncement.querySelector('.countdown-timer-1-wrapper');
       const timer2Wrapper = countdownAnnouncement.querySelector('.countdown-timer-2-wrapper');
       const timer2 = timer2Wrapper ? timer2Wrapper.querySelector('.countdown-timer-2') : null;
       const text1 = countdownAnnouncement.querySelector('.countdown-text-1');
       const text2 = countdownAnnouncement.querySelector('.countdown-text-2');
+      const text3 = countdownAnnouncement.querySelector('.countdown-text-3');
       
       if (!timer1) return;
       
-      if (!timer2) {
-        return;
-      }
-      
       function parseTimerDate(timer) {
+        if (!timer) return null;
+        
         const dateStr = timer.dataset.date;
         const timeStr = timer.dataset.time;
         const timezone = timer.dataset.timezone;
         
-        if (!dateStr || !timeStr) return null;
+        if (!dateStr || !timeStr || !timezone) return null;
         
         const [day, month, year] = dateStr.split('-');
         const [hour, minute] = timeStr.split(':');
         
-        const dateString = month + '/' + day + '/' + year + ' ' + hour + ':' + minute + ' GMT' + timezone;
-        return new Date(dateString).getTime();
+        // Validar que todos los valores estén presentes
+        if (!day || !month || !year) return null;
+        
+        // Usar valores por defecto para hora y minuto si no están presentes
+        const hourValue = hour || '00';
+        const minuteValue = minute || '00';
+        
+        // Convertir a números
+        const yearNum = parseInt(year, 10);
+        const monthNum = parseInt(month, 10);
+        const dayNum = parseInt(day, 10);
+        const hourNum = parseInt(hourValue, 10);
+        const minuteNum = parseInt(minuteValue, 10);
+        
+        // Validar que los valores numéricos sean válidos
+        if (isNaN(yearNum) || yearNum <= 0) return null;
+        if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) return null;
+        if (isNaN(dayNum) || dayNum < 1 || dayNum > 31) return null;
+        if (isNaN(hourNum) || hourNum < 0 || hourNum > 23) return null;
+        if (isNaN(minuteNum) || minuteNum < 0 || minuteNum > 59) return null;
+        
+        // Intentar crear la fecha
+        try {
+          const dateString = month + '/' + day + '/' + year + ' ' + hourValue + ':' + minuteValue + ' GMT' + timezone;
+          const timestamp = new Date(dateString).getTime();
+          
+          // Validar que el timestamp sea válido (no NaN y positivo)
+          if (isNaN(timestamp) || timestamp <= 0) return null;
+          
+          return timestamp;
+        } catch (e) {
+          return null;
+        }
+      }
+      
+      function updateBlinkEffect(distance, textElement) {
+        if (!textElement) return;
+        
+        // Calcular horas restantes
+        const hoursRemaining = Math.floor(distance / (1000 * 60 * 60));
+        
+        // Si queda 1 hora o menos y el timer está activo (distance > 0)
+        if (distance > 0 && hoursRemaining <= 1) {
+          textElement.classList.add('urgent-blink');
+        } else {
+          textElement.classList.remove('urgent-blink');
+        }
       }
       
       function updateTimerVisibility() {
         const now = Date.now();
+        
+        // Buscar Timer 2 dinámicamente en cada actualización
+        const timer2Wrapper = countdownAnnouncement.querySelector('.countdown-timer-2-wrapper');
+        const timer2 = timer2Wrapper ? timer2Wrapper.querySelector('.countdown-timer-2') : null;
+        
         const date1 = parseTimerDate(timer1);
-        const date2 = parseTimerDate(timer2);
+        const date2 = timer2 ? parseTimerDate(timer2) : null;
         
         if (!date1) return;
         
-        // Si no hay Timer 2, mostrar siempre Timer 1
-        if (!date2) {
+        // Si no hay Timer 2 configurado o válido, solo mostrar Timer 1 (nunca mostrar texto 3)
+        if (!date2 || !timer2) {
+          const distance1 = date1 - now;
+          
+          // Timer 1 activo o expirado - siempre mostrar el timer
           if (text1) text1.style.display = '';
           if (text2) text2.style.display = 'none';
+          if (text3) text3.style.display = 'none';
           if (timer1Wrapper) timer1Wrapper.style.display = '';
           if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+          // Quitar clase de centrado
+          if (announcementBarCountdown) announcementBarCountdown.classList.remove('show-text-3');
+          
+          // Verificar si queda 1 hora o menos y aplicar parpadeo
+          updateBlinkEffect(distance1, text1);
           return;
         }
         
@@ -553,6 +702,25 @@
         let showTimer1 = true;
         let showTimer2 = false;
         
+        // Verificar si ambos timers expiraron
+        if (distance1 <= 0 && distance2 <= 0) {
+          // Ambos expiraron: mostrar texto 3 y ocultar timers
+          if (text1) text1.style.display = 'none';
+          if (text2) text2.style.display = 'none';
+          if (text3) text3.style.display = 'block';
+          if (timer1Wrapper) timer1Wrapper.style.display = 'none';
+          if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+          // Quitar parpadeo de ambos textos
+          if (text1) text1.classList.remove('urgent-blink');
+          if (text2) text2.classList.remove('urgent-blink');
+          // Agregar clase para centrar el contenido
+          if (announcementBarCountdown) announcementBarCountdown.classList.add('show-text-3');
+          return;
+        }
+        
+        // Quitar clase de centrado si algún timer está activo
+        if (announcementBarCountdown) announcementBarCountdown.classList.remove('show-text-3');
+        
         if (distance1 > 0 && distance2 > 0) {
           // Ambas están en el futuro: mostrar la más cercana
           showTimer1 = distance1 <= distance2;
@@ -565,23 +733,31 @@
           // Timer 1 expiró, Timer 2 está en el futuro: mostrar Timer 2
           showTimer1 = false;
           showTimer2 = true;
-        } else {
-          // Ambas expiraron: mostrar Timer 1 por defecto
-          showTimer1 = true;
-          showTimer2 = false;
         }
         
         // Aplicar visibilidad según la decisión
         if (showTimer1) {
           if (text1) text1.style.display = '';
           if (text2) text2.style.display = 'none';
+          if (text3) text3.style.display = 'none';
           if (timer1Wrapper) timer1Wrapper.style.display = '';
           if (timer2Wrapper) timer2Wrapper.style.display = 'none';
+          
+          // Verificar si queda 1 hora o menos y aplicar parpadeo al timer visible
+          updateBlinkEffect(distance1, text1);
+          // Quitar parpadeo del timer no visible
+          if (text2) text2.classList.remove('urgent-blink');
         } else {
           if (text1) text1.style.display = 'none';
           if (text2) text2.style.display = '';
+          if (text3) text3.style.display = 'none';
           if (timer1Wrapper) timer1Wrapper.style.display = 'none';
           if (timer2Wrapper) timer2Wrapper.style.display = '';
+          
+          // Verificar si queda 1 hora o menos y aplicar parpadeo al timer visible
+          updateBlinkEffect(distance2, text2);
+          // Quitar parpadeo del timer no visible
+          if (text1) text1.classList.remove('urgent-blink');
         }
       }
       
@@ -629,6 +805,12 @@
       "id": "text_2",
       "label": "Text 2",
       "info": "Text for second timer (optional)"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Text 3",
+      "info": "Text to show when no countdown is active (optional)"
     },
     {
       "type": "header",
