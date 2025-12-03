@@ -191,7 +191,7 @@
         "text_2": "Black Friday Overtime. Luxurious Softness Awaits",
         "color_bg": "#0e355e",
         "color_text": "#ffffff",
-        "timezone": "+0800",
+        "timezone": "-0800",
         "timer_year": 2025,
         "timer_month": "11",
         "timer_day": "29",
