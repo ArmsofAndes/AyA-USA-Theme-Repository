@@ -859,7 +859,7 @@
 .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
   margin: 0 !important;
   display: inline-flex;
-  width: auto;
+  width: 175.3px;
   /* Only allow button-specific transitions (hover effects) */
   /* Position and layout transitions are disabled to prevent movement during dropdown close */
 }

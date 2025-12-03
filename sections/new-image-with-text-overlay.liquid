@@ -253,6 +253,11 @@
   {%- endcase -%}
 {% endfor %}
 
+/* Buttons grid wrapper - desktop styles */
+#shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+  width: 175.3px;
+}
+
 /* Responsive heading adjustments */
 @media only screen and (max-width: 767px) {
   {% for block in section.blocks %}
