@@ -277,12 +277,17 @@
   /* Cuando el texto 3 está visible, centrar todo el contenido */
   .announcement-bar-countdown.show-text-3 .announcement-bar--inner {
     justify-content: center !important;
+    align-items: center !important;
+    min-height: 100% !important;
   }
 
   .announcement-bar-countdown.show-text-3 .countdown-text-3 {
-    display: block !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100%;
     text-align: center;
+    min-height: 100%;
   }
 
   .countdown-announcement-timer {
@@ -615,23 +620,11 @@
         
         if (!date1) return;
         
-        // Si no hay Timer 2, verificar si Timer 1 expiró
+        // Si no hay Timer 2, solo mostrar Timer 1 (nunca mostrar texto 3)
         if (!date2) {
           const distance1 = date1 - now;
           
-          // Si Timer 1 expiró, mostrar texto 3
-          if (distance1 <= 0) {
-            if (text1) text1.style.display = 'none';
-            if (text2) text2.style.display = 'none';
-            if (text3) text3.style.display = 'block';
-            if (timer1Wrapper) timer1Wrapper.style.display = 'none';
-            if (timer2Wrapper) timer2Wrapper.style.display = 'none';
-            // Agregar clase para centrar el contenido
-            if (announcementBarCountdown) announcementBarCountdown.classList.add('show-text-3');
-            return;
-          }
-          
-          // Timer 1 activo
+          // Timer 1 activo o expirado - siempre mostrar el timer
           if (text1) text1.style.display = '';
           if (text2) text2.style.display = 'none';
           if (text3) text3.style.display = 'none';
