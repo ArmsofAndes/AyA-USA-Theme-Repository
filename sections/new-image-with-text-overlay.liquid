@@ -1,6 +1,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
 
 {{- 'image-with-text-overlay.css' | asset_url | stylesheet_tag -}}
 {%- liquid
@@ -16,7 +16,6 @@
     assign overlay_opacity = section.settings.overlay_opacity
     assign disable_top_spacing = section.settings.disable_top_spacing
     assign disable_bottom_spacing = section.settings.disable_bottom_spacing
-    assign free_sleeve_text = section.settings.free_sleeve_text | default: "*Orders over $200 unlock a free Alpaca Arm Sleeve."
 
     case mobile_height
         when 'mobile-height-350'
@@ -87,7 +86,6 @@
                     {%- liquid
                         assign button_group_started = false
                         assign button_count = 0
-                        assign bottom_section_started = false
                     -%}
                     {% for block in section.blocks %}
                         {%- case block.type -%}
@@ -97,12 +95,6 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
-                                {%- if block.id == 'subheading_r7FGyJ' -%}
-                                    {% unless bottom_section_started %}
-                                        <div class="bf-bottom-section">
-                                        {% assign bottom_section_started = true %}
-                                    {% endunless %}
-                                {%- endif -%}
                                 <div class="block-wrapper block-{{ block.id }}" 
                                      data-block-type="subheading"
                                      {{ block.shopify_attributes }}>
@@ -120,34 +112,7 @@
                                      data-block-type="heading"
                                      {{ block.shopify_attributes }}>
                                     <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
-                                      {%- if block.settings.sale_line_1 != blank or block.settings.sale_line_2_text_1 != blank or block.settings.sale_line_2_text_2 != blank or block.settings.sale_line_3_discount != blank -%}
-                                        {%- assign line_1 = block.settings.sale_line_1 | default: "CYBER MONDAY" -%}
-                                        {%- assign line_2_text_1 = block.settings.sale_line_2_text_1 | default: "FINAL HOURS OF THE" -%}
-                                        {%- assign line_2_text_2 = block.settings.sale_line_2_text_2 | default: "YEAR'S BEST DEALS" -%}
-                                        {%- assign line_3_discount = block.settings.sale_line_3_discount | default: "25% OFF SITEWIDE" -%}
-                                        {%- if line_3_discount contains 'SITEWIDE' -%}
-                                          {%- assign discount_first = line_3_discount | remove: 'SITEWIDE' | strip -%}
-                                          {%- assign discount_second = "SITEWIDE" -%}
-                                        {%- elsif line_3_discount contains 'OFF' -%}
-                                          {%- assign discount_parts = line_3_discount | split: 'OFF' -%}
-                                          {%- assign discount_first = discount_parts[0] | append: 'OFF' | strip -%}
-                                          {%- assign discount_second = discount_parts[1] | strip | default: "" -%}
-                                        {%- else -%}
-                                          {%- assign discount_parts = line_3_discount | split: ' ' -%}
-                                          {%- if discount_parts.size >= 3 -%}
-                                            {%- assign discount_first = discount_parts[0] | append: ' ' | append: discount_parts[1] | strip -%}
-                                            {%- assign discount_second = discount_parts | slice: 2, 10 | join: ' ' | strip -%}
-                                          {%- else -%}
-                                            {%- assign discount_first = discount_parts[0] | default: "25% OFF" -%}
-                                            {%- assign discount_second = discount_parts | slice: 1, 10 | join: ' ' | strip | default: "SITEWIDE" -%}
-                                          {%- endif -%}
-                                        {%- endif -%}
-                                        <span class="bf-yellow-bf">{{ line_1 }}</span><span class="bf-group-left"><span class="bf-white">{{ line_2_text_1 }}</span><span class="bf-white">{{ line_2_text_2 }}</span></span><div class="bf-line-3-wrapper"><span class="bf-discount">{{ discount_first }}</span> <span class="bf-sitewide">{{ discount_second }}</span></div>
-                                      {%- elsif block.settings.text contains '<' -%}
-                                        {{ block.settings.text }}
-                                      {%- else -%}
                                       {{ block.settings.text | newline_to_br }}
-                                      {%- endif -%}
                                     </{{ heading_tag }}>
                                 </div>
                             {%- when 'text' -%}
@@ -198,10 +163,6 @@
                                     </div>
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
-                                    {%- if bottom_section_started -%}
-                                        </div>
-                                        {% assign bottom_section_started = false %}
-                                    {%- endif -%}
                                   {% endif %}
                                 {% endif %}
                             {%- when 'space' -%}
@@ -210,10 +171,6 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
-                                {%- if bottom_section_started -%}
-                                    </div>
-                                    {% assign bottom_section_started = false %}
-                                {%- endif -%}
                                 <div class="block-wrapper block-space block-{{ block.id }}" 
                                      data-block-type="space"
                                      {{ block.shopify_attributes }}></div>
@@ -222,16 +179,7 @@
                     {% if button_group_started %}
                         </div>
                     {% endif %}
-                    {%- if bottom_section_started -%}
-                        </div>
-                    {%- endif -%}
                 </div>
-                
-                {% if free_sleeve_text != blank %}
-                <div class="bf-overlay--free-sleeve-text">
-                    {{ free_sleeve_text }}
-                </div>
-                {% endif %}
             </div>
 
         </image-with-text-overlay>
@@ -261,15 +209,6 @@
         --block-margin-top: {{ block.settings.margin_top }}rem;
         --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
       }
-      {%- if block.id == 'subheading_r7FGyJ' -%}
-        #shopify-section-{{ section.id }} .block-subheading_r7FGyJ {
-          --block-font-size: 1.0rem;
-          --block-font-weight: 400;
-          --block-color: #ffffff;
-          --block-margin-top: 0rem;
-          --block-margin-bottom: 2rem;
-        }
-      {%- endif -%}
     {%- when 'heading' -%}
       {%- if block.settings.heading_line_height > 0 -%}
         {%- assign heading_line_height = block.settings.heading_line_height -%}
@@ -349,11 +288,9 @@
   {% endfor %}
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    display: flex;
     gap: 10px;
     width: 100%;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
     flex-wrap: wrap;
   }
   
@@ -411,564 +348,6 @@
 /* Section-specific overrides */
 #shopify-section-{{ section.id }} p {
   margin-bottom: 0;
-}
-
-/* ============================================
-   BLACK FRIDAY BANNER SPECIFIC STYLES
-   Refactored and optimized CSS with rem units
-   ============================================ */
-
-/* Section-specific selector for scoping */
-#shopify-section-{{ section.id }} {
-  /* Layout Variables */
-  --bf-section-max-width: 98.75rem; /* 1580px */
-  --bf-section-padding-desktop: 3.4375rem; /* 55px */
-  --bf-section-padding-mobile: 0.875rem; /* 14px */
-  --bf-content-padding-mobile: 12%;
-  --bf-buttons-gap-desktop: 2.85625rem; /* 45.7px */
-  --bf-buttons-margin-right: 22%;
-  
-  /* Typography Variables - Desktop */
-  --bf-heading-font-size-desktop: 2.5rem; /* 40px */
-  --bf-heading-line-height-desktop: 2.875rem; /* 46px */
-  --bf-discount-font-size-desktop: 6rem; /* 96px */
-  --bf-discount-line-height-desktop: 5.625rem; /* 90px */
-  --bf-subheading-font-size-desktop: 2.5rem; /* 40px */
-  --bf-subheading-line-height-desktop: 2.5rem; /* 40px */
-  
-  /* Typography Variables - Mobile */
-  --bf-heading-font-size-mobile: 1.25rem; /* 20px */
-  --bf-heading-line-height-mobile: 1.5625rem; /* 25px */
-  --bf-discount-font-size-mobile: 2.5rem; /* 40px */
-  --bf-discount-line-height-mobile: 1.75rem; /* 28px */
-  --bf-sitewide-font-size-mobile: 1.25rem; /* 20px */
-  --bf-subheading-font-size-mobile: 2.1875rem; /* 35px */
-  --bf-subheading-line-height-mobile: 2.5rem; /* 40px */
-  
-  /* Letter Spacing Variables - Desktop */
-  --bf-letter-spacing-yellow-bf: 1.575rem; /* 25.2px */
-  --bf-letter-spacing-yellow-white: 0.2rem; /* 3.2px */
-  --bf-letter-spacing-discount: 1.2rem; /* 19.2px */
-  
-  /* Letter Spacing Variables - Mobile */
-  --bf-letter-spacing-mobile: 0.1875rem; /* 3px */
-  --bf-letter-spacing-discount-mobile: 0.375rem; /* 6px */
-  --bf-letter-spacing-subheading-mobile: 0.13125rem; /* 2.1px */
-}
-
-/* ============================================
-   LAYOUT STYLES
-   ============================================ */
-
-/* Content container - Full height */
-#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
-  height: 100%;
-  min-height: 100%;
-  gap: 0;
-}
-
-/* Desktop/Laptop Layout (768px+) 
-   This breakpoint covers:
-   - Tablets in landscape mode (768px+)
-   - Small laptops (1024px+)
-   - Standard laptops (1366px+)
-   - Desktop monitors (1920px+)
-   All desktop/laptop sizes use the same styles for consistency */
-@media only screen and (min-width: 768px) {
-  /* Content container positioning */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
-    padding-top: 0 !important;
-    align-items: center !important;
-    max-width: var(--bf-section-max-width) !important;
-    margin: 0 auto !important;
-    justify-content: center !important;
-  }
-  
-  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner.content-width-medium {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    margin: 0 auto !important;
-  }
-  
-  /* Section padding */
-  #shopify-section-{{ section.id }} .image-with-text-overlay {
-    padding-left: var(--bf-section-padding-desktop) !important;
-    padding-right: var(--bf-section-padding-desktop) !important;
-  }
-}
-
-/* Mobile Layout (max-width: 767px) */
-@media only screen and (max-width: 767px) {
-  /* Reset content container - remove any default padding/margin */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--content.content-bottom-center {
-    padding: 0 !important;
-    margin: 0 !important;
-    align-items: flex-end !important;
-  }
-  
-  #shopify-section-{{ section.id }} .image-with-text-overlay {
-    padding: var(--bf-section-padding-mobile) 0 !important;
-  }
-  
-  /* Content inner - flex container with two sections: heading top, subheading+buttons bottom */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100%;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  
-  /* Reset all block-wrapper margins in mobile to avoid conflicts */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .block-wrapper {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Section 1: Heading - Order 1, stick to top */
-  #shopify-section-{{ section.id }} .block-heading_QdDkF8 {
-    order: 1;
-    align-self: flex-start;
-    width: 100%;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Heading container - remove all margins and padding (mobile only) */
-  #shopify-section-{{ section.id }} .block-heading_QdDkF8 .image-with-text-overlay--heading {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  /* Remove all margins from elements inside heading */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading * {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  /* Bottom section wrapper - groups subheading and buttons together (mobile only) */
-  #shopify-section-{{ section.id }} .bf-bottom-section {
-    order: 2;
-    display: flex;
-    flex-direction: column;
-    margin-top: 70% !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    width: 100%;
-  }
-  
-  /* Hide bottom section wrapper in desktop */
-  @media only screen and (min-width: 768px) {
-    #shopify-section-{{ section.id }} .bf-bottom-section {
-      display: contents; /* Remove wrapper in desktop, let elements flow normally */
-    }
-  }
-  
-  /* Subheading - part of bottom section */
-  #shopify-section-{{ section.id }} .bf-bottom-section .block-subheading_r7FGyJ {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Reset subheading internal margins */
-  #shopify-section-{{ section.id }} .bf-bottom-section .block-subheading_r7FGyJ .subheading {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Buttons wrapper - part of bottom section, directly below subheading */
-  #shopify-section-{{ section.id }} .bf-bottom-section .buttons-grid-wrapper {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin-top: 0.9375rem !important; /* 15px gap from subheading */
-    margin-bottom: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    padding-left: 10%;
-    padding-right: 10%;
-  }
-  
-  /* Reset button wrapper internal margins */
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-}
-
-/* ============================================
-   TYPOGRAPHY STYLES - DESKTOP/LAPTOP
-   Applies consistently from 768px and above
-   (covers all laptop and desktop sizes)
-   ============================================ */
-
-@media only screen and (min-width: 768px) {
-  /* Base heading reset */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
-    font-family: 'Open Sans', sans-serif !important;
-    text-align: left !important;
-    margin-bottom: 2rem !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
-    color: inherit !important;
-  }
-  
-  /* Main heading text: "BLACK FRIDAY OUR BIGGEST SALE EVER!" */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow-bf,
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow,
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-white {
-    font-size: var(--bf-heading-font-size-desktop) !important;
-    font-weight: 800 !important;
-    line-height: var(--bf-heading-line-height-desktop) !important;
-    font-family: 'Open Sans', sans-serif !important;
-  }
-  
-  /* Group left alignment */
-  #shopify-section-{{ section.id }} .bf-group-left {
-    display: flex !important;
-    flex-direction: column !important;
-    margin-top: 0.5rem !important;
-    text-align: left !important;
-  }
-  
-  /* Each text in bf-group-left on separate line */
-  #shopify-section-{{ section.id }} .bf-group-left .bf-white {
-    display: block !important;
-  }
-  
-  /* Letter spacing for colored text */
-  #shopify-section-{{ section.id }} .bf-yellow-bf {
-    color: #FD0 !important;
-    letter-spacing: var(--bf-letter-spacing-yellow-white) !important;
-  }
-  
-  #shopify-section-{{ section.id }} .bf-yellow {
-    color: #FD0 !important;
-    letter-spacing: var(--bf-letter-spacing-yellow-white) !important;
-  }
-  
-  #shopify-section-{{ section.id }} .bf-white {
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-yellow-white) !important;
-  }
-  
-  /* Line 3 wrapper - flexbox container for discount and sitewide */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    margin-top: 1.0rem !important;
-    text-align: left !important;
-  }
-  
-  /* Discount text: "25% OFF" */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-discount {
-    display: block !important;
-    font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: 0.75 !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    text-align: left !important;
-  }
-  
-  /* Sitewide text */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-sitewide {
-    display: block !important;
-    font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: 0.75 !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 1.5rem !important;
-    margin-bottom: 0 !important;
-    text-align: left !important;
-  }
-  
-  /* Fallback for old structure (without wrapper) */
-  #shopify-section-{{ section.id }} .bf-discount:not(.bf-line-3-wrapper .bf-discount) {
-    display: block !important;
-    font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: 0.75 !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 1rem !important;
-    text-align: left !important;
-  }
-  
-  #shopify-section-{{ section.id }} .bf-sitewide:not(.bf-line-3-wrapper .bf-sitewide) {
-    display: block !important;
-    font-size: var(--bf-discount-font-size-desktop) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount) !important;
-    line-height: 0.75 !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0.625rem !important;
-    text-align: left !important;
-  }
-  
-  /* Subheading: "Luxuriously Soft Pima & Alpaca" */
-  /* High specificity to override base styles */
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"] .subheading {
-    color: #FFF !important;
-    font-family: 'Baskervville', serif !important;
-    font-size: var(--bf-subheading-font-size-desktop) !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: var(--bf-subheading-line-height-desktop) !important;
-    text-align: center !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    letter-spacing: normal !important;
-    text-transform: none !important;
-  }
-  
-  /* Buttons wrapper */
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    display: flex !important;
-    gap: var(--bf-buttons-gap-desktop) !important;
-    width: auto !important;
-    margin: 0 5rem !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-  }
-  
-  /* Button width for desktop */
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper .button {
-    width: 160px;
-  }
-}
-
-/* ============================================
-   TYPOGRAPHY STYLES - MOBILE
-   ============================================ */
-
-@media only screen and (max-width: 767px) {
-  /* Main heading text: "BLACK FRIDAY OUR BIGGEST SALE EVER!" */
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow-bf,
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-yellow,
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading .bf-white {
-    font-family: 'Open Sans', sans-serif !important;
-    font-size: var(--bf-heading-font-size-mobile) !important;
-    font-weight: 800 !important;
-    line-height: var(--bf-heading-line-height-mobile) !important;
-    letter-spacing: var(--bf-letter-spacing-mobile) !important;
-  }
-  
-  /* Heading container - use gap for spacing instead of margins */
-  #shopify-section-{{ section.id }} .block-heading_QdDkF8 .image-with-text-overlay--heading {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #shopify-section-{{ section.id }} .image-with-text-overlay--heading {
-    text-align: center;
-  }
-  
-  /* Group left - reduce size to match other elements, no margin (gap handles spacing) */
-  #shopify-section-{{ section.id }} .bf-group-left {
-    display: flex;
-    flex-direction: column;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    font-size: var(--bf-heading-font-size-mobile) !important; /* Match other heading elements */
-    line-height: var(--bf-heading-line-height-mobile) !important;
-    align-items: center;
-  }
-  
-  /* Each text in bf-group-left on separate line (mobile) */
-  #shopify-section-{{ section.id }} .bf-group-left .bf-white {
-    display: block !important;
-  }
-  
-  /* bf-yellow-bf - no margin (gap handles spacing) */
-  #shopify-section-{{ section.id }} .bf-yellow-bf {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Reset all internal text element margins in mobile (gap handles spacing) */
-  #shopify-section-{{ section.id }} .bf-yellow,
-  #shopify-section-{{ section.id }} .bf-white,
-  #shopify-section-{{ section.id }} .bf-discount,
-  #shopify-section-{{ section.id }} .bf-sitewide {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  
-  /* Letter spacing for mobile */
-  #shopify-section-{{ section.id }} .bf-yellow-bf,
-  #shopify-section-{{ section.id }} .bf-yellow,
-  #shopify-section-{{ section.id }} .bf-white {
-    letter-spacing: var(--bf-letter-spacing-mobile);
-  }
-  
-  #shopify-section-{{ section.id }} .bf-yellow-bf,
-  #shopify-section-{{ section.id }} .bf-yellow {
-    color: #FD0 !important;
-  }
-  
-  #shopify-section-{{ section.id }} .bf-white {
-    color: #FFF !important;
-  }
-  
-  /* Line 3 wrapper - flexbox container for discount and sitewide (mobile) */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    text-align: center !important;
-  }
-  
-  /* Discount text: "25% OFF" (mobile) */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-discount {
-    display: block;
-    font-size: var(--bf-discount-font-size-mobile) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount-mobile);
-    line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0.25rem !important;
-    margin-bottom: 0 !important;
-  }
-  
-  /* Sitewide text (mobile) */
-  #shopify-section-{{ section.id }} .bf-line-3-wrapper .bf-sitewide {
-    display: block;
-    font-size: var(--bf-sitewide-font-size-mobile) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-mobile);
-    line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0.25rem !important;
-    margin-bottom: 0 !important;
-  }
-  
-  /* Fallback for old structure (mobile) */
-  #shopify-section-{{ section.id }} .bf-discount:not(.bf-line-3-wrapper .bf-discount) {
-    display: block;
-    font-size: var(--bf-discount-font-size-mobile) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-discount-mobile);
-    line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  #shopify-section-{{ section.id }} .bf-sitewide:not(.bf-line-3-wrapper .bf-sitewide) {
-    display: block;
-    font-size: var(--bf-sitewide-font-size-mobile) !important;
-    font-weight: 700 !important;
-    color: #FFF !important;
-    letter-spacing: var(--bf-letter-spacing-mobile);
-    line-height: var(--bf-discount-line-height-mobile) !important;
-    font-family: 'Open Sans', sans-serif !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-  
-  /* Remove text-align inheritance in mobile */
-  #shopify-section-{{ section.id }} .bf-discount,
-  #shopify-section-{{ section.id }} .bf-sitewide,
-  #shopify-section-{{ section.id }} .bf-group-left {
-    text-align: inherit;
-  }
-  
-  /* Subheading: "Luxuriously Soft Pima & Alpaca" */
-  /* High specificity to override base styles - reset all spacing */
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"] .subheading {
-    font-family: 'Baskervville', serif !important;
-    font-size: var(--bf-subheading-font-size-mobile) !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: var(--bf-subheading-line-height-mobile) !important;
-    letter-spacing: var(--bf-letter-spacing-subheading-mobile) !important;
-    text-align: center !important;
-    color: #FFF !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    text-transform: none !important;
-  }
-  
-  /* Mobile Free Sleeve Text */
-  #shopify-section-{{ section.id }} .bf-overlay--free-sleeve-text {
-    position: absolute;
-    /* bottom: 1rem; */
-    left: 0;
-    width: 100%;
-    color: #CCC;
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 14px;
-    line-height: 40px;
-    letter-spacing: 0;
-    vertical-align: middle;
-    z-index: 10;
-    pointer-events: none;
-  }
-}
-
-/* Desktop Free Sleeve Text */
-@media only screen and (min-width: 768px) {
-  #shopify-section-{{ section.id }} .bf-overlay--free-sleeve-text {
-    position: absolute;
-    left: 0;
-    bottom: 2rem;
-    margin-bottom: 1rem;
-    color: #CCC;
-    text-align: left;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.6875rem; /* 27px */
-    font-style: normal;
-    font-weight: 400;
-    line-height: 2.5rem; /* 40px - 148.148% */
-    z-index: 10;
-    pointer-events: none;
-  }
 }
 </style>
 {% schema %}
@@ -1161,13 +540,6 @@
                 "label": "Content alignment"
             },
             {
-                "type": "text",
-                "id": "free_sleeve_text",
-                "label": "Free sleeve text",
-                "default": "*Orders over $200 unlock a free Alpaca Arm Sleeve.",
-                "info": "Text displayed at the bottom left of the overlay"
-            },
-            {
         "type": "header",
         "content": "Colors"
       },
@@ -1274,34 +646,6 @@
                         "id": "text",
                         "label": "Text",
                         "default": "Image with text overlay"
-                    },
-                    {
-                      "type": "header",
-                      "content": "Sale Text"
-                    },
-                    {
-                        "type": "text",
-                        "id": "sale_line_1",
-                        "label": "Line 1 (Event Name)",
-                        "default": "CYBER MONDAY"
-                    },
-                    {
-                        "type": "text",
-                        "id": "sale_line_2_text_1",
-                        "label": "Line 2 - Text 1",
-                        "default": "FINAL HOURS OF THE"
-                    },
-                    {
-                        "type": "text",
-                        "id": "sale_line_2_text_2",
-                        "label": "Line 2 - Text 2",
-                        "default": "YEAR'S BEST DEALS"
-                    },
-                    {
-                        "type": "text",
-                        "id": "sale_line_3_discount",
-                        "label": "Line 3 (Discount)",
-                        "default": "25% OFF SITEWIDE"
                     },
                     {
                       "type": "header",
