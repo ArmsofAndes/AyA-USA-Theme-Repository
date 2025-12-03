@@ -280,10 +280,17 @@
   }
 
   /* Cuando el texto 3 está visible, centrar todo el contenido */
+  .announcement-bar-countdown.show-text-3 {
+    display: flex !important;
+    align-items: center !important;
+  }
+
   .announcement-bar-countdown.show-text-3 .announcement-bar--inner {
     justify-content: center !important;
     align-items: center !important;
     min-height: 100% !important;
+    height: 100% !important;
+    display: flex !important;
   }
 
   .announcement-bar-countdown.show-text-3 .countdown-text-3 {
@@ -292,7 +299,7 @@
     justify-content: center !important;
     width: 100%;
     text-align: center;
-    min-height: 100%;
+    margin: 0;
   }
 
   .countdown-announcement-timer {
@@ -360,6 +367,33 @@
       margin: 0 auto;
       gap: 1rem;
       box-sizing: border-box;
+    }
+
+    /* Estilos específicos para cuando el texto 3 está visible en desktop */
+    .announcement-bar-countdown.show-text-3 {
+      height: 42.3px !important;
+      min-height: 42.3px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .announcement-bar-countdown.show-text-3 .announcement-bar--inner {
+      height: 100% !important;
+      min-height: 100% !important;
+      align-items: center !important;
+      justify-content: center !important;
+      display: flex !important;
+    }
+
+    .announcement-bar-countdown.show-text-3 .countdown-text-3 {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      line-height: 1.5;
     }
   }
 
