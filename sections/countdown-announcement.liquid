@@ -45,6 +45,13 @@
       echo timer_hour | append: ':' | append: timer_minute
     endcapture
     
+    if timer_2_hour == blank
+      assign timer_2_hour = '00'
+    endif
+    if timer_2_minute == blank
+      assign timer_2_minute = '00'
+    endif
+    
     capture date_2
       echo timer_2_day | append: '-' | append: timer_2_month | append: '-' | append: timer_2_year
     endcapture
@@ -54,10 +61,8 @@
     endcapture
     
     assign has_timer_2 = false
-    if timer_2_year != blank and timer_2_year > 0 and timer_2_month != blank and timer_2_day != blank and timer_2_hour != blank and timer_2_minute != blank
-      if timer_2_year >= 2000
-        assign has_timer_2 = true
-      endif
+    if timer_2_year != blank and timer_2_year > 0 and timer_2_month != blank and timer_2_day != blank
+      assign has_timer_2 = true
     endif
   endif
 -%}
@@ -573,30 +578,39 @@
         const [day, month, year] = dateStr.split('-');
         const [hour, minute] = timeStr.split(':');
         
-        // Validar que todos los valores estén presentes y sean válidos
-        if (!day || !month || !year || !hour || !minute) return null;
+        // Validar que todos los valores estén presentes
+        if (!day || !month || !year) return null;
         
-        // Convertir a números y validar
+        // Usar valores por defecto para hora y minuto si no están presentes
+        const hourValue = hour || '00';
+        const minuteValue = minute || '00';
+        
+        // Convertir a números
         const yearNum = parseInt(year, 10);
         const monthNum = parseInt(month, 10);
         const dayNum = parseInt(day, 10);
-        const hourNum = parseInt(hour, 10);
-        const minuteNum = parseInt(minute, 10);
+        const hourNum = parseInt(hourValue, 10);
+        const minuteNum = parseInt(minuteValue, 10);
         
-        // Validar que el año sea válido (mayor que 0 y razonable)
-        if (isNaN(yearNum) || yearNum <= 0 || yearNum < 2000) return null;
+        // Validar que los valores numéricos sean válidos
+        if (isNaN(yearNum) || yearNum <= 0) return null;
         if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) return null;
         if (isNaN(dayNum) || dayNum < 1 || dayNum > 31) return null;
         if (isNaN(hourNum) || hourNum < 0 || hourNum > 23) return null;
         if (isNaN(minuteNum) || minuteNum < 0 || minuteNum > 59) return null;
         
-        const dateString = month + '/' + day + '/' + year + ' ' + hour + ':' + minute + ' GMT' + timezone;
-        const timestamp = new Date(dateString).getTime();
-        
-        // Validar que el timestamp sea válido (no NaN)
-        if (isNaN(timestamp)) return null;
-        
-        return timestamp;
+        // Intentar crear la fecha
+        try {
+          const dateString = month + '/' + day + '/' + year + ' ' + hourValue + ':' + minuteValue + ' GMT' + timezone;
+          const timestamp = new Date(dateString).getTime();
+          
+          // Validar que el timestamp sea válido (no NaN y positivo)
+          if (isNaN(timestamp) || timestamp <= 0) return null;
+          
+          return timestamp;
+        } catch (e) {
+          return null;
+        }
       }
       
       function updateBlinkEffect(distance, textElement) {
@@ -615,13 +629,18 @@
       
       function updateTimerVisibility() {
         const now = Date.now();
+        
+        // Buscar Timer 2 dinámicamente en cada actualización
+        const timer2Wrapper = countdownAnnouncement.querySelector('.countdown-timer-2-wrapper');
+        const timer2 = timer2Wrapper ? timer2Wrapper.querySelector('.countdown-timer-2') : null;
+        
         const date1 = parseTimerDate(timer1);
-        const date2 = parseTimerDate(timer2);
+        const date2 = timer2 ? parseTimerDate(timer2) : null;
         
         if (!date1) return;
         
-        // Si no hay Timer 2, solo mostrar Timer 1 (nunca mostrar texto 3)
-        if (!date2) {
+        // Si no hay Timer 2 configurado o válido, solo mostrar Timer 1 (nunca mostrar texto 3)
+        if (!date2 || !timer2) {
           const distance1 = date1 - now;
           
           // Timer 1 activo o expirado - siempre mostrar el timer
