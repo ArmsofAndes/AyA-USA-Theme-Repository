@@ -17,7 +17,7 @@ if (!customElements.get('theme-header')) {
       super();
     }
     connectedCallback() {
-      this.header_section = this.closest('.header-section') || this.closest('.header-section-v2') || document.querySelector('.header-section');
+      this.header_section = document.querySelector('.header-section');
       this.menu = this.querySelector('#mobile-menu');
       this.toggle = document.querySelector('.mobile-toggle-wrapper');
 

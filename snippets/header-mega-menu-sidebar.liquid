@@ -3,207 +3,113 @@
     <mega-menu-sidebar class="mega-menu-sidebar">
       <div class="mega-menu-sidebar--sidebar">
         {%- if link.links.size > 0 -%}
-          <ul>
+          <ul class="mega-menu-sidebar--columns">
           {%- for l in link.links -%}
-            <li role="none">
-              <a href="{{ l.url }}" class="mega-menu-sidebar--button{% if forloop.first %} active{% endif %}" data-target="#{{ mega_menu_block.id}}-{{ forloop.index }}">
+            <li class="mega-menu-sidebar--column" role="none">
+              <a href="{{ l.url }}" class="mega-menu-sidebar--column-title">
                 <span>{{ l.title }}</span>
               </a>
+              {%- if l.links.size > 0 -%}
+                <ul class="mega-menu-sidebar--subcollections">
+                  {%- for sub_link in l.links -%}
+                    {%- if sub_link.type != 'product_link' -%}
+                      <li>
+                        <a href="{{ sub_link.url }}" class="mega-menu-sidebar--subcollection-link">{{ sub_link.title }}</a>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
             </li>
           {%- endfor -%}
           </ul>
         {%- endif -%}
       </div>
-      <div class="mega-menu-sidebar--content">
-
-{%- if mega_menu_block.settings.show_manual_products -%}
-  <div class="mega-menu-sidebar--manual-products">
-    {%- assign product_ids = "product_1,product_2,product_3,product_4" | split: "," -%}
-    {%- assign shown_handles = '' -%}
-    
-    {%- for key in product_ids -%}
-      {%- assign handle = mega_menu_block.settings[key] | strip -%}
-
-      {%- if handle != blank -%}
-        {%- assign product = all_products[handle] -%}
-        {%- if product and product.published_at -%}
-          {%- unless shown_handles contains product.handle -%}
-            {%- assign shown_handles = shown_handles | append: product.handle | append: ',' -%}
-            <div class="product-item">
-              <a href="{{ product.url }}" style="position: relative; display: block;">
-                {%- comment -%} Auto discount (compare_at_price) {%- endcomment -%}
-                {%- if product.compare_at_price > product.price -%}
-                  {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
-                  <span class="discount-badge">-{{ discount | round }}%</span>
-                {%- endif -%}
-
-                {%- comment -%} Manual % tag badge (show only first match) {%- endcomment -%}
-                {%- assign pct_badge_shown = false -%}
-                {%- for tag in product.tags -%}
-                  {%- if pct_badge_shown == false and tag contains '%' -%}
-                    <span class="discount-badge">{{ tag }} OFF</span>
-                    {%- assign pct_badge_shown = true -%}
-                  {%- endif -%}
-                {%- endfor -%}
-
-                <img src="{{ product.featured_image | img_url: '300x' }}" alt="{{ product.title }}">
-                <p>{{ product.title }}</p>
-                {% render 'product-price', product: product %}
-              </a>
-            </div>
-          {%- endunless -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
-  </div>
-{%- endif -%}
-
-
-        
-        {%- if link.links.size > 0 -%}
-          {%- for l in link.links -%}
-            <ul id="{{ mega_menu_block.id}}-{{ forloop.index }}" class="mega-menu-sidebar--content-inner{% if forloop.first %} active{% endif %}">
-             {%- for sub_link in l.links -%}
-  {%- if sub_link.type != 'product_link' -%}
-    <li>
-      {%- if sub_link.type == 'collection_link' and sub_link.object.featured_image and mega_menu_block.settings.content_collection_image -%}
-        <a href="{{ sub_link.url }}" class="mega-menu-sidebar--content-container">
-          <div class="mega-menu-sidebar--content-image">
-            {%- render 'responsive-image', image: sub_link.object.featured_image, sizes: '237x237', priority: 'low' -%}
-          </div>
-          <span class="text-button">{{- sub_link.title -}}</span>
-        </a>
-      {%- else -%}
-        <a href="{{ sub_link.url }}" class="thb-full-menu--link">{{- sub_link.title -}}</a>
-      {%- endif -%}
-    </li>
-  {%- endif -%}
-{%- endfor -%}
-
-            </ul>
-          {%- endfor -%}
-        {%- endif -%}
-      </div>
     </mega-menu-sidebar>
-    <script src="{{ 'mega-menu-sidebar.js' | asset_url }}" defer="defer"></script>
   </div>
 </div>
 
 <style>
-  .discount-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: #ff3b30;
-  color: #fff;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 4px 6px;
-  border-radius: 4px;
-  z-index: 2;
-}
-.manual-product-wrapper {
-  width: 200px;
-  margin-right: 16px;
-  text-align: center;
-  flex: 0 0 auto;
-}
+  /* Estilos para el mega menu sidebar horizontal */
+  .mega-menu-sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 20px 0px;
+  }
 
-.manual-product-wrapper .product-card-simple {
-  width: 100% !important;
-}
+  .mega-menu-sidebar--sidebar {
+    width: 100% !important;
+    padding: 30px 40px !important;
+    min-height: 365.19px !important;
+    display: flex;
+    align-items: flex-start;
+  }
 
-.manual-product-wrapper img {
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover;
-  
-}
+  .mega-menu-sidebar--columns {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-  .mega-menu-sidebar--content-image img {
-  width: 237px;
-  height: 237px;
-  object-fit: cover; /* Para que la imagen se recorte sin deformarse */
-  display: block;
-}
- /* Ajuste de las columnas */
-.mega-menu-sidebar {
-  display: flex;
-}
+  .mega-menu-sidebar--column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-.mega-menu-sidebar--sidebar {
-  width: 200px !important; /* ancho */
-  flex-shrink: 0;
-}
+  .mega-menu-sidebar--column-title {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: inherit;
+    display: block;
+  }
 
-.mega-menu-sidebar--content {
-  flex: 1;
-  width: auto;
-  padding-top: 8px !important;
-}
-.mega-menu-sidebar--sidebar {
-  padding: 8px 7px 8px 20px !important; /* Reduce el espacio interno */
-}
+  .mega-menu-sidebar--column-title:hover {
+    text-decoration: underline;
+  }
 
-.mega-menu-sidebar--sidebar ul {
-  padding: 0 !important;
-  margin: 0 !important;
-}
+  .mega-menu-sidebar--subcollections {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
 
-.mega-menu-sidebar--sidebar li a {
-  padding: 6px 10px !important; /* Ajusta el espacio dentro de los botones */
-  font-size: 14px;
-}
+  .mega-menu-sidebar--subcollections li {
+    padding: 0;
+  }
+
+  .mega-menu-sidebar--subcollection-link {
+    font-size: 0.875rem;
+    font-weight: normal;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    padding: 2px 0;
+  }
+
+  .mega-menu-sidebar--subcollection-link:hover {
+    text-decoration: none;
+  }
 
   .mega-menu-container {
-  max-width: 1630px !important;  /* Ajusta al ancho de tu menú */
-  margin-left: auto !important;
-  margin-right: auto !important;
-  left: 0 !important;
-  right: 0 !important;
-  position: absolute !important;
-}
-
-.mega-menu-sidebar--manual-products {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px 0;
-}
-
-.product-item {
-  width: 200px;
-  text-align: left;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.product-item a {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
-}
-.product-item p:first-of-type {
-  font-weight: 500!important;
-  line-height: 1.4!important;
-  margin-bottom: 5px;
-}
-.product-item img {
-  width: 100%;
-  height: auto;
-
-  display: block;
-}
-
-.product-item p {
-  margin: 6px 0 0;
-  word-break: break-word;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
+    max-width: 1630px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: absolute !important;
+    min-height: 365.19px !important;
+  }
 </style>

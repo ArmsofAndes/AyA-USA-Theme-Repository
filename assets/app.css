@@ -2524,6 +2524,7 @@ h6,
       margin-right: auto;
       max-width: 1640px;
       overflow-y: auto;
+      min-height: 365.19px;
       max-height: calc(100vh - calc(var(--header-height, 0px) + var(--header-offset, 0px) + 50px)); }
   .thb-full-menu .mega-menu-container--inner {
     width: 100%; }
@@ -2610,7 +2611,7 @@ h6,
   .mega-menu-sidebar ul {
     list-style: none;
     margin: 0;
-    padding: 0; }
+    padding: 20px 0px; }
   .mega-menu-sidebar--button {
     display: inline-flex;
     align-items: center;
