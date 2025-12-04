@@ -2037,6 +2037,13 @@ h6,
   z-index: 50;
   width: 100%; }
 
+.header-section-v2 {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100%; }
+
 .header {
   display: block;
   border-bottom: 1px solid var(--color-header-border, var(--color-border));

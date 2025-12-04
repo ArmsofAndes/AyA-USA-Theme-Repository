@@ -14,7 +14,8 @@
   position: relative;
   z-index: 52; }
 
-.header-section + .announcement-bar-section {
+.header-section + .announcement-bar-section,
+.header-section-v2 + .announcement-bar-section {
   z-index: 49; }
 
 .announcement-bar {
