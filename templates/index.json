@@ -148,6 +148,98 @@
         "disable_bottom_spacing": true
       }
     },
+    "overlay_christmas_2025_nJbFA9": {
+      "type": "overlay-christmas-2025",
+      "blocks": {
+        "subheading_JaMWKq": {
+          "type": "subheading",
+          "settings": {
+            "text": "Add a tagline",
+            "subheading_font_size": 16,
+            "subheading_font_weight": "400",
+            "subheading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 1
+          }
+        },
+        "heading_fHyfmV": {
+          "type": "heading",
+          "settings": {
+            "text": "Image with text overlay",
+            "heading_font_size": 3.2,
+            "heading_font_size_mobile": 1.5,
+            "heading_line_height": 3.7,
+            "heading_font_weight": "700",
+            "heading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 1
+          }
+        },
+        "text_hBJfpm": {
+          "type": "text",
+          "settings": {
+            "summary_text_closed": "Creating the World's Healthiest Fashion",
+            "summary_text_open": "Creating the World's Healthiest Fashion",
+            "dropdown_initially_open": false,
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "description_size": "medium",
+            "text_font_size": 1.6,
+            "text_font_size_mobile": 0.7,
+            "enable_dropdown_animations_desktop": true,
+            "enable_dropdown_animations_mobile": true,
+            "text_font_weight": "400",
+            "line_height": 1.5,
+            "text_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 1
+          }
+        },
+        "button_GPcUXd": {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop Now",
+            "button_link": "",
+            "button_font_size": 16,
+            "button_font_size_mobile": 15,
+            "button_font_weight": "400",
+            "button_color": "#ffffff",
+            "button_background_color": "#000000",
+            "button_border_color": "#000000",
+            "button_border_width": 0,
+            "button_border_radius": 4,
+            "button_border_style": "solid",
+            "button_outline": false,
+            "hover_text_color": "#000000",
+            "hover_background_color": "#ffffff",
+            "hover_border_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_JaMWKq",
+        "heading_fHyfmV",
+        "text_hBJfpm",
+        "button_GPcUXd"
+      ],
+      "name": "Overlay Christmas 2025",
+      "settings": {
+        "use_global_font": false,
+        "font_family": "montserrat",
+        "section_width": "grid",
+        "image": "shopify://shop_images/foto_web_1.jpg",
+        "image_parallax": false,
+        "desktop_vh_height": 80,
+        "desktop_height": "desktop-height-650",
+        "mobile_height": "mobile-height-500",
+        "content_width": "medium",
+        "content_position": "bottom-center",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
     "section_steps_content_main_BUHzF3": {
       "type": "section-steps-content-main",
       "blocks": {
@@ -1152,6 +1244,7 @@
     "custom_liquid_jzQjfa",
     "custom_liquid_7eCQ4K",
     "new_image_with_text_overlay_gGq73n",
+    "overlay_christmas_2025_nJbFA9",
     "section_steps_content_main_BUHzF3",
     "rich_text_dwzBWy",
     "custom8product_eApXHc",
