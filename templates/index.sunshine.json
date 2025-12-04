@@ -183,7 +183,7 @@
           "bikinis",
           "swimwears",
           "womens-tops",
-          "bottoms",
+          "womens-bottoms",
           "bras",
           "bikini-sets"
         ],
@@ -270,7 +270,7 @@
         "81534227-b9ef-4d02-9449-7a3eb4cb6275": {
           "type": "collection",
           "settings": {
-            "collection": "bottoms"
+            "collection": "womens-bottoms"
           }
         },
         "a4670ac9-891d-46d9-b4ca-ba8003a039d6": {
