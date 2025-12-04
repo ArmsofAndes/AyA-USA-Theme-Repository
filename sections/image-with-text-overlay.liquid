@@ -43,7 +43,7 @@
   {% assign section_font = section.settings.font_family | default: settings.font_body | default: 'inherit' %}
 {%- endif -%}
 <div class="row {{ section_width }}"
-	style="--section-font-family: "Baskervville", serif;">
+	style="--section-font-family: 'Baskervville', serif;">
 	<div class="small-12 columns">
 		<image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}" 
           style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};height: {{ section.settings.desktop_vh_height }}vh;">
@@ -86,12 +86,12 @@
 				<div class="image-with-text-overlay--content-inner content-width-{{ content_width }}">
 					{% for block in section.blocks %}
 						{%- case block.type -%}
-							{%- when 'subheading' -%}
+							{%- when 'overlay_subheading' -%}
 								<p class="subheading"
    style="font-size: {{ block.settings.subheading_font_size | divided_by: 16.0 }}rem!important;
           font-weight: {{ block.settings.subheading_font_weight }};
           color: {{ block.settings.subheading_color }};
-		  font-family: "Baskervville", serif;
+		  font-family: 'Baskervville', serif;
         margin-top: {{ block.settings.margin_top }}rem;
         margin-bottom: {{ block.settings.margin_bottom }}rem;"
    {{ block.shopify_attributes }}>
@@ -99,7 +99,7 @@
 </p>
 							{%- when 'heading' -%}
 								<{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading"
-  style="font-family: "Baskervville", serif;
+  style="font-family: 'Baskervville', serif;
   font-size: {{ block.settings.heading_font_size| divided_by: 16.0 }}rem; font-weight: {{ block.settings.heading_font_weight }}; color: {{ block.settings.heading_color }}; 
   line-height: {{ block.settings.heading_font_size| divided_by: 16.0 }}rem; 
   overflow: visible;
@@ -113,7 +113,7 @@
 									style="font-size: {{ block.settings.text_font_size }}px; 
 									font-weight: {{ block.settings.text_font_weight }}; 
 									color: {{ block.settings.text_color }};
-									font-family: "Baskervville", serif;
+									font-family: 'Baskervville', serif;
                                     margin-top: {{ block.settings.margin_top }}rem;
                                     margin-bottom: {{ block.settings.margin_bottom }}rem;
                                     line-height: {{ block.settings.line_height }};" 
@@ -134,7 +134,7 @@
      line-height: 1.2;
     border: {{ block.settings.button_border_width | default: 0 }}px {{ block.settings.button_border_style | default: 'solid' }} {{ block.settings.button_border_color | default: '#000000' }};                              
     border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
-    font-family: "Baskervville", serif;">
+    font-family: 'Baskervville', serif;">
   <span>{{ block.settings.button_text }}</span>
 </a>
 
@@ -419,7 +419,7 @@
     ],
     "blocks": [
 			{
-				"type": "subheading",
+				"type": "overlay_subheading",
 				"name": "Subheading",
 				"limit": 1,
 				"settings": [
@@ -739,7 +739,7 @@
         "name": "Image with text overlay",
 				"blocks": [
 					{
-						"type": "subheading"
+						"type": "overlay_subheading"
 					},
 					{
 						"type": "heading"
