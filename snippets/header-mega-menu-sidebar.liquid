@@ -1,7 +1,30 @@
+{%- liquid
+  assign categories_width = mega_menu_block.settings.sidebar_categories_width | default: 60
+  assign products_width = mega_menu_block.settings.sidebar_products_width | default: 40
+  assign main_gap = mega_menu_block.settings.sidebar_main_gap | default: 1.2
+  assign padding_vertical = mega_menu_block.settings.sidebar_padding_vertical | default: 2.2
+  assign padding_horizontal = mega_menu_block.settings.sidebar_padding_horizontal | default: 3.1
+  assign min_height = mega_menu_block.settings.sidebar_min_height | default: 23
+  assign categories_gap = mega_menu_block.settings.sidebar_categories_gap | default: 0.6
+  assign column_min_width = mega_menu_block.settings.sidebar_column_min_width | default: 11.5
+  assign category_title_size = mega_menu_block.settings.sidebar_category_title_size | default: 1
+  assign category_title_margin = mega_menu_block.settings.sidebar_category_title_margin | default: 1.1
+  assign subcollections_gap = mega_menu_block.settings.sidebar_subcollections_gap | default: 0.6
+  assign subcollection_font_size = mega_menu_block.settings.sidebar_subcollection_font_size | default: 0.9
+  assign subcollection_padding = mega_menu_block.settings.sidebar_subcollection_padding | default: 0.3
+  assign products_gap = mega_menu_block.settings.sidebar_products_gap | default: 1.5
+  assign products_padding_left = mega_menu_block.settings.sidebar_products_padding_left | default: 1.9
+  assign products_margin_right = mega_menu_block.settings.sidebar_products_margin_right | default: 0.9
+  assign product_image_margin = mega_menu_block.settings.sidebar_product_image_margin | default: 0.9
+  assign product_title_size = mega_menu_block.settings.sidebar_product_title_size | default: 0.9
+  assign product_image_radius = mega_menu_block.settings.sidebar_product_image_radius | default: 0.3
+  assign products_gap_half = products_gap | divided_by: 2.0
+-%}
 <div class="sub-menu mega-menu-container" tabindex="-1">
   <div class="mega-menu-container--inner mega-menu-container--inner-has-sidebar">
     <mega-menu-sidebar class="mega-menu-sidebar">
-      <div class="mega-menu-sidebar--sidebar">
+      <!-- Primera columna: Categorías -->
+      <div class="mega-menu-sidebar--categories">
         {%- if link.links.size > 0 -%}
           <ul class="mega-menu-sidebar--columns">
           {%- for l in link.links -%}
@@ -25,84 +48,234 @@
           </ul>
         {%- endif -%}
       </div>
+      
+      <!-- Segunda columna: Productos -->
+      {%- if mega_menu_block.settings.show_manual_products -%}
+      <div class="mega-menu-sidebar--products">
+        {%- assign product_ids = "product_1,product_2" | split: "," -%}
+        {%- assign shown_handles = '' -%}
+        
+        {%- for key in product_ids -%}
+          {%- assign handle = mega_menu_block.settings[key] | strip -%}
+          {%- if handle != blank -%}
+            {%- assign product = all_products[handle] -%}
+            {%- if product and product.published_at -%}
+              {%- unless shown_handles contains product.handle -%}
+                {%- assign shown_handles = shown_handles | append: product.handle | append: ',' -%}
+                <div class="mega-menu-sidebar--product-item">
+                  <a href="{{ product.url }}">
+                    {%- if product.featured_image -%}
+                      <div class="mega-menu-sidebar--product-image">
+                        <img 
+                          src="{{ product.featured_image | image_url: width: 300 }}" 
+                          alt="{{ product.title | escape }}"
+                          width="300"
+                          height="300"
+                          loading="lazy">
+                      </div>
+                    {%- endif -%}
+                    <div class="mega-menu-sidebar--product-title">{{ product.title }}</div>
+                  </a>
+                </div>
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
     </mega-menu-sidebar>
   </div>
 </div>
 
 <style>
-  /* Estilos para el mega menu sidebar horizontal */
+  /* ============================================
+     MEGA MENU SIDEBAR - ESTILOS PROFESIONALES
+     ============================================ */
+
+  /* Reset de listas dentro del mega menu sidebar */
   .mega-menu-sidebar ul {
     list-style: none;
     margin: 0;
-    padding: 20px 0px;
+    padding: 0;
   }
 
-  .mega-menu-sidebar--sidebar {
-    width: 100% !important;
-    padding: 30px 40px !important;
-    min-height: 365.19px !important;
+  /* Contenedor principal con dos columnas */
+  .mega-menu-sidebar {
     display: flex;
+    flex-direction: row;
+    gap: {{ main_gap }}rem;
+    width: 100%;
+    padding: {{ padding_vertical }}rem {{ padding_horizontal }}rem;
+    min-height: {{ min_height }}rem;
+    overflow: visible;
     align-items: flex-start;
   }
 
+  /* Primera columna: Categorías */
+  .mega-menu-sidebar--categories {
+    flex: 0 0 {{ categories_width }}%;
+    width: {{ categories_width }}%;
+    display: flex;
+    align-items: flex-start;
+    overflow: visible;
+    min-width: 0;
+  }
+
+  /* Contenedor de columnas de categorías */
   .mega-menu-sidebar--columns {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: {{ categories_gap }}rem;
     list-style: none;
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
   }
 
+  /* Columna individual de categoría */
   .mega-menu-sidebar--column {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    min-width: {{ column_min_width }}rem;
+    max-width: 100%;
   }
 
+  /* Título de la categoría */
   .mega-menu-sidebar--column-title {
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: underline;
-    font-size: 1rem;
-    margin-bottom: 16px;
+    font-size: {{ category_title_size }}rem;
+    line-height: 1.5;
+    margin-bottom: {{ category_title_margin }}rem;
     color: inherit;
     display: block;
+    transition: opacity 0.2s ease;
   }
 
   .mega-menu-sidebar--column-title:hover {
     text-decoration: underline;
+    opacity: 0.8;
   }
 
+  /* Lista de subcolecciones */
   .mega-menu-sidebar--subcollections {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex: 1;
+    gap: {{ subcollections_gap }}rem;
   }
 
   .mega-menu-sidebar--subcollections li {
     padding: 0;
+    margin: 0;
   }
 
+  /* Enlaces de subcolecciones */
   .mega-menu-sidebar--subcollection-link {
-    font-size: 0.875rem;
-    font-weight: normal;
+    font-size: {{ subcollection_font_size }}rem;
+    font-weight: 400;
+    line-height: 1.5;
     text-decoration: none;
     color: inherit;
     display: block;
-    padding: 2px 0;
+    padding: {{ subcollection_padding }}rem 0;
+    transition: opacity 0.2s ease, color 0.2s ease;
   }
 
   .mega-menu-sidebar--subcollection-link:hover {
+    opacity: 0.7;
     text-decoration: none;
   }
 
+  /* Segunda columna: Productos */
+  .mega-menu-sidebar--products {
+    flex: 0 0 calc({{ products_width }}% - {{ products_margin_right }}rem);
+    width: calc({{ products_width }}% - {{ products_margin_right }}rem);
+    max-width: calc({{ products_width }}% - {{ products_margin_right }}rem);
+    display: flex;
+    flex-direction: row;
+    gap: {{ products_gap }}rem;
+    padding-left: {{ products_padding_left }}rem;
+    padding-right: 0;
+    margin-right: {{ products_margin_right }}rem !important;
+    border-left: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+
+  /* Item de producto */
+  .mega-menu-sidebar--product-item {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 calc(50% - {{ products_gap_half }}rem);
+    width: calc(50% - {{ products_gap_half }}rem);
+    max-width: calc(50% - {{ products_gap_half }}rem);
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .mega-menu-sidebar--product-item a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.2s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .mega-menu-sidebar--product-item a:hover {
+    opacity: 0.8;
+  }
+
+  /* Imagen del producto */
+  .mega-menu-sidebar--product-image {
+    width: 100%;
+    margin-bottom: {{ product_image_margin }}rem;
+    overflow: hidden;
+    border-radius: {{ product_image_radius }}rem;
+  }
+
+  .mega-menu-sidebar--product-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .mega-menu-sidebar--product-item a:hover .mega-menu-sidebar--product-image img {
+    transform: scale(1.02);
+  }
+
+  /* Título del producto */
+  .mega-menu-sidebar--product-title {
+    font-size: {{ product_title_size }}rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    color: inherit;
+    margin: 0;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    display: block !important;
+    hyphens: auto;
+    min-width: 0;
+  }
+
+  /* Contenedor del mega menu */
   .mega-menu-container {
     max-width: 1630px !important;
     margin-left: auto !important;
@@ -110,6 +283,32 @@
     left: 0 !important;
     right: 0 !important;
     position: absolute !important;
-    min-height: 365.19px !important;
+    min-height: {{ min_height }}rem !important;
+    overflow: visible !important;
+  }
+
+  .mega-menu-container--inner {
+    overflow: visible !important;
+  }
+
+  /* Responsive: Ajustes para pantallas más pequeñas - Mantener valores originales en mobile */
+  @media screen and (max-width: 1200px) {
+    .mega-menu-sidebar {
+      gap: 0.9rem;
+      padding: 1.9rem 2.5rem;
+    }
+
+    .mega-menu-sidebar--columns {
+      gap: 0.6rem;
+    }
+
+    .mega-menu-sidebar--products {
+      display: none;
+    }
+
+    .mega-menu-sidebar--categories {
+      flex: 1;
+      width: 100%;
+    }
   }
 </style>

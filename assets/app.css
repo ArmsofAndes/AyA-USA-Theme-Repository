@@ -2653,9 +2653,10 @@ h6,
       .mega-menu-sidebar--content ul.active {
         display: grid; }
       .mega-menu-sidebar--content ul a {
-        padding: 0;
+        padding: 12px 0;
         white-space: normal;
-        font-size: 0.875rem; }
+        font-size: 0.875rem;
+        line-height: 1.6; }
         .mega-menu-sidebar--content ul a span {
           line-height: inherit; }
     .mega-menu-sidebar--content .product-card {
@@ -2664,12 +2665,14 @@ h6,
     .mega-menu-sidebar--content-container {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 10px;
       align-items: flex-start;
-      color: var(--color-header-links); }
+      color: var(--color-header-links);
+      margin-bottom: 20px; }
       @media only screen and (min-width: 768px) {
         .mega-menu-sidebar--content-container {
-          gap: 15px; } }
+          gap: 15px;
+          margin-bottom: 25px; } }
       .mega-menu-sidebar--content-container span {
         text-transform: uppercase;
         display: inline-block; }

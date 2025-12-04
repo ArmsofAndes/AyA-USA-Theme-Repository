@@ -185,9 +185,17 @@
     border: 0;
     list-style: none;
     margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px 10px; }
+    display: block; }
+    .mobile-menu .mega-menu-sidebar--content li {
+      margin-bottom: 20px; }
+    .mobile-menu .mega-menu-sidebar--content a {
+      padding: 10px 0;
+      line-height: 1.6;
+      display: block; }
+    .mobile-menu .mega-menu-sidebar--content .mega-menu-sidebar--content-container {
+      margin-bottom: 20px; }
+  .mobile-menu .mega-menu-sidebar--content .product-card {
+    display: none; }
 
 .mobile-secondary-menu {
   list-style: none;

@@ -92,22 +92,11 @@
 													</li>
 													<ul class="mega-menu-sidebar--content">
 													{%- for sub_link in l.links -%}
+														{%- if sub_link.type != 'product_link' -%}
 														<li>
-															{%- if sub_link.type == 'collection_link' and sub_link.object.featured_image -%}
-																{%- if mega_menu_block_sidebar.settings.content_collection_image -%}
-																<a href="{{ sub_link.url }}" class="mega-menu-sidebar--content-container">
-																	<div class="mega-menu-sidebar--content-image">
-																	{%- render 'responsive-image', image: sub_link.object.featured_image, sizes: '237x237', priority: 'low' -%}
-																	</div>
-																	<span class="text-button">{{- sub_link.title -}}</span>
-																</a>
-																{%- else -%}
-																<a href="{{ sub_link.url }}" class="thb-full-menu--link">{{- sub_link.title -}}</a>
-																{%- endif -%}
-															{%- elsif sub_link.type == 'product_link' -%}
-																{%- render 'product-card-simple', product_card_product: sub_link.object, show_product_image: mega_menu_block_sidebar.settings.content_product_image -%}
-															{%- endif -%}
+															<a href="{{ sub_link.url }}" class="thb-full-menu--link">{{- sub_link.title -}}</a>
 														</li>
+														{%- endif -%}
 													{%- endfor -%}
 													</ul>
 												</ul>
