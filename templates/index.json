@@ -36,10 +36,25 @@
     "overlay_christmas_2025_nJbFA9": {
       "type": "overlay-christmas-2025",
       "blocks": {
+        "heading_fHyfmV": {
+          "type": "heading",
+          "settings": {
+            "text": "Holiday Sale",
+            "is_holiday_sale_heading": true,
+            "heading_font_size": 3.2,
+            "heading_font_size_mobile": 1.5,
+            "heading_line_height": 3.7,
+            "heading_font_weight": "700",
+            "heading_color": "#ffffff",
+            "margin_top": 0,
+            "margin_bottom": 2.2
+          }
+        },
         "subheading_JaMWKq": {
           "type": "subheading",
           "settings": {
-            "text": "Add a tagline",
+            "text": "Wrap the Season in Plastic-Free Softness",
+            "is_wrap_season_subheading": true,
             "subheading_font_size": 16,
             "subheading_font_weight": "400",
             "subheading_color": "#ffffff",
@@ -47,34 +62,29 @@
             "margin_bottom": 1
           }
         },
-        "heading_fHyfmV": {
-          "type": "heading",
+        "discount_offer_A6gkAF": {
+          "type": "discount_offer",
           "settings": {
-            "text": "Image with text overlay",
-            "heading_font_size": 3.2,
-            "heading_font_size_mobile": 1.5,
-            "heading_line_height": 3.7,
-            "heading_font_weight": "700",
-            "heading_color": "#ffffff",
+            "buy_text": "Buy 2,",
+            "get_text": "Get 10% Off",
             "margin_top": 0,
             "margin_bottom": 1
           }
         },
-        "text_hBJfpm": {
-          "type": "text",
+        "discount_offer_ic7CGd": {
+          "type": "discount_offer",
           "settings": {
-            "summary_text_closed": "Creating the World's Healthiest Fashion",
-            "summary_text_open": "Creating the World's Healthiest Fashion",
-            "dropdown_initially_open": false,
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "description_size": "medium",
-            "text_font_size": 1.6,
-            "text_font_size_mobile": 0.7,
-            "enable_dropdown_animations_desktop": true,
-            "enable_dropdown_animations_mobile": true,
-            "text_font_weight": "400",
-            "line_height": 1.5,
-            "text_color": "#ffffff",
+            "buy_text": "Buy 2,",
+            "get_text": "Get 10% Off",
+            "margin_top": 0,
+            "margin_bottom": 1
+          }
+        },
+        "discount_offer_JW4nC8": {
+          "type": "discount_offer",
+          "settings": {
+            "buy_text": "Buy 2,",
+            "get_text": "Get 10% Off",
             "margin_top": 0,
             "margin_bottom": 1
           }
@@ -101,9 +111,11 @@
         }
       },
       "block_order": [
-        "subheading_JaMWKq",
         "heading_fHyfmV",
-        "text_hBJfpm",
+        "subheading_JaMWKq",
+        "discount_offer_A6gkAF",
+        "discount_offer_ic7CGd",
+        "discount_offer_JW4nC8",
         "button_GPcUXd"
       ],
       "name": "Overlay Christmas 2025",
@@ -118,8 +130,8 @@
         "desktop_height": "desktop-height-750",
         "mobile_height": "mobile-height-500",
         "content_width": "medium",
-        "content_position": "bottom-center",
-        "text_alignment": "center",
+        "content_position": "middle-left",
+        "text_alignment": "left",
         "overlay_color": "#000000",
         "overlay_opacity": 0,
         "disable_top_spacing": true,
