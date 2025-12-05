@@ -33,121 +33,6 @@
         "section_width": "full-width-row"
       }
     },
-    "new_image_with_text_overlay_gGq73n": {
-      "type": "new-image-with-text-overlay",
-      "blocks": {
-        "subheading_nDmD4K": {
-          "type": "subheading",
-          "disabled": true,
-          "settings": {
-            "text": "Fashion for a Non-Toxic Life",
-            "subheading_font_size": 16,
-            "subheading_font_weight": "400",
-            "subheading_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 1
-          }
-        },
-        "heading_L4WVfk": {
-          "type": "heading",
-          "settings": {
-            "text": "Fashion for a Non-Toxic Life",
-            "heading_font_size": 3.2,
-            "heading_font_size_mobile": 1.5,
-            "heading_line_height": 3.7,
-            "heading_font_weight": "700",
-            "heading_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "text_3XQMyT": {
-          "type": "text",
-          "settings": {
-            "summary_text_closed": "Creating the World's Healthiest Fashion",
-            "summary_text_open": "Created with Plastic-Free Ingredients",
-            "dropdown_initially_open": false,
-            "text": "<p>Regenerative Organic Pima Cotton </p><p>Copper Zippers on Cotton Tape </p><p>Tree Rubber Elastic Bands</p><p>Mother of Pearl Buttons</p><p>Free Ranging Alpacas</p><p>Cotton Threads</p><p>Cotton Labels</p>",
-            "description_size": "medium",
-            "text_font_size": 1.2,
-            "text_font_size_mobile": 0.7,
-            "enable_dropdown_animations_desktop": true,
-            "enable_dropdown_animations_mobile": true,
-            "text_font_weight": "400",
-            "line_height": 1.8,
-            "text_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 2
-          }
-        },
-        "button_icrqak": {
-          "type": "button",
-          "settings": {
-            "button_text": "SHOP WOMEN",
-            "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
-            "button_font_size": 16,
-            "button_font_size_mobile": 15,
-            "button_font_weight": "600",
-            "button_color": "#ffffff",
-            "button_background_color": "#242c48",
-            "button_border_color": "#ffffff",
-            "button_border_width": 2,
-            "button_border_radius": 25,
-            "button_border_style": "solid",
-            "button_outline": false,
-            "hover_text_color": "#242c48",
-            "hover_background_color": "#ffffff",
-            "hover_border_color": "#242c48"
-          }
-        },
-        "button_4qhx4p": {
-          "type": "button",
-          "settings": {
-            "button_text": "SHOP MEN",
-            "button_link": "shopify://collections/all-mens",
-            "button_font_size": 16,
-            "button_font_size_mobile": 15,
-            "button_font_weight": "600",
-            "button_color": "#ffffff",
-            "button_background_color": "#242c48",
-            "button_border_color": "#ffffff",
-            "button_border_width": 2,
-            "button_border_radius": 25,
-            "button_border_style": "solid",
-            "button_outline": false,
-            "hover_text_color": "#242c48",
-            "hover_background_color": "#ffffff",
-            "hover_border_color": "#242c48"
-          }
-        }
-      },
-      "block_order": [
-        "subheading_nDmD4K",
-        "heading_L4WVfk",
-        "text_3XQMyT",
-        "button_icrqak",
-        "button_4qhx4p"
-      ],
-      "name": "Image with text overlay new",
-      "settings": {
-        "use_global_font": true,
-        "font_family": "helvetica",
-        "section_width": "full-width-row-full",
-        "image": "shopify://shop_images/foto_web_1.jpg",
-        "mobile_image": "shopify://shop_images/Untitled-2_1.jpg",
-        "image_parallax": false,
-        "desktop_vh_height": 80,
-        "desktop_height": "desktop-height-650",
-        "mobile_height": "mobile-height-500",
-        "content_width": "medium",
-        "content_position": "bottom-center",
-        "text_alignment": "center",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0,
-        "disable_top_spacing": true,
-        "disable_bottom_spacing": true
-      }
-    },
     "overlay_christmas_2025_nJbFA9": {
       "type": "overlay-christmas-2025",
       "blocks": {
@@ -225,17 +110,18 @@
       "settings": {
         "use_global_font": false,
         "font_family": "montserrat",
-        "section_width": "grid",
+        "section_width": "full-width-row-full",
         "image": "shopify://shop_images/foto_web_1.jpg",
+        "mobile_image": "shopify://shop_images/FOTO_MOBILE_1_3f9c071b-e59a-4ec6-8fe4-4869594c6bda.jpg",
         "image_parallax": false,
         "desktop_vh_height": 80,
-        "desktop_height": "desktop-height-650",
+        "desktop_height": "desktop-height-750",
         "mobile_height": "mobile-height-500",
         "content_width": "medium",
         "content_position": "bottom-center",
         "text_alignment": "center",
         "overlay_color": "#000000",
-        "overlay_opacity": 30,
+        "overlay_opacity": 0,
         "disable_top_spacing": true,
         "disable_bottom_spacing": true
       }
@@ -1243,7 +1129,6 @@
     "custom_liquid_fLM8Gg",
     "custom_liquid_jzQjfa",
     "custom_liquid_7eCQ4K",
-    "new_image_with_text_overlay_gGq73n",
     "overlay_christmas_2025_nJbFA9",
     "section_steps_content_main_BUHzF3",
     "rich_text_dwzBWy",
