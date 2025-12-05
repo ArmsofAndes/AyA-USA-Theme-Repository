@@ -97,7 +97,7 @@
         "button_GPcUXd": {
           "type": "button",
           "settings": {
-            "button_text": "Shop Women",
+            "button_text": "SHOP WOMEN",
             "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "button_font_size": 16,
             "button_font_size_mobile": 15,
@@ -117,7 +117,7 @@
         "button_aHVeif": {
           "type": "button",
           "settings": {
-            "button_text": "Shop Men",
+            "button_text": "SHOP MEN",
             "button_link": "shopify://collections/all-mens",
             "button_font_size": 16,
             "button_font_size_mobile": 15,
