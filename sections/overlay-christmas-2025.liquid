@@ -1,6 +1,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+<link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 
 {{- 'overlay-christmas-2025.css' | asset_url | stylesheet_tag -}}
 {%- liquid
@@ -95,7 +95,7 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
-                                <div class="block-wrapper block-{{ block.id }}" 
+                                <div class="block-wrapper block-{{ block.id }}{% if block.settings.is_wrap_season_subheading %} wrap-season-subheading{% endif %}" 
                                      data-block-type="subheading"
                                      {{ block.shopify_attributes }}>
                                     <p class="subheading">
@@ -108,7 +108,7 @@
                                     {% assign button_group_started = false %}
                                     {% assign button_count = 0 %}
                                 {% endif %}
-                                <div class="block-wrapper block-{{ block.id }}" 
+                                <div class="block-wrapper block-{{ block.id }}{% if block.settings.is_holiday_sale_heading %} holiday-sale-heading{% endif %}" 
                                      data-block-type="heading"
                                      {{ block.shopify_attributes }}>
                                     <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
@@ -122,10 +122,19 @@
                                     {% assign button_count = 0 %}
                                 {% endif %}
                                 {%- if block.settings.text != blank -%}
-                                  <div class="block-wrapper block-{{ block.id }} text-dropdown-wrapper" 
-                                       data-block-type="text"
-                                       id="richtext-wrapper-{{ block.id }}"
-                                       {{ block.shopify_attributes }}>
+                                  {%- if block.settings.is_pima_alpaca_text -%}
+                                    <div class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
+                                         data-block-type="text"
+                                         {{ block.shopify_attributes }}>
+                                      <div class="rte">
+                                        {{ block.settings.text }}
+                                      </div>
+                                    </div>
+                                  {%- else -%}
+                                    <div class="block-wrapper block-{{ block.id }} text-dropdown-wrapper" 
+                                         data-block-type="text"
+                                         id="richtext-wrapper-{{ block.id }}"
+                                         {{ block.shopify_attributes }}>
                                       <details class="text-dropdown{% unless block.settings.enable_dropdown_animations_desktop %} dropdown-animations-disabled-desktop{% endunless %}{% unless block.settings.enable_dropdown_animations_mobile %} dropdown-animations-disabled-mobile{% endunless %}" 
                                                 data-block-id="{{ block.id }}"
                                                 {% if block.settings.dropdown_initially_open %}open{% endif %}>
@@ -140,6 +149,23 @@
                                           </div>
                                         </div>
                                       </details>
+                                    </div>
+                                  {%- endif -%}
+                                {%- endif -%}
+                            {%- when 'discount_offer' -%}
+                                {% if button_group_started %}
+                                    </div>
+                                    {% assign button_group_started = false %}
+                                    {% assign button_count = 0 %}
+                                {% endif %}
+                                {%- if block.settings.buy_text != blank or block.settings.get_text != blank -%}
+                                  <div class="block-wrapper block-{{ block.id }} discount-offer" 
+                                       data-block-type="text"
+                                       style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
+                                       {{ block.shopify_attributes }}>
+                                    <div class="rte discount-offer-content">
+                                      <span class="discount-buy-part">{{ block.settings.buy_text }}</span><span class="discount-get-part">{{ block.settings.get_text }}</span>
+                                    </div>
                                   </div>
                                 {%- endif -%}
                             {%- when 'button' -%}
@@ -250,6 +276,11 @@
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --space-height: {{ block.settings.height }}px;
       }
+    {%- when 'discount_offer' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} {
+        --block-margin-top: {{ block.settings.margin_top }}rem;
+        --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
+      }
   {%- endcase -%}
 {% endfor %}
 
@@ -353,6 +384,174 @@
 /* Section-specific overrides */
 #shopify-section-{{ section.id }} p {
   margin-bottom: 0;
+}
+
+/* ============================================
+   CHRISTMAS 2025 - SPECIFIC TEXT STYLES
+   ============================================ */
+
+/* Text 1: "Holiday Sale" - Heading */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
+#shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
+  color: #FFF !important;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+  -webkit-text-stroke-width: 0.5px !important;
+  -webkit-text-stroke-color: #FFF !important;
+  font-family: Baskervville, serif !important;
+  font-size: 62px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 22.4px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
+  #shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
+    color: #FFF !important;
+    text-align: center !important;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+    -webkit-text-stroke-width: 0.5px !important;
+    -webkit-text-stroke-color: #FFF !important;
+    font-family: Baskervville, serif !important;
+    font-size: 35px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 22.4px !important;
+  }
+}
+
+/* Text 2: "Wrap the Season in Plastic-Free Softness" - Subheading */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"].wrap-season-subheading .subheading,
+#shopify-section-{{ section.id }} .wrap-season-subheading .subheading {
+  color: #FFF !important;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 23px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  line-height: 22.4px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="subheading"].wrap-season-subheading .subheading,
+  #shopify-section-{{ section.id }} .wrap-season-subheading .subheading {
+    color: #FFF !important;
+    text-align: center !important;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+    font-family: Montserrat, sans-serif !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: 22.4px !important;
+  }
+}
+
+/* Text 4, 5, 6: Discount Offers - Special styling with split colors */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer,
+#shopify-section-{{ section.id }} .discount-offer {
+  font-family: Montserrat, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  margin-top: var(--block-margin-top, 0) !important;
+  margin-bottom: var(--block-margin-bottom, 0) !important;
+}
+
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
+#shopify-section-{{ section.id }} .discount-offer .rte,
+#shopify-section-{{ section.id }} .discount-offer .discount-offer-content {
+  font-size: 60px !important;
+  line-height: 45px !important;
+  font-family: Montserrat, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
+#shopify-section-{{ section.id }} .discount-offer .discount-buy-part {
+  color: #FFC25E !important;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 60px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 45px !important;
+  display: inline !important;
+}
+
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
+#shopify-section-{{ section.id }} .discount-offer .discount-get-part {
+  color: #FFF !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 60px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 45px !important;
+  display: inline !important;
+}
+
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
+  #shopify-section-{{ section.id }} .discount-offer .rte,
+  #shopify-section-{{ section.id }} .discount-offer .discount-offer-content {
+    text-align: center !important;
+    font-size: 31px !important;
+    line-height: 45px !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
+  #shopify-section-{{ section.id }} .discount-offer .discount-buy-part {
+    color: #FFC25E !important;
+    text-align: center !important;
+    font-family: Montserrat, sans-serif !important;
+    font-size: 31px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 45px !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
+  #shopify-section-{{ section.id }} .discount-offer .discount-get-part {
+    color: #FFF !important;
+    font-family: Montserrat, sans-serif !important;
+    font-size: 31px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 45px !important;
+  }
+}
+
+/* Text 8: "Luxuriously Soft Pima & Alpaca" - Text */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte p,
+#shopify-section-{{ section.id }} .pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .pima-alpaca-text .rte p {
+  color: #FFF !important;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 30px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 22.4px !important;
+}
+
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte p,
+  #shopify-section-{{ section.id }} .pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .pima-alpaca-text .rte p {
+    color: #FFF !important;
+    text-align: center !important;
+    font-family: Montserrat, sans-serif !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 22.4px !important;
+  }
 }
 </style>
 {% schema %}
@@ -593,6 +792,13 @@
                         "label": "Text",
                         "default": "Add a tagline"
                     },
+                    {
+                        "type": "checkbox",
+                        "id": "is_wrap_season_subheading",
+                        "label": "Aplicar estilo 'Wrap the Season'",
+                        "default": false,
+                        "info": "Activa los estilos especiales para 'Wrap the Season in Plastic-Free Softness'"
+                    },
                   {
   "type": "number",
   "id": "subheading_font_size",
@@ -651,6 +857,13 @@
                         "id": "text",
                         "label": "Text",
                         "default": "Image with text overlay"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "is_holiday_sale_heading",
+                        "label": "Aplicar estilo 'Holiday Sale'",
+                        "default": false,
+                        "info": "Activa los estilos especiales para 'Holiday Sale'"
                     },
                     {
                       "type": "header",
@@ -772,6 +985,13 @@
             "id": "text",
             "label": "Content",
             "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+          },
+          {
+            "type": "checkbox",
+            "id": "is_pima_alpaca_text",
+            "label": "Aplicar estilo 'Luxuriously Soft Pima & Alpaca'",
+            "default": false,
+            "info": "Activa los estilos especiales para 'Luxuriously Soft Pima & Alpaca'"
           },
                     {
                         "type": "select",
@@ -1032,26 +1252,162 @@
             "default": 50
           }
         ]
+      },
+      {
+        "type": "discount_offer",
+        "name": "Discount Offer",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "text",
+            "id": "buy_text",
+            "label": "Buy text (e.g., 'Buy 2, ' or 'Buy 3, ' or 'Buy 4, ')",
+            "default": "Buy 2, ",
+            "info": "Esta parte aparecerá en color dorado (#FFC25E)"
+          },
+          {
+            "type": "text",
+            "id": "get_text",
+            "label": "Get text (e.g., 'Get 10% Off' or 'Get 15% Off' or 'Get 20% Off')",
+            "default": "Get 10% Off",
+            "info": "Esta parte aparecerá en color blanco"
+          },
+          {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin Top",
+            "min": 0,
+            "max": 5,
+            "step": 0.1,
+            "unit": "rem",
+            "default": 0
+          },
+          {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin Bottom",
+            "min": 0,
+            "max": 5,
+            "step": 0.1,
+            "unit": "rem",
+            "default": 1
+          }
+        ]
       }
     ],
-    "max_blocks": 5,
+    "max_blocks": 8,
     "presets": [
       {
         "name": "Overlay Christmas 2025",
-                "blocks": [
-                    {
-                        "type": "subheading"
-                    },
-                    {
-                        "type": "heading"
-                    },
-                    {
-                        "type": "text"
-                    },
-                    {
-                        "type": "button"
-                    }
-                ]
+        "blocks": [
+          {
+            "type": "heading",
+            "settings": {
+              "text": "Holiday Sale",
+              "is_holiday_sale_heading": true,
+              "heading_font_size": 3.875,
+              "heading_font_size_mobile": 2.1875,
+              "heading_font_weight": "400",
+              "heading_color": "#ffffff",
+              "heading_line_height": 1.4,
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "subheading",
+            "settings": {
+              "text": "Wrap the Season in Plastic-Free Softness",
+              "is_wrap_season_subheading": true,
+              "subheading_font_size": 23,
+              "subheading_font_weight": "600",
+              "subheading_color": "#ffffff",
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "discount_offer",
+            "settings": {
+              "buy_text": "Buy 2, ",
+              "get_text": "Get 10% Off",
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "discount_offer",
+            "settings": {
+              "buy_text": "Buy 3, ",
+              "get_text": "Get 15% Off",
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "discount_offer",
+            "settings": {
+              "buy_text": "Buy 4, ",
+              "get_text": "Get 20% Off",
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "text",
+            "settings": {
+              "text": "<p>Luxuriously Soft Pima & Alpaca</p>",
+              "is_pima_alpaca_text": true,
+              "text_font_size": 1.875,
+              "text_font_size_mobile": 0.9375,
+              "text_font_weight": "700",
+              "text_color": "#ffffff",
+              "line_height": 1.4,
+              "margin_top": 0,
+              "margin_bottom": 0
+            }
+          },
+          {
+            "type": "button",
+            "settings": {
+              "button_text": "SHOP WOMEN",
+              "button_link": "",
+              "button_font_size": 16,
+              "button_font_size_mobile": 15,
+              "button_font_weight": "400",
+              "button_color": "#ffffff",
+              "button_background_color": "#01264a",
+              "button_border_color": "#ffffff",
+              "button_border_width": 1,
+              "button_border_radius": 4,
+              "button_border_style": "solid",
+              "button_outline": false,
+              "hover_text_color": "#000000",
+              "hover_background_color": "#ffffff",
+              "hover_border_color": "#000000"
+            }
+          },
+          {
+            "type": "button",
+            "settings": {
+              "button_text": "SHOP MEN",
+              "button_link": "",
+              "button_font_size": 16,
+              "button_font_size_mobile": 15,
+              "button_font_weight": "400",
+              "button_color": "#ffffff",
+              "button_background_color": "#01264a",
+              "button_border_color": "#ffffff",
+              "button_border_width": 1,
+              "button_border_radius": 4,
+              "button_border_style": "solid",
+              "button_outline": false,
+              "hover_text_color": "#000000",
+              "hover_background_color": "#ffffff",
+              "hover_border_color": "#000000"
+            }
+          }
+        ]
       }
     ],
         "enabled_on": {
