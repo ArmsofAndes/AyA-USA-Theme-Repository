@@ -26,9 +26,9 @@
     when 'mobile-height-450'
       assign mobile_image_height = 450
     when 'mobile-height-500'
-      assign mobile_image_height = 620
+      assign mobile_image_height = 560
     else
-      assign mobile_image_height = 620
+      assign mobile_image_height = 560
   endcase
 
   assign priority = false
@@ -354,15 +354,17 @@
 {% endfor %}
 
 /* Buttons grid wrapper - desktop styles */
-#shopify-section-{{ section.id }} .buttons-grid-wrapper {
+#shopify-section-{{ section.id }} .buttons-grid-wrapper,
+#overlay-christmas-2025-buttons-wrapper-{{ section.id }} {
   display: flex !important;
-  gap: {{ section.settings.buttons_gap_desktop | default: 46 }}px !important;
+  gap: {{ section.settings.buttons_gap_desktop | default: 46 | divided_by: 16.0 }}rem !important;
   width: auto !important;
   margin: 0 auto !important;
   margin-right: {{ section.settings.buttons_margin_right_desktop | default: 22 }}% !important;
   justify-content: flex-start !important;
   align-items: center !important;
   flex-wrap: wrap !important;
+  margin-bottom: 2rem !important;
 }
 
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
@@ -381,12 +383,16 @@
 
 /* Responsive heading adjustments */
 @media only screen and (max-width: 767px) {
-  /* Mobile: Eliminar padding del contenedor principal */
+  /* Mobile: Forzar altura a 560px (35rem) */
   #shopify-section-{{ section.id }} .image-with-text-overlay,
   #overlay-christmas-2025-{{ section.id }} {
+    height: 35rem !important;
+    min-height: 35rem !important;
+    max-height: 35rem !important;
     padding: 0px 0 !important;
     box-shadow: none !important;
     filter: none !important;
+    box-sizing: border-box !important;
   }
   
   /* Mobile: Quitar sombreado de la imagen de fondo */
@@ -650,7 +656,8 @@
   }
   
   /* Mobile: Buttons grid wrapper - horizontal, 50% cada uno, gap configurable */
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper,
+  #overlay-christmas-2025-buttons-wrapper-{{ section.id }} {
     display: flex !important;
     gap: {{ section.settings.buttons_gap_mobile | default: 1.0 }}rem !important;
     width: 100% !important;
@@ -658,6 +665,7 @@
     justify-content: center !important;
     align-items: center !important;
     margin: 0 auto !important;
+    margin-bottom: 2rem !important;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
@@ -783,7 +791,7 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: {{ section.settings.content_inner_gap_mobile | default: 14.0 }}rem !important;
+    gap: 10rem !important;
   }
   
   /* Mobile: Forzar que todos los bloques estén centrados */
@@ -863,8 +871,8 @@
 
 {% for block in section.blocks %}
   {%- if block.type == 'heading' and block.settings.is_holiday_sale_heading -%}
-    {%- assign font_size = block.settings.holiday_sale_font_size_desktop | default: 62 -%}
-    {%- assign line_height_setting = block.settings.holiday_sale_line_height_desktop | default: 22.5 -%}
+    {%- assign font_size = block.settings.holiday_sale_font_size_desktop | default: 62 | divided_by: 16.0 -%}
+    {%- assign line_height_setting = block.settings.holiday_sale_line_height_desktop | default: 22.5 | divided_by: 16.0 -%}
     {%- if line_height_setting < font_size -%}
       {%- assign line_height = font_size | times: 1.2 -%}
     {%- else -%}
@@ -874,15 +882,15 @@
     #shopify-section-{{ section.id }} .block-{{ block.id }}.holiday-sale-heading .image-with-text-overlay--heading,
     #overlay-christmas-2025-heading-text-{{ block.id }} {
       color: {{ block.settings.holiday_sale_color_desktop | default: '#FFFFFF' }} !important;
-      text-shadow: {{ block.settings.holiday_sale_text_shadow_x_desktop | default: 0 }}px {{ block.settings.holiday_sale_text_shadow_y_desktop | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+      text-shadow: {{ block.settings.holiday_sale_text_shadow_x_desktop | default: 0 }}rem {{ block.settings.holiday_sale_text_shadow_y_desktop | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_blur_desktop | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
       -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_desktop | default: 0.5 }}px !important;
       -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_desktop | default: '#FFFFFF' }} !important;
       font-family: Baskervville, serif !important;
-      font-size: {{ font_size }}px !important;
+      font-size: {{ font_size }}rem !important;
       font-style: normal !important;
       font-weight: {{ block.settings.holiday_sale_font_weight_desktop | default: 400 }} !important;
-      line-height: {{ line_height }}px !important;
-      min-height: {{ line_height }}px !important;
+      line-height: {{ line_height }}rem !important;
+      min-height: {{ line_height }}rem !important;
       height: auto !important;
       max-height: none !important;
       margin-top: 0 !important;
@@ -902,8 +910,8 @@
 @media only screen and (max-width: 767px) {
   {% for block in section.blocks %}
     {%- if block.type == 'heading' and block.settings.is_holiday_sale_heading -%}
-      {%- assign font_size_mobile = block.settings.holiday_sale_font_size_mobile | default: 35 -%}
-      {%- assign line_height_setting_mobile = block.settings.holiday_sale_line_height_mobile | default: 22.5 -%}
+      {%- assign font_size_mobile = block.settings.holiday_sale_font_size_mobile | default: 35 | divided_by: 16.0 -%}
+      {%- assign line_height_setting_mobile = block.settings.holiday_sale_line_height_mobile | default: 22.5 | divided_by: 16.0 -%}
       {%- if line_height_setting_mobile < font_size_mobile -%}
         {%- assign line_height_mobile = font_size_mobile | times: 1.2 -%}
       {%- else -%}
@@ -914,14 +922,14 @@
       #overlay-christmas-2025-heading-text-{{ block.id }} {
         color: {{ block.settings.holiday_sale_color_mobile | default: '#FFFFFF' }} !important;
         text-align: center !important;
-        text-shadow: {{ block.settings.holiday_sale_text_shadow_x_mobile | default: 0 }}px {{ block.settings.holiday_sale_text_shadow_y_mobile | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_blur_mobile | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_color_mobile | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+        text-shadow: {{ block.settings.holiday_sale_text_shadow_x_mobile | default: 0 }}rem {{ block.settings.holiday_sale_text_shadow_y_mobile | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_blur_mobile | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_color_mobile | default: 'rgba(0, 0, 0, 0.25)' }} !important;
         -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_mobile | default: 0.5 }}px !important;
         -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_mobile | default: '#FFFFFF' }} !important;
         font-family: Baskervville, serif !important;
-        font-size: {{ font_size_mobile }}px !important;
+        font-size: {{ font_size_mobile }}rem !important;
         font-style: normal !important;
         font-weight: {{ block.settings.holiday_sale_font_weight_mobile | default: 400 }} !important;
-        line-height: {{ line_height_mobile }}px !important;
+        line-height: {{ line_height_mobile }}rem !important;
         height: auto !important;
         min-height: auto !important;
         max-height: none !important;
@@ -934,7 +942,7 @@
         height: auto !important;
         min-height: auto !important;
         max-height: none !important;
-        line-height: {{ line_height_mobile }}px !important;
+        line-height: {{ line_height_mobile }}rem !important;
       }
     {%- endif -%}
   {% endfor %}
@@ -1416,7 +1424,7 @@
         { "value": "mobile-height-350", "label": "350px" },
         { "value": "mobile-height-400", "label": "400px" },
         { "value": "mobile-height-450", "label": "450px" },
-        { "value": "mobile-height-500", "label": "620px" },
+        { "value": "mobile-height-500", "label": "560px" },
         { "value": "mobile-height-full", "label": "Full screen" }
       ],
       "default": "mobile-height-500"
@@ -1598,8 +1606,8 @@
           "label": "Color (Desktop)",
           "default": "#FFFFFF"
         },
-        {
-          "type": "range",
+    {
+        "type": "range",
           "id": "holiday_sale_font_size_desktop",
           "label": "Tamaño de fuente (px) - Desktop",
           "min": 20,
@@ -1662,9 +1670,9 @@
           "type": "range",
           "id": "holiday_sale_stroke_width_desktop",
           "label": "Ancho de borde de texto (px) - Desktop",
-          "min": 0,
-          "max": 5,
-          "step": 0.1,
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
           "default": 0.5
         },
         {
@@ -1710,17 +1718,17 @@
           "step": 0.5,
           "default": 22.5
         },
-        {
-          "type": "range",
+    {
+        "type": "range",
           "id": "holiday_sale_text_shadow_x_mobile",
           "label": "Sombra X (px) - Mobile",
           "min": 0,
           "max": 20,
           "step": 1,
-          "default": 0
-        },
-        {
-          "type": "range",
+        "default": 0
+    },
+    {
+        "type": "range",
           "id": "holiday_sale_text_shadow_y_mobile",
           "label": "Sombra Y (px) - Mobile",
           "min": 0,
@@ -1747,9 +1755,9 @@
           "type": "range",
           "id": "holiday_sale_stroke_width_mobile",
           "label": "Ancho de borde de texto (px) - Mobile",
-          "min": 0,
-          "max": 5,
-          "step": 0.1,
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
           "default": 0.5
         },
         {
