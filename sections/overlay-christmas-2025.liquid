@@ -1074,10 +1074,17 @@
       font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
       line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
       display: inline !important;
-      margin-left: 0.25rem !important;
+      margin-left: 0.5rem !important;
     }
   {%- endif -%}
 {% endfor %}
+
+/* Desktop: Estilo específico para el primer discount offer */
+@media only screen and (min-width: 768px) {
+  #overlay-christmas-2025-discount-get-discount_offer_A6gkAF {
+    margin-left: 0.5rem !important;
+  }
+}
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
