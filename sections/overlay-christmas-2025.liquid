@@ -134,40 +134,19 @@
                   </div>
                 {%- endif -%}
 
-              {%- when 'text' -%}
+              {%- when 'pima_alpaca' -%}
                 {% if button_group_started %}
                   </div>
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
                 {%- if block.settings.text != blank -%}
-                  {%- if block.settings.is_pima_alpaca_text -%}
-                    <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
-                         data-block-type="text"
-                         {{ block.shopify_attributes }}>
-                      <div id="overlay-christmas-2025-pima-alpaca-text-{{ block.id }}" class="rte">{{ block.settings.text }}</div>
-                    </div>
-                  {%- else -%}
-                    <div class="block-wrapper block-{{ block.id }} text-dropdown-wrapper" 
-                         data-block-type="text"
-                         id="richtext-wrapper-{{ block.id }}"
-                         {{ block.shopify_attributes }}>
-                      <details class="text-dropdown{% unless block.settings.enable_dropdown_animations_desktop %} dropdown-animations-disabled-desktop{% endunless %}{% unless block.settings.enable_dropdown_animations_mobile %} dropdown-animations-disabled-mobile{% endunless %}" 
-                                data-block-id="{{ block.id }}"
-                                {% if block.settings.dropdown_initially_open %}open{% endif %}>
-                        <summary class="text-dropdown-summary" 
-                                 data-summary-closed="{% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed | escape }}{% else %}Creating the World's Healthiest Fashion{% endif %}"
-                                 data-summary-open="{% if block.settings.summary_text_open != blank %}{{ block.settings.summary_text_open | escape }}{% else %}Creating the World's Healthiest Fashion{% endif %}">
-                          {% if block.settings.summary_text_closed != blank %}{{ block.settings.summary_text_closed }}{% else %}Creating the World's Healthiest Fashion{% endif %}
-                        </summary>
-                        <div class="text-dropdown-content">
-                          <div id="richtext-{{ block.id }}" class="rte description-size--{{ block.settings.description_size }}">
-                            {{ block.settings.text }}
-                          </div>
-                        </div>
-                      </details>
-                    </div>
-                  {%- endif -%}
+                  <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
+                       data-block-type="pima_alpaca"
+                       style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
+                       {{ block.shopify_attributes }}>
+                    <div id="overlay-christmas-2025-pima-alpaca-text-{{ block.id }}" class="rte">{{ block.settings.text }}</div>
+                  </div>
                 {%- endif -%}
 
               {%- when 'button' -%}
@@ -251,19 +230,11 @@
           --block-line-height: {{ heading_line_height }}rem;
         }
       {%- endunless -%}
-    {%- when 'text' -%}
+    {%- when 'pima_alpaca' -%}
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --block-margin-top: {{ block.settings.margin_top }}rem;
         --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
       }
-      {%- unless block.settings.is_pima_alpaca_text -%}
-        #shopify-section-{{ section.id }} .block-{{ block.id }} {
-          --block-font-size: {{ block.settings.text_font_size }}rem;
-          --block-font-weight: {{ block.settings.text_font_weight }};
-          --block-color: {{ block.settings.text_color }};
-          --block-line-height: {{ block.settings.line_height }};
-        }
-      {%- endunless -%}
     {%- when 'button' -%}
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --btn-font-size: {{ block.settings.button_font_size }}px;
@@ -313,25 +284,6 @@
     {%- endif -%}
   {% endfor %}
   
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"] .rte:not(.description-size--medium) {
-    font-size: 1rem;
-  }
-  
-  {% for block in section.blocks %}
-    {%- if block.type == 'text' -%}
-      {%- unless block.settings.is_pima_alpaca_text -%}
-        {%- if block.settings.text_font_size_mobile and block.settings.text_font_size_mobile > 0 -%}
-          #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
-            font-size: {{ block.settings.text_font_size_mobile }}rem !important;
-          }
-        {%- else -%}
-          #shopify-section-{{ section.id }} .block-{{ block.id }} .rte.description-size--medium p {
-            font-size: 0.7rem !important;
-          }
-        {%- endif -%}
-      {%- endunless -%}
-    {%- endif -%}
-  {% endfor %}
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
     gap: 10px;
@@ -672,7 +624,8 @@
 
 /* Text 8: "Luxuriously Soft Pima & Alpaca" - Text */
 /* Force visibility - Desktop styles */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"],
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text,
 #shopify-section-{{ section.id }} .pima-alpaca-text.block-wrapper,
 #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text,
 #shopify-section-{{ section.id }} .image-with-text-overlay--content .pima-alpaca-text,
@@ -693,9 +646,12 @@
   z-index: 1 !important;
 }
 
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte *,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte p,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte p,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte *,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte p,
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte,
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte *,
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte p,
@@ -724,7 +680,8 @@
 }
 
 /* Override any dynamic styles that might interfere */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte,
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte,
 #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
 #overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
@@ -732,15 +689,20 @@
   font-size: 30px !important;
   line-height: 22.4px !important;
   color: #FFF !important;
+  font-family: Montserrat, sans-serif !important;
+  font-style: normal !important;
   font-weight: 700 !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte *,
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte p,
   #shopify-section-{{ section.id }} .pima-alpaca-text .rte,
   #shopify-section-{{ section.id }} .pima-alpaca-text .rte *,
   #shopify-section-{{ section.id }} .pima-alpaca-text .rte p,
@@ -1108,134 +1070,15 @@
       ]
     },
     {
-      "type": "text",
-      "name": "Text",
+      "type": "pima_alpaca",
+      "name": "Pima & Alpaca",
       "limit": 1,
       "settings": [
         {
-          "type": "header",
-          "content": "Dropdown Summary"
-        },
-        {
-          "type": "text",
-          "id": "summary_text_closed",
-          "label": "Texto del summary (cerrado)",
-          "default": "Creating the World's Healthiest Fashion",
-          "info": "Texto que se muestra cuando el dropdown está cerrado"
-        },
-        {
-          "type": "text",
-          "id": "summary_text_open",
-          "label": "Texto del summary (abierto)",
-          "default": "Creating the World's Healthiest Fashion",
-          "info": "Texto que se muestra cuando el dropdown está abierto"
-        },
-        {
-          "type": "checkbox",
-          "id": "dropdown_initially_open",
-          "label": "Abrir dropdown inicialmente",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "Dropdown Content"
-        },
-        {
           "type": "richtext",
           "id": "text",
-          "label": "Content",
-          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
-        },
-        {
-          "type": "checkbox",
-          "id": "is_pima_alpaca_text",
-          "label": "Aplicar estilo 'Luxuriously Soft Pima & Alpaca'",
-          "default": false,
-          "info": "Activa los estilos especiales para 'Luxuriously Soft Pima & Alpaca'"
-        },
-        {
-          "type": "select",
-          "id": "description_size",
-          "label": "Size",
-          "options": [
-            { "value": "small", "label": "Small" },
-            { "value": "medium", "label": "Medium" },
-            { "value": "large", "label": "Large" }
-          ],
-          "default": "medium"
-        },
-        {
-          "type": "header",
-          "content": "Desktop Settings"
-        },
-        {
-          "type": "range",
-          "id": "text_font_size",
-          "label": "Tamaño de fuente Desktop (rem)",
-          "min": 1,
-          "max": 5,
-          "step": 0.1,
-          "unit": "rem",
-          "default": 1.6
-        },
-        {
-          "type": "header",
-          "content": "Mobile Settings"
-        },
-        {
-          "type": "range",
-          "id": "text_font_size_mobile",
-          "label": "Tamaño de fuente Mobile (rem)",
-          "min": 0.5,
-          "max": 3,
-          "step": 0.1,
-          "unit": "rem",
-          "default": 0.7,
-          "info": "Si está en 0, usará el tamaño de desktop"
-        },
-        {
-          "type": "header",
-          "content": "Dropdown Animations"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_dropdown_animations_desktop",
-          "label": "Activar animaciones del dropdown en Desktop",
-          "default": true
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_dropdown_animations_mobile",
-          "label": "Activar animaciones del dropdown en Mobile",
-          "default": true
-        },
-        {
-          "type": "select",
-          "id": "text_font_weight",
-          "label": "Peso de fuente",
-          "default": "400",
-          "options": [
-            { "value": "300", "label": "Light (300)" },
-            { "value": "400", "label": "Normal (400)" },
-            { "value": "500", "label": "Medium (500)" },
-            { "value": "600", "label": "Semi Bold (600)" },
-            { "value": "700", "label": "Bold (700)" }
-          ]
-        },
-        {
-          "type": "range",
-          "id": "line_height",
-          "label": "Line Height",
-          "min": 1,
-          "max": 3,
-          "step": 0.1,
-          "default": 1.5
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Color del texto",
-          "default": "#ffffff"
+          "label": "Text",
+          "default": "<p>Luxuriously Soft Pima & Alpaca</p>"
         },
         {
           "type": "range",
@@ -1255,7 +1098,7 @@
           "max": 5,
           "step": 0.1,
           "unit": "rem",
-          "default": 1
+          "default": 0
         }
       ]
     },
@@ -1461,15 +1304,9 @@
           }
         },
         {
-          "type": "text",
+          "type": "pima_alpaca",
           "settings": {
             "text": "<p>Luxuriously Soft Pima & Alpaca</p>",
-            "is_pima_alpaca_text": true,
-            "text_font_size": 1.875,
-            "text_font_size_mobile": 0.9375,
-            "text_font_weight": "700",
-            "text_color": "#ffffff",
-            "line_height": 1.4,
             "margin_top": 0,
             "margin_bottom": 0
           }
