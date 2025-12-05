@@ -43,21 +43,17 @@
             "is_holiday_sale_heading": true,
             "heading_font_size": 3.2,
             "heading_font_size_mobile": 1.5,
-            "heading_line_height": 3.7,
+            "heading_line_height": 0,
             "heading_font_weight": "700",
             "heading_color": "#ffffff",
             "margin_top": 0,
-            "margin_bottom": 2.2
+            "margin_bottom": 1.1
           }
         },
-        "subheading_JaMWKq": {
-          "type": "subheading",
+        "wrap_season_text_KFmBxE": {
+          "type": "wrap_season_text",
           "settings": {
             "text": "Wrap the Season in Plastic-Free Softness",
-            "is_wrap_season_subheading": true,
-            "subheading_font_size": 16,
-            "subheading_font_weight": "400",
-            "subheading_color": "#ffffff",
             "margin_top": 0,
             "margin_bottom": 1
           }
@@ -74,8 +70,8 @@
         "discount_offer_ic7CGd": {
           "type": "discount_offer",
           "settings": {
-            "buy_text": "Buy 2,",
-            "get_text": "Get 10% Off",
+            "buy_text": "Buy 3,",
+            "get_text": "Get 15% Off",
             "margin_top": 0,
             "margin_bottom": 1
           }
@@ -83,8 +79,8 @@
         "discount_offer_JW4nC8": {
           "type": "discount_offer",
           "settings": {
-            "buy_text": "Buy 2,",
-            "get_text": "Get 10% Off",
+            "buy_text": "Buy 4,",
+            "get_text": "Get 20% Off",
             "margin_top": 0,
             "margin_bottom": 1
           }
@@ -112,7 +108,7 @@
       },
       "block_order": [
         "heading_fHyfmV",
-        "subheading_JaMWKq",
+        "wrap_season_text_KFmBxE",
         "discount_offer_A6gkAF",
         "discount_offer_ic7CGd",
         "discount_offer_JW4nC8",
