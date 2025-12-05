@@ -55,7 +55,7 @@
           "settings": {
             "text": "Wrap the Season in Plastic-Free Softness",
             "margin_top": 0,
-            "margin_bottom": 1
+            "margin_bottom": 1.6
           }
         },
         "discount_offer_A6gkAF": {
@@ -89,8 +89,8 @@
           "type": "pima_alpaca",
           "settings": {
             "text": "<p>Luxuriously Soft Pima & Alpaca</p>",
-            "margin_top": 1,
-            "margin_bottom": 2.1
+            "margin_top": 1.2,
+            "margin_bottom": 2.5
           }
         },
         "button_GPcUXd": {
