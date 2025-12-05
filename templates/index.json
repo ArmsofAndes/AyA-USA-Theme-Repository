@@ -85,24 +85,12 @@
             "margin_bottom": 1.1
           }
         },
-        "text_z8AejK": {
-          "type": "text",
+        "pima_alpaca_3YJAix": {
+          "type": "pima_alpaca",
           "settings": {
-            "summary_text_closed": "Creating the World's Healthiest Fashion",
-            "summary_text_open": "Creating the World's Healthiest Fashion",
-            "dropdown_initially_open": false,
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "is_pima_alpaca_text": false,
-            "description_size": "medium",
-            "text_font_size": 1.6,
-            "text_font_size_mobile": 0.7,
-            "enable_dropdown_animations_desktop": true,
-            "enable_dropdown_animations_mobile": true,
-            "text_font_weight": "400",
-            "line_height": 1.5,
-            "text_color": "#ffffff",
-            "margin_top": 0,
-            "margin_bottom": 1
+            "text": "<p>Luxuriously Soft Pima & Alpaca</p>",
+            "margin_top": 1,
+            "margin_bottom": 2.1
           }
         },
         "button_GPcUXd": {
@@ -152,7 +140,7 @@
         "discount_offer_A6gkAF",
         "discount_offer_ic7CGd",
         "discount_offer_JW4nC8",
-        "text_z8AejK",
+        "pima_alpaca_3YJAix",
         "button_GPcUXd",
         "button_aHVeif"
       ],
