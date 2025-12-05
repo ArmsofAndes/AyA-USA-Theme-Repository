@@ -86,6 +86,11 @@
           {%- liquid
             assign button_group_started = false
             assign button_count = 0
+            assign header_group_started = false
+            assign footer_group_started = false
+            assign discount_count = 0
+            assign discount_group_started = false
+            assign bottom_group_started = false
           -%}
           
           {% for block in section.blocks %}
@@ -96,6 +101,10 @@
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
+                {%- if block.settings.is_holiday_sale_heading -%}
+                  {%- assign header_group_started = true -%}
+                  <div id="overlay-christmas-2025-header-group-{{ section.id }}" class="header-group-wrapper">
+                {%- endif -%}
                 <div id="overlay-christmas-2025-heading-{{ block.id }}" class="block-wrapper block-{{ block.id }}{% if block.settings.is_holiday_sale_heading %} holiday-sale-heading{% endif %}" 
                      data-block-type="heading"
                      {{ block.shopify_attributes }}>
@@ -112,10 +121,13 @@
                 {% endif %}
                 <div id="overlay-christmas-2025-wrap-season-{{ block.id }}" class="block-wrapper block-{{ block.id }} wrap-season-text" 
                      data-block-type="wrap_season_text"
-                     style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                      {{ block.shopify_attributes }}>
                   <p id="overlay-christmas-2025-wrap-season-text-{{ block.id }}" class="wrap-season-text-content">{{ block.settings.text }}</p>
                 </div>
+                {%- if header_group_started -%}
+                  </div>
+                  {%- assign header_group_started = false -%}
+                {%- endif -%}
 
               {%- when 'discount_offer' -%}
                 {% if button_group_started %}
@@ -123,10 +135,20 @@
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
+                {%- if header_group_started -%}
+                  </div>
+                  {%- assign header_group_started = false -%}
+                {%- endif -%}
+                {%- assign discount_count = discount_count | plus: 1 -%}
+                {%- if discount_count == 1 -%}
+                  {%- assign footer_group_started = true -%}
+                  <div id="overlay-christmas-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                  {%- assign discount_group_started = true -%}
+                  <div id="overlay-christmas-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
+                {%- endif -%}
                 {%- if block.settings.buy_text != blank or block.settings.get_text != blank -%}
                   <div id="overlay-christmas-2025-discount-{{ block.id }}" class="block-wrapper block-{{ block.id }} discount-offer" 
                        data-block-type="text"
-                       style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                        {{ block.shopify_attributes }}>
                     <div id="overlay-christmas-2025-discount-content-{{ block.id }}" class="rte discount-offer-content">
                       <span id="overlay-christmas-2025-discount-buy-{{ block.id }}" class="discount-buy-part">{{ block.settings.buy_text }}</span><span id="overlay-christmas-2025-discount-get-{{ block.id }}" class="discount-get-part">{{ block.settings.get_text }}</span>
@@ -140,16 +162,47 @@
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
+                {%- if header_group_started -%}
+                  </div>
+                  {%- assign header_group_started = false -%}
+                {%- endif -%}
+                {%- if discount_group_started -%}
+                  </div>
+                  {%- assign discount_group_started = false -%}
+                {%- endif -%}
+                {%- if discount_count > 0 and footer_group_started == false -%}
+                  {%- assign footer_group_started = true -%}
+                  <div id="overlay-christmas-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                {%- endif -%}
+                {%- if bottom_group_started == false -%}
+                  {%- assign bottom_group_started = true -%}
+                  <div id="overlay-christmas-2025-bottom-group-{{ section.id }}" class="bottom-group-wrapper">
+                {%- endif -%}
                 {%- if block.settings.text != blank -%}
                   <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text{% if block.settings.use_theme_font %} use-theme-font{% endif %}" 
                        data-block-type="pima_alpaca"
-                       style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                        {{ block.shopify_attributes }}>
                     <div id="overlay-christmas-2025-pima-alpaca-text-{{ block.id }}" class="rte">{{ block.settings.text }}</div>
                   </div>
                 {%- endif -%}
 
               {%- when 'button' -%}
+                {%- if header_group_started -%}
+                  </div>
+                  {%- assign header_group_started = false -%}
+                {%- endif -%}
+                {%- if discount_group_started -%}
+                  </div>
+                  {%- assign discount_group_started = false -%}
+                {%- endif -%}
+                {%- if discount_count > 0 and footer_group_started == false -%}
+                  {%- assign footer_group_started = true -%}
+                  <div id="overlay-christmas-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                {%- endif -%}
+                {%- if bottom_group_started == false -%}
+                  {%- assign bottom_group_started = true -%}
+                  <div id="overlay-christmas-2025-bottom-group-{{ section.id }}" class="bottom-group-wrapper">
+                {%- endif -%}
                 {% if block.settings.button_text != blank %}
                   {% if button_count == 0 %}
                     <div id="overlay-christmas-2025-buttons-wrapper-{{ section.id }}" class="buttons-grid-wrapper">
@@ -170,6 +223,14 @@
                     </div>
                     {% assign button_group_started = false %}
                     {% assign button_count = 0 %}
+                    {%- if bottom_group_started -%}
+                      </div>
+                      {%- assign bottom_group_started = false -%}
+                    {%- endif -%}
+                    {%- if footer_group_started -%}
+                      </div>
+                      {%- assign footer_group_started = false -%}
+                    {%- endif -%}
                   {% endif %}
                 {% endif %}
 
@@ -186,6 +247,22 @@
           {% endfor %}
           
           {% if button_group_started %}
+            </div>
+          {% endif %}
+          
+          {% if header_group_started %}
+            </div>
+          {% endif %}
+          
+          {% if discount_group_started %}
+            </div>
+          {% endif %}
+          
+          {% if bottom_group_started %}
+            </div>
+          {% endif %}
+          
+          {% if footer_group_started %}
             </div>
           {% endif %}
         </div>
@@ -277,8 +354,42 @@
   width: 175.3px;
 }
 
+/* Desktop: Aplicar tipografía del tema a los botones si está activado */
+{%- if section.settings.use_theme_font_buttons -%}
+#shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
+#shopify-section-{{ section.id }} .buttons-grid-wrapper .button[class*="custom-btn"],
+#shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] a.button {
+  font-family: Baskervville, serif !important;
+  font-weight: 400 !important;
+}
+{%- endif -%}
+
 /* Responsive heading adjustments */
 @media only screen and (max-width: 767px) {
+  /* Mobile: Eliminar padding del contenedor principal */
+  #shopify-section-{{ section.id }} .image-with-text-overlay,
+  #overlay-christmas-2025-{{ section.id }} {
+    padding: 0px 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  /* Mobile: Quitar sombreado de la imagen de fondo */
+  #shopify-section-{{ section.id }} .image-with-text-overlay--bg,
+  #overlay-christmas-2025-bg-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .image-with-text-overlay--bg {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  #shopify-section-{{ section.id }} .image-with-text-overlay--bg img,
+  #overlay-christmas-2025-bg-{{ section.id }} img,
+  #overlay-christmas-2025-{{ section.id }} .image-with-text-overlay--bg img {
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+  
   {% for block in section.blocks %}
     {%- if block.type == 'heading' -%}
       {%- unless block.settings.is_holiday_sale_heading -%}
@@ -295,22 +406,280 @@
     {%- endif -%}
   {% endfor %}
   
+  /* Mobile: Agrupación de elementos */
+  /* Grupo 1: Heading + Wrap Season Text - contenedor HTML */
+  #shopify-section-{{ section.id }} .header-group-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .header-group-wrapper .block-wrapper[data-block-type="heading"].holiday-sale-heading {
+    margin-bottom: 0rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  #shopify-section-{{ section.id }} .header-group-wrapper .block-wrapper[data-block-type="wrap_season_text"] {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  /* Fallback para cuando no hay contenedor (por si acaso) */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading {
+    margin-bottom: 0.5rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"] {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  /* Grupo 2 y 3: Footer Group - contenedor principal HTML */
+  #shopify-section-{{ section.id }} .footer-group-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+    gap: 1.0rem !important;
+  }
+  
+  /* Subgrupo 1: Discount Group - Los 3 discount offers */
+  #shopify-section-{{ section.id }} .discount-group-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  
+  /* Discount Offers dentro del discount group - reducir separación vertical */
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer {
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: -0.3rem !important;
+    margin-bottom: -0.3rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer:first-of-type {
+    margin-top: 0 !important;
+    margin-bottom: -0.3rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer:not(:first-of-type):not(:last-of-type) {
+    margin-top: -0.3rem !important;
+    margin-bottom: -0.3rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer:last-of-type {
+    margin-top: -0.3rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* También eliminar márgenes del contenido interno y reducir line-height para menos separación */
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer .rte,
+  #shopify-section-{{ section.id }} .discount-group-wrapper .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content {
+    margin: 0 !important;
+    line-height: 0.9 !important;
+  }
+  
+  /* Subgrupo 2: Bottom Group - Pima Alpaca + Buttons */
+  #shopify-section-{{ section.id }} .bottom-group-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 1rem !important;
+  }
+  
+  /* Pima Alpaca dentro del bottom group - sin márgenes */
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .block-wrapper[data-block-type="pima_alpaca"] {
+    margin: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  /* También eliminar márgenes del contenido interno del pima_alpaca */
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .block-wrapper[data-block-type="pima_alpaca"] .rte,
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .block-wrapper[data-block-type="pima_alpaca"] .rte *,
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .block-wrapper[data-block-type="pima_alpaca"] .rte p {
+    margin: 0 !important;
+  }
+  
+  /* También aplicar sin márgenes a nivel general para mobile - sobrescribir variables CSS */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"],
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text,
+  #shopify-section-{{ section.id }} .pima-alpaca-text.block-wrapper,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content .pima-alpaca-text,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .block-wrapper.pima-alpaca-text,
+  #overlay-christmas-2025-pima-alpaca-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text {
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    --block-margin-top: 0 !important;
+    --block-margin-bottom: 0 !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte p,
+  #shopify-section-{{ section.id }} .pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .pima-alpaca-text .rte *,
+  #shopify-section-{{ section.id }} .pima-alpaca-text .rte p,
+  #shopify-section-{{ section.id }} .pima-alpaca-text p,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte p,
+  #overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Buttons Wrapper dentro del bottom group */
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper {
+    margin-top: 0 !important;
+    width: 100% !important;
+    justify-content: center !important;
+    display: flex !important;
+    gap: 1rem !important;
+    flex-wrap: nowrap !important;
+  }
+  
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
+    flex: 0 0 127px !important;
+    min-width: 127px !important;
+    max-width: 127px !important;
+    width: 127px !important;
+  }
+  
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    width: 127px !important;
+  }
+  
+  /* Mobile: Aplicar tipografía del tema a los botones dentro del bottom-group si está activado */
+  {%- if section.settings.use_theme_font_buttons -%}
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .button[class*="custom-btn"] {
+    font-family: Baskervville, serif !important;
+    font-weight: 400 !important;
+  }
+  {%- else -%}
+  #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    font-family: var(--section-font-family, inherit) !important;
+  }
+  {%- endif -%}
+  
+  /* Fallback para cuando no hay contenedor (por si acaso) */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer {
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer:first-of-type {
+    margin-top: 0 !important;
+    margin-bottom: 0.3rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer:not(:first-of-type):not(:last-of-type) {
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer:last-of-type {
+    margin-top: 0.3rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] {
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    gap: 10px;
-    width: 100%;
-    flex-wrap: wrap;
+    margin-top: 0 !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  /* Mobile: Buttons grid wrapper - horizontal, 50% cada uno, gap 1rem */
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
+    display: flex !important;
+    gap: 1rem !important;
+    width: 100% !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
     margin: 0 !important;
-    flex: 1;
-    min-width: 0;
+    flex: 0 0 127px !important;
+    min-width: 127px !important;
+    max-width: 127px !important;
+    width: 127px !important;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
-    width: 100%;
+    width: 127px !important;
     margin: 0 !important;
+  }
+  
+  /* Mobile: Aplicar tipografía del tema a los botones si está activado */
+  {%- if section.settings.use_theme_font_buttons -%}
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .button[class*="custom-btn"] {
+    font-family: Baskervville, serif !important;
+    font-weight: 400 !important;
+  }
+  {%- else -%}
+  #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    font-family: var(--section-font-family, inherit) !important;
+  }
+  {%- endif -%}
+  
+  /* Márgenes específicos para cada botón en mobile */
+  #shopify-section-{{ section.id }} #overlay-christmas-2025-button-link-button_GPcUXd {
+    /* margin-left: 1rem !important; */
+    margin-right: 0 !important;
+  }
+  
+  #shopify-section-{{ section.id }} #overlay-christmas-2025-button-link-button_aHVeif {
+    margin-left: 0 !important;
+    margin-right: 1rem !important;
   }
   
   {% for block in section.blocks %}
@@ -324,6 +693,11 @@
         #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
           font-size: {{ mobile_font_size }}px !important;
           font-weight: 400 !important;
+          {%- if section.settings.use_theme_font_buttons -%}
+          font-family: Baskervville, serif !important;
+          {%- else -%}
+          font-family: var(--section-font-family, inherit) !important;
+          {%- endif -%}
         }
       {%- else -%}
         #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} {
@@ -333,6 +707,11 @@
         #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button[class*="custom-btn"] {
           font-size: 15px !important;
           font-weight: 400 !important;
+          {%- if section.settings.use_theme_font_buttons -%}
+          font-family: Baskervville, serif !important;
+          {%- else -%}
+          font-family: var(--section-font-family, inherit) !important;
+          {%- endif -%}
         }
       {%- endif -%}
     {%- endif -%}
@@ -364,6 +743,46 @@
   margin-right: auto !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
+}
+
+/* Mobile: Asegurar que el contenedor de contenido esté centrado */
+@media only screen and (max-width: 767px) {
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content,
+  #overlay-christmas-2025-content-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .image-with-text-overlay--content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 20px !important;
+  }
+  
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner,
+  #overlay-christmas-2025-content-inner-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .image-with-text-overlay--content-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 14rem !important;
+  }
+  
+  /* Mobile: Forzar que todos los bloques estén centrados */
+  #shopify-section-{{ section.id }} .block-wrapper {
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Mobile: Asegurar que los textos estén centrados */
+  #shopify-section-{{ section.id }} .block-wrapper * {
+    text-align: center !important;
+  }
 }
 
 /* Ensure all special blocks are visible */
@@ -594,6 +1013,15 @@
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
+  /* Mobile: Contenedor de descuentos - centrado */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer,
+  #shopify-section-{{ section.id }} .discount-offer {
+    text-align: center !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
   #shopify-section-{{ section.id }} .discount-offer .rte,
@@ -603,6 +1031,9 @@
     text-align: center !important;
     font-size: 31px !important;
     line-height: 45px !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 auto !important;
   }
   
   /* Mobile: "Buy x," part */
@@ -617,6 +1048,7 @@
     font-style: normal !important;
     font-weight: 700 !important;
     line-height: 45px !important;
+    display: inline !important;
   }
   
   /* Mobile: "Get XX% Off" part */
@@ -630,6 +1062,7 @@
     font-style: normal !important;
     font-weight: 700 !important;
     line-height: 45px !important;
+    display: inline !important;
   }
 }
 
@@ -724,6 +1157,24 @@
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
+  /* Sobrescribir márgenes del contenedor principal - eliminar variables CSS */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"],
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text,
+  #shopify-section-{{ section.id }} .pima-alpaca-text.block-wrapper,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content .pima-alpaca-text,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .block-wrapper.pima-alpaca-text,
+  #overlay-christmas-2025-pima-alpaca-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text {
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    --block-margin-top: 0 !important;
+    --block-margin-bottom: 0 !important;
+  }
+  
   /* Estilos base para mobile */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
@@ -742,6 +1193,16 @@
   #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
     color: #FFF !important;
     text-align: center !important;
+    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     overflow: visible !important;
     height: auto !important;
     min-height: auto !important;
@@ -784,6 +1245,13 @@
       "id": "use_global_font",
       "label": "Usar tipografía global del theme",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_font_buttons",
+      "label": "Usar tipografía del tema (Baskervville) en botones",
+      "default": true,
+      "info": "Si está activado, los botones usarán Baskervville con peso 400"
     },
     {
       "type": "select",
