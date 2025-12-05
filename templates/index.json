@@ -82,22 +82,42 @@
             "buy_text": "Buy 4,",
             "get_text": "Get 20% Off",
             "margin_top": 0,
-            "margin_bottom": 1
+            "margin_bottom": 1.1
           }
         },
         "button_GPcUXd": {
           "type": "button",
           "settings": {
-            "button_text": "Shop Now",
-            "button_link": "",
+            "button_text": "Shop Women",
+            "button_link": "shopify://collections/all-womens-100-plastic-free-clothing",
             "button_font_size": 16,
             "button_font_size_mobile": 15,
             "button_font_weight": "400",
             "button_color": "#ffffff",
             "button_background_color": "#000000",
-            "button_border_color": "#000000",
-            "button_border_width": 0,
-            "button_border_radius": 4,
+            "button_border_color": "#ffffff",
+            "button_border_width": 3,
+            "button_border_radius": 50,
+            "button_border_style": "solid",
+            "button_outline": false,
+            "hover_text_color": "#000000",
+            "hover_background_color": "#ffffff",
+            "hover_border_color": "#000000"
+          }
+        },
+        "button_aHVeif": {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop Men",
+            "button_link": "shopify://collections/all-mens",
+            "button_font_size": 16,
+            "button_font_size_mobile": 15,
+            "button_font_weight": "400",
+            "button_color": "#ffffff",
+            "button_background_color": "#000000",
+            "button_border_color": "#ffffff",
+            "button_border_width": 3,
+            "button_border_radius": 50,
             "button_border_style": "solid",
             "button_outline": false,
             "hover_text_color": "#000000",
@@ -112,7 +132,8 @@
         "discount_offer_A6gkAF",
         "discount_offer_ic7CGd",
         "discount_offer_JW4nC8",
-        "button_GPcUXd"
+        "button_GPcUXd",
+        "button_aHVeif"
       ],
       "name": "Overlay Christmas 2025",
       "settings": {
