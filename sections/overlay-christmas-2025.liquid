@@ -47,10 +47,10 @@
 
 <div class="row {{ section_width }}" style="--section-font-family: {{ section_font }};">
   <div class="small-12 columns">
-    <image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
+    <image-with-text-overlay id="overlay-christmas-2025-{{ section.id }}" class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
       style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};">
       
-      <div class="image-with-text-overlay--bg parallax--{{ image_parallax }}">
+      <div id="overlay-christmas-2025-bg-{{ section.id }}" class="image-with-text-overlay--bg parallax--{{ image_parallax }}">
         {% if image %}
           {%- liquid
             assign small_width = image.src.height | times: '375' | divided_by: image.src.width
@@ -81,8 +81,8 @@
         {%- endif -%}
       </div>
 
-      <div class="image-with-text-overlay--content content-{{ content_position }}">
-        <div class="image-with-text-overlay--content-inner content-width-{{ content_width }}">
+      <div id="overlay-christmas-2025-content-{{ section.id }}" class="image-with-text-overlay--content content-{{ content_position }}">
+        <div id="overlay-christmas-2025-content-inner-{{ section.id }}" class="image-with-text-overlay--content-inner content-width-{{ content_width }}">
           {%- liquid
             assign button_group_started = false
             assign button_count = 0
@@ -96,10 +96,10 @@
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
-                <div class="block-wrapper block-{{ block.id }}{% if block.settings.is_holiday_sale_heading %} holiday-sale-heading{% endif %}" 
+                <div id="overlay-christmas-2025-heading-{{ block.id }}" class="block-wrapper block-{{ block.id }}{% if block.settings.is_holiday_sale_heading %} holiday-sale-heading{% endif %}" 
                      data-block-type="heading"
                      {{ block.shopify_attributes }}>
-                  <{{ heading_tag }} class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
+                  <{{ heading_tag }} id="overlay-christmas-2025-heading-text-{{ block.id }}" class="{{ block.settings.heading_size }} image-with-text-overlay--heading">
                     {{ block.settings.text | newline_to_br }}
                   </{{ heading_tag }}>
                 </div>
@@ -110,11 +110,11 @@
                   {% assign button_group_started = false %}
                   {% assign button_count = 0 %}
                 {% endif %}
-                <div class="block-wrapper block-{{ block.id }} wrap-season-text" 
+                <div id="overlay-christmas-2025-wrap-season-{{ block.id }}" class="block-wrapper block-{{ block.id }} wrap-season-text" 
                      data-block-type="wrap_season_text"
                      style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                      {{ block.shopify_attributes }}>
-                  <p class="wrap-season-text-content">{{ block.settings.text }}</p>
+                  <p id="overlay-christmas-2025-wrap-season-text-{{ block.id }}" class="wrap-season-text-content">{{ block.settings.text }}</p>
                 </div>
 
               {%- when 'discount_offer' -%}
@@ -124,12 +124,12 @@
                   {% assign button_count = 0 %}
                 {% endif %}
                 {%- if block.settings.buy_text != blank or block.settings.get_text != blank -%}
-                  <div class="block-wrapper block-{{ block.id }} discount-offer" 
+                  <div id="overlay-christmas-2025-discount-{{ block.id }}" class="block-wrapper block-{{ block.id }} discount-offer" 
                        data-block-type="text"
                        style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                        {{ block.shopify_attributes }}>
-                    <div class="rte discount-offer-content">
-                      <span class="discount-buy-part">{{ block.settings.buy_text }}</span><span class="discount-get-part">{{ block.settings.get_text }}</span>
+                    <div id="overlay-christmas-2025-discount-content-{{ block.id }}" class="rte discount-offer-content">
+                      <span id="overlay-christmas-2025-discount-buy-{{ block.id }}" class="discount-buy-part">{{ block.settings.buy_text }}</span><span id="overlay-christmas-2025-discount-get-{{ block.id }}" class="discount-get-part">{{ block.settings.get_text }}</span>
                     </div>
                   </div>
                 {%- endif -%}
@@ -142,10 +142,10 @@
                 {% endif %}
                 {%- if block.settings.text != blank -%}
                   {%- if block.settings.is_pima_alpaca_text -%}
-                    <div class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
+                    <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
                          data-block-type="text"
                          {{ block.shopify_attributes }}>
-                      <div class="rte">{{ block.settings.text }}</div>
+                      <div id="overlay-christmas-2025-pima-alpaca-text-{{ block.id }}" class="rte">{{ block.settings.text }}</div>
                     </div>
                   {%- else -%}
                     <div class="block-wrapper block-{{ block.id }} text-dropdown-wrapper" 
@@ -173,14 +173,14 @@
               {%- when 'button' -%}
                 {% if block.settings.button_text != blank %}
                   {% if button_count == 0 %}
-                    <div class="buttons-grid-wrapper">
+                    <div id="overlay-christmas-2025-buttons-wrapper-{{ section.id }}" class="buttons-grid-wrapper">
                     {% assign button_group_started = true %}
                   {% endif %}
                   {% assign button_count = button_count | plus: 1 %}
-                  <div class="block-wrapper block-{{ block.id }}" 
+                  <div id="overlay-christmas-2025-button-{{ block.id }}" class="block-wrapper block-{{ block.id }}" 
                        data-block-type="button"
                        {{ block.shopify_attributes }}>
-                    <a class="button custom-btn-{{ block.id }}{% if block.settings.button_outline %} outline{% endif %}"
+                    <a id="overlay-christmas-2025-button-link-{{ block.id }}" class="button custom-btn-{{ block.id }}{% if block.settings.button_outline %} outline{% endif %}"
                        href="{{ block.settings.button_link }}"
                        role="button">
                       {{ block.settings.button_text }}
@@ -391,6 +391,18 @@
   margin-bottom: 0;
 }
 
+/* Center and limit width of content container */
+#shopify-section-{{ section.id }} .image-with-text-overlay--content.content-middle-left,
+#overlay-christmas-2025-content-{{ section.id }}.content-middle-left,
+#overlay-christmas-2025-{{ section.id }} .image-with-text-overlay--content.content-middle-left {
+  max-width: 1670px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
 /* Ensure all special blocks are visible */
 #shopify-section-{{ section.id }} .holiday-sale-heading,
 #shopify-section-{{ section.id }} .wrap-season-text,
@@ -399,7 +411,8 @@
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading,
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"],
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text {
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
@@ -413,7 +426,8 @@
 #shopify-section-{{ section.id }} .holiday-sale-heading *,
 #shopify-section-{{ section.id }} .wrap-season-text *,
 #shopify-section-{{ section.id }} .discount-offer *,
-#shopify-section-{{ section.id }} .pima-alpaca-text * {
+#shopify-section-{{ section.id }} .pima-alpaca-text *,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text * {
   visibility: visible !important;
   opacity: 1 !important;
 }
@@ -425,7 +439,9 @@
 /* Text 1: "Holiday Sale" - Heading */
 /* Desktop styles */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading,
-#shopify-section-{{ section.id }} .holiday-sale-heading {
+#shopify-section-{{ section.id }} .holiday-sale-heading,
+#overlay-christmas-2025-heading-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .holiday-sale-heading {
   margin-top: var(--block-margin-top, 0) !important;
   margin-bottom: var(--block-margin-bottom, 0) !important;
   display: block !important;
@@ -438,7 +454,9 @@
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
 #shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading,
 #shopify-section-{{ section.id }} .holiday-sale-heading h1,
-#shopify-section-{{ section.id }} .holiday-sale-heading h3 {
+#shopify-section-{{ section.id }} .holiday-sale-heading h3,
+#overlay-christmas-2025-heading-text-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
   color: #FFF !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
   -webkit-text-stroke-width: 0.5px !important;
@@ -462,7 +480,9 @@
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
   #shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading,
   #shopify-section-{{ section.id }} .holiday-sale-heading h1,
-  #shopify-section-{{ section.id }} .holiday-sale-heading h3 {
+  #shopify-section-{{ section.id }} .holiday-sale-heading h3,
+  #overlay-christmas-2025-heading-text-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
     color: #FFF !important;
     text-align: center !important;
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
@@ -481,7 +501,9 @@
 /* Text 2: "Wrap the Season in Plastic-Free Softness" - New Block Type */
 /* Desktop styles */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"],
-#shopify-section-{{ section.id }} .wrap-season-text {
+#shopify-section-{{ section.id }} .wrap-season-text,
+#overlay-christmas-2025-wrap-season-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .wrap-season-text {
   margin-top: var(--block-margin-top, 0) !important;
   margin-bottom: var(--block-margin-bottom, 0) !important;
   display: block !important;
@@ -495,7 +517,9 @@
 
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"] .wrap-season-text-content,
 #shopify-section-{{ section.id }} .wrap-season-text .wrap-season-text-content,
-#shopify-section-{{ section.id }} .wrap-season-text p {
+#shopify-section-{{ section.id }} .wrap-season-text p,
+#overlay-christmas-2025-wrap-season-text-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .wrap-season-text-content {
   color: #FFF !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
   font-family: Montserrat, sans-serif !important;
@@ -518,7 +542,9 @@
 @media only screen and (max-width: 767px) {
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"] .wrap-season-text-content,
   #shopify-section-{{ section.id }} .wrap-season-text .wrap-season-text-content,
-  #shopify-section-{{ section.id }} .wrap-season-text p {
+  #shopify-section-{{ section.id }} .wrap-season-text p,
+  #overlay-christmas-2025-wrap-season-text-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .wrap-season-text-content {
     color: #FFF !important;
     text-align: center !important;
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
@@ -540,7 +566,9 @@
 /* Text 4, 5, 6: Discount Offers - Special styling with split colors */
 /* Desktop styles */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer,
-#shopify-section-{{ section.id }} .discount-offer {
+#shopify-section-{{ section.id }} .discount-offer,
+#overlay-christmas-2025-discount-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .discount-offer {
   font-family: Montserrat, sans-serif !important;
   font-style: normal !important;
   font-weight: 700 !important;
@@ -555,7 +583,9 @@
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
 #shopify-section-{{ section.id }} .discount-offer .rte,
-#shopify-section-{{ section.id }} .discount-offer .discount-offer-content {
+#shopify-section-{{ section.id }} .discount-offer .discount-offer-content,
+#overlay-christmas-2025-discount-content-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .discount-offer-content {
   font-size: 60px !important;
   line-height: 45px !important;
   font-family: Montserrat, sans-serif !important;
@@ -572,7 +602,9 @@
 
 /* Desktop: "Buy x," part */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
-#shopify-section-{{ section.id }} .discount-offer .discount-buy-part {
+#shopify-section-{{ section.id }} .discount-offer .discount-buy-part,
+#overlay-christmas-2025-discount-buy-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .discount-buy-part {
   color: #FFC25E !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
   font-family: Montserrat, sans-serif !important;
@@ -585,7 +617,9 @@
 
 /* Desktop: "Get XX% Off" part */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
-#shopify-section-{{ section.id }} .discount-offer .discount-get-part {
+#shopify-section-{{ section.id }} .discount-offer .discount-get-part,
+#overlay-christmas-2025-discount-get-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .discount-get-part {
   color: #FFF !important;
   font-family: Montserrat, sans-serif !important;
   font-size: 60px !important;
@@ -600,7 +634,9 @@
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
   #shopify-section-{{ section.id }} .discount-offer .rte,
-  #shopify-section-{{ section.id }} .discount-offer .discount-offer-content {
+  #shopify-section-{{ section.id }} .discount-offer .discount-offer-content,
+  #overlay-christmas-2025-discount-content-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .discount-offer-content {
     text-align: center !important;
     font-size: 31px !important;
     line-height: 45px !important;
@@ -608,7 +644,9 @@
   
   /* Mobile: "Buy x," part */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
-  #shopify-section-{{ section.id }} .discount-offer .discount-buy-part {
+  #shopify-section-{{ section.id }} .discount-offer .discount-buy-part,
+  #overlay-christmas-2025-discount-buy-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .discount-buy-part {
     color: #FFC25E !important;
     text-align: center !important;
     font-family: Montserrat, sans-serif !important;
@@ -620,7 +658,9 @@
   
   /* Mobile: "Get XX% Off" part */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
-  #shopify-section-{{ section.id }} .discount-offer .discount-get-part {
+  #shopify-section-{{ section.id }} .discount-offer .discount-get-part,
+  #overlay-christmas-2025-discount-get-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .discount-get-part {
     color: #FFF !important;
     font-family: Montserrat, sans-serif !important;
     font-size: 31px !important;
@@ -631,9 +671,14 @@
 }
 
 /* Text 8: "Luxuriously Soft Pima & Alpaca" - Text */
-/* Desktop styles */
+/* Force visibility - Desktop styles */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text,
-#shopify-section-{{ section.id }} .pima-alpaca-text.block-wrapper {
+#shopify-section-{{ section.id }} .pima-alpaca-text.block-wrapper,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content .pima-alpaca-text,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .block-wrapper.pima-alpaca-text,
+#overlay-christmas-2025-pima-alpaca-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text {
   margin-top: var(--block-margin-top, 0) !important;
   margin-bottom: var(--block-margin-bottom, 0) !important;
   display: block !important;
@@ -642,7 +687,10 @@
   width: 100% !important;
   height: auto !important;
   max-height: none !important;
+  min-height: auto !important;
   overflow: visible !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
@@ -652,7 +700,11 @@
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte *,
 #shopify-section-{{ section.id }} .pima-alpaca-text .rte p,
 #shopify-section-{{ section.id }} .pima-alpaca-text p,
-#shopify-section-{{ section.id }} .pima-alpaca-text {
+#shopify-section-{{ section.id }} .pima-alpaca-text,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte p,
+#overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
   color: #FFF !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
   font-family: Montserrat, sans-serif !important;
@@ -673,11 +725,15 @@
 
 /* Override any dynamic styles that might interfere */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].pima-alpaca-text .rte,
-#shopify-section-{{ section.id }} .pima-alpaca-text .rte {
+#shopify-section-{{ section.id }} .pima-alpaca-text .rte,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
+#overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
+#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
   font-size: 30px !important;
   line-height: 22.4px !important;
   color: #FFF !important;
   font-weight: 700 !important;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* Mobile styles */
@@ -689,7 +745,11 @@
   #shopify-section-{{ section.id }} .pima-alpaca-text .rte *,
   #shopify-section-{{ section.id }} .pima-alpaca-text .rte p,
   #shopify-section-{{ section.id }} .pima-alpaca-text p,
-  #shopify-section-{{ section.id }} .pima-alpaca-text {
+  #shopify-section-{{ section.id }} .pima-alpaca-text,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte p,
+  #overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
+  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
     color: #FFF !important;
     text-align: center !important;
     font-family: Montserrat, sans-serif !important;
