@@ -141,7 +141,7 @@
                   {% assign button_count = 0 %}
                 {% endif %}
                 {%- if block.settings.text != blank -%}
-                  <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text" 
+                  <div id="overlay-christmas-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text{% if block.settings.use_theme_font %} use-theme-font{% endif %}" 
                        data-block-type="pima_alpaca"
                        style="--block-margin-top: {{ block.settings.margin_top }}rem; --block-margin-bottom: {{ block.settings.margin_bottom }}rem;"
                        {{ block.shopify_attributes }}>
@@ -262,6 +262,17 @@
 {% endfor %}
 
 /* Buttons grid wrapper - desktop styles */
+#shopify-section-{{ section.id }} .buttons-grid-wrapper {
+  display: flex !important;
+  gap: 45.7px !important;
+  width: auto !important;
+  margin: 0 auto !important;
+  margin-right: 22% !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
   width: 175.3px;
 }
@@ -646,6 +657,7 @@
   z-index: 1 !important;
 }
 
+/* Estilos base para Pima & Alpaca (siempre aplicados) */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte p,
@@ -663,11 +675,6 @@
 #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
   color: #FFF !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-  font-family: Montserrat, sans-serif !important;
-  font-size: 30px !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  line-height: 22.4px !important;
   margin: 0 !important;
   padding: 0 !important;
   display: block !important;
@@ -679,13 +686,33 @@
   max-height: none !important;
 }
 
-/* Override any dynamic styles that might interfere */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text .rte,
-#shopify-section-{{ section.id }} .pima-alpaca-text .rte,
-#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text .rte,
-#overlay-christmas-2025-pima-alpaca-text-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
+/* Estilos de tipografía personalizados (solo cuando NO se usa la tipografía del tema) */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte *,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte p,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte *,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte p,
+#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte *,
+#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte p,
+#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) p,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte p,
+#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
+  font-family: Montserrat, sans-serif !important;
+  font-size: 30px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 22.4px !important;
+}
+
+/* Override any dynamic styles that might interfere (solo cuando NO se usa la tipografía del tema) */
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte,
+#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
+#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
   font-size: 30px !important;
   line-height: 22.4px !important;
   color: #FFF !important;
@@ -697,6 +724,7 @@
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
+  /* Estilos base para mobile */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte *,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"] .rte p,
@@ -714,11 +742,6 @@
   #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text .rte {
     color: #FFF !important;
     text-align: center !important;
-    font-family: Montserrat, sans-serif !important;
-    font-size: 15px !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 22.4px !important;
     overflow: visible !important;
     height: auto !important;
     min-height: auto !important;
@@ -726,6 +749,27 @@
     visibility: visible !important;
     opacity: 1 !important;
     display: block !important;
+  }
+  
+  /* Estilos de tipografía personalizados para mobile (solo cuando NO se usa la tipografía del tema) */
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte p,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte *,
+  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte p,
+  #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte,
+  #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte *,
+  #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte p,
+  #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) p,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
+  #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte p,
+  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
+    font-family: Montserrat, sans-serif !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 22.4px !important;
   }
 }
 </style>
@@ -1079,6 +1123,13 @@
           "id": "text",
           "label": "Text",
           "default": "<p>Luxuriously Soft Pima & Alpaca</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_theme_font",
+          "label": "Usar tipografía del tema",
+          "default": false,
+          "info": "Si está activado, usará la tipografía del tema en lugar de los estilos personalizados"
         },
         {
           "type": "range",
