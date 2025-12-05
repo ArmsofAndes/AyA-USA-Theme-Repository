@@ -89,7 +89,7 @@
           "type": "pima_alpaca",
           "settings": {
             "text": "<p>Luxuriously Soft Pima & Alpaca</p>",
-            "margin_top": 1.2,
+            "margin_top": 1.7,
             "margin_bottom": 2.5
           }
         },
