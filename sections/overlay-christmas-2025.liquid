@@ -281,6 +281,21 @@
   --section-desktop-height: {{ section.settings.desktop_vh_height }}vh;
 }
 
+/* Force height to exactly 750px for desktop-height-750 class */
+@media only screen and (min-width: 768px) {
+  #shopify-section-{{ section.id }} .image-with-text-overlay.desktop-height-750,
+  #overlay-christmas-2025-{{ section.id }}.desktop-height-750 {
+    height: 750px !important;
+    min-height: 750px !important;
+    max-height: 750px !important;
+    box-sizing: border-box !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    /* Override the CSS variable that might be using vh */
+    --section-desktop-height: 750px !important;
+  }
+}
+
 /* Block-specific CSS custom properties */
 {% for block in section.blocks %}
   {%- case block.type -%}
@@ -341,10 +356,10 @@
 /* Buttons grid wrapper - desktop styles */
 #shopify-section-{{ section.id }} .buttons-grid-wrapper {
   display: flex !important;
-  gap: 45.7px !important;
+  gap: {{ section.settings.buttons_gap_desktop | default: 46 }}px !important;
   width: auto !important;
   margin: 0 auto !important;
-  margin-right: 22% !important;
+  margin-right: {{ section.settings.buttons_margin_right_desktop | default: 22 }}% !important;
   justify-content: flex-start !important;
   align-items: center !important;
   flex-wrap: wrap !important;
@@ -414,7 +429,7 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: {{ section.settings.header_group_margin_bottom_mobile | default: 1.5 }}rem !important;
   }
   
   #shopify-section-{{ section.id }} .header-group-wrapper .block-wrapper[data-block-type="heading"].holiday-sale-heading {
@@ -451,8 +466,8 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-top: 1.5rem !important;
-    gap: 1.0rem !important;
+    margin-top: {{ section.settings.footer_group_margin_top_mobile | default: 1.5 }}rem !important;
+    gap: {{ section.settings.footer_group_gap_mobile | default: 1.0 }}rem !important;
   }
   
   /* Subgrupo 1: Discount Group - Los 3 discount offers */
@@ -634,10 +649,10 @@
     justify-content: center !important;
   }
   
-  /* Mobile: Buttons grid wrapper - horizontal, 50% cada uno, gap 1rem */
+  /* Mobile: Buttons grid wrapper - horizontal, 50% cada uno, gap configurable */
   #shopify-section-{{ section.id }} .buttons-grid-wrapper {
     display: flex !important;
-    gap: 1rem !important;
+    gap: {{ section.settings.buttons_gap_mobile | default: 1.0 }}rem !important;
     width: 100% !important;
     flex-wrap: nowrap !important;
     justify-content: center !important;
@@ -768,7 +783,7 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 14rem !important;
+    gap: {{ section.settings.content_inner_gap_mobile | default: 14.0 }}rem !important;
   }
   
   /* Mobile: Forzar que todos los bloques estén centrados */
@@ -820,64 +835,109 @@
 
 /* Text 1: "Holiday Sale" - Heading */
 /* Desktop styles */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading,
-#shopify-section-{{ section.id }} .holiday-sale-heading,
-#overlay-christmas-2025-heading-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .holiday-sale-heading {
-  margin-top: var(--block-margin-top, 0) !important;
-  margin-bottom: var(--block-margin-bottom, 0) !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  width: 100% !important;
-  height: auto !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'heading' and block.settings.is_holiday_sale_heading -%}
+    {%- assign font_size = block.settings.holiday_sale_font_size_desktop | default: 62 -%}
+    {%- assign line_height_setting = block.settings.holiday_sale_line_height_desktop | default: 22.5 -%}
+    {%- if line_height_setting < font_size -%}
+      {%- assign line_height = font_size | times: 1.2 -%}
+    {%- else -%}
+      {%- assign line_height = line_height_setting -%}
+    {%- endif -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }},
+    #shopify-section-{{ section.id }} .block-{{ block.id }}.holiday-sale-heading,
+    #overlay-christmas-2025-heading-{{ block.id }} {
+      margin-top: var(--block-margin-top, 0) !important;
+      margin-bottom: var(--block-margin-bottom, 0) !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
-#shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading,
-#shopify-section-{{ section.id }} .holiday-sale-heading h1,
-#shopify-section-{{ section.id }} .holiday-sale-heading h3,
-#overlay-christmas-2025-heading-text-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
-  color: #FFF !important;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-  -webkit-text-stroke-width: 0.5px !important;
-  -webkit-text-stroke-color: #FFF !important;
-  font-family: Baskervville, serif !important;
-  font-size: 62px !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  line-height: 1.2 !important;
-  min-height: 22.4px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  overflow: visible !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'heading' and block.settings.is_holiday_sale_heading -%}
+    {%- assign font_size = block.settings.holiday_sale_font_size_desktop | default: 62 -%}
+    {%- assign line_height_setting = block.settings.holiday_sale_line_height_desktop | default: 22.5 -%}
+    {%- if line_height_setting < font_size -%}
+      {%- assign line_height = font_size | times: 1.2 -%}
+    {%- else -%}
+      {%- assign line_height = line_height_setting -%}
+    {%- endif -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading,
+    #shopify-section-{{ section.id }} .block-{{ block.id }}.holiday-sale-heading .image-with-text-overlay--heading,
+    #overlay-christmas-2025-heading-text-{{ block.id }} {
+      color: {{ block.settings.holiday_sale_color_desktop | default: '#FFFFFF' }} !important;
+      text-shadow: {{ block.settings.holiday_sale_text_shadow_x_desktop | default: 0 }}px {{ block.settings.holiday_sale_text_shadow_y_desktop | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+      -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_desktop | default: 0.5 }}px !important;
+      -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_desktop | default: '#FFFFFF' }} !important;
+      font-family: Baskervville, serif !important;
+      font-size: {{ font_size }}px !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.holiday_sale_font_weight_desktop | default: 400 }} !important;
+      line-height: {{ line_height }}px !important;
+      min-height: {{ line_height }}px !important;
+      height: auto !important;
+      max-height: none !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="heading"].holiday-sale-heading .image-with-text-overlay--heading,
-  #shopify-section-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading,
-  #shopify-section-{{ section.id }} .holiday-sale-heading h1,
-  #shopify-section-{{ section.id }} .holiday-sale-heading h3,
-  #overlay-christmas-2025-heading-text-{{ section.id }},
-  #overlay-christmas-2025-{{ section.id }} .holiday-sale-heading .image-with-text-overlay--heading {
-    color: #FFF !important;
-    text-align: center !important;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-    -webkit-text-stroke-width: 0.5px !important;
-    -webkit-text-stroke-color: #FFF !important;
-    font-family: Baskervville, serif !important;
-    font-size: 35px !important;
-    font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: 1.2 !important;
-    min-height: 22.4px !important;
-    overflow: visible !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'heading' and block.settings.is_holiday_sale_heading -%}
+      {%- assign font_size_mobile = block.settings.holiday_sale_font_size_mobile | default: 35 -%}
+      {%- assign line_height_setting_mobile = block.settings.holiday_sale_line_height_mobile | default: 22.5 -%}
+      {%- if line_height_setting_mobile < font_size_mobile -%}
+        {%- assign line_height_mobile = font_size_mobile | times: 1.2 -%}
+      {%- else -%}
+        {%- assign line_height_mobile = line_height_setting_mobile -%}
+      {%- endif -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .image-with-text-overlay--heading,
+      #shopify-section-{{ section.id }} .block-{{ block.id }}.holiday-sale-heading .image-with-text-overlay--heading,
+      #overlay-christmas-2025-heading-text-{{ block.id }} {
+        color: {{ block.settings.holiday_sale_color_mobile | default: '#FFFFFF' }} !important;
+        text-align: center !important;
+        text-shadow: {{ block.settings.holiday_sale_text_shadow_x_mobile | default: 0 }}px {{ block.settings.holiday_sale_text_shadow_y_mobile | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_blur_mobile | default: 4 }}px {{ block.settings.holiday_sale_text_shadow_color_mobile | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+        -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_mobile | default: 0.5 }}px !important;
+        -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_mobile | default: '#FFFFFF' }} !important;
+        font-family: Baskervville, serif !important;
+        font-size: {{ font_size_mobile }}px !important;
+        font-style: normal !important;
+        font-weight: {{ block.settings.holiday_sale_font_weight_mobile | default: 400 }} !important;
+        line-height: {{ line_height_mobile }}px !important;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      
+      /* Ajustar el contenedor del heading en mobile para que no ocupe espacio extra */
+      #shopify-section-{{ section.id }} .block-{{ block.id }},
+      #overlay-christmas-2025-heading-{{ block.id }} {
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        line-height: {{ line_height_mobile }}px !important;
+      }
+    {%- endif -%}
+  {% endfor %}
 }
 
 /* Text 2: "Wrap the Season in Plastic-Free Softness" - New Block Type */
@@ -897,52 +957,58 @@
   overflow: visible !important;
 }
 
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"] .wrap-season-text-content,
-#shopify-section-{{ section.id }} .wrap-season-text .wrap-season-text-content,
-#shopify-section-{{ section.id }} .wrap-season-text p,
-#overlay-christmas-2025-wrap-season-text-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .wrap-season-text-content {
-  color: #FFF !important;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-  font-family: Montserrat, sans-serif !important;
-  font-size: 23px !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
-  line-height: 22.4px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  overflow: visible !important;
-  height: auto !important;
-  min-height: auto !important;
-  max-height: none !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'wrap_season_text' -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .wrap-season-text-content,
+    #shopify-section-{{ section.id }} .block-{{ block.id }}.wrap-season-text .wrap-season-text-content,
+    #shopify-section-{{ section.id }} .block-{{ block.id }} p,
+    #overlay-christmas-2025-wrap-season-text-{{ block.id }} {
+      color: {{ block.settings.wrap_season_color_desktop | default: '#FFFFFF' }} !important;
+      text-shadow: {{ block.settings.wrap_season_text_shadow_x_desktop | default: 0 }}px {{ block.settings.wrap_season_text_shadow_y_desktop | default: 4 }}px {{ block.settings.wrap_season_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.wrap_season_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+      font-family: Montserrat, sans-serif !important;
+      font-size: {{ block.settings.wrap_season_font_size_desktop | default: 23 }}px !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.wrap_season_font_weight_desktop | default: 600 }} !important;
+      line-height: {{ block.settings.wrap_season_line_height_desktop | default: 22.5 }}px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="wrap_season_text"] .wrap-season-text-content,
-  #shopify-section-{{ section.id }} .wrap-season-text .wrap-season-text-content,
-  #shopify-section-{{ section.id }} .wrap-season-text p,
-  #overlay-christmas-2025-wrap-season-text-{{ section.id }},
-  #overlay-christmas-2025-{{ section.id }} .wrap-season-text-content {
-    color: #FFF !important;
-    text-align: center !important;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-    font-family: Montserrat, sans-serif !important;
-    font-size: 14px !important;
-    font-style: normal !important;
-    font-weight: 600 !important;
-    line-height: 22.4px !important;
-    overflow: visible !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'wrap_season_text' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .wrap-season-text-content,
+      #shopify-section-{{ section.id }} .block-{{ block.id }}.wrap-season-text .wrap-season-text-content,
+      #shopify-section-{{ section.id }} .block-{{ block.id }} p,
+      #overlay-christmas-2025-wrap-season-text-{{ block.id }} {
+        color: {{ block.settings.wrap_season_color_mobile | default: '#FFFFFF' }} !important;
+        text-align: center !important;
+        text-shadow: {{ block.settings.wrap_season_text_shadow_x_mobile | default: 0 }}px {{ block.settings.wrap_season_text_shadow_y_mobile | default: 4 }}px {{ block.settings.wrap_season_text_shadow_blur_mobile | default: 4 }}px {{ block.settings.wrap_season_text_shadow_color_mobile | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+        font-family: Montserrat, sans-serif !important;
+        font-size: {{ block.settings.wrap_season_font_size_mobile | default: 14 }}px !important;
+        font-style: normal !important;
+        font-weight: {{ block.settings.wrap_season_font_weight_mobile | default: 600 }} !important;
+        line-height: {{ block.settings.wrap_season_line_height_mobile | default: 22.5 }}px !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+      }
+    {%- endif -%}
+  {% endfor %}
 }
 
 /* Text 4, 5, 6: Discount Offers - Special styling with split colors */
@@ -962,54 +1028,56 @@
   width: 100% !important;
 }
 
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
-#shopify-section-{{ section.id }} .discount-offer .rte,
-#shopify-section-{{ section.id }} .discount-offer .discount-offer-content,
-#overlay-christmas-2025-discount-content-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .discount-offer-content {
-  font-size: 60px !important;
-  line-height: 45px !important;
-  font-family: Montserrat, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  overflow: visible !important;
-  min-height: 45px !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'discount_offer' -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .rte,
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-offer-content,
+    #overlay-christmas-2025-discount-content-{{ block.id }} {
+      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
+      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
+      font-family: Montserrat, sans-serif !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+      min-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
-/* Desktop: "Buy x," part */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
-#shopify-section-{{ section.id }} .discount-offer .discount-buy-part,
-#overlay-christmas-2025-discount-buy-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .discount-buy-part {
-  color: #FFC25E !important;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-  font-family: Montserrat, sans-serif !important;
-  font-size: 60px !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  line-height: 45px !important;
-  display: inline !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'discount_offer' -%}
+    /* Desktop: "Buy x," part */
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-buy-part,
+    #overlay-christmas-2025-discount-buy-{{ block.id }} {
+      color: {{ block.settings.discount_buy_color_desktop | default: '#FFC25E' }} !important;
+      text-shadow: {{ block.settings.discount_text_shadow_x_desktop | default: 0 }}px {{ block.settings.discount_text_shadow_y_desktop | default: 4 }}px {{ block.settings.discount_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.discount_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+      font-family: Montserrat, sans-serif !important;
+      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
+      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
+      display: inline !important;
+    }
 
-/* Desktop: "Get XX% Off" part */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
-#shopify-section-{{ section.id }} .discount-offer .discount-get-part,
-#overlay-christmas-2025-discount-get-{{ section.id }},
-#overlay-christmas-2025-{{ section.id }} .discount-get-part {
-  color: #FFF !important;
-  font-family: Montserrat, sans-serif !important;
-  font-size: 60px !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  line-height: 45px !important;
-  display: inline !important;
-}
+    /* Desktop: "Get XX% Off" part */
+    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-get-part,
+    #overlay-christmas-2025-discount-get-{{ block.id }} {
+      color: {{ block.settings.discount_get_color_desktop | default: '#FFFFFF' }} !important;
+      font-family: Montserrat, sans-serif !important;
+      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
+      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
+      display: inline !important;
+      margin-left: 0.25rem !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
@@ -1022,48 +1090,50 @@
     margin-right: auto !important;
   }
   
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .rte,
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-offer-content,
-  #shopify-section-{{ section.id }} .discount-offer .rte,
-  #shopify-section-{{ section.id }} .discount-offer .discount-offer-content,
-  #overlay-christmas-2025-discount-content-{{ section.id }},
-  #overlay-christmas-2025-{{ section.id }} .discount-offer-content {
-    text-align: center !important;
-    font-size: 31px !important;
-    line-height: 45px !important;
-    display: block !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'discount_offer' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .rte,
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-offer-content,
+      #overlay-christmas-2025-discount-content-{{ block.id }} {
+        text-align: center !important;
+        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
+        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
+        display: block !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+      }
+    {%- endif -%}
+  {% endfor %}
   
-  /* Mobile: "Buy x," part */
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-buy-part,
-  #shopify-section-{{ section.id }} .discount-offer .discount-buy-part,
-  #overlay-christmas-2025-discount-buy-{{ section.id }},
-  #overlay-christmas-2025-{{ section.id }} .discount-buy-part {
-    color: #FFC25E !important;
-    text-align: center !important;
-    font-family: Montserrat, sans-serif !important;
-    font-size: 31px !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 45px !important;
-    display: inline !important;
-  }
-  
-  /* Mobile: "Get XX% Off" part */
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer .discount-get-part,
-  #shopify-section-{{ section.id }} .discount-offer .discount-get-part,
-  #overlay-christmas-2025-discount-get-{{ section.id }},
-  #overlay-christmas-2025-{{ section.id }} .discount-get-part {
-    color: #FFF !important;
-    font-family: Montserrat, sans-serif !important;
-    font-size: 31px !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 45px !important;
-    display: inline !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'discount_offer' -%}
+      /* Mobile: "Buy x," part */
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-buy-part,
+      #overlay-christmas-2025-discount-buy-{{ block.id }} {
+        color: {{ block.settings.discount_buy_color_mobile | default: '#FFC25E' }} !important;
+        text-align: center !important;
+        font-family: Montserrat, sans-serif !important;
+        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
+        font-style: normal !important;
+        font-weight: {{ block.settings.discount_font_weight_mobile | default: 700 }} !important;
+        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
+        display: inline !important;
+      }
+      
+      /* Mobile: "Get XX% Off" part */
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-get-part,
+      #overlay-christmas-2025-discount-get-{{ block.id }} {
+        color: {{ block.settings.discount_get_color_mobile | default: '#FFFFFF' }} !important;
+        font-family: Montserrat, sans-serif !important;
+        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
+        font-style: normal !important;
+        font-weight: {{ block.settings.discount_font_weight_mobile | default: 700 }} !important;
+        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
+        display: inline !important;
+        margin-left: 0.25rem !important;
+      }
+    {%- endif -%}
+  {% endfor %}
 }
 
 /* Text 8: "Luxuriously Soft Pima & Alpaca" - Text */
@@ -1127,33 +1197,38 @@
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte *,
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte p,
 #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte,
-#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte *,
-#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte p,
-#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) p,
-#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
-#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte p,
-#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
-  font-family: Montserrat, sans-serif !important;
-  font-size: 30px !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  line-height: 22.4px !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'pima_alpaca' -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte,
+    #shopify-section-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte *,
+    #shopify-section-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte p,
+    #overlay-christmas-2025-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte {
+      font-family: Montserrat, sans-serif !important;
+      font-size: {{ block.settings.pima_alpaca_font_size_desktop | default: 30 }}px !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.pima_alpaca_font_weight_desktop | default: 700 }} !important;
+      line-height: {{ block.settings.pima_alpaca_line_height_desktop | default: 22.5 }}px !important;
+      color: {{ block.settings.pima_alpaca_color_desktop | default: '#FFFFFF' }} !important;
+      text-shadow: {{ block.settings.pima_alpaca_text_shadow_x_desktop | default: 0 }}px {{ block.settings.pima_alpaca_text_shadow_y_desktop | default: 4 }}px {{ block.settings.pima_alpaca_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.pima_alpaca_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
-/* Override any dynamic styles that might interfere (solo cuando NO se usa la tipografía del tema) */
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
-#shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"].pima-alpaca-text:not(.use-theme-font) .rte,
-#shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte,
-#shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
-#overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
-  font-size: 30px !important;
-  line-height: 22.4px !important;
-  color: #FFF !important;
-  font-family: Montserrat, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
-}
+{% for block in section.blocks %}
+  {%- if block.type == 'pima_alpaca' -%}
+    /* Override any dynamic styles that might interfere (solo cuando NO se usa la tipografía del tema) */
+    #shopify-section-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte,
+    #overlay-christmas-2025-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte {
+      font-size: {{ block.settings.pima_alpaca_font_size_desktop | default: 30 }}px !important;
+      line-height: {{ block.settings.pima_alpaca_line_height_desktop | default: 22.5 }}px !important;
+      color: {{ block.settings.pima_alpaca_color_desktop | default: '#FFFFFF' }} !important;
+      font-family: Montserrat, sans-serif !important;
+      font-style: normal !important;
+      font-weight: {{ block.settings.pima_alpaca_font_weight_desktop | default: 700 }} !important;
+      text-shadow: {{ block.settings.pima_alpaca_text_shadow_x_desktop | default: 0 }}px {{ block.settings.pima_alpaca_text_shadow_y_desktop | default: 4 }}px {{ block.settings.pima_alpaca_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.pima_alpaca_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
@@ -1225,13 +1300,19 @@
   #shopify-section-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) p,
   #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte,
   #shopify-section-{{ section.id }} .image-with-text-overlay--content-inner .pima-alpaca-text:not(.use-theme-font) .rte p,
-  #overlay-christmas-2025-{{ section.id }} .pima-alpaca-text:not(.use-theme-font) .rte {
-    font-family: Montserrat, sans-serif !important;
-    font-size: 15px !important;
-    font-style: normal !important;
-    font-weight: 700 !important;
-    line-height: 22.4px !important;
-  }
+  {% for block in section.blocks %}
+    {%- if block.type == 'pima_alpaca' -%}
+      #shopify-section-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte,
+      #overlay-christmas-2025-{{ section.id }} .block-{{ block.id }}:not(.use-theme-font) .rte {
+        font-family: Montserrat, sans-serif !important;
+        font-size: {{ block.settings.pima_alpaca_font_size_mobile | default: 15 }}px !important;
+        font-style: normal !important;
+        font-weight: {{ block.settings.pima_alpaca_font_weight_mobile | default: 700 }} !important;
+        line-height: {{ block.settings.pima_alpaca_line_height_mobile | default: 22.5 }}px !important;
+        color: {{ block.settings.pima_alpaca_color_mobile | default: '#FFFFFF' }} !important;
+      }
+    {%- endif -%}
+  {% endfor %}
 }
 </style>
 
@@ -1317,7 +1398,7 @@
         { "value": "desktop-height-750", "label": "750px" },
         { "value": "desktop-height-full", "label": "Full screen" }
       ],
-      "default": "desktop-height-650"
+      "default": "desktop-height-750"
     },
     {
       "type": "select",
@@ -1391,6 +1472,81 @@
     },
     {
       "type": "header",
+      "content": "Buttons Layout - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "buttons_gap_desktop",
+      "label": "Espaciado entre botones (px) - Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_right_desktop",
+      "label": "Margen derecho (%) - Desktop",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Buttons Layout - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "buttons_gap_mobile",
+      "label": "Espaciado entre botones (rem) - Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 1.0
+    },
+    {
+      "type": "header",
+      "content": "Content Spacing - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "content_inner_gap_mobile",
+      "label": "Espaciado vertical del contenido (rem) - Mobile",
+      "min": 0,
+      "max": 20,
+      "step": 0.2,
+      "default": 14.0
+    },
+    {
+      "type": "range",
+      "id": "footer_group_gap_mobile",
+      "label": "Espaciado del grupo footer (rem) - Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 1.0
+    },
+    {
+      "type": "range",
+      "id": "header_group_margin_bottom_mobile",
+      "label": "Margen inferior del grupo header (rem) - Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "footer_group_margin_top_mobile",
+      "label": "Margen superior del grupo footer (rem) - Mobile",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "header",
       "content": "Spacing"
     },
     {
@@ -1424,6 +1580,176 @@
           "label": "Aplicar estilo 'Holiday Sale'",
           "default": false,
           "info": "Activa los estilos especiales para 'Holiday Sale'"
+        },
+        {
+          "type": "header",
+          "content": "Holiday Sale - Desktop"
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_color_desktop",
+          "label": "Color (Desktop)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_font_size_desktop",
+          "label": "Tamaño de fuente (px) - Desktop",
+          "min": 20,
+          "max": 120,
+          "step": 1,
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_font_weight_desktop",
+          "label": "Peso de fuente - Desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_line_height_desktop",
+          "label": "Altura de línea (px) - Desktop",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_x_desktop",
+          "label": "Sombra X (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_y_desktop",
+          "label": "Sombra Y (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_blur_desktop",
+          "label": "Desenfoque de sombra (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_text_shadow_color_desktop",
+          "label": "Color de sombra - Desktop",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_stroke_width_desktop",
+          "label": "Ancho de borde de texto (px) - Desktop",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "default": 0.5
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_stroke_color_desktop",
+          "label": "Color de borde de texto - Desktop",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "header",
+          "content": "Holiday Sale - Mobile"
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_color_mobile",
+          "label": "Color (Mobile)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_font_size_mobile",
+          "label": "Tamaño de fuente (px) - Mobile",
+          "min": 12,
+          "max": 60,
+          "step": 1,
+          "default": 35
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_font_weight_mobile",
+          "label": "Peso de fuente - Mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_line_height_mobile",
+          "label": "Altura de línea (px) - Mobile",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_x_mobile",
+          "label": "Sombra X (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_y_mobile",
+          "label": "Sombra Y (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_text_shadow_blur_mobile",
+          "label": "Desenfoque de sombra (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_text_shadow_color_mobile",
+          "label": "Color de sombra - Mobile",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
+          "type": "range",
+          "id": "holiday_sale_stroke_width_mobile",
+          "label": "Ancho de borde de texto (px) - Mobile",
+          "min": 0,
+          "max": 5,
+          "step": 0.1,
+          "default": 0.5
+        },
+        {
+          "type": "color",
+          "id": "holiday_sale_stroke_color_mobile",
+          "label": "Color de borde de texto - Mobile",
+          "default": "#FFFFFF"
         },
         {
           "type": "header",
@@ -1519,6 +1845,146 @@
           "default": "Wrap the Season in Plastic-Free Softness"
         },
         {
+          "type": "header",
+          "content": "Wrap Season - Desktop"
+        },
+        {
+          "type": "color",
+          "id": "wrap_season_color_desktop",
+          "label": "Color (Desktop)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_font_size_desktop",
+          "label": "Tamaño de fuente (px) - Desktop",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 23
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_font_weight_desktop",
+          "label": "Peso de fuente - Desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_line_height_desktop",
+          "label": "Altura de línea (px) - Desktop",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_x_desktop",
+          "label": "Sombra X (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_y_desktop",
+          "label": "Sombra Y (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_blur_desktop",
+          "label": "Desenfoque de sombra (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "wrap_season_text_shadow_color_desktop",
+          "label": "Color de sombra - Desktop",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
+          "type": "header",
+          "content": "Wrap Season - Mobile"
+        },
+        {
+          "type": "color",
+          "id": "wrap_season_color_mobile",
+          "label": "Color (Mobile)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_font_size_mobile",
+          "label": "Tamaño de fuente (px) - Mobile",
+          "min": 8,
+          "max": 30,
+          "step": 1,
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_font_weight_mobile",
+          "label": "Peso de fuente - Mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_line_height_mobile",
+          "label": "Altura de línea (px) - Mobile",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_x_mobile",
+          "label": "Sombra X (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_y_mobile",
+          "label": "Sombra Y (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "wrap_season_text_shadow_blur_mobile",
+          "label": "Desenfoque de sombra (px) - Mobile",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "wrap_season_text_shadow_color_mobile",
+          "label": "Color de sombra - Mobile",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
           "type": "range",
           "id": "margin_top",
           "label": "Margin Top",
@@ -1560,6 +2026,125 @@
           "info": "Esta parte aparecerá en color blanco"
         },
         {
+          "type": "header",
+          "content": "Discount Offer - Desktop"
+        },
+        {
+          "type": "color",
+          "id": "discount_buy_color_desktop",
+          "label": "Color 'Buy X,' (Desktop)",
+          "default": "#FFC25E"
+        },
+        {
+          "type": "color",
+          "id": "discount_get_color_desktop",
+          "label": "Color 'Get XX% Off' (Desktop)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "discount_font_size_desktop",
+          "label": "Tamaño de fuente (px) - Desktop",
+          "min": 20,
+          "max": 120,
+          "step": 1,
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "discount_font_weight_desktop",
+          "label": "Peso de fuente - Desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        },
+        {
+          "type": "range",
+          "id": "discount_line_height_desktop",
+          "label": "Altura de línea (px) - Desktop",
+          "min": 20,
+          "max": 80,
+          "step": 1,
+          "default": 45
+        },
+        {
+          "type": "range",
+          "id": "discount_text_shadow_x_desktop",
+          "label": "Sombra X (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "discount_text_shadow_y_desktop",
+          "label": "Sombra Y (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "discount_text_shadow_blur_desktop",
+          "label": "Desenfoque de sombra (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "discount_text_shadow_color_desktop",
+          "label": "Color de sombra - Desktop",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
+          "type": "header",
+          "content": "Discount Offer - Mobile"
+        },
+        {
+          "type": "color",
+          "id": "discount_buy_color_mobile",
+          "label": "Color 'Buy X,' (Mobile)",
+          "default": "#FFC25E"
+        },
+        {
+          "type": "color",
+          "id": "discount_get_color_mobile",
+          "label": "Color 'Get XX% Off' (Mobile)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "discount_font_size_mobile",
+          "label": "Tamaño de fuente (px) - Mobile",
+          "min": 12,
+          "max": 60,
+          "step": 1,
+          "default": 31
+        },
+        {
+          "type": "range",
+          "id": "discount_font_weight_mobile",
+          "label": "Peso de fuente - Mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        },
+        {
+          "type": "range",
+          "id": "discount_line_height_mobile",
+          "label": "Altura de línea (px) - Mobile",
+          "min": 20,
+          "max": 80,
+          "step": 1,
+          "default": 45
+        },
+        {
           "type": "range",
           "id": "margin_top",
           "label": "Margin Top",
@@ -1598,6 +2183,113 @@
           "label": "Usar tipografía del tema",
           "default": false,
           "info": "Si está activado, usará la tipografía del tema en lugar de los estilos personalizados"
+        },
+        {
+          "type": "header",
+          "content": "Pima & Alpaca - Desktop"
+        },
+        {
+          "type": "color",
+          "id": "pima_alpaca_color_desktop",
+          "label": "Color (Desktop)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_font_size_desktop",
+          "label": "Tamaño de fuente (px) - Desktop",
+          "min": 10,
+          "max": 60,
+          "step": 1,
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_font_weight_desktop",
+          "label": "Peso de fuente - Desktop",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_line_height_desktop",
+          "label": "Altura de línea (px) - Desktop",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_text_shadow_x_desktop",
+          "label": "Sombra X (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_text_shadow_y_desktop",
+          "label": "Sombra Y (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_text_shadow_blur_desktop",
+          "label": "Desenfoque de sombra (px) - Desktop",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "pima_alpaca_text_shadow_color_desktop",
+          "label": "Color de sombra - Desktop",
+          "default": "rgba(0, 0, 0, 0.25)"
+        },
+        {
+          "type": "header",
+          "content": "Pima & Alpaca - Mobile"
+        },
+        {
+          "type": "color",
+          "id": "pima_alpaca_color_mobile",
+          "label": "Color (Mobile)",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_font_size_mobile",
+          "label": "Tamaño de fuente (px) - Mobile",
+          "min": 8,
+          "max": 30,
+          "step": 1,
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_font_weight_mobile",
+          "label": "Peso de fuente - Mobile",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 700
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_line_height_mobile",
+          "label": "Altura de línea (px) - Mobile",
+          "min": 10,
+          "max": 50,
+          "step": 0.5,
+          "default": 22.5
         },
         {
           "type": "range",
