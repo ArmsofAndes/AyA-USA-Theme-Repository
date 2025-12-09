@@ -17,6 +17,20 @@ if (!customElements.get('free-shipping')) {
       this.remainingText = this.querySelector('.free-shipping--text-remaining');
       this.fullText = this.querySelector('.free-shipping--text-full');
 
+      // Verificar si los textos tienen contenido visible
+      const hasRemainingText = this.remainingText && this.remainingText.textContent.trim() !== '';
+      const hasFullText = this.fullText && this.fullText.textContent.trim() !== '';
+      const hasAnyText = hasRemainingText || hasFullText;
+
+      // Si no hay ningún texto visible, ocultar todo el componente
+      if (!hasAnyText) {
+        this.style.display = 'none';
+        return;
+      }
+
+      // Mostrar el componente si hay texto
+      this.style.display = '';
+
       if (total < minimum) {
         percentage = total / minimum;
 
@@ -27,14 +41,23 @@ if (!customElements.get('free-shipping')) {
         }
 
         if (this.remainingText && this.fullText) {
-          this.remainingText.style.display = 'block';
+          this.remainingText.style.display = hasRemainingText ? 'block' : 'none';
           this.fullText.style.display = 'none';
         }
       } else {
         if (this.remainingText && this.fullText) {
           this.remainingText.style.display = 'none';
-          this.fullText.style.display = 'block';
+          this.fullText.style.display = hasFullText ? 'block' : 'none';
         }
+      }
+
+      // Si después de mostrar/ocultar textos, no hay ningún texto visible, ocultar el componente
+      const visibleText = this.remainingText?.style.display === 'block' ? this.remainingText : 
+                          this.fullText?.style.display === 'block' ? this.fullText : null;
+      
+      if (!visibleText || visibleText.textContent.trim() === '') {
+        this.style.display = 'none';
+        return;
       }
 
       this.style.setProperty('--percentage', percentage);
