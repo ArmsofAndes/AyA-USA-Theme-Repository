@@ -482,7 +482,7 @@
         "content_position": "bottom-center",
         "text_alignment": "center",
         "overlay_color": "#000000",
-        "overlay_opacity": 30,
+        "overlay_opacity": 0,
         "buttons_gap_desktop": 45,
         "buttons_margin_right_desktop": 22,
         "buttons_gap_mobile": 1,
