@@ -72,13 +72,102 @@
   <div class="announcement-bar announcement-bar-countdown">
     <div class="announcement-bar--inner">
       
-      <!-- Texto Timer 1 -->
-      <div class="countdown-announcement-text countdown-text-1">
-        <span>{{ text_1 }}</span>
+      <!-- Text Rotation Container -->
+      <div class="countdown-text-rotation-container" 
+           data-rotation-interval="{{ section.settings.text_rotation_interval | default: 5 }}"
+           data-enable-rotation="{{ section.settings.enable_text_rotation }}"
+           data-show-arrows="{{ section.settings.show_rotation_arrows }}">
+        
+        <!-- Left Arrow -->
+        {% if section.settings.show_rotation_arrows and section.settings.enable_text_rotation %}
+          <button class="countdown-rotation-arrow countdown-rotation-arrow--left" aria-label="Previous text" type="button">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        {% endif %}
+        
+        <!-- Texts Wrapper -->
+        <div class="countdown-texts-wrapper">
+          <!-- Text 1 - Timer 1 -->
+          <div class="countdown-text-item countdown-announcement-text countdown-text-1-timer-1" 
+               data-text-index="0" 
+               data-timer="1" 
+               style="display: none;">
+            <span class="countdown-announcement-text-content">{{ text_1 }}</span>
+          </div>
+          
+          <!-- Text 1 - Timer 2 -->
+          {% if text_2 != blank %}
+            <div class="countdown-text-item countdown-announcement-text countdown-text-1-timer-2" 
+                 data-text-index="0" 
+                 data-timer="2" 
+                 style="display: none;">
+              <span class="countdown-announcement-text-content">{{ text_2 }}</span>
+            </div>
+          {% endif %}
+          
+          <!-- Text 1 - Final (visible by default to avoid flickering) -->
+          {% if text_3 != blank %}
+            <div class="countdown-text-item countdown-announcement-text countdown-text-1-final" 
+                 data-text-index="0" 
+                 data-timer="final" 
+                 style="display: inline-flex;">
+              <span class="countdown-announcement-text-content">{{ text_3 }}</span>
+            </div>
+          {% elsif text_1 != blank %}
+            <!-- Fallback: show text 1 if text 3 is not available -->
+            <div class="countdown-text-item countdown-announcement-text countdown-text-1-timer-1" 
+                 data-text-index="0" 
+                 data-timer="1" 
+                 style="display: inline-flex;">
+              <span class="countdown-announcement-text-content">{{ text_1 }}</span>
+            </div>
+          {% endif %}
+          
+          <!-- Text 2 - Timer 1 (Optional) -->
+          {% if section.settings.enable_second_text and section.settings.second_text_timer_1 != blank %}
+            <div class="countdown-text-item countdown-announcement-text countdown-text-2-timer-1" 
+                 data-text-index="1" 
+                 data-timer="1" 
+                 style="display: none;">
+              <span class="countdown-announcement-text-content">{{ section.settings.second_text_timer_1 }}</span>
+            </div>
+          {% endif %}
+          
+          <!-- Text 2 - Timer 2 (Optional) -->
+          {% if section.settings.enable_second_text and section.settings.second_text_timer_2 != blank %}
+            <div class="countdown-text-item countdown-announcement-text countdown-text-2-timer-2" 
+                 data-text-index="1" 
+                 data-timer="2" 
+                 style="display: none;">
+              <span class="countdown-announcement-text-content">{{ section.settings.second_text_timer_2 }}</span>
+            </div>
+          {% endif %}
+          
+          <!-- Text 2 - Final (Optional) -->
+          {% if section.settings.enable_second_text and section.settings.second_text_final != blank %}
+            <div class="countdown-text-item countdown-announcement-text countdown-text-2-final" 
+                 data-text-index="1" 
+                 data-timer="final" 
+                 style="display: none;">
+              <span class="countdown-announcement-text-content">{{ section.settings.second_text_final }}</span>
+            </div>
+          {% endif %}
+        </div>
+        
+        <!-- Right Arrow -->
+        {% if section.settings.show_rotation_arrows and section.settings.enable_text_rotation %}
+          <button class="countdown-rotation-arrow countdown-rotation-arrow--right" aria-label="Next text" type="button">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        {% endif %}
       </div>
       
-      <!-- Timer 1 -->
-      <div class="countdown-announcement-timer countdown-timer-1-wrapper">
+      <!-- Timer 1 (hidden by default until script detects active countdown) -->
+      <div class="countdown-announcement-timer countdown-timer-1-wrapper" style="display: none;">
         <countdown-timer 
           class="countdown-timer countdown-timer-1" 
           data-date="{{ date }}" 
@@ -109,9 +198,6 @@
       
       <!-- Timer 2 (oculto inicialmente) -->
       {% if has_timer_2 %}
-        <div class="countdown-announcement-text countdown-text-2" style="display: none;">
-          <span>{{ text_2 }}</span>
-        </div>
         <div class="countdown-announcement-timer countdown-timer-2-wrapper" style="display: none;">
           <countdown-timer 
             class="countdown-timer countdown-timer-2" 
@@ -139,13 +225,6 @@
               <span class="countdown-timer--label">{{ 'sections.countdown_banner.seconds' | t }}</span>
             </span>
           </countdown-timer>
-        </div>
-      {% endif %}
-      
-      <!-- Texto 3 (cuando no hay countdown activo) -->
-      {% if text_3 != blank %}
-        <div class="countdown-announcement-text countdown-text-3" style="display: none;">
-          <span>{{ text_3 }}</span>
         </div>
       {% endif %}
     </div>
@@ -271,7 +350,88 @@
     }
   }
 
-  /* Estilos para el texto 3 (cuando no hay countdown activo) */
+  /* Text Rotation Container Styles */
+  .countdown-text-rotation-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    flex: 0 1 auto;
+    max-width: {{ section.settings.container_max_width_desktop | default: 450 }}px;
+    min-width: {{ section.settings.container_min_width_desktop | default: 400 }}px;
+    overflow: hidden;
+  }
+
+  .countdown-texts-wrapper {
+    flex: 1 1 auto;
+    position: relative;
+    min-height: 42.3px;
+    max-height: 84.6px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .countdown-text-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    letter-spacing: 0.03em;
+    min-height: 42.3px;
+    max-height: 84.6px;
+    box-sizing: border-box;
+    overflow: visible;
+    line-height: 1.4;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .countdown-text-item .countdown-announcement-text-content {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: block;
+    line-height: 1.4;
+    width: 100%;
+    text-align: {{ section.settings.text_align | default: 'center' }};
+  }
+
+  .countdown-rotation-arrow {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  .countdown-rotation-arrow:hover {
+    opacity: 1;
+  }
+
+  .countdown-rotation-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  /* Estilos para el texto 3 (cuando no hay countdown activo) - Legacy support */
   .countdown-text-3 {
     width: 100%;
     text-align: center;
@@ -425,6 +585,33 @@
       padding: 0;
     }
 
+    .countdown-text-rotation-container {
+      max-width: {{ section.settings.container_max_width_mobile | default: 335 }}px;
+      min-width: {{ section.settings.container_min_width_mobile | default: 335 }}px;
+      flex: 0 1 auto;
+      order: 1;
+    }
+    
+    .countdown-text-item {
+      max-height: 64px;
+      min-height: 32px;
+      line-height: 1.4;
+      overflow: visible;
+    }
+    
+    .countdown-text-item .countdown-announcement-text-content {
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.4;
+    }
+    
+    .countdown-texts-wrapper {
+      min-height: 32px;
+      max-height: 64px;
+      overflow: visible;
+    }
+
     .countdown-announcement-timer {
       order: 2;
       width: 100%;
@@ -466,6 +653,7 @@
 </style>
 
 <script src="{{ 'countdown-banner.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'countdown-text-rotation.js' | asset_url }}" defer="defer"></script>
 
 <script>
   (function() {
@@ -811,6 +999,124 @@
       "id": "text_3",
       "label": "Text 3",
       "info": "Text to show when no countdown is active (optional)"
+    },
+    {
+      "type": "header",
+      "content": "Text Rotation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_text_rotation",
+      "label": "Enable text rotation",
+      "default": false,
+      "info": "Enable automatic rotation between texts"
+    },
+    {
+      "type": "number",
+      "id": "text_rotation_interval",
+      "label": "Text rotation interval (seconds)",
+      "default": 5,
+      "info": "Time in seconds between automatic text rotation. Applies to all texts."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rotation_arrows",
+      "label": "Show rotation arrows",
+      "default": true,
+      "info": "Show left/right arrows for manual text rotation"
+    },
+    {
+      "type": "header",
+      "content": "Container Size Settings"
+    },
+    {
+      "type": "range",
+      "id": "container_min_width_desktop",
+      "min": 300,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Container Min Width (Desktop)",
+      "default": 400,
+      "info": "Minimum width of the text rotation container on desktop"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width_desktop",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Container Max Width (Desktop)",
+      "default": 450,
+      "info": "Maximum width of the text rotation container on desktop"
+    },
+    {
+      "type": "range",
+      "id": "container_min_width_mobile",
+      "min": 200,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Container Min Width (Mobile)",
+      "default": 335,
+      "info": "Minimum width of the text rotation container on mobile"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width_mobile",
+      "min": 200,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Container Max Width (Mobile)",
+      "default": 335,
+      "info": "Maximum width of the text rotation container on mobile"
+    },
+    {
+      "type": "header",
+      "content": "Text Alignment Settings"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "info": "Text alignment for the countdown text content"
+    },
+    {
+      "type": "header",
+      "content": "Second Text (Optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_second_text",
+      "label": "Enable second text",
+      "default": false,
+      "info": "Enable a second set of texts that can rotate with the first"
+    },
+    {
+      "type": "text",
+      "id": "second_text_timer_1",
+      "label": "Second Text (Timer 1)",
+      "info": "Text to show during Timer 1 countdown"
+    },
+    {
+      "type": "text",
+      "id": "second_text_timer_2",
+      "label": "Second Text (Timer 2)",
+      "info": "Text to show during Timer 2 countdown"
+    },
+    {
+      "type": "text",
+      "id": "second_text_final",
+      "label": "Second Text (Final)",
+      "info": "Text to show when both timers end"
     },
     {
       "type": "header",
