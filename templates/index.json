@@ -348,52 +348,6 @@
             "margin_bottom": 0.7
           }
         },
-        "discount_offer_NkwREG": {
-          "type": "discount_offer",
-          "settings": {
-            "buy_text": "Buy 3,",
-            "get_text": "Get 15% Off",
-            "discount_buy_color_desktop": "#FFC25E",
-            "discount_get_color_desktop": "#FFFFFF",
-            "discount_font_size_desktop": 60,
-            "discount_font_weight_desktop": 700,
-            "discount_line_height_desktop": 45,
-            "discount_text_shadow_x_desktop": 0,
-            "discount_text_shadow_y_desktop": 4,
-            "discount_text_shadow_blur_desktop": 4,
-            "discount_text_shadow_color_desktop": "rgba(0, 0, 0, 0.25)",
-            "discount_buy_color_mobile": "#FFC25E",
-            "discount_get_color_mobile": "#FFFFFF",
-            "discount_font_size_mobile": 31,
-            "discount_font_weight_mobile": 700,
-            "discount_line_height_mobile": 45,
-            "margin_top": 0,
-            "margin_bottom": 0.7
-          }
-        },
-        "discount_offer_fk7pri": {
-          "type": "discount_offer",
-          "settings": {
-            "buy_text": "Buy 4,",
-            "get_text": "Get 20% Off",
-            "discount_buy_color_desktop": "#FFC25E",
-            "discount_get_color_desktop": "#FFFFFF",
-            "discount_font_size_desktop": 60,
-            "discount_font_weight_desktop": 700,
-            "discount_line_height_desktop": 45,
-            "discount_text_shadow_x_desktop": 0,
-            "discount_text_shadow_y_desktop": 4,
-            "discount_text_shadow_blur_desktop": 4,
-            "discount_text_shadow_color_desktop": "rgba(0, 0, 0, 0.25)",
-            "discount_buy_color_mobile": "#FFC25E",
-            "discount_get_color_mobile": "#FFFFFF",
-            "discount_font_size_mobile": 31,
-            "discount_font_weight_mobile": 700,
-            "discount_line_height_mobile": 45,
-            "margin_top": 0,
-            "margin_bottom": 0.7
-          }
-        },
         "pima_alpaca_8JXfGy": {
           "type": "pima_alpaca",
           "settings": {
@@ -460,8 +414,6 @@
         "heading_cFFyje",
         "wrap_season_text_NcJeDz",
         "discount_offer_NXyypg",
-        "discount_offer_NkwREG",
-        "discount_offer_fk7pri",
         "pima_alpaca_8JXfGy",
         "button_x4wRrp",
         "button_jxkKx4"
