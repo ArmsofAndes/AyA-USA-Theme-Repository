@@ -1,0 +1,6 @@
+# Documentation files
+docs/
+
+# Markdown documentation files in root
+*.md
+
