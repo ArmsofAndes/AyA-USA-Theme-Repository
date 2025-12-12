@@ -59,35 +59,134 @@
     
     <!-- Texto lado izquierdo -->
     <div class="countdown-slim__text">
-      <div class="countdown-heading-1">
-        {% if section.settings.heading != blank %}
-          <h2 style="color: {{ color_text }};">
-            {{ section.settings.heading }}
-          </h2>
+      <!-- Text Rotation Container -->
+      <div class="countdown-text-rotation-container" 
+           data-rotation-interval="{{ section.settings.text_rotation_interval | default: 5 }}"
+           data-enable-rotation="{{ section.settings.enable_text_rotation }}"
+           data-show-arrows="{{ section.settings.show_rotation_arrows }}">
+        
+        <!-- Left Arrow -->
+        {% if section.settings.show_rotation_arrows and section.settings.enable_text_rotation %}
+          <button class="countdown-rotation-arrow countdown-rotation-arrow--left" aria-label="Previous text" type="button">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         {% endif %}
-        {% if section.settings.content != blank %}
-          <div class="countdown-slim__content" style="color: {{ color_text }};">
-            {{ section.settings.content }}
-          </div>
-        {% endif %}
-      </div>
-      
-      <div class="countdown-heading-2" style="display: none;">
-        {% if section.settings.heading_2 != blank %}
-          <h2 style="color: {{ color_text }};">
-            {{ section.settings.heading_2 }}
-          </h2>
-        {% endif %}
-        {% if section.settings.content_2 != blank %}
-          <div class="countdown-slim__content" style="color: {{ color_text }};">
-            {{ section.settings.content_2 }}
-          </div>
+        
+        <!-- Texts Wrapper -->
+        <div class="countdown-texts-wrapper">
+          <!-- Text Set 1 - Timer 1 (visible by default to avoid flickering) -->
+          {% if section.settings.heading != blank or section.settings.content != blank %}
+            <div class="countdown-text-item countdown-text-1-timer-1" 
+                 data-text-index="0" 
+                 data-timer="1" 
+                 style="display: flex;">
+              {% if section.settings.heading != blank %}
+                <h2 style="color: {{ color_text }};">
+                  <span class="countdown-announcement-text-content">{{ section.settings.heading }}</span>
+                </h2>
+              {% endif %}
+              {% if section.settings.content != blank %}
+                <div class="countdown-slim__content" style="color: {{ color_text }};">
+                  <span class="countdown-announcement-text-content">{{ section.settings.content }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          <!-- Text Set 1 - Timer 2 -->
+          {% if section.settings.heading_2 != blank or section.settings.content_2 != blank %}
+            <div class="countdown-text-item countdown-text-1-timer-2" 
+                 data-text-index="0" 
+                 data-timer="2" 
+                 style="display: none;">
+              {% if section.settings.heading_2 != blank %}
+                <h2 style="color: {{ color_text }};">
+                  <span class="countdown-announcement-text-content">{{ section.settings.heading_2 }}</span>
+                </h2>
+              {% endif %}
+              {% if section.settings.content_2 != blank %}
+                <div class="countdown-slim__content" style="color: {{ color_text }};">
+                  <span class="countdown-announcement-text-content">{{ section.settings.content_2 }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+          <!-- Text Set 2 - Timer 1 (Optional) -->
+          {% if section.settings.enable_second_text_set %}
+            {% if section.settings.second_heading_timer_1 != blank or section.settings.second_content_timer_1 != blank %}
+              <div class="countdown-text-item countdown-text-2-timer-1" 
+                   data-text-index="1" 
+                   data-timer="1" 
+                   style="display: none;">
+                {% if section.settings.second_heading_timer_1 != blank %}
+                  <h2 style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_heading_timer_1 }}</span>
+                  </h2>
+                {% endif %}
+                {% if section.settings.second_content_timer_1 != blank %}
+                  <div class="countdown-slim__content" style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_content_timer_1 }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            
+            <!-- Text Set 2 - Timer 2 (Optional) -->
+            {% if section.settings.second_heading_timer_2 != blank or section.settings.second_content_timer_2 != blank %}
+              <div class="countdown-text-item countdown-text-2-timer-2" 
+                   data-text-index="1" 
+                   data-timer="2" 
+                   style="display: none;">
+                {% if section.settings.second_heading_timer_2 != blank %}
+                  <h2 style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_heading_timer_2 }}</span>
+                  </h2>
+                {% endif %}
+                {% if section.settings.second_content_timer_2 != blank %}
+                  <div class="countdown-slim__content" style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_content_timer_2 }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            
+            <!-- Text Set 2 - Final (Optional) -->
+            {% if section.settings.second_heading_final != blank or section.settings.second_content_final != blank %}
+              <div class="countdown-text-item countdown-text-2-final" 
+                   data-text-index="1" 
+                   data-timer="final" 
+                   style="display: none;">
+                {% if section.settings.second_heading_final != blank %}
+                  <h2 style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_heading_final }}</span>
+                  </h2>
+                {% endif %}
+                {% if section.settings.second_content_final != blank %}
+                  <div class="countdown-slim__content" style="color: {{ color_text }};">
+                    <span class="countdown-announcement-text-content">{{ section.settings.second_content_final }}</span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+        
+        <!-- Right Arrow -->
+        {% if section.settings.show_rotation_arrows and section.settings.enable_text_rotation %}
+          <button class="countdown-rotation-arrow countdown-rotation-arrow--right" aria-label="Next text" type="button">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         {% endif %}
       </div>
     </div>
 
-    <!-- Contador lado derecho -->
-    <div class="countdown-slim__timer">
+    <!-- Contador lado derecho (hidden by default until script detects active countdown) -->
+    <div class="countdown-slim__timer" style="display: none;">
       <div class="countdown-timer-wrapper">
         <countdown-timer 
           class="countdown-timer-1" 
@@ -249,6 +348,93 @@
     margin: 0;
   }
 
+  /* Text Rotation Container Styles */
+  #shopify-section-{{ section.id }} .countdown-text-rotation-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    flex: 0 1 auto;
+    max-width: {{ section.settings.container_max_width_desktop | default: 450 }}px;
+    min-width: {{ section.settings.container_min_width_desktop | default: 400 }}px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .countdown-texts-wrapper {
+    flex: 1 1 auto;
+    position: relative;
+    min-height: auto;
+    max-height: none;
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .countdown-text-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    letter-spacing: 0.03em;
+    min-height: auto;
+    max-height: none;
+    box-sizing: border-box;
+    overflow: visible;
+    line-height: 1.4;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    width: 100%;
+    text-align: {{ section.settings.text_align | default: 'left' }};
+  }
+
+  #shopify-section-{{ section.id }} .countdown-text-item h2 {
+    margin-bottom: 0.5rem;
+    text-align: {{ section.settings.text_align | default: 'left' }};
+  }
+
+  #shopify-section-{{ section.id }} .countdown-text-item .countdown-announcement-text-content {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: block;
+    line-height: 1.4;
+    width: 100%;
+    text-align: {{ section.settings.text_align | default: 'left' }};
+  }
+
+  #shopify-section-{{ section.id }} .countdown-rotation-arrow {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .countdown-rotation-arrow:hover {
+    opacity: 1;
+  }
+
+  #shopify-section-{{ section.id }} .countdown-rotation-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   /* Desktop styles (min-width: 769px) */
   @media (min-width: 769px) {
     #shopify-section-{{ section.id }} .countdown-slim__inner {
@@ -324,10 +510,37 @@
     #shopify-section-{{ section.id }} .countdown-slim__content {
       font-size: {{ section.settings.content_font_size | default: 16 | times: 0.7 | round }}px;
     }
+
+    #shopify-section-{{ section.id }} .countdown-text-rotation-container {
+      max-width: {{ section.settings.container_max_width_mobile | default: 335 }}px;
+      min-width: {{ section.settings.container_min_width_mobile | default: 335 }}px;
+      flex: 0 1 auto;
+    }
+    
+    #shopify-section-{{ section.id }} .countdown-text-item {
+      max-height: none;
+      min-height: auto;
+      line-height: 1.4;
+      overflow: visible;
+    }
+    
+    #shopify-section-{{ section.id }} .countdown-text-item .countdown-announcement-text-content {
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.4;
+    }
+    
+    #shopify-section-{{ section.id }} .countdown-texts-wrapper {
+      min-height: auto;
+      max-height: none;
+      overflow: visible;
+    }
   }
 </style>
 
 <script src="{{ 'countdown-banner.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'countdown-text-rotation.js' | asset_url }}" defer="defer"></script>
 
 <script>
   (function() {
@@ -432,6 +645,142 @@
       "id": "content",
       "label": "Texto",
       "default": "<p>Aprovecha antes que termine.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Text Rotation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_text_rotation",
+      "label": "Enable text rotation",
+      "default": false,
+      "info": "Enable automatic rotation between text sets"
+    },
+    {
+      "type": "number",
+      "id": "text_rotation_interval",
+      "label": "Text rotation interval (seconds)",
+      "default": 5,
+      "info": "Time in seconds between automatic text rotation. Applies to all text sets."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rotation_arrows",
+      "label": "Show rotation arrows",
+      "default": true,
+      "info": "Show left/right arrows for manual text rotation"
+    },
+    {
+      "type": "header",
+      "content": "Container Size Settings"
+    },
+    {
+      "type": "range",
+      "id": "container_min_width_desktop",
+      "min": 300,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Container Min Width (Desktop)",
+      "default": 400,
+      "info": "Minimum width of the text rotation container on desktop"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width_desktop",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Container Max Width (Desktop)",
+      "default": 450,
+      "info": "Maximum width of the text rotation container on desktop"
+    },
+    {
+      "type": "range",
+      "id": "container_min_width_mobile",
+      "min": 200,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Container Min Width (Mobile)",
+      "default": 335,
+      "info": "Minimum width of the text rotation container on mobile"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width_mobile",
+      "min": 200,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Container Max Width (Mobile)",
+      "default": 335,
+      "info": "Maximum width of the text rotation container on mobile"
+    },
+    {
+      "type": "header",
+      "content": "Text Alignment Settings"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "info": "Text alignment for the countdown text content"
+    },
+    {
+      "type": "header",
+      "content": "Second Text Set (Optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_second_text_set",
+      "label": "Enable second text set",
+      "default": false,
+      "info": "Enable a second set of heading/content that can rotate with the first"
+    },
+    {
+      "type": "text",
+      "id": "second_heading_timer_1",
+      "label": "Second Heading (Timer 1)",
+      "info": "Heading to show during Timer 1 countdown"
+    },
+    {
+      "type": "richtext",
+      "id": "second_content_timer_1",
+      "label": "Second Content (Timer 1)",
+      "info": "Content to show during Timer 1 countdown"
+    },
+    {
+      "type": "text",
+      "id": "second_heading_timer_2",
+      "label": "Second Heading (Timer 2)",
+      "info": "Heading to show during Timer 2 countdown"
+    },
+    {
+      "type": "richtext",
+      "id": "second_content_timer_2",
+      "label": "Second Content (Timer 2)",
+      "info": "Content to show during Timer 2 countdown"
+    },
+    {
+      "type": "text",
+      "id": "second_heading_final",
+      "label": "Second Heading (Final)",
+      "info": "Heading to show when both timers end"
+    },
+    {
+      "type": "richtext",
+      "id": "second_content_final",
+      "label": "Second Content (Final)",
+      "info": "Content to show when both timers end"
     },
     {
       "type": "header",

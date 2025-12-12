@@ -1,0 +1,11 @@
+# Documentation files
+docs/
+
+# Markdown documentation files in root
+*.md
+README.md
+COUNTDOWN_SLIM_MODIFICATION_PLAN.md
+FIX_PLAN.md
+HEADER_ANNOUNCEMENT_PLAN.md
+PLAN_SCHEMA_CONFIGURABLE.md
+
