@@ -1,6 +1,8 @@
+{% comment %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+{% endcomment %}
 
 {{- 'overlay-holiday-2025.css' | asset_url | stylesheet_tag -}}
 
@@ -145,15 +147,32 @@
                   <div id="overlay-holiday-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
                   {%- assign discount_group_started = true -%}
                   <div id="overlay-holiday-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
-                {%- endif -%}
-                {%- if block.settings.buy_text != blank or block.settings.get_text != blank -%}
-                  <div id="overlay-holiday-2025-discount-{{ block.id }}" class="block-wrapper block-{{ block.id }} discount-offer" 
-                       data-block-type="text"
-                       {{ block.shopify_attributes }}>
-                    <div id="overlay-holiday-2025-discount-content-{{ block.id }}" class="rte discount-offer-content">
-                      <span id="overlay-holiday-2025-discount-buy-{{ block.id }}" class="discount-buy-part">{{ block.settings.buy_text }}</span><span id="overlay-holiday-2025-discount-get-{{ block.id }}" class="discount-get-part">{{ block.settings.get_text }}</span>
+                    <div class="holiday-overlay-2025--discount-tier">
+                      <div class="holiday-overlay-2025--discount-footer">
+                        <div class="holiday-overlay-2025--discount-footer-grid">
+                          <div class="holiday-overlay-2025--discount-footer-col-1">
+                            <span class="holiday-overlay-2025--discount-footer-up-to">UP TO</span>
+                          </div>
+                          <div class="holiday-overlay-2025--discount-footer-col-2">
+                            <div class="holiday-overlay-2025--discount-footer-inner-grid">
+                              <div class="holiday-overlay-2025--discount-footer-inner-col-1">
+                                <span class="holiday-overlay-2025--discount-footer-number">20</span>
+                              </div>
+                              <div class="holiday-overlay-2025--discount-footer-inner-col-2">
+                                <div class="holiday-overlay-2025--discount-footer-inner-col-2-grid">
+                                  <div class="holiday-overlay-2025--discount-footer-inner-col-2-row-1">
+                                    <span class="holiday-overlay-2025--discount-footer-percent">%</span>
+                                  </div>
+                                  <div class="holiday-overlay-2025--discount-footer-inner-col-2-row-2">
+                                    <span class="holiday-overlay-2025--discount-footer-off">OFF</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                 {%- endif -%}
 
               {%- when 'pima_alpaca' -%}
@@ -169,6 +188,7 @@
                 {%- if discount_group_started -%}
                   </div>
                   {%- assign discount_group_started = false -%}
+                  <span class="holiday-overlay-2025--discount-shipping">& FREE SHIPPING</span>
                 {%- endif -%}
                 {%- if discount_count > 0 and footer_group_started == false -%}
                   {%- assign footer_group_started = true -%}
@@ -194,6 +214,7 @@
                 {%- if discount_group_started -%}
                   </div>
                   {%- assign discount_group_started = false -%}
+                  <span class="holiday-overlay-2025--discount-shipping">& FREE SHIPPING</span>
                 {%- endif -%}
                 {%- if discount_count > 0 and footer_group_started == false -%}
                   {%- assign footer_group_started = true -%}
@@ -355,15 +376,17 @@
 
 /* Buttons grid wrapper - desktop styles */
 #shopify-section-{{ section.id }} .buttons-grid-wrapper,
-#overlay-holiday-2025-buttons-wrapper-{{ section.id }} {
+#overlay-holiday-2025-buttons-wrapper-{{ section.id }},
+#overlay-holiday-2025-buttons-wrapper-{{ section.id }}.buttons-grid-wrapper {
   display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   gap: {{ section.settings.buttons_gap_desktop | default: 46 | divided_by: 16.0 }}rem !important;
   width: auto !important;
   margin: 0 auto !important;
   margin-right: {{ section.settings.buttons_margin_right_desktop | default: 22 }}% !important;
   justify-content: flex-start !important;
   align-items: center !important;
-  flex-wrap: wrap !important;
   margin-bottom: 2rem !important;
 }
 
@@ -472,8 +495,8 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-top: {{ section.settings.footer_group_margin_top_mobile | default: 1.5 }}rem !important;
-    gap: {{ section.settings.footer_group_gap_mobile | default: 1.0 }}rem !important;
+    margin-top: 1.5rem !important;
+    gap: 0rem !important;
   }
   
   /* Subgrupo 1: Discount Group - Los 3 discount offers */
@@ -483,6 +506,7 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
+    margin-bottom: -15px;
   }
   
   /* Discount Offers dentro del discount group - reducir separación vertical */
@@ -592,6 +616,7 @@
     width: 100% !important;
     justify-content: center !important;
     display: flex !important;
+    flex-direction: row !important;
     gap: 1rem !important;
     flex-wrap: nowrap !important;
   }
@@ -649,19 +674,15 @@
     text-align: center !important;
   }
   
-  #shopify-section-{{ section.id }} .buttons-grid-wrapper {
-    margin-top: 0 !important;
-    width: 100% !important;
-    justify-content: center !important;
-  }
-  
   /* Mobile: Buttons grid wrapper - horizontal, 50% cada uno, gap configurable */
   #shopify-section-{{ section.id }} .buttons-grid-wrapper,
-  #overlay-holiday-2025-buttons-wrapper-{{ section.id }} {
+  #overlay-holiday-2025-buttons-wrapper-{{ section.id }},
+  #overlay-holiday-2025-buttons-wrapper-{{ section.id }}.buttons-grid-wrapper {
     display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     gap: {{ section.settings.buttons_gap_mobile | default: 1.0 }}rem !important;
     width: 100% !important;
-    flex-wrap: nowrap !important;
     justify-content: center !important;
     align-items: center !important;
     margin: 0 auto !important;
@@ -768,6 +789,15 @@
   padding-right: 20px !important;
 }
 
+/* Centrar verticalmente el contenido */
+#shopify-section-{{ section.id }} .image-with-text-overlay--content,
+#overlay-holiday-2025-content-{{ section.id }},
+#overlay-holiday-2025-{{ section.id }} .image-with-text-overlay--content {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
 /* Mobile: Asegurar que el contenedor de contenido esté centrado */
 @media only screen and (max-width: 767px) {
   #shopify-section-{{ section.id }} .image-with-text-overlay--content,
@@ -791,7 +821,7 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 10rem !important;
+    gap: 7.5rem !important;
   }
   
   /* Mobile: Forzar que todos los bloques estén centrados */

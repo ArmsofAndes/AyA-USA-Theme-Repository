@@ -152,7 +152,7 @@
   .image-with-text-overlay--content.content-bottom-center {
     max-width: 1570px;
     margin: 0 auto;
-    padding-top: 189px;
+    padding-top: 0px;
     align-items: flex-start;
   }
 }
@@ -835,7 +835,8 @@
 
 /* Buttons wrapper - using flexbox instead of grid */
 .buttons-grid-wrapper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   gap: 45.7px;
   width: auto;
   margin: 0 auto;
@@ -866,7 +867,8 @@
 
 @media only screen and (max-width: 767px) {
   .buttons-grid-wrapper {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     gap: 10px;
     width: 100%;
     margin: 0 auto;
@@ -945,13 +947,14 @@
 /* Disable animations for content (except buttons and dropdown elements) */
 /* Note: :not(.text-dropdown *) doesn't work in CSS, so we use specific overrides below */
 /* IMPORTANT: Dropdown animations MUST come AFTER this rule and use higher specificity */
-.image-with-text-overlay--content *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *),
-.image-with-text-overlay--content-inner *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *) {
+.image-with-text-overlay--content *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *):not([class*="holiday-overlay-2025"]),
+.image-with-text-overlay--content-inner *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *):not([class*="holiday-overlay-2025"]) {
   animation: none !important;
   transition: none !important;
   opacity: 1 !important;
   transform: none !important;
   text-align: left;
+  margin-top: -10px;
 }
 
 /* CRITICAL: Dropdown animations in media queries below use higher specificity */
@@ -1041,4 +1044,217 @@
 
 .image-with-text-overlay.text-right {
   text-align: right;
+}
+
+/* ============================================
+   HOLIDAY OVERLAY 2025 - DISCOUNT STYLES
+   ============================================ */
+
+/* discount-tier - Desktop */
+@media only screen and (min-width: 768px) {
+  .holiday-overlay-2025--discount-tier {
+    margin: 0;
+    padding: 0;
+    height: 180px;
+  }
+}
+
+/* discount-footer */
+.holiday-overlay-2025--discount-footer {
+  display: block;
+  height: auto;
+}
+
+/* discount-footer-grid */
+.holiday-overlay-2025--discount-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(auto, 60px) max-content;
+  gap: 0;
+  width: fit-content;
+  height: auto;
+  align-items: center;
+  justify-items: center;
+}
+
+/* discount-footer-col-1 */
+.holiday-overlay-2025--discount-footer-col-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+  transform-origin: center;
+  width: fit-content;
+  height: fit-content;
+}
+
+/* "UP TO" */
+.holiday-overlay-2025--discount-footer-up-to {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 49px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 49px;
+  transform: rotate(-90deg) !important;
+  transform-origin: center;
+}
+
+/* discount-footer-col-2 */
+.holiday-overlay-2025--discount-footer-col-2 {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 100%;
+}
+
+/* discount-footer-inner-grid */
+.holiday-overlay-2025--discount-footer-inner-grid {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 0;
+  width: fit-content;
+  height: 100%;
+}
+
+/* discount-footer-inner-col-1 */
+.holiday-overlay-2025--discount-footer-inner-col-1 {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: visible;
+}
+
+/* "20" */
+.holiday-overlay-2025--discount-footer-number {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 190px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 190px;
+}
+
+/* discount-footer-inner-col-2 */
+.holiday-overlay-2025--discount-footer-inner-col-2 {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: visible;
+}
+
+/* discount-footer-inner-col-2-grid */
+.holiday-overlay-2025--discount-footer-inner-col-2-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content max-content;
+  gap: 0;
+  width: fit-content;
+}
+
+/* discount-footer-inner-col-2-row-1 and row-2 */
+.holiday-overlay-2025--discount-footer-inner-col-2-row-1,
+.holiday-overlay-2025--discount-footer-inner-col-2-row-2 {
+  display: flex;
+  align-items: center;
+  min-height: fit-content;
+  overflow: visible;
+}
+
+/* "%" */
+.holiday-overlay-2025--discount-footer-percent {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 130px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 130px;
+}
+
+/* "OFF" */
+.holiday-overlay-2025--discount-footer-off {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 49px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 49px;
+}
+
+/* "& Free Shipping" - Desktop */
+.holiday-overlay-2025--discount-shipping {
+  color: #FFC25E;
+  font-family: Montserrat;
+  font-size: 41px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 2.95px;
+  text-transform: uppercase;
+}
+
+/* "& Free Shipping" - Mobile */
+@media only screen and (max-width: 767px) {
+  .holiday-overlay-2025--discount-shipping {
+    color: #FFC25E;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+  }
+
+  /* Discount footer elements - Mobile */
+  .holiday-overlay-2025--discount-footer-off {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 30px;
+  }
+
+  .holiday-overlay-2025--discount-footer-percent {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 60px;
+  }
+
+  .holiday-overlay-2025--discount-footer-number {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 110px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 110px;
+  }
+
+  .holiday-overlay-2025--discount-footer-up-to {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 24px;
+    transform: rotate(-90deg) !important;
+    transform-origin: center;
+  }
 }
