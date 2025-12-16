@@ -8,7 +8,51 @@
   margin-right: auto; }
   @media only screen and (min-width: 768px) {
     .announcement-bar--inner {
-      padding: 0px; } }
+      padding: 0px; }
+    
+    .announcement-bar-top-section.sticky-enabled-section {
+      height: var(--announcement-top-height-desktop);
+      min-height: var(--announcement-top-height-desktop);
+    }
+    
+    .announcement-bar-top-section:not(.sticky-enabled-section) {
+      height: auto;
+      min-height: auto;
+    } }
+
+.announcement-bar-top-section {
+  /* Valores fijos de altura para evitar cálculos dinámicos cuando está sticky */
+  --announcement-top-height-desktop: 42px;
+  --announcement-top-height-mobile: 46px;
+}
+
+.announcement-bar-top-section.sticky-enabled-section {
+  position: sticky;
+  top: 0;
+  z-index: 52;
+}
+
+.announcement-bar-top-section:not(.sticky-enabled-section) {
+  position: static;
+  height: auto;
+  min-height: auto;
+}
+
+.announcement-bar-countdown-section {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.announcement-bar-countdown-section.sticky-enabled-section {
+  position: sticky;
+  top: var(--announcement-top-height, 0);
+  z-index: 52;
+}
+
+.announcement-bar-countdown-section:not(.sticky-enabled-section) {
+  position: static;
+}
 
 .announcement-bar-section {
   position: relative;

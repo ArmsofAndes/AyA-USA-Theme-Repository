@@ -11,7 +11,37 @@
 	if template == 'index'
 		assign transparent_header = section.settings.transparent_header
 	endif
+
+	assign show_on_home = section.settings.show_on_home
+	assign show_on_collection = section.settings.show_on_collection
+	assign show_on_product = section.settings.show_on_product
+	assign show_header = true
+
+	if show_on_home == blank
+		assign show_on_home = true
+	endif
+	if show_on_collection == blank
+		assign show_on_collection = true
+	endif
+	if show_on_product == blank
+		assign show_on_product = true
+	endif
+
+	if template == 'index'
+		if show_on_home == false
+			assign show_header = false
+		endif
+	elsif template.name == 'collection'
+		if show_on_collection == false
+			assign show_header = false
+		endif
+	elsif template.name == 'product'
+		if show_on_product == false
+			assign show_header = false
+		endif
+	endif
 -%}
+{%- if show_header -%}
 <theme-header id="header" class="header {{ style }} {{ header_shadow }} transparent--{{ transparent_header }} transparent-border--{{ transparent_header_border }} {% if sticky_header %}header-sticky--active{%- endif -%}">
 	{%- if transparent_header_background and transparent_header -%}
 	<div class="header--transparent-background" style="--header-transparent-background: {{ section.settings.transparent_header_background_gradient }};"></div>
@@ -45,7 +75,6 @@
       
      
 	{%- endstyle -%}
-</theme-header>
 {{- 'header.js' | asset_url | script_tag -}}
 <style>
 .thb-secondary-area-item.thb-secondary-eu {
@@ -245,8 +274,10 @@ ul.mega-menu-columns ul[role="menu"] ul[role="menu"] > li > a.thb-full-menu--lin
         "query-input": "required name=search_term_string"
       },
       "url": {{ request.origin | append: page.url | json }}
-    }
+	}
   </script>
+{%- endif -%}
+</theme-header>
 {%- endif -%}
 
 {% schema %}
@@ -255,9 +286,35 @@ ul.mega-menu-columns ul[role="menu"] ul[role="menu"] > li > a.thb-full-menu--lin
 	"class": "header-section",
 	"settings": [
 		{
+			"type": "header",
+			"content": "Sticky Settings"
+		},
+		{
 			"type": "checkbox",
 			"id": "sticky_header",
 			"label": "Enable sticky header",
+			"default": true
+		},
+		{
+			"type": "header",
+			"content": "Visibility Settings"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_home",
+			"label": "Show on home page",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_collection",
+			"label": "Show on collection pages",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_product",
+			"label": "Show on product pages",
 			"default": true
 		},
 		{

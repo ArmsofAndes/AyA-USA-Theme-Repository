@@ -5,9 +5,46 @@
   assign enable_countdown = section.settings.enable_countdown
   assign show_on_homepage_only = section.settings.show_on_homepage_only
   
+  assign show_on_home = section.settings.show_on_home
+  assign show_on_collection = section.settings.show_on_collection
+  assign show_on_product = section.settings.show_on_product
+  
   if show_on_homepage_only
     if template != 'index'
       assign enable_countdown = false
+    endif
+  else
+    if show_on_home == false and template == 'index'
+      assign enable_countdown = false
+    endif
+    
+    if show_on_collection == false and template.name == 'collection'
+      assign enable_countdown = false
+    endif
+    
+    if show_on_product == false and template.name == 'product'
+      assign enable_countdown = false
+    endif
+  endif
+  
+  assign enable_sticky = section.settings.enable_sticky
+  assign sticky_on_home = section.settings.sticky_on_home
+  assign sticky_on_collection = section.settings.sticky_on_collection
+  assign sticky_on_product = section.settings.sticky_on_product
+  
+  if enable_sticky
+    if template == 'index'
+      if sticky_on_home == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'collection'
+      if sticky_on_collection == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'product'
+      if sticky_on_product == false
+        assign enable_sticky = false
+      endif
     endif
   endif
   
@@ -69,7 +106,7 @@
 
 {%- if enable_countdown -%}
 <div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section" style="background-color: {{ color_bg }}; color: {{ color_text }};">
-  <div class="announcement-bar announcement-bar-countdown">
+  <div class="announcement-bar announcement-bar-countdown" data-sticky-enabled="{{ enable_sticky }}">
     <div class="announcement-bar--inner">
       
       <!-- Text Rotation Container -->
@@ -296,12 +333,17 @@
   }
 
   /* Sticky positioning - se actualiza dinámicamente por JavaScript */
-  .announcement-bar-countdown-section {
-    position: sticky !important;
-    z-index: 51 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  .announcement-bar-countdown-section.sticky-enabled-section {
+    position: sticky;
+    top: var(--announcement-top-height, 0);
+    z-index: 51;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .announcement-bar-countdown-section:not(.sticky-enabled-section) {
+    position: static;
   }
 
   .announcement-bar-countdown {
@@ -657,6 +699,18 @@
 
 <script>
   (function() {
+    const countdownBar = document.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
+    if (countdownBar) {
+      const section = countdownBar.closest('.announcement-bar-countdown-section');
+      if (section) {
+        section.classList.add('sticky-enabled-section');
+      }
+    }
+  })();
+</script>
+
+<script>
+  (function() {
     document.addEventListener('DOMContentLoaded', function() {
       // Calcular alturas para sticky positioning en cascada
       function updateStickyPositions() {
@@ -973,10 +1027,62 @@
       "default": false
     },
     {
+      "type": "header",
+      "content": "Sticky Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable sticky",
+      "default": true,
+      "info": "When enabled, this countdown bar will stay fixed when scrolling. It will position below the top announcement bar if it exists."
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_home",
+      "label": "Apply sticky on home page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_collection",
+      "label": "Apply sticky on collection pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_product",
+      "label": "Apply sticky on product pages",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Visibility Settings"
+    },
+    {
       "type": "checkbox",
       "id": "show_on_homepage_only",
       "label": "Show on homepage only",
-      "default": false
+      "default": false,
+      "info": "Legacy setting - has priority over new visibility controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_home",
+      "label": "Show on home page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_collection",
+      "label": "Show on collection pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_product",
+      "label": "Show on product pages",
+      "default": true
     },
     {
       "type": "header",

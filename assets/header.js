@@ -58,10 +58,13 @@ if (!customElements.get('theme-header')) {
 
       window.dispatchEvent(new Event('scroll'));
 
-      if (document.querySelector('.announcement-bar-section')) {
-
-        window.addEventListener('scroll', this.setAnnouncementHeight(), {
-          passive: true
+      if (document.querySelector('.announcement-bar-top-section') || document.querySelector('.announcement-bar-countdown-section')) {
+        this.applyStickyClasses();
+        this.observeStickyChanges();
+        this.setAnnouncementHeight();
+        
+        window.addEventListener('resize', () => {
+          this.setAnnouncementHeight();
         });
         window.dispatchEvent(new Event('resize'));
       }
@@ -78,12 +81,110 @@ if (!customElements.get('theme-header')) {
       }
     }
     setAnnouncementHeight() {
-      const a_bar = document.getElementById('shopify-section-announcement-bar');
+      const a_bar = document.querySelector('.announcement-bar-top-section');
+      const countdown_bar = document.querySelector('.announcement-bar-countdown-section');
+      let h = 0;
+      let top_h = 0;
+      
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      
       if (a_bar) {
-        let h = a_bar.clientHeight;
-        document.documentElement.style.setProperty('--announcement-height', h + 'px');
+        const isSticky = a_bar.classList.contains('sticky-enabled-section');
+        
+        if (isSticky) {
+          // Cuando está sticky, usar valores fijos
+          top_h = isMobile ? 46 : 42;
+          h += top_h;
+          document.documentElement.style.setProperty('--announcement-top-height', top_h + 'px');
+        } else {
+          // Cuando NO está sticky, establecer en 0
+          document.documentElement.style.setProperty('--announcement-top-height', '0px');
+        }
+      } else {
+        document.documentElement.style.setProperty('--announcement-top-height', '0px');
       }
-
+      
+      if (countdown_bar) {
+        const isSticky = countdown_bar.classList.contains('sticky-enabled-section');
+        const computedStyle = window.getComputedStyle(countdown_bar);
+        
+        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+          const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight;
+          h += countdownHeight;
+        }
+      }
+      
+      document.documentElement.style.setProperty('--announcement-height', h + 'px');
+    }
+    
+    applyStickyClasses() {
+      // Aplicar clase sticky al announcement-bar-top-section si está habilitado
+      const topBar = document.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
+      if (topBar) {
+        const topSection = topBar.closest('.announcement-bar-top-section');
+        if (topSection) {
+          const shouldBeSticky = topBar.getAttribute('data-sticky-enabled') === 'true';
+          if (shouldBeSticky && !topSection.classList.contains('sticky-enabled-section')) {
+            topSection.classList.add('sticky-enabled-section');
+            this.setAnnouncementHeight();
+          } else if (!shouldBeSticky && topSection.classList.contains('sticky-enabled-section')) {
+            topSection.classList.remove('sticky-enabled-section');
+            this.setAnnouncementHeight();
+          }
+        }
+      }
+      
+      // Aplicar clase sticky al countdown si está habilitado
+      const countdownBar = document.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
+      if (countdownBar) {
+        const countdownSection = countdownBar.closest('.announcement-bar-countdown-section');
+        if (countdownSection) {
+          const shouldBeSticky = countdownBar.getAttribute('data-sticky-enabled') === 'true';
+          if (shouldBeSticky && !countdownSection.classList.contains('sticky-enabled-section')) {
+            countdownSection.classList.add('sticky-enabled-section');
+            this.setAnnouncementHeight();
+          } else if (!shouldBeSticky && countdownSection.classList.contains('sticky-enabled-section')) {
+            countdownSection.classList.remove('sticky-enabled-section');
+            this.setAnnouncementHeight();
+          }
+        }
+      }
+    }
+    
+    observeStickyChanges() {
+      const observer = new MutationObserver((mutations) => {
+        let shouldRecalculate = false;
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target;
+            if (target.classList.contains('announcement-bar-top-section') || 
+                target.classList.contains('announcement-bar-countdown-section')) {
+              shouldRecalculate = true;
+            }
+          }
+        });
+        if (shouldRecalculate) {
+          this.setAnnouncementHeight();
+        }
+      });
+      
+      // Observar cambios en las secciones
+      const topSection = document.querySelector('.announcement-bar-top-section');
+      const countdownSection = document.querySelector('.announcement-bar-countdown-section');
+      
+      if (topSection) {
+        observer.observe(topSection, {
+          attributes: true,
+          attributeFilter: ['class']
+        });
+      }
+      
+      if (countdownSection) {
+        observer.observe(countdownSection, {
+          attributes: true,
+          attributeFilter: ['class']
+        });
+      }
     }
     setHeaderOffset() {
       let h = this.header_section.getBoundingClientRect().top;

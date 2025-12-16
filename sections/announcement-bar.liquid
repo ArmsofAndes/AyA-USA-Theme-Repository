@@ -2,16 +2,51 @@
   {%- liquid
     assign announcement_bar_layout = section.settings.announcement_bar_layout
     assign speed = section.settings.speed
-    assign sticky_announcement_bar = section.settings['sticky_announcement-bar']
+    assign enable_sticky = section.settings.enable_sticky
     assign direction = section.settings.direction
     assign show_announcement_bar = true
 
     assign autoplay = section.settings.autoplay
+    
+    assign show_on_home = section.settings.show_on_home
+    assign show_on_collection = section.settings.show_on_collection
+    assign show_on_product = section.settings.show_on_product
+    
     if section.settings.announcement_bar_homepage_only
-      if template == 'index'
-        assign show_announcement_bar = true
-      else
+      if template != 'index'
         assign show_announcement_bar = false
+      endif
+    else
+      if show_on_home == false and template == 'index'
+        assign show_announcement_bar = false
+      endif
+      
+      if show_on_collection == false and template.name == 'collection'
+        assign show_announcement_bar = false
+      endif
+      
+      if show_on_product == false and template.name == 'product'
+        assign show_announcement_bar = false
+      endif
+    endif
+    
+    assign sticky_on_home = section.settings.sticky_on_home
+    assign sticky_on_collection = section.settings.sticky_on_collection
+    assign sticky_on_product = section.settings.sticky_on_product
+    
+    if enable_sticky
+      if template == 'index'
+        if sticky_on_home == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'collection'
+        if sticky_on_collection == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'product'
+        if sticky_on_product == false
+          assign enable_sticky = false
+        endif
       endif
     endif
 
@@ -23,8 +58,9 @@
   {%- if show_announcement_bar -%}
     {{- 'announcement-bar.css' | asset_url | stylesheet_tag -}}
 
-    <div id="shopify-section-{{ section.id }}" class="announcement-bar-section {% if sticky_announcement_bar %}announcement-bar-section--sticky{% endif %}">
-    <div class="announcement-bar {% if sticky_announcement_bar %}announcement-bar--fixed{% endif %}"
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section">
+    <div class="announcement-bar announcement-bar-top" 
+         data-sticky-enabled="{{ enable_sticky }}"
          role="region"
          aria-label="Announcement bar"
          style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};">
@@ -87,26 +123,22 @@
         padding-top: 0 !important;
       }
 
-      /* Barra sticky - aplicar al contenedor de la sección */
-      .announcement-bar-section--sticky {
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 52 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+      /* Valores fijos de altura para evitar cálculos dinámicos cuando está sticky */
+      .announcement-bar-top-section {
+        --announcement-top-height-desktop: 42px;
+        --announcement-top-height-mobile: 46px;
       }
 
-      .announcement-bar--fixed {
-        position: relative !important;
-        width: 100% !important;
-        margin: 0 !important;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      .announcement-bar-top-section.sticky-enabled-section {
+        position: sticky;
+        top: 0;
+        z-index: 52;
       }
 
-      /* Asegurar que el contenedor interno se mueva con el sticky */
-      .announcement-bar--fixed .announcement-bar--inner {
-        position: relative;
-        z-index: 1;
+      .announcement-bar-top-section:not(.sticky-enabled-section) {
+        position: static;
+        height: auto;
+        min-height: auto;
       }
 
       /* ajustes visuales */
@@ -123,6 +155,16 @@
           color: var(--color-announcement-bar-text, #fff);
           line-height: 1;
           padding: 4px 0;
+        }
+        
+        .announcement-bar-top-section.sticky-enabled-section {
+          height: var(--announcement-top-height-desktop);
+          min-height: var(--announcement-top-height-desktop);
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) {
+          height: auto;
+          min-height: auto;
         }
       }
       
@@ -208,12 +250,14 @@
     </style>
 
     <script>
-      (function () {
-        var bar = document.querySelector('.announcement-bar--fixed');
-        if (!bar) return;
-
-        // NO aplicar padding-top al body ya que usamos sticky positioning
-        // El sticky positioning no requiere padding-top adicional
+      (function() {
+        const topBar = document.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
+        if (topBar) {
+          const section = topBar.closest('.announcement-bar-top-section');
+          if (section) {
+            section.classList.add('sticky-enabled-section');
+          }
+        }
       })();
     </script>
 
@@ -292,10 +336,40 @@
 	"max_blocks": 5,
 	"settings": [
 		{
+			"type": "header",
+			"content": "Sticky Settings"
+		},
+		{
 			"type": "checkbox",
-			"id": "sticky_announcement-bar",
-			"label": "Mantiene fijo announcement-bar",
-			"default": true
+			"id": "enable_sticky",
+			"label": "Enable sticky",
+			"default": true,
+			"info": "When enabled, this bar will stay fixed at the top when scrolling"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_home",
+			"label": "Apply sticky on home page",
+			"default": true,
+			"info": "Apply sticky behavior on home page"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_collection",
+			"label": "Apply sticky on collection pages",
+			"default": true,
+			"info": "Apply sticky behavior on collection pages"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_product",
+			"label": "Apply sticky on product pages",
+			"default": true,
+			"info": "Apply sticky behavior on product pages"
+		},
+		{
+			"type": "header",
+			"content": "Visibility Settings"
 		},
 		{
 			"type": "checkbox",
@@ -307,7 +381,26 @@
 			"type": "checkbox",
 			"id": "announcement_bar_homepage_only",
 			"label": "Show on home page only",
-			"default": false
+			"default": false,
+			"info": "Legacy setting - has priority over new visibility controls"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_home",
+			"label": "Show on home page",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_collection",
+			"label": "Show on collection pages",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_product",
+			"label": "Show on product pages",
+			"default": true
 		},
 		{
 			"type": "select",
