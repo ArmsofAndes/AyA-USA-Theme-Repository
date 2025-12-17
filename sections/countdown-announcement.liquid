@@ -131,15 +131,14 @@
   endif
 -%}
 
-{%- liquid
-  assign bg_color = color_bg | default: '#000000'
-  assign txt_color = color_text | default: '#ffffff'
--%}
-
 {%- if enable_countdown -%}
-<div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section" 
-     style="--countdown-bg-color: {{ bg_color }}; --countdown-text-color: {{ txt_color }};"
-     data-no-inline-styles="true">
+{%- liquid
+  assign is_specific_section = false
+  if section.id == 'sections--20691356287222__announcement-bar-countdown'
+    assign is_specific_section = true
+  endif
+-%}
+<div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section {% if is_specific_section %}countdown-specific-section{% endif %}" style="--countdown-bg-color: {{ color_bg }}; --countdown-text-color: {{ color_text }};" {% if is_specific_section %}data-no-inline-styles="true"{% endif %}>
   <div class="announcement-bar announcement-bar-countdown" data-sticky-enabled="{{ enable_sticky }}">
     <div class="announcement-bar--inner">
       
@@ -361,27 +360,27 @@
 
   /* Eliminar bordes y márgenes del contenedor de sección */
   #shopify-section-{{ section.id }} {
-    margin: 0;
-    padding: 0;
-    border: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     background-color: var(--countdown-bg-color, #000000) !important;
     color: var(--countdown-text-color, #ffffff) !important;
   }
   
-  /* Eliminar estilos inline del elemento específico */
-  #shopify-section-{{ section.id }}[data-no-inline-styles="true"],
-  #shopify-section-{{ section.id }}[data-no-inline-styles="true"] * {
+  /* Estilos específicos para el elemento countdown con ID específico - sin estilos inline */
+  #shopify-section-sections--20691356287222__announcement-bar-countdown.countdown-specific-section,
+  #shopify-section-sections--20691356287222__announcement-bar-countdown.countdown-specific-section * {
     background-color: var(--countdown-bg-color, #000000) !important;
     color: var(--countdown-text-color, #ffffff) !important;
   }
   
-  #shopify-section-{{ section.id }} .announcement-bar-countdown {
+  #shopify-section-sections--20691356287222__announcement-bar-countdown.countdown-specific-section .announcement-bar-countdown {
     background-color: var(--countdown-bg-color, #000000) !important;
     color: var(--countdown-text-color, #ffffff) !important;
   }
   
-  #shopify-section-{{ section.id }} .countdown-announcement-text,
-  #shopify-section-{{ section.id }} .countdown-announcement-text-content {
+  #shopify-section-sections--20691356287222__announcement-bar-countdown.countdown-specific-section .countdown-announcement-text,
+  #shopify-section-sections--20691356287222__announcement-bar-countdown.countdown-specific-section .countdown-announcement-text-content {
     color: var(--countdown-text-color, #ffffff) !important;
   }
 
@@ -840,6 +839,28 @@
       });
     }
     
+    // Función para eliminar estilos inline del countdown
+    function removeInlineStyles() {
+      const specificSection = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
+      if (specificSection && specificSection.hasAttribute('data-no-inline-styles')) {
+        // Eliminar estilos inline de background-color y color del elemento principal
+        if (specificSection.hasAttribute('style')) {
+          const currentStyle = specificSection.getAttribute('style');
+          // Mantener solo las variables CSS, eliminar background-color y color inline
+          const newStyle = currentStyle
+            .replace(/background-color\s*:\s*[^;]+;?/gi, '')
+            .replace(/color\s*:\s*[^;]+;?/gi, '')
+            .replace(/;\s*;/g, ';')
+            .trim();
+          if (newStyle) {
+            specificSection.setAttribute('style', newStyle);
+          } else if (!currentStyle.includes('--countdown-bg-color') && !currentStyle.includes('--countdown-text-color')) {
+            specificSection.removeAttribute('style');
+          }
+        }
+      }
+    }
+    
     // Función para verificar y mantener sticky activo - FORZAR EN TODAS LAS PÁGINAS
     function forceSticky() {
       const specificSection = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
@@ -862,7 +883,7 @@
             let topValue = '0px';
             let totalHeight = 0;
             
-            if (announcementBarTop) {
+            if (announcementBarTop && announcementBarTop !== specificSection) {
               const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
               totalHeight += topHeight;
             }
@@ -909,47 +930,6 @@
             specificSection.style.removeProperty('padding');
           }
         }
-      }
-    }
-    
-    // Función para eliminar estilos inline del countdown
-    function removeInlineStyles() {
-      const specificSection = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
-      if (specificSection && specificSection.hasAttribute('data-no-inline-styles')) {
-        // Eliminar estilos inline de background-color y color del elemento principal
-        if (specificSection.hasAttribute('style')) {
-          const currentStyle = specificSection.getAttribute('style');
-          // Mantener solo las variables CSS, eliminar background-color y color inline
-          const newStyle = currentStyle
-            .replace(/background-color\s*:\s*[^;]+;?/gi, '')
-            .replace(/color\s*:\s*[^;]+;?/gi, '')
-            .replace(/;\s*;/g, ';')
-            .trim();
-          if (newStyle) {
-            specificSection.setAttribute('style', newStyle);
-          } else {
-            specificSection.removeAttribute('style');
-          }
-        }
-        
-        // Eliminar estilos inline de los hijos que no sean necesarios
-        const childrenWithStyle = specificSection.querySelectorAll('[style*="background-color"], [style*="color"]');
-        childrenWithStyle.forEach(function(el) {
-          // Solo eliminar si no es un elemento de display (necesario para la rotación)
-          if (!el.hasAttribute('data-text-index') && !el.classList.contains('countdown-text-item')) {
-            const currentStyle = el.getAttribute('style');
-            const newStyle = currentStyle
-              .replace(/background-color\s*:\s*[^;]+;?/gi, '')
-              .replace(/color\s*:\s*[^;]+;?/gi, '')
-              .replace(/;\s*;/g, ';')
-              .trim();
-            if (newStyle) {
-              el.setAttribute('style', newStyle);
-            } else {
-              el.removeAttribute('style');
-            }
-          }
-        });
       }
     }
     
@@ -1000,13 +980,18 @@
     let scrollTimeout;
     window.addEventListener('scroll', function() {
       forceSticky();
+      removeInlineStyles();
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(forceSticky, 50);
+      scrollTimeout = setTimeout(function() {
+        forceSticky();
+        removeInlineStyles();
+      }, 50);
     }, { passive: true });
     
     // Ejecutar periódicamente para mantener sticky
     setInterval(function() {
       forceSticky();
+      removeInlineStyles();
     }, 100);
     
     // Escuchar eventos de Shopify para cuando se recarga una sección
@@ -1015,26 +1000,27 @@
         setTimeout(function() {
           applyStickyClass();
           forceSticky();
+          removeInlineStyles();
         }, 50);
       });
       document.addEventListener('shopify:section:select', function(event) {
         setTimeout(function() {
           applyStickyClass();
           forceSticky();
+          removeInlineStyles();
         }, 50);
       });
     }
     
     // Usar MutationObserver para detectar cuando se agregan elementos countdown
     const observer = new MutationObserver(function(mutations) {
-      let shouldUpdate = false;
       mutations.forEach(function(mutation) {
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach(function(node) {
             if (node.nodeType === 1) {
               const countdownBar = node.querySelector && node.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
               if (countdownBar || (node.classList && node.classList.contains('announcement-bar-countdown') && node.getAttribute('data-sticky-enabled') === 'true')) {
-                shouldUpdate = true;
+                setTimeout(applyStickyClass, 50);
               }
             }
           });
@@ -1042,23 +1028,20 @@
         if (mutation.type === 'attributes') {
           const target = mutation.target;
           if (target.id === 'shopify-section-sections--20691356287222__announcement-bar-countdown' || 
-              (target.classList && target.classList.contains('announcement-bar-countdown')) ||
-              (target.hasAttribute && target.hasAttribute('data-sticky-enabled'))) {
-            shouldUpdate = true;
+              (target.classList && target.classList.contains('announcement-bar-countdown'))) {
+            setTimeout(function() {
+              applyStickyClass();
+              forceSticky();
+              removeInlineStyles();
+            }, 50);
           }
+          
           // Detectar cambios en estilos inline
           if (mutation.attributeName === 'style' && target.id === 'shopify-section-sections--20691356287222__announcement-bar-countdown') {
-            shouldUpdate = true;
+            setTimeout(removeInlineStyles, 50);
           }
         }
       });
-      if (shouldUpdate) {
-        setTimeout(function() {
-          applyStickyClass();
-          forceSticky();
-          removeInlineStyles();
-        }, 50);
-      }
     });
     
     // Observar cambios en el body
@@ -1096,6 +1079,7 @@
       function updateStickyPositions() {
         // Usar los nuevos selectores
         const announcementBarSection = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+        const simpleAnnouncementSection = document.querySelector('.simple-announcement-item-section.sticky-enabled-section');
         const countdownSection = document.querySelector('.announcement-bar-countdown-section.sticky-enabled-section');
         const headerSection = document.querySelector('.header-section');
 
@@ -1104,9 +1088,21 @@
         if (announcementBarSection) {
           const computedStyle = window.getComputedStyle(announcementBarSection);
           if (computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
-            announcementHeight = Math.ceil(announcementBarSection.offsetHeight || 0);
+          announcementHeight = Math.ceil(announcementBarSection.offsetHeight || 0);
           }
         }
+        
+        // Calcular altura del simple-announcement-item si está sticky
+        let simpleAnnouncementHeight = 0;
+        if (simpleAnnouncementSection) {
+          const computedStyle = window.getComputedStyle(simpleAnnouncementSection);
+          if (computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+            simpleAnnouncementHeight = Math.ceil(simpleAnnouncementSection.offsetHeight || 0);
+          }
+        }
+        
+        // Calcular el top total para el countdown (announcement-bar-top + simple-announcement-item)
+        const countdownTop = announcementHeight + simpleAnnouncementHeight;
         
         // Configurar countdown con sticky y top (usando variable CSS)
         if (countdownSection) {
@@ -1114,7 +1110,7 @@
           if (computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
             // El top ya está configurado en CSS usando var(--announcement-top-height)
             // Solo necesitamos asegurarnos de que la variable esté actualizada
-            document.documentElement.style.setProperty('--announcement-top-height', announcementHeight + 'px');
+            document.documentElement.style.setProperty('--announcement-top-height', countdownTop + 'px');
           }
         }
 
@@ -1129,7 +1125,7 @@
         
         // Aplicar top al header usando la variable CSS --announcement-height
         if (headerSection) {
-          const totalHeight = announcementHeight + countdownHeight;
+          const totalHeight = announcementHeight + simpleAnnouncementHeight + countdownHeight;
           document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
           // El header debe usar top: var(--announcement-height) en CSS
           headerSection.style.setProperty('top', totalHeight + 'px', 'important');
@@ -1150,10 +1146,20 @@
         });
         
         const announcementBarSection = document.querySelector('.announcement-bar-top-section');
+        const simpleAnnouncementSection = document.querySelector('.simple-announcement-item-section');
         const countdownSection = document.querySelector('.announcement-bar-countdown-section');
         
         if (announcementBarSection) {
           observer.observe(announcementBarSection, {
+            attributes: true,
+            attributeFilter: ['class', 'style'],
+            childList: true,
+            subtree: true
+          });
+        }
+        
+        if (simpleAnnouncementSection) {
+          observer.observe(simpleAnnouncementSection, {
             attributes: true,
             attributeFilter: ['class', 'style'],
             childList: true,
@@ -1173,6 +1179,7 @@
 
       if (window.ResizeObserver) {
         const announcementBarSection = document.querySelector('.announcement-bar-top-section');
+        const simpleAnnouncementSection = document.querySelector('.simple-announcement-item-section');
         const countdownSection = document.querySelector('.announcement-bar-countdown-section');
         const headerSection = document.querySelector('.header-section');
         
@@ -1181,6 +1188,13 @@
             setTimeout(updateStickyPositions, 50);
           });
           ro.observe(announcementBarSection);
+        }
+        
+        if (simpleAnnouncementSection) {
+          const roSimple = new ResizeObserver(() => {
+            setTimeout(updateStickyPositions, 50);
+          });
+          roSimple.observe(simpleAnnouncementSection);
         }
         
         if (countdownSection) {

@@ -6,6 +6,9 @@
   assign link_url = section.settings.link_url
   assign link_label = section.settings.link_label
   assign icon = section.settings.icon
+  assign background_color = section.settings.background_color | default: '#000000'
+  assign text_color = section.settings.text_color | default: '#ffffff'
+  assign font_size = section.settings.font_size | default: 13
   
   assign show_on_home = section.settings.show_on_home
   assign show_on_collection = section.settings.show_on_collection
@@ -85,15 +88,8 @@
   endif
 -%}
 
-{%- liquid
-  assign bg_color = section.settings.background_color | default: '#000000'
-  assign text_color = section.settings.text_color | default: '#ffffff'
-  assign font_size = section.settings.font_size | default: 13
--%}
-
 {%- if enable_item and show_item -%}
-<div id="shopify-section-{{ section.id }}" class="simple-announcement-item-section {% if enable_sticky %}sticky-enabled-section{% endif %}" 
-     style="--simple-announcement-bg: {{ bg_color }}; --simple-announcement-text: {{ text_color }}; --simple-announcement-font-size: {{ font_size }}px;">
+<div id="shopify-section-{{ section.id }}" class="simple-announcement-item-section {% if enable_sticky %}sticky-enabled-section{% endif %}" style="--simple-announcement-bg: {{ background_color }}; --simple-announcement-text: {{ text_color }}; --simple-announcement-font-size: {{ font_size }}px;" data-no-inline-styles="true">
   <div class="simple-announcement-item" data-sticky-enabled="{{ enable_sticky }}">
     <div class="simple-announcement-item--inner">
       <div class="simple-announcement-item--content">
@@ -114,16 +110,16 @@
   <style>
     /* Estilos esenciales para simple-announcement-item */
     #shopify-section-{{ section.id }}.simple-announcement-item-section {
-      margin: 0;
-      padding: 0;
-      border: none;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
       background-color: var(--simple-announcement-bg, #000000) !important;
       color: var(--simple-announcement-text, #ffffff) !important;
     }
     
     #shopify-section-{{ section.id }}.simple-announcement-item-section.sticky-enabled-section {
       position: sticky !important;
-      top: 0 !important;
+      top: var(--simple-announcement-top, 0px) !important;
       z-index: 52 !important;
       width: 100% !important;
       left: 0 !important;
@@ -192,8 +188,9 @@
       width: auto;
       max-height: 18px;
       max-width: 18px;
-      fill: var(--simple-announcement-text, #ffffff) !important;
-      stroke: var(--simple-announcement-text, #ffffff) !important;
+      fill: currentColor !important;
+      stroke: currentColor !important;
+      color: var(--simple-announcement-text, #ffffff) !important;
     }
     
     #shopify-section-{{ section.id }} .simple-announcement-item:hover,
@@ -202,6 +199,8 @@
       translate: none !important;
       box-shadow: none !important;
       cursor: default !important;
+      background-color: var(--simple-announcement-bg, #000000) !important;
+      color: var(--simple-announcement-text, #ffffff) !important;
     }
   </style>
   
@@ -210,142 +209,140 @@
       const sectionId = 'shopify-section-{{ section.id }}';
       const specificSection = document.getElementById(sectionId);
       
-      if (specificSection) {
-        // Función para forzar sticky en todas las páginas
-        function forceSticky() {
-          const item = specificSection.querySelector('.simple-announcement-item');
-          if (item && item.getAttribute('data-sticky-enabled') === 'true') {
-            // Calcular el top basado en otros elementos sticky
-            const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
-            const countdownBar = document.querySelector('.announcement-bar-countdown-section.sticky-enabled-section');
-            
-            let topValue = '0px';
-            let totalHeight = 0;
-            
-            if (announcementBarTop) {
-              const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
-              totalHeight += topHeight;
-            }
-            
-            if (countdownBar) {
-              const countdownHeight = countdownBar.offsetHeight || 42.3;
-              totalHeight += countdownHeight;
-            }
-            
-            if (totalHeight > 0) {
-              topValue = totalHeight + 'px';
-            }
-            
-            // Forzar sticky SIEMPRE
-            specificSection.classList.add('sticky-enabled-section');
-            specificSection.style.setProperty('position', 'sticky', 'important');
-            specificSection.style.setProperty('top', topValue, 'important');
-            specificSection.style.setProperty('z-index', '52', 'important');
-            specificSection.style.setProperty('width', '100%', 'important');
-            specificSection.style.setProperty('left', '0', 'important');
-            specificSection.style.setProperty('right', '0', 'important');
-            specificSection.style.setProperty('margin', '0', 'important');
-            specificSection.style.setProperty('padding', '0', 'important');
-            
-            // Asegurar que el contenedor padre no bloquee
-            const parentSection = specificSection.closest('.shopify-section-group-header-group');
-            if (parentSection) {
-              parentSection.style.setProperty('overflow', 'visible', 'important');
-            }
-          } else if (item && item.getAttribute('data-sticky-enabled') === 'false') {
-            specificSection.classList.remove('sticky-enabled-section');
-            specificSection.style.removeProperty('position');
-            specificSection.style.removeProperty('top');
-            specificSection.style.removeProperty('z-index');
-            specificSection.style.removeProperty('width');
-            specificSection.style.removeProperty('left');
-            specificSection.style.removeProperty('right');
-            specificSection.style.removeProperty('margin');
-            specificSection.style.removeProperty('padding');
+      if (!specificSection) return;
+      
+      // Función para aplicar sticky y eliminar estilos inline
+      function applyStickyAndCleanStyles() {
+        const item = specificSection.querySelector('.simple-announcement-item');
+        if (!item) return;
+        
+        const enableSticky = item.getAttribute('data-sticky-enabled') === 'true';
+        
+        if (enableSticky) {
+          // Agregar clase sticky
+          specificSection.classList.add('sticky-enabled-section');
+          
+          // Calcular top basado en otros elementos sticky
+          const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+          let topValue = '0px';
+          let totalHeight = 0;
+          
+          if (announcementBarTop && announcementBarTop !== specificSection) {
+            const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
+            totalHeight += topHeight;
+          }
+          
+          if (totalHeight > 0) {
+            topValue = totalHeight + 'px';
+          }
+          
+          document.documentElement.style.setProperty('--simple-announcement-top', topValue);
+          
+          // Forzar position sticky SIEMPRE
+          specificSection.style.setProperty('position', 'sticky', 'important');
+          specificSection.style.setProperty('top', topValue, 'important');
+          specificSection.style.setProperty('z-index', '52', 'important');
+          specificSection.style.setProperty('width', '100%', 'important');
+          specificSection.style.setProperty('left', '0', 'important');
+          specificSection.style.setProperty('right', '0', 'important');
+          specificSection.style.setProperty('margin', '0', 'important');
+          specificSection.style.setProperty('padding', '0', 'important');
+          
+          // Asegurar que el contenedor padre no bloquee
+          const parentSection = specificSection.closest('.shopify-section-group-header-group');
+          if (parentSection) {
+            parentSection.style.setProperty('overflow', 'visible', 'important');
+          }
+        } else {
+          // Remover sticky si está deshabilitado
+          specificSection.classList.remove('sticky-enabled-section');
+          specificSection.style.removeProperty('position');
+          specificSection.style.removeProperty('top');
+          specificSection.style.removeProperty('z-index');
+          specificSection.style.removeProperty('width');
+          specificSection.style.removeProperty('left');
+          specificSection.style.removeProperty('right');
+          specificSection.style.removeProperty('margin');
+          specificSection.style.removeProperty('padding');
+        }
+        
+        // Eliminar estilos inline de background-color y color si existen
+        if (specificSection.hasAttribute('data-no-inline-styles')) {
+          const currentStyle = specificSection.getAttribute('style') || '';
+          const newStyle = currentStyle
+            .replace(/background-color\s*:\s*[^;]+;?/gi, '')
+            .replace(/color\s*:\s*[^;]+;?/gi, '')
+            .replace(/;\s*;/g, ';')
+            .trim();
+          
+          if (newStyle) {
+            specificSection.setAttribute('style', newStyle);
+          } else if (!currentStyle.includes('--simple-announcement')) {
+            specificSection.removeAttribute('style');
           }
         }
-        
-        // Ejecutar inmediatamente
-        forceSticky();
-        
-        // Ejecutar cuando el DOM esté listo
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', forceSticky);
-        }
-        
-        // Ejecutar después de delays
-        setTimeout(forceSticky, 50);
-        setTimeout(forceSticky, 100);
-        setTimeout(forceSticky, 200);
-        setTimeout(forceSticky, 500);
-        
-        // Ejecutar cuando la ventana se carga completamente
-        window.addEventListener('load', forceSticky);
-        
-        // Ejecutar en scroll para mantener sticky activo
-        window.addEventListener('scroll', forceSticky, { passive: true });
-        
-        // Ejecutar periódicamente para mantener sticky
-        setInterval(forceSticky, 100);
-        
-        // Escuchar eventos de Shopify
-        if (typeof Shopify !== 'undefined') {
-          document.addEventListener('shopify:section:load', function(event) {
-            setTimeout(forceSticky, 50);
-          });
-          document.addEventListener('shopify:section:select', function(event) {
-            setTimeout(forceSticky, 50);
-          });
-          document.addEventListener('shopify:section:reorder', function(event) {
-            setTimeout(forceSticky, 50);
-          });
-        }
-        
-        // Usar MutationObserver para detectar cambios
-        const observer = new MutationObserver(function(mutations) {
-          let shouldUpdate = false;
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && 
-                (mutation.attributeName === 'data-sticky-enabled' || mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
-              const target = mutation.target;
-              if (specificSection.contains(target) || target === specificSection) {
-                shouldUpdate = true;
-              }
-            }
-            if (mutation.type === 'childList') {
-              mutation.addedNodes.forEach(function(node) {
-                if (node.nodeType === 1 && (specificSection.contains(node) || node === specificSection)) {
-                  shouldUpdate = true;
-                }
-              });
-            }
-          });
-          if (shouldUpdate) {
-            setTimeout(forceSticky, 50);
+      }
+      
+      // Ejecutar en varios momentos
+      applyStickyAndCleanStyles();
+      document.addEventListener('DOMContentLoaded', applyStickyAndCleanStyles);
+      window.addEventListener('load', applyStickyAndCleanStyles);
+      setTimeout(applyStickyAndCleanStyles, 50);
+      setTimeout(applyStickyAndCleanStyles, 100);
+      setTimeout(applyStickyAndCleanStyles, 200);
+      setTimeout(applyStickyAndCleanStyles, 500);
+      
+      // Ejecutar en scroll para mantener sticky activo
+      window.addEventListener('scroll', applyStickyAndCleanStyles, { passive: true });
+      
+      // Ejecutar periódicamente
+      setInterval(applyStickyAndCleanStyles, 100);
+      
+      // Observar cambios
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && 
+              (mutation.attributeName === 'style' || mutation.attributeName === 'data-sticky-enabled' || mutation.attributeName === 'class')) {
+            applyStickyAndCleanStyles();
+          } else if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            applyStickyAndCleanStyles();
           }
         });
-        
-        // Observar cambios en el elemento y sus atributos
-        observer.observe(specificSection, {
+      });
+      
+      observer.observe(specificSection, {
+        attributes: true,
+        attributeFilter: ['style', 'data-sticky-enabled', 'class'],
+        childList: true,
+        subtree: true
+      });
+      
+      // Observar cambios en otros elementos sticky para recalcular top
+      const stickyObserver = new MutationObserver(function() {
+        applyStickyAndCleanStyles();
+      });
+      
+      const announcementBarTop = document.querySelector('.announcement-bar-top-section');
+      if (announcementBarTop) {
+        stickyObserver.observe(announcementBarTop, {
           attributes: true,
-          attributeFilter: ['data-sticky-enabled', 'style', 'class'],
+          attributeFilter: ['class', 'style'],
           childList: true,
           subtree: true
         });
-        
-        // Observar cambios en otros elementos sticky para recalcular top
-        const stickyObserver = new MutationObserver(function() {
-          setTimeout(forceSticky, 50);
+      }
+      
+      // Escuchar eventos de Shopify
+      if (typeof Shopify !== 'undefined') {
+        document.addEventListener('shopify:section:load', function(event) {
+          if (event.detail && event.detail.sectionId === sectionId.replace('shopify-section-', '')) {
+            setTimeout(applyStickyAndCleanStyles, 100);
+          }
         });
-        
-        // Observar cambios en otros elementos sticky
-        const otherStickyElements = document.querySelectorAll('.announcement-bar-top-section, .announcement-bar-countdown-section');
-        otherStickyElements.forEach(function(el) {
-          stickyObserver.observe(el, {
-            attributes: true,
-            attributeFilter: ['class', 'style'],
-            childList: false
-          });
+        document.addEventListener('shopify:section:select', function(event) {
+          if (event.detail && event.detail.sectionId === sectionId.replace('shopify-section-', '')) {
+            setTimeout(applyStickyAndCleanStyles, 100);
+          }
         });
       }
     })();
@@ -393,7 +390,7 @@
     },
     {
       "type": "header",
-      "content": "Appearance"
+      "content": "Style Settings"
     },
     {
       "type": "color",
