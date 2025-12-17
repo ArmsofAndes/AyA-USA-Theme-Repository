@@ -81,6 +81,83 @@
   background: #000000 !important;
 }
 
+/* Estilos específicos para el elemento con ID shopify-section-sections--20691356287222__announcement-bar */
+#shopify-section-sections--20691356287222__announcement-bar,
+#shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar.announcement-bar-top {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar * {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-inner-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
+  --marquee-speed: 20s;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  --hover-bg: transparent !important;
+  --hover-text: inherit !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item a {
+  color: #ffffff !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item a:hover {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: none !important;
+  translate: none !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
 .announcement-bar--inner {
   padding: 0 15px;
   max-width: 1440px;

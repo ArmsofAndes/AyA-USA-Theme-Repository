@@ -8,6 +8,7 @@
   assign show_on_home = section.settings.show_on_home
   assign show_on_collection = section.settings.show_on_collection
   assign show_on_product = section.settings.show_on_product
+  assign show_on_blog = section.settings.show_on_blog
   
   if show_on_homepage_only
     if template != 'index'
@@ -25,12 +26,19 @@
     if show_on_product == false and template.name == 'product'
       assign enable_countdown = false
     endif
+    
+    if show_on_blog == false
+      if template.name == 'blog' or template.name == 'article'
+        assign enable_countdown = false
+      endif
+    endif
   endif
   
   assign enable_sticky = section.settings.enable_sticky
   assign sticky_on_home = section.settings.sticky_on_home
   assign sticky_on_collection = section.settings.sticky_on_collection
   assign sticky_on_product = section.settings.sticky_on_product
+  assign sticky_on_blog = section.settings.sticky_on_blog
   
   if enable_sticky
     if template == 'index'
@@ -43,6 +51,14 @@
       endif
     elsif template.name == 'product'
       if sticky_on_product == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'blog'
+      if sticky_on_blog == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'article'
+      if sticky_on_blog == false
         assign enable_sticky = false
       endif
     endif
@@ -1076,6 +1092,12 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "sticky_on_blog",
+      "label": "Apply sticky on blog pages",
+      "default": true
+    },
+    {
       "type": "header",
       "content": "Visibility Settings"
     },
@@ -1102,6 +1124,12 @@
       "type": "checkbox",
       "id": "show_on_product",
       "label": "Show on product pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_blog",
+      "label": "Show on blog pages",
       "default": true
     },
     {
