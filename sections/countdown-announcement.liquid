@@ -40,7 +40,6 @@
   assign sticky_on_product = section.settings.sticky_on_product
   assign sticky_on_blog = section.settings.sticky_on_blog
   
-  # Valores por defecto: si no están configurados, aplicar sticky en todas las páginas
   if sticky_on_home == blank
     assign sticky_on_home = true
   endif
@@ -54,7 +53,6 @@
     assign sticky_on_blog = true
   endif
   
-  # Si enable_sticky está habilitado, verificar configuraciones específicas por página
   if enable_sticky
     if template == 'index'
       if sticky_on_home == false
