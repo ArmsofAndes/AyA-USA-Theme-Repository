@@ -232,13 +232,25 @@
         box-shadow: none !important;
       }
       
-      #shopify-section-sections--20691356287222__announcement-bar * {
+      /* Solo aplicar a contenedores, no a elementos de texto */
+      #shopify-section-sections--20691356287222__announcement-bar > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
         border: none !important;
         border-top: none !important;
         border-bottom: none !important;
         border-left: none !important;
         border-right: none !important;
         outline: none !important;
+      }
+      
+      /* Aplicar fondo negro solo a contenedores principales */
+      #shopify-section-sections--20691356287222__announcement-bar > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar {
         background-color: #000000 !important;
         background: #000000 !important;
       }
@@ -303,9 +315,22 @@
       }
 
       .announcement-bar-top-section.sticky-enabled-section {
-        position: sticky;
-        top: 0;
-        z-index: 52;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 52 !important;
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
+      
+      /* Asegurar sticky para el ID específico */
+      #shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-section.sticky-enabled-section {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 52 !important;
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
       }
       
       /* Asegurar que el z-index no cambie en hover */
@@ -617,13 +642,82 @@
 
     <script>
       (function() {
-        const topBar = document.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
-        if (topBar) {
-          const section = topBar.closest('.announcement-bar-top-section');
-          if (section) {
-            section.classList.add('sticky-enabled-section');
-          }
+        // Función para aplicar clase sticky y forzar position sticky
+        function applyStickyClass() {
+          const topBars = document.querySelectorAll('.announcement-bar-top[data-sticky-enabled="true"]');
+          topBars.forEach(function(topBar) {
+            const section = topBar.closest('.announcement-bar-top-section');
+            if (section && topBar.getAttribute('data-sticky-enabled') === 'true') {
+              section.classList.add('sticky-enabled-section');
+              
+              // Forzar position sticky directamente en el elemento
+              const computedStyle = window.getComputedStyle(section);
+              if (computedStyle.position !== 'sticky') {
+                section.style.setProperty('position', 'sticky', 'important');
+                section.style.setProperty('top', '0', 'important');
+                section.style.setProperty('z-index', '52', 'important');
+                section.style.setProperty('width', '100%', 'important');
+                section.style.setProperty('left', '0', 'important');
+                section.style.setProperty('right', '0', 'important');
+              }
+            }
+          });
         }
+        
+        // Ejecutar inmediatamente
+        applyStickyClass();
+        
+        // Ejecutar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyStickyClass);
+        }
+        
+        // Ejecutar después de un pequeño delay
+        setTimeout(applyStickyClass, 50);
+        setTimeout(applyStickyClass, 100);
+        
+        // Ejecutar cuando la ventana se carga completamente
+        window.addEventListener('load', applyStickyClass);
+        
+        // Escuchar eventos de Shopify
+        if (typeof Shopify !== 'undefined') {
+          document.addEventListener('shopify:section:load', function(event) {
+            setTimeout(applyStickyClass, 50);
+          });
+          document.addEventListener('shopify:section:select', function(event) {
+            setTimeout(applyStickyClass, 50);
+          });
+        }
+        
+        // Usar MutationObserver para detectar cambios
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+              mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) {
+                  const topBar = node.querySelector && node.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
+                  if (topBar || (node.classList && node.classList.contains('announcement-bar-top') && node.getAttribute('data-sticky-enabled') === 'true')) {
+                    setTimeout(applyStickyClass, 50);
+                  }
+                }
+              });
+            }
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+              const target = mutation.target;
+              if (target.classList && target.classList.contains('announcement-bar-top')) {
+                setTimeout(applyStickyClass, 50);
+              }
+            }
+          });
+        });
+        
+        // Observar cambios en el body
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['data-sticky-enabled']
+        });
         
         // Eliminar estilos inline del elemento específico sections--20691356287222
         const specificSectionId = 'shopify-section-sections--20691356287222__announcement-bar';

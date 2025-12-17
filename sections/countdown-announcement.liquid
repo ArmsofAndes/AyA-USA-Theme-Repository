@@ -40,6 +40,21 @@
   assign sticky_on_product = section.settings.sticky_on_product
   assign sticky_on_blog = section.settings.sticky_on_blog
   
+  # Valores por defecto: si no están configurados, aplicar sticky en todas las páginas
+  if sticky_on_home == blank
+    assign sticky_on_home = true
+  endif
+  if sticky_on_collection == blank
+    assign sticky_on_collection = true
+  endif
+  if sticky_on_product == blank
+    assign sticky_on_product = true
+  endif
+  if sticky_on_blog == blank
+    assign sticky_on_blog = true
+  endif
+  
+  # Si enable_sticky está habilitado, verificar configuraciones específicas por página
   if enable_sticky
     if template == 'index'
       if sticky_on_home == false
@@ -53,11 +68,7 @@
       if sticky_on_product == false
         assign enable_sticky = false
       endif
-    elsif template.name == 'blog'
-      if sticky_on_blog == false
-        assign enable_sticky = false
-      endif
-    elsif template.name == 'article'
+    elsif template.name == 'blog' or template.name == 'article'
       if sticky_on_blog == false
         assign enable_sticky = false
       endif
@@ -775,16 +786,76 @@
         if (section && countdownBar.getAttribute('data-sticky-enabled') === 'true') {
           section.classList.add('sticky-enabled-section');
           
-          // Forzar position sticky directamente en el elemento
-          const computedStyle = window.getComputedStyle(section);
-          if (computedStyle.position !== 'sticky') {
-            section.style.setProperty('position', 'sticky', 'important');
-            section.style.setProperty('top', 'var(--announcement-top-height, 0)', 'important');
-            section.style.setProperty('z-index', '51', 'important');
-            section.style.setProperty('width', '100%', 'important');
+          // Calcular el top basado en la altura del announcement-bar-top
+          const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+          let topValue = '0px';
+          if (announcementBarTop) {
+            const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
+            topValue = topHeight + 'px';
+            document.documentElement.style.setProperty('--announcement-top-height', topValue);
+          }
+          
+          // Forzar position sticky directamente en el elemento - SIEMPRE
+          section.style.setProperty('position', 'sticky', 'important');
+          section.style.setProperty('top', topValue, 'important');
+          section.style.setProperty('z-index', '51', 'important');
+          section.style.setProperty('width', '100%', 'important');
+          section.style.setProperty('left', '0', 'important');
+          section.style.setProperty('right', '0', 'important');
+          section.style.setProperty('margin', '0', 'important');
+          section.style.setProperty('padding', '0', 'important');
+          
+          // También forzar en el contenedor padre si existe
+          const parentSection = section.closest('.shopify-section-group-header-group');
+          if (parentSection) {
+            parentSection.style.setProperty('overflow', 'visible', 'important');
           }
         }
       });
+    }
+    
+    // Función para verificar y mantener sticky activo - FORZAR EN TODAS LAS PÁGINAS
+    function forceSticky() {
+      const specificSection = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
+      if (specificSection) {
+        // Buscar cualquier countdown en esta sección, no solo los que tienen data-sticky-enabled="true"
+        const countdownBar = specificSection.querySelector('.announcement-bar-countdown');
+        // Si existe el elemento, forzar sticky independientemente del atributo data-sticky-enabled
+        if (countdownBar) {
+          // Verificar si tiene la clase sticky-enabled-section
+          if (!specificSection.classList.contains('sticky-enabled-section')) {
+            specificSection.classList.add('sticky-enabled-section');
+          }
+          
+          // Calcular el top
+          const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+          let topValue = '0px';
+          if (announcementBarTop) {
+            const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
+            topValue = topHeight + 'px';
+            document.documentElement.style.setProperty('--announcement-top-height', topValue);
+          }
+          
+          // Forzar sticky SIEMPRE, sin importar lo que otros scripts hagan
+          const computedStyle = window.getComputedStyle(specificSection);
+          if (computedStyle.position !== 'sticky') {
+            specificSection.style.setProperty('position', 'sticky', 'important');
+          }
+          specificSection.style.setProperty('top', topValue, 'important');
+          specificSection.style.setProperty('z-index', '51', 'important');
+          specificSection.style.setProperty('width', '100%', 'important');
+          specificSection.style.setProperty('left', '0', 'important');
+          specificSection.style.setProperty('right', '0', 'important');
+          specificSection.style.setProperty('margin', '0', 'important');
+          specificSection.style.setProperty('padding', '0', 'important');
+          
+          // Asegurar que el contenedor padre no bloquee
+          const parentSection = specificSection.closest('.shopify-section-group-header-group');
+          if (parentSection) {
+            parentSection.style.setProperty('overflow', 'visible', 'important');
+          }
+        }
+      }
     }
     
     // Ejecutar inmediatamente
@@ -800,15 +871,37 @@
     setTimeout(applyStickyClass, 100);
     
     // Ejecutar cuando la ventana se carga completamente
-    window.addEventListener('load', applyStickyClass);
+    window.addEventListener('load', function() {
+      applyStickyClass();
+      forceSticky();
+    });
+    
+    // Ejecutar en scroll para mantener sticky activo
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+      forceSticky();
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(forceSticky, 50);
+    }, { passive: true });
+    
+    // Ejecutar periódicamente para mantener sticky
+    setInterval(function() {
+      forceSticky();
+    }, 100);
     
     // Escuchar eventos de Shopify para cuando se recarga una sección
     if (typeof Shopify !== 'undefined') {
       document.addEventListener('shopify:section:load', function(event) {
-        setTimeout(applyStickyClass, 50);
+        setTimeout(function() {
+          applyStickyClass();
+          forceSticky();
+        }, 50);
       });
       document.addEventListener('shopify:section:select', function(event) {
-        setTimeout(applyStickyClass, 50);
+        setTimeout(function() {
+          applyStickyClass();
+          forceSticky();
+        }, 50);
       });
     }
     
@@ -825,10 +918,14 @@
             }
           });
         }
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+        if (mutation.type === 'attributes') {
           const target = mutation.target;
-          if (target.classList && target.classList.contains('announcement-bar-countdown')) {
-            setTimeout(applyStickyClass, 50);
+          if (target.id === 'shopify-section-sections--20691356287222__announcement-bar-countdown' || 
+              (target.classList && target.classList.contains('announcement-bar-countdown'))) {
+            setTimeout(function() {
+              applyStickyClass();
+              forceSticky();
+            }, 50);
           }
         }
       });
