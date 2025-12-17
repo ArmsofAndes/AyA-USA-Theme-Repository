@@ -258,6 +258,16 @@
               if (parentSection) {
                 parentSection.style.setProperty('overflow', 'visible', 'important');
               }
+              
+              // Disparar evento personalizado para notificar cambio de sticky
+              window.dispatchEvent(new CustomEvent('sticky-element-changed', {
+                detail: { element: specificSection, isSticky: true }
+              }));
+              
+              // Llamar directamente a setAnnouncementHeight si está disponible
+              if (window.themeHeader && typeof window.themeHeader.setAnnouncementHeight === 'function') {
+                window.themeHeader.setAnnouncementHeight();
+              }
             } else {
               specificSection.classList.remove('sticky-enabled-section');
               specificSection.style.removeProperty('position');
@@ -271,6 +281,16 @@
               const parentSection = specificSection.closest('.shopify-section-group-header-group');
               if (parentSection) {
                 parentSection.style.removeProperty('overflow');
+              }
+              
+              // Disparar evento personalizado para notificar cambio de sticky
+              window.dispatchEvent(new CustomEvent('sticky-element-changed', {
+                detail: { element: specificSection, isSticky: false }
+              }));
+              
+              // Llamar directamente a setAnnouncementHeight si está disponible
+              if (window.themeHeader && typeof window.themeHeader.setAnnouncementHeight === 'function') {
+                window.themeHeader.setAnnouncementHeight();
               }
             }
           }

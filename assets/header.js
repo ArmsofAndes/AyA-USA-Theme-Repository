@@ -15,6 +15,8 @@ if (!customElements.get('theme-header')) {
   class ThemeHeader extends HTMLElement {
     constructor() {
       super();
+      // Exponer instancia globalmente para que otros scripts puedan llamar a setAnnouncementHeight
+      window.themeHeader = this;
     }
     connectedCallback() {
       this.header_section = document.querySelector('.header-section');
@@ -58,7 +60,11 @@ if (!customElements.get('theme-header')) {
 
       window.dispatchEvent(new Event('scroll'));
 
-      if (document.querySelector('.announcement-bar-top-section') || document.querySelector('.announcement-bar-countdown-section')) {
+      if (document.querySelector('.announcement-bar-top-section') || 
+          document.querySelector('.announcement-bar-countdown-section') || 
+          document.querySelector('.simple-announcement-item-section') ||
+          document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M') ||
+          document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown')) {
         // Aplicar clases sticky inmediatamente
         this.applyStickyClasses();
         
@@ -74,6 +80,13 @@ if (!customElements.get('theme-header')) {
         this.observeStickyChanges();
         this.setupStickyObservers();
         this.setAnnouncementHeight();
+        
+        // Escuchar eventos personalizados de cambio de sticky
+        window.addEventListener('sticky-element-changed', () => {
+          setTimeout(() => {
+            this.setAnnouncementHeight();
+          }, 50);
+        });
         
         // Recalcular en scroll para detectar cuando elementos dejan de ser sticky
         let scrollTimeout;
@@ -120,10 +133,17 @@ if (!customElements.get('theme-header')) {
       }
     }
     setAnnouncementHeight() {
+      // Buscar elementos específicos por ID primero, luego por clase como fallback
+      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
+      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
+      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
+      
+      // Fallback a búsqueda por clase si no se encuentran los IDs específicos
       const a_bar = document.querySelector('.announcement-bar-top-section');
-      const simple_item = document.querySelector('.simple-announcement-item-section');
-      const countdown_bar = document.querySelector('.announcement-bar-countdown-section');
-      const headerSection = document.querySelector('.header-section');
+      const simple_item = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
+      const countdown_bar = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
+      const headerSection = specificHeader || document.querySelector('.header-section');
+      
       let totalHeight = 0;
       let topHeight = 0;
       
@@ -172,12 +192,14 @@ if (!customElements.get('theme-header')) {
       }
       
       // Calcular altura del simple-announcement-item (segundo en el orden)
+      // Priorizar el elemento específico si existe
       if (simple_item && shouldBeSticky(simple_item)) {
         const simpleItemHeight = simple_item.clientHeight || simple_item.offsetHeight || (isMobile ? 46 : 42);
         totalHeight += simpleItemHeight;
       }
       
       // Calcular altura del countdown si está sticky (tercero en el orden)
+      // Priorizar el elemento específico si existe
       if (countdown_bar && shouldBeSticky(countdown_bar)) {
         const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
         totalHeight += countdownHeight;
@@ -186,7 +208,7 @@ if (!customElements.get('theme-header')) {
       // Actualizar la altura total
       document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
       
-      // Actualizar el top del header
+      // Actualizar el top del header (priorizar el elemento específico si existe)
       if (headerSection) {
         headerSection.style.setProperty('top', totalHeight + 'px', 'important');
       }
@@ -232,18 +254,28 @@ if (!customElements.get('theme-header')) {
         mutations.forEach((mutation) => {
           if (mutation.type === 'attributes') {
             const target = mutation.target;
-            if (target.classList && (
+            // Verificar si el cambio es en uno de los elementos específicos o en sus clases
+            const isSpecificElement = target.id === 'shopify-section-sections--20691356287222__simple_announcement_item_46z49M' ||
+                                      target.id === 'shopify-section-sections--20691356287222__announcement-bar-countdown' ||
+                                      target.id === 'shopify-section-sections--20691356287222__header';
+            
+            if (isSpecificElement || (target.classList && (
                 target.classList.contains('announcement-bar-top-section') || 
                 target.classList.contains('announcement-bar-countdown-section') ||
-                target.classList.contains('sticky-enabled-section'))) {
+                target.classList.contains('simple-announcement-item-section') ||
+                target.classList.contains('sticky-enabled-section')))) {
               shouldRecalculate = true;
             }
           }
           if (mutation.type === 'childList' || mutation.type === 'characterData') {
             const target = mutation.target;
             if (target.closest && (
+                target.closest('#shopify-section-sections--20691356287222__simple_announcement_item_46z49M') ||
+                target.closest('#shopify-section-sections--20691356287222__announcement-bar-countdown') ||
+                target.closest('#shopify-section-sections--20691356287222__header') ||
                 target.closest('.announcement-bar-top-section') || 
-                target.closest('.announcement-bar-countdown-section'))) {
+                target.closest('.announcement-bar-countdown-section') ||
+                target.closest('.simple-announcement-item-section'))) {
               shouldRecalculate = true;
             }
           }
@@ -255,14 +287,20 @@ if (!customElements.get('theme-header')) {
         }
       });
       
-      // Observar cambios en las secciones
+      // Observar cambios en los elementos específicos primero
+      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
+      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
+      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
+      
+      // Observar cambios en las secciones (específicas y genéricas)
       const topSection = document.querySelector('.announcement-bar-top-section');
-      const countdownSection = document.querySelector('.announcement-bar-countdown-section');
+      const countdownSection = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
+      const simpleItemSection = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
       
       if (topSection) {
         observer.observe(topSection, {
           attributes: true,
-          attributeFilter: ['class', 'style'],
+          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
           childList: true,
           subtree: true
         });
@@ -270,6 +308,24 @@ if (!customElements.get('theme-header')) {
       
       if (countdownSection) {
         observer.observe(countdownSection, {
+          attributes: true,
+          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
+          childList: true,
+          subtree: true
+        });
+      }
+      
+      if (simpleItemSection) {
+        observer.observe(simpleItemSection, {
+          attributes: true,
+          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
+          childList: true,
+          subtree: true
+        });
+      }
+      
+      if (specificHeader) {
+        observer.observe(specificHeader, {
           attributes: true,
           attributeFilter: ['class', 'style'],
           childList: true,
@@ -284,14 +340,23 @@ if (!customElements.get('theme-header')) {
         this.setAnnouncementHeight();
       });
       
+      // Buscar elementos específicos primero
+      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
+      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
+      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
+      
       // Observar todos los elementos, no solo los que tienen la clase sticky-enabled-section
       // porque pueden agregarse después
       const topSection = document.querySelector('.announcement-bar-top-section');
-      const countdownSection = document.querySelector('.announcement-bar-countdown-section');
-      const headerSection = document.querySelector('.header-section');
+      const countdownSection = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
+      const simpleItemSection = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
+      const headerSection = specificHeader || document.querySelector('.header-section');
       
       if (topSection) {
         resizeObserver.observe(topSection);
+      }
+      if (simpleItemSection) {
+        resizeObserver.observe(simpleItemSection);
       }
       if (countdownSection) {
         resizeObserver.observe(countdownSection);
@@ -318,6 +383,9 @@ if (!customElements.get('theme-header')) {
       
       if (topSection) {
         intersectionObserver.observe(topSection);
+      }
+      if (simpleItemSection) {
+        intersectionObserver.observe(simpleItemSection);
       }
       if (countdownSection) {
         intersectionObserver.observe(countdownSection);
