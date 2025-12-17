@@ -297,6 +297,44 @@ if (!customElements.get('theme-header')) {
       const allCountdowns = this.getAllElementsByType('countdown');
       const allHeaders = this.getAllElementsByType('header');
       
+      // Crear una lista de todos los elementos sticky en orden del DOM
+      const allStickyElements = [];
+      
+      // Agregar todos los simple items
+      allSimpleItems.forEach(element => {
+        if (this.shouldBeSticky(element, 'simpleItem')) {
+          allStickyElements.push({
+            element: element,
+            type: 'simpleItem',
+            zIndex: this.Z_INDEX.simpleItem
+          });
+        }
+      });
+      
+      // Agregar todos los countdowns
+      allCountdowns.forEach(element => {
+        if (this.shouldBeSticky(element, 'countdown')) {
+          allStickyElements.push({
+            element: element,
+            type: 'countdown',
+            zIndex: this.Z_INDEX.countdown
+          });
+        }
+      });
+      
+      // Ordenar todos los elementos sticky por su posición NATURAL en el DOM
+      // IMPORTANTE: Usar compareDocumentPosition, NO getBoundingClientRect
+      // porque getBoundingClientRect puede estar distorsionado por sticky
+      allStickyElements.sort((a, b) => {
+        const position = a.element.compareDocumentPosition(b.element);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1; // a viene antes que b en el DOM
+        } else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1; // b viene antes que a en el DOM
+        }
+        return 0; // Mismo nodo o no relacionados
+      });
+      
       // IMPORTANTE: Procesar elementos en el orden correcto del DOM
       // 1. Primero todos los simple items (ordenados por posición en DOM)
       // 2. Luego todos los countdowns (ordenados por posición en DOM)
@@ -313,12 +351,6 @@ if (!customElements.get('theme-header')) {
           // Sumar la altura de este elemento al cumulativeTop para el siguiente
           const height = this.getElementHeight(element, 'simpleItem');
           cumulativeTop += height;
-        } else {
-          // Remover sticky si no debería serlo
-          element.classList.remove('sticky-enabled-section');
-          element.style.removeProperty('position');
-          element.style.removeProperty('top');
-          element.style.removeProperty('z-index');
         }
       });
       
@@ -330,7 +362,13 @@ if (!customElements.get('theme-header')) {
           // Sumar la altura de este elemento al cumulativeTop para el siguiente
           const height = this.getElementHeight(element, 'countdown');
           cumulativeTop += height;
-        } else {
+        }
+      });
+      
+      // Procesar elementos que NO son sticky pero necesitan respetar el espacio
+      // (por ejemplo, simple items o countdowns que no están activos como sticky)
+      allSimpleItems.forEach(element => {
+        if (!this.shouldBeSticky(element, 'simpleItem')) {
           // Remover sticky si no debería serlo
           element.classList.remove('sticky-enabled-section');
           element.style.removeProperty('position');
@@ -339,15 +377,24 @@ if (!customElements.get('theme-header')) {
         }
       });
       
-      // 3. Procesar todos los headers (DESPUÉS de simple items y countdowns)
-      // Los headers SIEMPRE deben estar después de todos los elementos sticky arriba
+      allCountdowns.forEach(element => {
+        if (!this.shouldBeSticky(element, 'countdown')) {
+          // Remover sticky si no debería serlo
+          element.classList.remove('sticky-enabled-section');
+          element.style.removeProperty('position');
+          element.style.removeProperty('top');
+          element.style.removeProperty('z-index');
+        }
+      });
+      
+      // 3. Headers (todos los headers, no solo el específico)
+      // Aplicar a TODOS los headers para que respeten el espacio de elementos sticky arriba
       allHeaders.forEach(headerSection => {
         // Verificar si este header debería ser sticky
         const isHeaderSticky = this.shouldBeSticky(headerSection, 'header');
         
         if (isHeaderSticky) {
           // Si el header es sticky, aplicar sticky con el cumulativeTop calculado
-          // El cumulativeTop ya incluye todas las alturas de simple items y countdowns
           this.applyStickyToElement(headerSection, 'header', cumulativeTop);
         } else {
           // Si el header NO es sticky pero hay elementos sticky arriba,
