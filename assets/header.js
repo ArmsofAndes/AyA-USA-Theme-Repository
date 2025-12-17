@@ -259,7 +259,7 @@ if (!customElements.get('theme-header')) {
       const heights = {};
       const stickyStates = {};
       
-      // Obtener todos los elementos
+      // Obtener todos los elementos específicos
       this.STICKY_ORDER.forEach(type => {
         elements[type] = this.getElementByType(type);
         if (elements[type]) {
@@ -294,13 +294,34 @@ if (!customElements.get('theme-header')) {
         }
       }
       
-      // 3. Header
-      if (elements.header) {
-        this.applyStickyToElement(elements.header, 'header', cumulativeTop);
-        // El header no se suma al cumulativeTop porque es el último
-      }
+      // 3. Headers (todos los headers, no solo el específico)
+      // Aplicar a TODOS los headers para que respeten el espacio de elementos sticky arriba
+      const allHeaders = document.querySelectorAll('.header-section');
+      allHeaders.forEach(headerSection => {
+        // Verificar si este header debería ser sticky
+        const isHeaderSticky = this.shouldBeSticky(headerSection, 'header');
+        
+        if (isHeaderSticky) {
+          // Si el header es sticky, aplicar sticky con el cumulativeTop calculado
+          this.applyStickyToElement(headerSection, 'header', cumulativeTop);
+        } else {
+          // Si el header NO es sticky pero hay elementos sticky arriba,
+          // aún necesita respetar el espacio usando la variable CSS
+          // El CSS ya maneja esto con: top: var(--announcement-height, 0px)
+          // Pero también lo aplicamos directamente para asegurar
+          if (cumulativeTop > 0) {
+            // Solo actualizar si hay elementos sticky arriba
+            const headerComputedStyle = window.getComputedStyle(headerSection);
+            // Si el header tiene position sticky (aunque no esté activo el sticky),
+            // actualizar su top para respetar el espacio
+            if (headerComputedStyle.position === 'sticky') {
+              headerSection.style.setProperty('top', cumulativeTop + 'px', 'important');
+            }
+          }
+        }
+      });
       
-      // Actualizar CSS variable para compatibilidad
+      // Actualizar CSS variable para compatibilidad (todos los headers la usan)
       document.documentElement.style.setProperty('--announcement-height', cumulativeTop + 'px');
     }
 
