@@ -54,126 +54,6 @@
         "announcement_text": "#ffffff"
       }
     },
-    "rich_text_yTy93w": {
-      "type": "rich-text",
-      "blocks": {
-        "subheading_CPcgxU": {
-          "type": "subheading",
-          "disabled": true,
-          "settings": {
-            "text": "Subheading for this section",
-            "color": "",
-            "font_size": 24,
-            "font_weight": 400
-          }
-        },
-        "heading_ga6pWF": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "text": "",
-            "color": "",
-            "font_size": 16,
-            "font_weight": 200
-          }
-        },
-        "text_EWwLYn": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "<p>NOT A SINGLE DROP OF PLASTIC IS USED IN ANY OF OUR PRODUCTS*</p>",
-            "custom_liquid": "",
-            "color": "",
-            "font_size": 14,
-            "font_weight": 400
-          }
-        }
-      },
-      "block_order": [
-        "subheading_CPcgxU",
-        "heading_ga6pWF",
-        "text_EWwLYn"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".row {max-width: 100%;}"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "use_global_font": false,
-        "font_family": "roboto",
-        "custom_anchor_id": "",
-        "section_width": "grid",
-        "text_width": "medium",
-        "text_position": "center",
-        "text_alignment": "center",
-        "color_bg": "#242c48",
-        "color_text": "#ffffff",
-        "color_links": "#151515",
-        "disable_top_spacing": true,
-        "disable_bottom_spacing": true
-      }
-    },
-    "rich_text_d9fWEy": {
-      "type": "rich-text",
-      "blocks": {
-        "subheading_dJCcCh": {
-          "type": "subheading",
-          "disabled": true,
-          "settings": {
-            "text": "Subheading for this section",
-            "color": "",
-            "font_size": 24,
-            "font_weight": 400
-          }
-        },
-        "heading_AVkBQR": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "text": "",
-            "color": "",
-            "font_size": 16,
-            "font_weight": 200
-          }
-        },
-        "text_R6NJYt": {
-          "type": "text",
-          "settings": {
-            "text": "<p>25% off everything. Free US shipping $100+</p>",
-            "custom_liquid": "",
-            "color": "#ffffff",
-            "font_size": 14,
-            "font_weight": 100
-          }
-        }
-      },
-      "block_order": [
-        "subheading_dJCcCh",
-        "heading_AVkBQR",
-        "text_R6NJYt"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".rte {margin-bottom: 0px;}",
-        "p {padding: 0.4em 20px;}"
-      ],
-      "name": "Rich text",
-      "settings": {
-        "use_global_font": true,
-        "font_family": "baskerville",
-        "custom_anchor_id": "",
-        "section_width": "full-width-row",
-        "text_width": "xlarge",
-        "text_position": "center",
-        "text_alignment": "center",
-        "color_bg": "#536191",
-        "color_text": "#ffffff",
-        "color_links": "#151515",
-        "disable_top_spacing": true,
-        "disable_bottom_spacing": true
-      }
-    },
     "announcement-bar-countdown": {
       "type": "countdown-announcement",
       "settings": {
@@ -431,8 +311,6 @@
   },
   "order": [
     "announcement-bar",
-    "rich_text_yTy93w",
-    "rich_text_d9fWEy",
     "announcement-bar-countdown",
     "header"
   ]
