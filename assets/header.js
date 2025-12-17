@@ -164,25 +164,56 @@ if (!customElements.get('theme-header')) {
     }
 
     /**
-     * Obtener elemento por tipo
+     * Obtener TODOS los elementos de un tipo específico
      */
-    getElementByType(type) {
+    getAllElementsByType(type) {
+      const elements = [];
+      
+      // Primero buscar por ID específico si existe
       const id = this.SPECIFIC_IDS[type];
-      if (!id) return null;
-      
-      const element = document.getElementById(id);
-      if (element) return element;
-      
-      // Fallback a búsqueda por clase
-      if (type === 'simpleItem') {
-        return document.querySelector('.simple-announcement-item-section');
-      } else if (type === 'countdown') {
-        return document.querySelector('.announcement-bar-countdown-section');
-      } else if (type === 'header') {
-        return document.querySelector('.header-section');
+      if (id) {
+        const specificElement = document.getElementById(id);
+        if (specificElement) {
+          elements.push(specificElement);
+        }
       }
       
-      return null;
+      // Luego buscar todos los elementos por clase
+      let selector = '';
+      if (type === 'simpleItem') {
+        selector = '.simple-announcement-item-section';
+      } else if (type === 'countdown') {
+        selector = '.announcement-bar-countdown-section';
+      } else if (type === 'header') {
+        selector = '.header-section';
+      }
+      
+      if (selector) {
+        const allElements = document.querySelectorAll(selector);
+        allElements.forEach(element => {
+          // Evitar duplicados si ya está en la lista
+          if (!elements.includes(element)) {
+            elements.push(element);
+          }
+        });
+      }
+      
+      // Ordenar por posición en el DOM (de arriba hacia abajo)
+      elements.sort((a, b) => {
+        const aRect = a.getBoundingClientRect();
+        const bRect = b.getBoundingClientRect();
+        return aRect.top - bRect.top;
+      });
+      
+      return elements;
+    }
+    
+    /**
+     * Obtener elemento por tipo (mantener para compatibilidad, pero ahora devuelve el primero)
+     */
+    getElementByType(type) {
+      const allElements = this.getAllElementsByType(type);
+      return allElements.length > 0 ? allElements[0] : null;
     }
 
     /**
@@ -255,48 +286,80 @@ if (!customElements.get('theme-header')) {
      * Actualizar todos los elementos sticky y calcular posiciones
      */
     updateAllStickyElements() {
-      const elements = {};
-      const heights = {};
-      const stickyStates = {};
+      // Obtener TODOS los elementos de cada tipo, ordenados por posición en el DOM
+      const allSimpleItems = this.getAllElementsByType('simpleItem');
+      const allCountdowns = this.getAllElementsByType('countdown');
+      const allHeaders = this.getAllElementsByType('header');
       
-      // Obtener todos los elementos específicos
-      this.STICKY_ORDER.forEach(type => {
-        elements[type] = this.getElementByType(type);
-        if (elements[type]) {
-          stickyStates[type] = this.shouldBeSticky(elements[type], type);
-          if (stickyStates[type]) {
-            heights[type] = this.getElementHeight(elements[type], type);
-          } else {
-            heights[type] = 0;
-          }
-        } else {
-          stickyStates[type] = false;
-          heights[type] = 0;
+      // Crear una lista de todos los elementos sticky en orden del DOM
+      const allStickyElements = [];
+      
+      // Agregar todos los simple items
+      allSimpleItems.forEach(element => {
+        if (this.shouldBeSticky(element, 'simpleItem')) {
+          allStickyElements.push({
+            element: element,
+            type: 'simpleItem',
+            zIndex: this.Z_INDEX.simpleItem
+          });
         }
+      });
+      
+      // Agregar todos los countdowns
+      allCountdowns.forEach(element => {
+        if (this.shouldBeSticky(element, 'countdown')) {
+          allStickyElements.push({
+            element: element,
+            type: 'countdown',
+            zIndex: this.Z_INDEX.countdown
+          });
+        }
+      });
+      
+      // Ordenar todos los elementos sticky por su posición en el DOM
+      allStickyElements.sort((a, b) => {
+        const aRect = a.element.getBoundingClientRect();
+        const bRect = b.element.getBoundingClientRect();
+        return aRect.top - bRect.top;
       });
       
       // Calcular top para cada elemento en orden
       let cumulativeTop = 0;
       
-      // 1. Simple Item
-      if (elements.simpleItem) {
-        this.applyStickyToElement(elements.simpleItem, 'simpleItem', cumulativeTop);
-        if (stickyStates.simpleItem) {
-          cumulativeTop += heights.simpleItem;
-        }
-      }
+      // Aplicar sticky a todos los elementos en orden y calcular cumulativeTop
+      allStickyElements.forEach((item, index) => {
+        // Aplicar sticky con el cumulativeTop actual
+        this.applyStickyToElement(item.element, item.type, cumulativeTop);
+        
+        // Sumar la altura de este elemento al cumulativeTop para el siguiente
+        const height = this.getElementHeight(item.element, item.type);
+        cumulativeTop += height;
+      });
       
-      // 2. Countdown
-      if (elements.countdown) {
-        this.applyStickyToElement(elements.countdown, 'countdown', cumulativeTop);
-        if (stickyStates.countdown) {
-          cumulativeTop += heights.countdown;
+      // Procesar elementos que NO son sticky pero necesitan respetar el espacio
+      // (por ejemplo, simple items o countdowns que no están activos como sticky)
+      allSimpleItems.forEach(element => {
+        if (!this.shouldBeSticky(element, 'simpleItem')) {
+          // Remover sticky si no debería serlo
+          element.classList.remove('sticky-enabled-section');
+          element.style.removeProperty('position');
+          element.style.removeProperty('top');
+          element.style.removeProperty('z-index');
         }
-      }
+      });
+      
+      allCountdowns.forEach(element => {
+        if (!this.shouldBeSticky(element, 'countdown')) {
+          // Remover sticky si no debería serlo
+          element.classList.remove('sticky-enabled-section');
+          element.style.removeProperty('position');
+          element.style.removeProperty('top');
+          element.style.removeProperty('z-index');
+        }
+      });
       
       // 3. Headers (todos los headers, no solo el específico)
       // Aplicar a TODOS los headers para que respeten el espacio de elementos sticky arriba
-      const allHeaders = document.querySelectorAll('.header-section');
       allHeaders.forEach(headerSection => {
         // Verificar si este header debería ser sticky
         const isHeaderSticky = this.shouldBeSticky(headerSection, 'header');
@@ -334,12 +397,14 @@ if (!customElements.get('theme-header')) {
         this.updateAllStickyElements();
       });
       
-      // Observar todos los elementos específicos
-      Object.values(this.SPECIFIC_IDS).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-          resizeObserver.observe(element);
-        }
+      // Observar TODOS los elementos de cada tipo, no solo los específicos
+      const allSimpleItems = this.getAllElementsByType('simpleItem');
+      const allCountdowns = this.getAllElementsByType('countdown');
+      const allHeaders = this.getAllElementsByType('header');
+      
+      // Observar todos los elementos encontrados
+      [...allSimpleItems, ...allCountdowns, ...allHeaders].forEach(element => {
+        resizeObserver.observe(element);
       });
       
       // MutationObserver para detectar cambios en atributos y clases
@@ -348,17 +413,35 @@ if (!customElements.get('theme-header')) {
         mutations.forEach((mutation) => {
           if (mutation.type === 'attributes') {
             const target = mutation.target;
-            const isSpecificElement = Object.values(this.SPECIFIC_IDS).includes(target.id);
-            if (isSpecificElement || 
-                target.classList?.contains('sticky-enabled-section') ||
-                target.hasAttribute('data-sticky-enabled')) {
+            // Verificar si el cambio es en un elemento sticky relevante
+            if (target.classList?.contains('sticky-enabled-section') ||
+                target.classList?.contains('simple-announcement-item-section') ||
+                target.classList?.contains('announcement-bar-countdown-section') ||
+                target.classList?.contains('header-section') ||
+                target.hasAttribute('data-sticky-enabled') ||
+                target.closest('.simple-announcement-item-section') ||
+                target.closest('.announcement-bar-countdown-section') ||
+                target.closest('.header-section')) {
               shouldUpdate = true;
             }
           } else if (mutation.type === 'childList') {
             const target = mutation.target;
-            if (target.closest && Object.values(this.SPECIFIC_IDS).some(id => target.closest('#' + id))) {
+            // Verificar si se agregaron o removieron elementos sticky
+            if (target.closest && (
+                target.closest('.simple-announcement-item-section') ||
+                target.closest('.announcement-bar-countdown-section') ||
+                target.closest('.header-section'))) {
               shouldUpdate = true;
             }
+            // Verificar si los nodos agregados son elementos sticky
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === 1 && (
+                  node.classList?.contains('simple-announcement-item-section') ||
+                  node.classList?.contains('announcement-bar-countdown-section') ||
+                  node.classList?.contains('header-section'))) {
+                shouldUpdate = true;
+              }
+            });
           }
         });
         if (shouldUpdate) {
@@ -366,17 +449,20 @@ if (!customElements.get('theme-header')) {
         }
       });
       
-      // Observar cada elemento específico
-      Object.values(this.SPECIFIC_IDS).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-          mutationObserver.observe(element, {
-            attributes: true,
-            attributeFilter: ['class', 'style', 'data-sticky-enabled'],
-            childList: true,
-            subtree: true
-          });
-        }
+      // Observar todos los elementos de cada tipo
+      [...allSimpleItems, ...allCountdowns, ...allHeaders].forEach(element => {
+        mutationObserver.observe(element, {
+          attributes: true,
+          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
+          childList: true,
+          subtree: true
+        });
+      });
+      
+      // También observar el body para detectar cuando se agregan nuevos elementos
+      mutationObserver.observe(document.body, {
+        childList: true,
+        subtree: true
       });
     }
 
