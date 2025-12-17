@@ -15,9 +15,27 @@ if (!customElements.get('theme-header')) {
   class ThemeHeader extends HTMLElement {
     constructor() {
       super();
-      // Exponer instancia globalmente para que otros scripts puedan llamar a setAnnouncementHeight
+      // Exponer instancia globalmente para que otros scripts puedan llamar a métodos
       window.themeHeader = this;
+      
+      // IDs específicos de los elementos que necesitan sticky
+      this.SPECIFIC_IDS = {
+        simpleItem: 'shopify-section-sections--20691356287222__simple_announcement_item_46z49M',
+        countdown: 'shopify-section-sections--20691356287222__announcement-bar-countdown',
+        header: 'shopify-section-sections--20691356287222__header'
+      };
+      
+      // Orden de elementos sticky (de arriba hacia abajo)
+      this.STICKY_ORDER = ['simpleItem', 'countdown', 'header'];
+      
+      // Z-index para cada elemento
+      this.Z_INDEX = {
+        simpleItem: 52,
+        countdown: 51,
+        header: 50
+      };
     }
+    
     connectedCallback() {
       this.header_section = document.querySelector('.header-section');
       this.menu = this.querySelector('#mobile-menu');
@@ -60,70 +78,285 @@ if (!customElements.get('theme-header')) {
 
       window.dispatchEvent(new Event('scroll'));
 
-      if (document.querySelector('.announcement-bar-top-section') || 
-          document.querySelector('.announcement-bar-countdown-section') || 
-          document.querySelector('.simple-announcement-item-section') ||
-          document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M') ||
-          document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown')) {
-        // Aplicar clases sticky inmediatamente
-        this.applyStickyClasses();
-        
-        // Aplicar clases sticky después de un pequeño delay para asegurar que todos los elementos estén disponibles
-        setTimeout(() => {
-          this.applyStickyClasses();
-        }, 50);
-        
-        setTimeout(() => {
-          this.applyStickyClasses();
-        }, 100);
-        
-        this.observeStickyChanges();
-        this.setupStickyObservers();
-        this.setAnnouncementHeight();
-        
-        // Escuchar eventos personalizados de cambio de sticky
-        window.addEventListener('sticky-element-changed', () => {
-          setTimeout(() => {
-            this.setAnnouncementHeight();
-          }, 50);
-        });
-        
-        // Recalcular en scroll para detectar cuando elementos dejan de ser sticky
-        let scrollTimeout;
-        
-        window.addEventListener('scroll', () => {
-          this.setAnnouncementHeight();
-          
-          // Cuando el scroll se detiene, ejecutar una verificación final
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => {
-            this.setAnnouncementHeight();
-          }, 100);
-        }, {
-          passive: true
-        });
-        
-        window.addEventListener('resize', () => {
-          this.applyStickyClasses();
-          this.setAnnouncementHeight();
-        });
-        
-        // Escuchar eventos de Shopify para aplicar clases cuando se recarga una sección
-        if (typeof Shopify !== 'undefined') {
-          document.addEventListener('shopify:section:load', () => {
-            setTimeout(() => {
-              this.applyStickyClasses();
-              this.setAnnouncementHeight();
-            }, 100);
-          });
-        }
-        
-        window.dispatchEvent(new Event('resize'));
-      }
-
+      // Inicializar sistema de sticky para elementos específicos
+      this.initStickySystem();
+      
       // Buttons.
       this.menu.querySelectorAll('summary').forEach(summary => summary.addEventListener('click', this.onSummaryClick.bind(this)));
       this.menu.querySelectorAll('.parent-link-back--button').forEach(button => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
+    }
+
+    /**
+     * Inicializar el sistema de sticky para los elementos específicos
+     */
+    initStickySystem() {
+      // Verificar si existen los elementos específicos
+      const hasSpecificElements = Object.values(this.SPECIFIC_IDS).some(id => document.getElementById(id));
+      
+      if (hasSpecificElements) {
+        // Aplicar sticky inicialmente
+        this.updateAllStickyElements();
+        
+        // Observar cambios
+        this.setupStickyObservers();
+        
+        // Escuchar eventos personalizados
+        window.addEventListener('sticky-element-changed', () => {
+          setTimeout(() => this.updateAllStickyElements(), 50);
+        });
+        
+        // Recalcular en scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+          this.updateAllStickyElements();
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => this.updateAllStickyElements(), 100);
+        }, { passive: true });
+        
+        // Recalcular en resize
+        window.addEventListener('resize', () => {
+          this.updateAllStickyElements();
+        });
+        
+        // Escuchar eventos de Shopify
+        if (typeof Shopify !== 'undefined') {
+          document.addEventListener('shopify:section:load', () => {
+            setTimeout(() => this.updateAllStickyElements(), 100);
+          });
+          document.addEventListener('shopify:section:select', () => {
+            setTimeout(() => this.updateAllStickyElements(), 100);
+          });
+        }
+        
+        // Ejecutar después de delays para asegurar que todos los elementos estén disponibles
+        setTimeout(() => this.updateAllStickyElements(), 50);
+        setTimeout(() => this.updateAllStickyElements(), 100);
+        setTimeout(() => this.updateAllStickyElements(), 200);
+      }
+    }
+
+    /**
+     * Verificar si un elemento debería ser sticky basándose en sus atributos y visibilidad
+     */
+    shouldBeSticky(element, elementType) {
+      if (!element) return false;
+      
+      // Verificar visibilidad
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
+        return false;
+      }
+      
+      // Verificar data-sticky-enabled según el tipo de elemento
+      if (elementType === 'simpleItem') {
+        const innerElement = element.querySelector('.simple-announcement-item[data-sticky-enabled="true"]');
+        return innerElement !== null;
+      } else if (elementType === 'countdown') {
+        const innerElement = element.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
+        return innerElement !== null;
+      } else if (elementType === 'header') {
+        // Para el header, verificar si tiene la clase header-sticky--active en el elemento theme-header
+        const headerElement = element.querySelector('theme-header.header-sticky--active, .header.header-sticky--active');
+        return headerElement !== null;
+      }
+      
+      return false;
+    }
+
+    /**
+     * Obtener elemento por tipo
+     */
+    getElementByType(type) {
+      const id = this.SPECIFIC_IDS[type];
+      if (!id) return null;
+      
+      const element = document.getElementById(id);
+      if (element) return element;
+      
+      // Fallback a búsqueda por clase
+      if (type === 'simpleItem') {
+        return document.querySelector('.simple-announcement-item-section');
+      } else if (type === 'countdown') {
+        return document.querySelector('.announcement-bar-countdown-section');
+      } else if (type === 'header') {
+        return document.querySelector('.header-section');
+      }
+      
+      return null;
+    }
+
+    /**
+     * Aplicar sticky a un elemento específico
+     */
+    applyStickyToElement(element, elementType, topValue) {
+      if (!element) return;
+      
+      const isSticky = this.shouldBeSticky(element, elementType);
+      const zIndex = this.Z_INDEX[elementType];
+      
+      if (isSticky) {
+        // Agregar clase sticky
+        element.classList.add('sticky-enabled-section');
+        
+        // Aplicar estilos sticky
+        element.style.setProperty('position', 'sticky', 'important');
+        element.style.setProperty('top', topValue + 'px', 'important');
+        element.style.setProperty('z-index', zIndex.toString(), 'important');
+        element.style.setProperty('width', '100%', 'important');
+        element.style.setProperty('left', '0', 'important');
+        element.style.setProperty('right', '0', 'important');
+        element.style.setProperty('margin', '0', 'important');
+        element.style.setProperty('padding', '0', 'important');
+        
+        // Asegurar que el contenedor padre no bloquee
+        const parentSection = element.closest('.shopify-section-group-header-group');
+        if (parentSection) {
+          parentSection.style.setProperty('overflow', 'visible', 'important');
+        }
+      } else {
+        // Remover sticky
+        element.classList.remove('sticky-enabled-section');
+        element.style.removeProperty('position');
+        element.style.removeProperty('top');
+        element.style.removeProperty('z-index');
+        element.style.removeProperty('width');
+        element.style.removeProperty('left');
+        element.style.removeProperty('right');
+        element.style.removeProperty('margin');
+        element.style.removeProperty('padding');
+        
+        const parentSection = element.closest('.shopify-section-group-header-group');
+        if (parentSection) {
+          parentSection.style.removeProperty('overflow');
+        }
+      }
+    }
+
+    /**
+     * Calcular altura de un elemento
+     */
+    getElementHeight(element, elementType) {
+      if (!element) return 0;
+      
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      
+      if (elementType === 'simpleItem') {
+        return element.clientHeight || element.offsetHeight || (isMobile ? 46 : 42);
+      } else if (elementType === 'countdown') {
+        return element.clientHeight || element.offsetHeight || 42.3;
+      } else if (elementType === 'header') {
+        return element.clientHeight || element.offsetHeight || 0;
+      }
+      
+      return 0;
+    }
+
+    /**
+     * Actualizar todos los elementos sticky y calcular posiciones
+     */
+    updateAllStickyElements() {
+      const elements = {};
+      const heights = {};
+      const stickyStates = {};
+      
+      // Obtener todos los elementos
+      this.STICKY_ORDER.forEach(type => {
+        elements[type] = this.getElementByType(type);
+        if (elements[type]) {
+          stickyStates[type] = this.shouldBeSticky(elements[type], type);
+          if (stickyStates[type]) {
+            heights[type] = this.getElementHeight(elements[type], type);
+          } else {
+            heights[type] = 0;
+          }
+        } else {
+          stickyStates[type] = false;
+          heights[type] = 0;
+        }
+      });
+      
+      // Calcular top para cada elemento en orden
+      let cumulativeTop = 0;
+      
+      // 1. Simple Item
+      if (elements.simpleItem) {
+        this.applyStickyToElement(elements.simpleItem, 'simpleItem', cumulativeTop);
+        if (stickyStates.simpleItem) {
+          cumulativeTop += heights.simpleItem;
+        }
+      }
+      
+      // 2. Countdown
+      if (elements.countdown) {
+        this.applyStickyToElement(elements.countdown, 'countdown', cumulativeTop);
+        if (stickyStates.countdown) {
+          cumulativeTop += heights.countdown;
+        }
+      }
+      
+      // 3. Header
+      if (elements.header) {
+        this.applyStickyToElement(elements.header, 'header', cumulativeTop);
+        // El header no se suma al cumulativeTop porque es el último
+      }
+      
+      // Actualizar CSS variable para compatibilidad
+      document.documentElement.style.setProperty('--announcement-height', cumulativeTop + 'px');
+    }
+
+    /**
+     * Configurar observadores para detectar cambios
+     */
+    setupStickyObservers() {
+      // ResizeObserver para detectar cambios en altura
+      const resizeObserver = new ResizeObserver(() => {
+        this.updateAllStickyElements();
+      });
+      
+      // Observar todos los elementos específicos
+      Object.values(this.SPECIFIC_IDS).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          resizeObserver.observe(element);
+        }
+      });
+      
+      // MutationObserver para detectar cambios en atributos y clases
+      const mutationObserver = new MutationObserver((mutations) => {
+        let shouldUpdate = false;
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes') {
+            const target = mutation.target;
+            const isSpecificElement = Object.values(this.SPECIFIC_IDS).includes(target.id);
+            if (isSpecificElement || 
+                target.classList?.contains('sticky-enabled-section') ||
+                target.hasAttribute('data-sticky-enabled')) {
+              shouldUpdate = true;
+            }
+          } else if (mutation.type === 'childList') {
+            const target = mutation.target;
+            if (target.closest && Object.values(this.SPECIFIC_IDS).some(id => target.closest('#' + id))) {
+              shouldUpdate = true;
+            }
+          }
+        });
+        if (shouldUpdate) {
+          setTimeout(() => this.updateAllStickyElements(), 50);
+        }
+      });
+      
+      // Observar cada elemento específico
+      Object.values(this.SPECIFIC_IDS).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          mutationObserver.observe(element, {
+            attributes: true,
+            attributeFilter: ['class', 'style', 'data-sticky-enabled'],
+            childList: true,
+            subtree: true
+          });
+        }
+      });
     }
 
     setStickyClass() {
@@ -132,304 +365,17 @@ if (!customElements.get('theme-header')) {
         this.classList.toggle('is-sticky', window.scrollY >= offset && window.scrollY > 0);
       }
     }
-    setAnnouncementHeight() {
-      // Buscar elementos específicos por ID primero, luego por clase como fallback
-      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
-      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
-      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
-      
-      // Fallback a búsqueda por clase si no se encuentran los IDs específicos
-      const a_bar = document.querySelector('.announcement-bar-top-section');
-      const simple_item = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
-      const countdown_bar = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
-      const headerSection = specificHeader || document.querySelector('.header-section');
-      
-      let totalHeight = 0;
-      let topHeight = 0;
-      
-      const isMobile = window.matchMedia('(max-width: 767px)').matches;
-      
-      // Función helper para verificar si un elemento debería ser sticky basándose en sus atributos
-      const shouldBeSticky = (element) => {
-        if (!element) return false;
-        
-        // Verificar si tiene la clase sticky-enabled-section
-        if (!element.classList.contains('sticky-enabled-section')) return false;
-        
-        // Verificar si está visible
-        const computedStyle = window.getComputedStyle(element);
-        const isVisible = computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
-        if (!isVisible) return false;
-        
-        // Para announcement-bar-top, verificar data-sticky-enabled en el elemento interno
-        if (element.classList.contains('announcement-bar-top-section')) {
-          const innerBar = element.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
-          return innerBar !== null;
-        }
-        
-        // Para simple-announcement-item, verificar data-sticky-enabled en el elemento interno
-        if (element.classList.contains('simple-announcement-item-section')) {
-          const innerItem = element.querySelector('.simple-announcement-item[data-sticky-enabled="true"]');
-          return innerItem !== null;
-        }
-        
-        // Para countdown, verificar data-sticky-enabled en el elemento interno
-        if (element.classList.contains('announcement-bar-countdown-section')) {
-          const innerBar = element.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
-          return innerBar !== null;
-        }
-        
-        return false;
-      };
-      
-      // Calcular altura del announcement-bar-top (primero en el orden)
-      if (a_bar && shouldBeSticky(a_bar)) {
-        topHeight = isMobile ? 46 : 42;
-        totalHeight += topHeight;
-        document.documentElement.style.setProperty('--announcement-top-height', topHeight + 'px');
-      } else {
-        document.documentElement.style.setProperty('--announcement-top-height', '0px');
-      }
-      
-      // Calcular altura del simple-announcement-item (segundo en el orden)
-      // Priorizar el elemento específico si existe
-      if (simple_item && shouldBeSticky(simple_item)) {
-        const simpleItemHeight = simple_item.clientHeight || simple_item.offsetHeight || (isMobile ? 46 : 42);
-        totalHeight += simpleItemHeight;
-      }
-      
-      // Calcular altura del countdown si está sticky (tercero en el orden)
-      // Priorizar el elemento específico si existe
-      let countdownHeight = 0;
-      if (countdown_bar && shouldBeSticky(countdown_bar)) {
-        countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
-        totalHeight += countdownHeight;
-      }
-      
-      // Actualizar la altura total en CSS variable
-      document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
-      
-      // Actualizar el top del header (priorizar el elemento específico si existe)
-      // El header debe estar DESPUÉS del countdown, así que su top debe incluir la altura del countdown
-      if (headerSection) {
-        // Asegurar que el header tenga position sticky si no la tiene
-        const headerComputedStyle = window.getComputedStyle(headerSection);
-        if (headerComputedStyle.position !== 'sticky') {
-          headerSection.style.setProperty('position', 'sticky', 'important');
-        }
-        
-        // El top del header debe ser la suma de todas las alturas de elementos sticky arriba
-        // Esto incluye: announcement-bar-top + simple-announcement-item + countdown
-        // El header DEBE estar por debajo del countdown, así que su top debe ser mayor
-        
-        // Verificar el top actual del countdown para asegurar que el header esté por debajo
-        let finalTop = totalHeight;
-        if (countdown_bar && shouldBeSticky(countdown_bar)) {
-          const countdownSection = countdown_bar.closest('.announcement-bar-countdown-section');
-          if (countdownSection) {
-            // Obtener el top calculado del countdown
-            const countdownTopStr = countdownSection.style.top || window.getComputedStyle(countdownSection).top;
-            const countdownTop = parseInt(countdownTopStr) || 0;
-            
-            // El header debe estar por debajo del countdown
-            // Su top debe ser: top del countdown + altura del countdown
-            finalTop = countdownTop + countdownHeight;
-          }
-        }
-        
-        headerSection.style.setProperty('top', finalTop + 'px', 'important');
-        // El header DEBE tener z-index 50 (menor que el countdown que tiene 51)
-        // para que el countdown quede por encima cuando ambos son sticky
-        headerSection.style.setProperty('z-index', '50', 'important');
-        
-      }
-    }
     
-    applyStickyClasses() {
-      // Aplicar clase sticky al announcement-bar-top-section si está habilitado
-      const topBars = document.querySelectorAll('.announcement-bar-top[data-sticky-enabled="true"]');
-      topBars.forEach((topBar) => {
-        const topSection = topBar.closest('.announcement-bar-top-section');
-        if (topSection) {
-          const shouldBeSticky = topBar.getAttribute('data-sticky-enabled') === 'true';
-          if (shouldBeSticky && !topSection.classList.contains('sticky-enabled-section')) {
-            topSection.classList.add('sticky-enabled-section');
-            this.setAnnouncementHeight();
-          } else if (!shouldBeSticky && topSection.classList.contains('sticky-enabled-section')) {
-            topSection.classList.remove('sticky-enabled-section');
-            this.setAnnouncementHeight();
-          }
-        }
-      });
-      
-      // Aplicar clase sticky al countdown si está habilitado
-      const countdownBars = document.querySelectorAll('.announcement-bar-countdown[data-sticky-enabled="true"]');
-      countdownBars.forEach((countdownBar) => {
-        const countdownSection = countdownBar.closest('.announcement-bar-countdown-section');
-        if (countdownSection) {
-          const shouldBeSticky = countdownBar.getAttribute('data-sticky-enabled') === 'true';
-          if (shouldBeSticky && !countdownSection.classList.contains('sticky-enabled-section')) {
-            countdownSection.classList.add('sticky-enabled-section');
-            this.setAnnouncementHeight();
-          } else if (!shouldBeSticky && countdownSection.classList.contains('sticky-enabled-section')) {
-            countdownSection.classList.remove('sticky-enabled-section');
-            this.setAnnouncementHeight();
-          }
-        }
-      });
-    }
-    
-    observeStickyChanges() {
-      const observer = new MutationObserver((mutations) => {
-        let shouldRecalculate = false;
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes') {
-            const target = mutation.target;
-            // Verificar si el cambio es en uno de los elementos específicos o en sus clases
-            const isSpecificElement = target.id === 'shopify-section-sections--20691356287222__simple_announcement_item_46z49M' ||
-                                      target.id === 'shopify-section-sections--20691356287222__announcement-bar-countdown' ||
-                                      target.id === 'shopify-section-sections--20691356287222__header';
-            
-            if (isSpecificElement || (target.classList && (
-                target.classList.contains('announcement-bar-top-section') || 
-                target.classList.contains('announcement-bar-countdown-section') ||
-                target.classList.contains('simple-announcement-item-section') ||
-                target.classList.contains('sticky-enabled-section')))) {
-              shouldRecalculate = true;
-            }
-          }
-          if (mutation.type === 'childList' || mutation.type === 'characterData') {
-            const target = mutation.target;
-            if (target.closest && (
-                target.closest('#shopify-section-sections--20691356287222__simple_announcement_item_46z49M') ||
-                target.closest('#shopify-section-sections--20691356287222__announcement-bar-countdown') ||
-                target.closest('#shopify-section-sections--20691356287222__header') ||
-                target.closest('.announcement-bar-top-section') || 
-                target.closest('.announcement-bar-countdown-section') ||
-                target.closest('.simple-announcement-item-section'))) {
-              shouldRecalculate = true;
-            }
-          }
-        });
-        if (shouldRecalculate) {
-          setTimeout(() => {
-            this.setAnnouncementHeight();
-          }, 50);
-        }
-      });
-      
-      // Observar cambios en los elementos específicos primero
-      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
-      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
-      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
-      
-      // Observar cambios en las secciones (específicas y genéricas)
-      const topSection = document.querySelector('.announcement-bar-top-section');
-      const countdownSection = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
-      const simpleItemSection = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
-      
-      if (topSection) {
-        observer.observe(topSection, {
-          attributes: true,
-          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
-          childList: true,
-          subtree: true
-        });
-      }
-      
-      if (countdownSection) {
-        observer.observe(countdownSection, {
-          attributes: true,
-          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
-          childList: true,
-          subtree: true
-        });
-      }
-      
-      if (simpleItemSection) {
-        observer.observe(simpleItemSection, {
-          attributes: true,
-          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
-          childList: true,
-          subtree: true
-        });
-      }
-      
-      if (specificHeader) {
-        observer.observe(specificHeader, {
-          attributes: true,
-          attributeFilter: ['class', 'style'],
-          childList: true,
-          subtree: true
-        });
-      }
-    }
-    
-    setupStickyObservers() {
-      // Usar ResizeObserver para detectar cambios en altura y posición
-      const resizeObserver = new ResizeObserver(() => {
-        this.setAnnouncementHeight();
-      });
-      
-      // Buscar elementos específicos primero
-      const specificSimpleItem = document.getElementById('shopify-section-sections--20691356287222__simple_announcement_item_46z49M');
-      const specificCountdown = document.getElementById('shopify-section-sections--20691356287222__announcement-bar-countdown');
-      const specificHeader = document.getElementById('shopify-section-sections--20691356287222__header');
-      
-      // Observar todos los elementos, no solo los que tienen la clase sticky-enabled-section
-      // porque pueden agregarse después
-      const topSection = document.querySelector('.announcement-bar-top-section');
-      const countdownSection = specificCountdown || document.querySelector('.announcement-bar-countdown-section');
-      const simpleItemSection = specificSimpleItem || document.querySelector('.simple-announcement-item-section');
-      const headerSection = specificHeader || document.querySelector('.header-section');
-      
-      if (topSection) {
-        resizeObserver.observe(topSection);
-      }
-      if (simpleItemSection) {
-        resizeObserver.observe(simpleItemSection);
-      }
-      if (countdownSection) {
-        resizeObserver.observe(countdownSection);
-      }
-      if (headerSection) {
-        resizeObserver.observe(headerSection);
-      }
-      
-      // También observar el contenedor padre para detectar cuando los elementos salen de la vista
-      const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          // Si el elemento sale completamente de la vista superior, recalcular
-          if (!entry.isIntersecting && entry.boundingClientRect.top < -100) {
-            setTimeout(() => {
-              this.setAnnouncementHeight();
-            }, 10);
-          }
-        });
-      }, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0
-      });
-      
-      if (topSection) {
-        intersectionObserver.observe(topSection);
-      }
-      if (simpleItemSection) {
-        intersectionObserver.observe(simpleItemSection);
-      }
-      if (countdownSection) {
-        intersectionObserver.observe(countdownSection);
-      }
-    }
     setHeaderOffset() {
       let h = this.header_section.getBoundingClientRect().top;
       document.documentElement.style.setProperty('--header-offset', h + 'px');
     }
+    
     setHeaderHeight() {
       let h = this.clientHeight;
       document.documentElement.style.setProperty('--header-height', h + 'px');
     }
+    
     onSummaryClick(event) {
       const summaryElement = event.currentTarget;
       const detailsElement = summaryElement.parentNode;
@@ -445,15 +391,18 @@ if (!customElements.get('theme-header')) {
         parentMenuElement && parentMenuElement.classList.add('submenu-open');
       }, 100);
     }
+    
     onCloseButtonClick(event) {
       event.preventDefault();
       const detailsElement = event.currentTarget.closest('details');
       this.closeSubmenu(detailsElement);
     }
+    
     closeSubmenu(detailsElement) {
       detailsElement.classList.remove('menu-opening');
       this.closeAnimation(detailsElement);
     }
+    
     closeAnimation(detailsElement) {
       let animationStart;
 
@@ -522,5 +471,4 @@ if (!customElements.get('full-menu')) {
     }
   }
   customElements.define('full-menu', FullMenu);
-}
 }

@@ -215,165 +215,61 @@
   
   <script>
     (function() {
+      // Notificar al sistema centralizado de sticky cuando este elemento cambie
       const sectionId = 'shopify-section-{{ section.id }}';
-      const specificSection = document.getElementById(sectionId);
+      const section = document.getElementById(sectionId);
       
-      if (specificSection) {
-        // Función para aplicar sticky forzado en todos los tipos de página
-        function forceSticky() {
-          const item = specificSection.querySelector('.simple-announcement-item');
-          if (item) {
-            const enableSticky = item.getAttribute('data-sticky-enabled') === 'true';
-            
-            if (enableSticky) {
-              // Agregar clase sticky
-              specificSection.classList.add('sticky-enabled-section');
-              
-              // Calcular el top basado en otros elementos sticky arriba
-              // El orden correcto es: announcement-bar-top -> simple-announcement-item -> countdown
-              const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
-              let topValue = '0px';
-              if (announcementBarTop && announcementBarTop !== specificSection) {
-                const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
-                topValue = topHeight + 'px';
-              }
-              
-              // NO considerar countdown aquí, porque countdown va DESPUÉS de simple-announcement-item
-              
-              // Forzar position sticky SIEMPRE, sin importar lo que otros scripts hagan
-              const computedStyle = window.getComputedStyle(specificSection);
-              if (computedStyle.position !== 'sticky') {
-                specificSection.style.setProperty('position', 'sticky', 'important');
-              }
-              specificSection.style.setProperty('top', topValue, 'important');
-              specificSection.style.setProperty('z-index', '52', 'important');
-              specificSection.style.setProperty('width', '100%', 'important');
-              specificSection.style.setProperty('left', '0', 'important');
-              specificSection.style.setProperty('right', '0', 'important');
-              specificSection.style.setProperty('margin', '0', 'important');
-              specificSection.style.setProperty('padding', '0', 'important');
-              
-              // Asegurar que el contenedor padre no bloquee
-              const parentSection = specificSection.closest('.shopify-section-group-header-group');
-              if (parentSection) {
-                parentSection.style.setProperty('overflow', 'visible', 'important');
-              }
-              
-              // Disparar evento personalizado para notificar cambio de sticky
-              window.dispatchEvent(new CustomEvent('sticky-element-changed', {
-                detail: { element: specificSection, isSticky: true }
-              }));
-              
-              // Llamar directamente a setAnnouncementHeight si está disponible
-              if (window.themeHeader && typeof window.themeHeader.setAnnouncementHeight === 'function') {
-                window.themeHeader.setAnnouncementHeight();
-              }
-            } else {
-              specificSection.classList.remove('sticky-enabled-section');
-              specificSection.style.removeProperty('position');
-              specificSection.style.removeProperty('top');
-              specificSection.style.removeProperty('z-index');
-              specificSection.style.removeProperty('width');
-              specificSection.style.removeProperty('left');
-              specificSection.style.removeProperty('right');
-              specificSection.style.removeProperty('margin');
-              specificSection.style.removeProperty('padding');
-              const parentSection = specificSection.closest('.shopify-section-group-header-group');
-              if (parentSection) {
-                parentSection.style.removeProperty('overflow');
-              }
-              
-              // Disparar evento personalizado para notificar cambio de sticky
-              window.dispatchEvent(new CustomEvent('sticky-element-changed', {
-                detail: { element: specificSection, isSticky: false }
-              }));
-              
-              // Llamar directamente a setAnnouncementHeight si está disponible
-              if (window.themeHeader && typeof window.themeHeader.setAnnouncementHeight === 'function') {
-                window.themeHeader.setAnnouncementHeight();
-              }
-            }
+      if (section) {
+        // Función para notificar cambios
+        const notifyStickyChange = () => {
+          window.dispatchEvent(new CustomEvent('sticky-element-changed', {
+            detail: { element: section }
+          }));
+          if (window.themeHeader && typeof window.themeHeader.updateAllStickyElements === 'function') {
+            window.themeHeader.updateAllStickyElements();
           }
-        }
+        };
         
-        // Ejecutar inmediatamente
-        forceSticky();
-        
-        // Ejecutar cuando el DOM esté listo
+        // Notificar cuando el DOM esté listo
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', forceSticky);
+          document.addEventListener('DOMContentLoaded', notifyStickyChange);
+        } else {
+          notifyStickyChange();
         }
         
-        // Ejecutar después de delays
-        setTimeout(forceSticky, 50);
-        setTimeout(forceSticky, 100);
-        setTimeout(forceSticky, 200);
-        setTimeout(forceSticky, 500);
+        // Notificar después de delays
+        setTimeout(notifyStickyChange, 50);
+        setTimeout(notifyStickyChange, 100);
+        setTimeout(notifyStickyChange, 200);
         
-        // Ejecutar cuando la ventana se carga completamente
-        window.addEventListener('load', forceSticky);
+        // Notificar cuando la ventana se carga completamente
+        window.addEventListener('load', notifyStickyChange);
         
-        // Ejecutar en scroll para mantener sticky activo
-        window.addEventListener('scroll', forceSticky, { passive: true });
+        // Observar cambios en data-sticky-enabled
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+              notifyStickyChange();
+            }
+          });
+        });
         
-        // Ejecutar periódicamente para mantener sticky
-        setInterval(forceSticky, 100);
+        const item = section.querySelector('.simple-announcement-item');
+        if (item) {
+          observer.observe(item, {
+            attributes: true,
+            attributeFilter: ['data-sticky-enabled']
+          });
+        }
         
         // Escuchar eventos de Shopify
         if (typeof Shopify !== 'undefined') {
-          document.addEventListener('shopify:section:load', function(event) {
-            if (event.detail && event.detail.sectionId && event.detail.sectionId === sectionId.replace('shopify-section-', '')) {
-              setTimeout(forceSticky, 100);
+          document.addEventListener('shopify:section:load', (event) => {
+            if (event.detail?.sectionId === sectionId.replace('shopify-section-', '')) {
+              setTimeout(notifyStickyChange, 100);
             }
           });
-          document.addEventListener('shopify:section:select', function(event) {
-            if (event.detail && event.detail.sectionId && event.detail.sectionId === sectionId.replace('shopify-section-', '')) {
-              setTimeout(forceSticky, 100);
-            }
-          });
-          document.addEventListener('shopify:section:reorder', forceSticky);
         }
-        
-        // Usar MutationObserver para detectar cambios
-        const observer = new MutationObserver(function(mutations) {
-          let shouldForce = false;
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes') {
-              const target = mutation.target;
-              if (target === specificSection || specificSection.contains(target)) {
-                shouldForce = true;
-              }
-            } else if (mutation.type === 'childList') {
-              mutation.addedNodes.forEach(function(node) {
-                if (node.nodeType === 1 && (node === specificSection || specificSection.contains(node))) {
-                  shouldForce = true;
-                }
-              });
-            }
-          });
-          if (shouldForce) {
-            setTimeout(forceSticky, 50);
-          }
-        });
-        
-        // Observar cambios en la sección
-        observer.observe(specificSection, {
-          attributes: true,
-          attributeFilter: ['style', 'class', 'data-sticky-enabled'],
-          childList: true,
-          subtree: true
-        });
-        
-        // También observar cambios en el body para detectar otros elementos sticky
-        const bodyObserver = new MutationObserver(function() {
-          setTimeout(forceSticky, 50);
-        });
-        bodyObserver.observe(document.body, {
-          childList: true,
-          subtree: true,
-          attributes: true,
-          attributeFilter: ['class']
-        });
       }
     })();
   </script>
