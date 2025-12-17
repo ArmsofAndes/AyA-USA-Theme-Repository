@@ -61,7 +61,23 @@ if (!customElements.get('theme-header')) {
       if (document.querySelector('.announcement-bar-top-section') || document.querySelector('.announcement-bar-countdown-section')) {
         this.applyStickyClasses();
         this.observeStickyChanges();
+        this.setupStickyObservers();
         this.setAnnouncementHeight();
+        
+        // Recalcular en scroll para detectar cuando elementos dejan de ser sticky
+        let scrollTimeout;
+        
+        window.addEventListener('scroll', () => {
+          this.setAnnouncementHeight();
+          
+          // Cuando el scroll se detiene, ejecutar una verificación final
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            this.setAnnouncementHeight();
+          }, 100);
+        }, {
+          passive: true
+        });
         
         window.addEventListener('resize', () => {
           this.setAnnouncementHeight();
@@ -83,38 +99,49 @@ if (!customElements.get('theme-header')) {
     setAnnouncementHeight() {
       const a_bar = document.querySelector('.announcement-bar-top-section');
       const countdown_bar = document.querySelector('.announcement-bar-countdown-section');
-      let h = 0;
-      let top_h = 0;
+      const headerSection = document.querySelector('.header-section');
+      let totalHeight = 0;
+      let topHeight = 0;
       
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
       
-      if (a_bar) {
-        const isSticky = a_bar.classList.contains('sticky-enabled-section');
+      // Función helper para verificar si un elemento está realmente sticky
+      const isElementSticky = (element) => {
+        if (!element) return false;
         
-        if (isSticky) {
-          // Cuando está sticky, usar valores fijos
-          top_h = isMobile ? 46 : 42;
-          h += top_h;
-          document.documentElement.style.setProperty('--announcement-top-height', top_h + 'px');
-        } else {
-          // Cuando NO está sticky, establecer en 0
-          document.documentElement.style.setProperty('--announcement-top-height', '0px');
-        }
+        const computedStyle = window.getComputedStyle(element);
+        const isStickyPosition = computedStyle.position === 'sticky';
+        const isVisible = computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
+        
+        if (!isStickyPosition || !isVisible) return false;
+        
+        const rect = element.getBoundingClientRect();
+        // Un elemento sticky está activo si está visible en el viewport
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      };
+      
+      // Calcular altura del announcement-bar-top
+      if (a_bar && isElementSticky(a_bar)) {
+        topHeight = isMobile ? 46 : 42;
+        totalHeight += topHeight;
+        document.documentElement.style.setProperty('--announcement-top-height', topHeight + 'px');
       } else {
         document.documentElement.style.setProperty('--announcement-top-height', '0px');
       }
       
-      if (countdown_bar) {
-        const isSticky = countdown_bar.classList.contains('sticky-enabled-section');
-        const computedStyle = window.getComputedStyle(countdown_bar);
-        
-        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
-          const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight;
-          h += countdownHeight;
-        }
+      // Calcular altura del countdown (solo si el top está sticky)
+      if (countdown_bar && topHeight > 0 && isElementSticky(countdown_bar)) {
+        const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
+        totalHeight += countdownHeight;
       }
       
-      document.documentElement.style.setProperty('--announcement-height', h + 'px');
+      // Actualizar la altura total
+      document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
+      
+      // Actualizar el top del header
+      if (headerSection) {
+        headerSection.style.setProperty('top', totalHeight + 'px', 'important');
+      }
     }
     
     applyStickyClasses() {
@@ -155,16 +182,28 @@ if (!customElements.get('theme-header')) {
       const observer = new MutationObserver((mutations) => {
         let shouldRecalculate = false;
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          if (mutation.type === 'attributes') {
             const target = mutation.target;
-            if (target.classList.contains('announcement-bar-top-section') || 
-                target.classList.contains('announcement-bar-countdown-section')) {
+            if (target.classList && (
+                target.classList.contains('announcement-bar-top-section') || 
+                target.classList.contains('announcement-bar-countdown-section') ||
+                target.classList.contains('sticky-enabled-section'))) {
+              shouldRecalculate = true;
+            }
+          }
+          if (mutation.type === 'childList' || mutation.type === 'characterData') {
+            const target = mutation.target;
+            if (target.closest && (
+                target.closest('.announcement-bar-top-section') || 
+                target.closest('.announcement-bar-countdown-section'))) {
               shouldRecalculate = true;
             }
           }
         });
         if (shouldRecalculate) {
-          this.setAnnouncementHeight();
+          setTimeout(() => {
+            this.setAnnouncementHeight();
+          }, 50);
         }
       });
       
@@ -175,15 +214,59 @@ if (!customElements.get('theme-header')) {
       if (topSection) {
         observer.observe(topSection, {
           attributes: true,
-          attributeFilter: ['class']
+          attributeFilter: ['class', 'style'],
+          childList: true,
+          subtree: true
         });
       }
       
       if (countdownSection) {
         observer.observe(countdownSection, {
           attributes: true,
-          attributeFilter: ['class']
+          attributeFilter: ['class', 'style'],
+          childList: true,
+          subtree: true
         });
+      }
+    }
+    
+    setupStickyObservers() {
+      // Usar ResizeObserver para detectar cambios en altura y posición
+      const resizeObserver = new ResizeObserver(() => {
+        this.setAnnouncementHeight();
+      });
+      
+      const topSection = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+      const countdownSection = document.querySelector('.announcement-bar-countdown-section.sticky-enabled-section');
+      
+      if (topSection) {
+        resizeObserver.observe(topSection);
+      }
+      if (countdownSection) {
+        resizeObserver.observe(countdownSection);
+      }
+      
+      // También observar el contenedor padre para detectar cuando los elementos salen de la vista
+      const intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          // Si el elemento sale completamente de la vista superior, recalcular
+          if (!entry.isIntersecting && entry.boundingClientRect.top < -100) {
+            setTimeout(() => {
+              this.setAnnouncementHeight();
+            }, 10);
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0
+      });
+      
+      if (topSection) {
+        intersectionObserver.observe(topSection);
+      }
+      if (countdownSection) {
+        intersectionObserver.observe(countdownSection);
       }
     }
     setHeaderOffset() {

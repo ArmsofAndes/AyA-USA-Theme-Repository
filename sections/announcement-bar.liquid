@@ -57,14 +57,22 @@
 
   {%- if show_announcement_bar -%}
     {{- 'announcement-bar.css' | asset_url | stylesheet_tag -}}
+    
+    {%- liquid
+      assign section_id = 'shopify-section-' | append: section.id
+      assign is_specific_section = false
+      if section_id == 'shopify-section-sections--20597477474550__announcement-bar'
+        assign is_specific_section = true
+      endif
+    -%}
 
-    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section">
-    <div class="announcement-bar announcement-bar-top" 
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if is_specific_section %}announcement-bar-top-custom{% endif %}">
+    <div class="announcement-bar announcement-bar-top {% if is_specific_section %}announcement-bar-top-custom{% endif %}" 
          data-sticky-enabled="{{ enable_sticky }}"
          role="region"
          aria-label="Announcement bar"
-         style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};">
-      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }}" style="--marquee-speed: {{ speed }}">
+         {% unless is_specific_section %}style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};"{% endunless %}>
+      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }} {% if is_specific_section %}announcement-bar-inner-custom{% endif %}" {% unless is_specific_section %}style="--marquee-speed: {{ speed }}"{% endunless %}>
         {%- if announcement_bar_layout == 'marquee' -%}
           {%- capture scrolling_text -%}
             <div>
@@ -102,10 +110,10 @@
           {%- comment -%} NUEVO LAYOUT: STACKED (apilado verticalmente) CON COLORES INDEPENDIENTES {%- endcomment -%}
           <div class="announcement-bar--stacked">
             {%- for block in section.blocks -%}
-              <div class="announcement-bar--item {% if block.settings.hide_on_desktop %}hide-desktop{% endif %} {% if block.settings.hide_on_mobile %}hide-mobile{% endif %}" 
+              <div class="announcement-bar--item {% if block.settings.hide_on_desktop %}hide-desktop{% endif %} {% if block.settings.hide_on_mobile %}hide-mobile{% endif %} {% if is_specific_section %}announcement-bar-item-custom{% endif %}" 
                    {{ block.shopify_attributes }}
-                   style="background-color: {{ block.settings.item_bg_color }}; color: {{ block.settings.item_text_color }}; --hover-bg: {{ block.settings.item_hover_bg_color }}; --hover-text: {{ block.settings.item_hover_text_color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
-                {%- if block.settings.link -%}<a href="{{ block.settings.link }}" target="_blank" style="color: {{ block.settings.item_text_color }};">{%- endif -%}
+                   {% unless is_specific_section %}style="background-color: {{ block.settings.item_bg_color }}; color: {{ block.settings.item_text_color }}; --hover-bg: {{ block.settings.item_hover_bg_color }}; --hover-text: {{ block.settings.item_hover_text_color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};"{% endunless %}>
+                {%- if block.settings.link -%}<a href="{{ block.settings.link }}" target="_blank" {% unless is_specific_section %}style="color: {{ block.settings.item_text_color }};"{% endunless %}>{%- endif -%}
                   {%- if block.settings.icon -%}{% render 'svg-icons-inline', icon: block.settings.icon %}{%- endif -%}
                   {{- block.settings.text -}}
                 {%- if block.settings.link -%}</a>{%- endif -%}
@@ -118,6 +126,78 @@
     </div>
 
     <style>
+      /* Estilos específicos para el elemento con ID shopify-section-sections--20597477474550__announcement-bar */
+      #shopify-section-sections--20597477474550__announcement-bar,
+      #shopify-section-sections--20597477474550__announcement-bar.announcement-bar-top-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top {
+        background-color: #000000 !important;
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar * {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-inner-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--inner,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--stacked {
+        --marquee-speed: 20s;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        --hover-bg: transparent !important;
+        --hover-text: inherit !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a {
+        color: #ffffff !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a:hover {
+        background-color: inherit !important;
+        color: inherit !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+      }
+      
       /* Eliminar espacio blanco - remover padding-top del body */
       body {
         padding-top: 0 !important;
@@ -134,11 +214,37 @@
         top: 0;
         z-index: 52;
       }
+      
+      /* Asegurar que el z-index no cambie en hover */
+      .announcement-bar-top-section.sticky-enabled-section:hover {
+        z-index: 52 !important;
+      }
+      
+      .announcement-bar-top-section.sticky-enabled-section *:hover {
+        z-index: auto !important;
+        position: relative !important;
+      }
 
       .announcement-bar-top-section:not(.sticky-enabled-section) {
         position: static;
-        height: auto;
-        min-height: auto;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar.announcement-bar-top {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar--inner {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
       }
 
       /* ajustes visuales */
@@ -148,12 +254,106 @@
         line-height: 1;
       }
       
+      /* Estilos específicos para announcement-bar-top */
+      .announcement-bar.announcement-bar-top,
+      .announcement-bar.announcement-bar-top[style] {
+        margin: 0 !important;
+        padding: 0 !important;
+        cursor: default !important;
+        pointer-events: auto !important;
+        height: 42px;
+        min-height: 42px;
+        max-height: 42px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+      }
+      
+      /* Sobrescribir estilos inline del announcement-bar-top */
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background-color"],
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background"] {
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      .announcement-bar.announcement-bar-top[style*="color"] {
+        color: var(--color-announcement-bar-text, #fff) !important;
+      }
+      
+      @media (max-width: 768px) {
+        .announcement-bar.announcement-bar-top {
+          height: 46px;
+          min-height: 46px;
+          max-height: 46px;
+        }
+      }
+      
+      /* Eliminar todos los efectos hover del announcement-bar-top */
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style]:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top *:hover {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        cursor: default !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+        z-index: inherit !important;
+        position: inherit !important;
+        top: inherit !important;
+        left: inherit !important;
+        right: inherit !important;
+        bottom: inherit !important;
+        margin: inherit !important;
+        padding: inherit !important;
+      }
+      
+      /* Asegurar que no haya cambios de z-index o position en hover */
+      .announcement-bar.announcement-bar-top,
+      .announcement-bar.announcement-bar-top * {
+        position: relative !important;
+        z-index: auto !important;
+      }
+      
+      .announcement-bar.announcement-bar-top:hover,
+      .announcement-bar.announcement-bar-top *:hover {
+        position: relative !important;
+        z-index: auto !important;
+      }
+      
+      .announcement-bar-top-section {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section .announcement-bar.announcement-bar-top {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
       /* Desktop styles */
       @media (min-width: 769px) {
         .announcement-bar {
           background: var(--color-announcement-bar-bg, var(--color-accent));
           color: var(--color-announcement-bar-text, #fff);
           line-height: 1;
+        }
+        
+        #shopify-section-sections--20597477474550__announcement-bar .announcement-bar,
+        #shopify-section-sections--20597477474550__announcement-bar .announcement-bar * {
+          background: #000000 !important;
+          background-color: #000000 !important;
+        }
+        
+        .announcement-bar:not(.announcement-bar-top) {
           padding: 4px 0;
         }
         
@@ -163,8 +363,24 @@
         }
         
         .announcement-bar-top-section:not(.sticky-enabled-section) {
-          height: auto;
-          min-height: auto;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar.announcement-bar-top {
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar--inner {
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
         }
       }
       
@@ -175,12 +391,56 @@
         }
       }
       
-      .announcement-bar .announcement-bar--inner { display:flex; align-items:center; }
+      .announcement-bar .announcement-bar--inner { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        height: 100%;
+        margin: 0;
+        padding: 0 15px;
+      }
+      
+      .announcement-bar.announcement-bar-top .announcement-bar--inner {
+        height: 100%;
+        min-height: 42px;
+        max-height: 42px;
+      }
+      
+      @media (min-width: 769px) {
+        .announcement-bar.announcement-bar-top .announcement-bar--inner {
+          min-height: 42px;
+          max-height: 42px;
+          height: 42px;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .announcement-bar.announcement-bar-top .announcement-bar--inner {
+          min-height: 46px;
+          max-height: 46px;
+          height: 46px;
+        }
+      }
       
       /* Eliminar padding cuando es Stacked para que no se vea el fondo */
       .announcement-bar--stacked { padding: 0 !important; }
       .announcement-bar.announcement-bar--stacked-parent { padding: 0 !important; }
-      .announcement-bar a { color: inherit; text-decoration: none; }
+      .announcement-bar a { 
+        color: inherit; 
+        text-decoration: none; 
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .announcement-bar.announcement-bar-top a {
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       /* Eliminar padding cuando es layout Stacked */
       .announcement-bar--inner.announcement-bar--stacked { 
@@ -207,6 +467,13 @@
         padding: 0.6em 20px;
         white-space: normal !important;
         display: block !important;
+        margin: 0;
+      }
+      
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item {
+        height: auto;
+        min-height: auto;
+        max-height: none;
       }
 
       .announcement-bar--stacked .announcement-bar--item a {
@@ -214,24 +481,30 @@
         white-space: normal;
       }
 
-      /* Hover effect para items con link en layout Stacked */
-      .announcement-bar--stacked .announcement-bar--item a:hover {
-        background-color: var(--hover-bg) !important;
-        color: var(--hover-text) !important;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        cursor: pointer;
+      /* Eliminar hover effects para items en layout Stacked cuando están en announcement-bar-top */
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item a:hover,
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item:hover,
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item:hover a {
+        background-color: inherit !important;
+        color: inherit !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+        z-index: inherit !important;
+        position: inherit !important;
+        top: inherit !important;
+        left: inherit !important;
+        right: inherit !important;
+        bottom: inherit !important;
+        margin: inherit !important;
+        padding: inherit !important;
       }
-
-      .announcement-bar--stacked .announcement-bar--item:hover {
-        background-color: var(--hover-bg) !important;
-        color: var(--hover-text) !important;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        cursor: pointer;
-      }
-
-      .announcement-bar--stacked .announcement-bar--item:hover a {
-        color: var(--hover-text) !important;
-        text-decoration: none;
+      
+      /* Sobrescribir estilos inline para items stacked dentro de announcement-bar-top */
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item {
+        --hover-bg: transparent !important;
+        --hover-text: inherit !important;
       }
 
       /* Ocultar en desktop */
@@ -284,15 +557,85 @@
     stroke: currentColor !important;
     color: inherit !important;
   }
-
-  .announcement-bar--item {
-    line-height: 1.1;
-    padding: 0.1em 0; /* Ajuste de espacio vertical */
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item svg {
+    margin: 0 8px 0 0;
+    flex-shrink: 0;
+    height: auto;
+    width: auto;
+    max-height: 18px;
+    max-width: 18px;
   }
   
-  .announcement-bar {
+  .announcement-bar.announcement-bar-top .announcement-bar--item {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .announcement-bar--item {
+    line-height: 1.2;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item {
+    height: 100%;
+    min-height: 42px;
+    max-height: 42px;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      min-height: 42px;
+      max-height: 42px;
+      height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      min-height: 46px;
+      max-height: 46px;
+      height: 46px;
+    }
+  }
+  
+  .announcement-bar:not(.announcement-bar-top) {
     padding-top: 0.6em;
     padding-bottom: 0.6em;
+  }
+  
+  .announcement-bar.announcement-bar-top {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top {
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+    }
   }
   
   .announcement-bar .flickity-nav {
@@ -322,9 +665,109 @@
     --hover-text: #ffffff !important;
   }
 
-  .announcement-bar--item:hover {
-    background-color: var(--hover-bg) !important;
-    color: var(--hover-text) !important;
+  /* Sobrescribir estilos inline para items dentro de announcement-bar-top */
+  .announcement-bar.announcement-bar-top .announcement-bar--item,
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style] {
+    background-color: inherit !important;
+    color: inherit !important;
+    --hover-bg: transparent !important;
+    --hover-text: inherit !important;
+  }
+  
+  /* Sobrescribir estilos inline específicamente usando selector de atributo */
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="background-color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-bg"] {
+    background-color: inherit !important;
+    --hover-bg: transparent !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-text"] {
+    color: inherit !important;
+    --hover-text: inherit !important;
+  }
+  
+  /* Sobrescribir estilos inline en enlaces dentro de items */
+  .announcement-bar.announcement-bar-top .announcement-bar--item a,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style] {
+    color: inherit !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style*="color"] {
+    color: inherit !important;
+  }
+
+  /* Eliminar hover effects para items dentro de announcement-bar-top */
+  .announcement-bar.announcement-bar-top .announcement-bar--item:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style]:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style]:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    translate: none !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    z-index: inherit !important;
+    position: inherit !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    bottom: inherit !important;
+    margin: inherit !important;
+    padding: inherit !important;
+  }
+  
+  /* Eliminar cualquier uso de variables CSS de hover */
+  .announcement-bar.announcement-bar-top .announcement-bar--item:hover {
+    background: inherit !important;
+    background-color: inherit !important;
+  }
+  
+  /* Prevenir hover y efectos de botón en el contenedor principal */
+  .announcement-bar.announcement-bar-top,
+  .announcement-bar-top-section {
+    pointer-events: none;
+    cursor: default !important;
+  }
+  
+  /* Eliminar todos los efectos hover del announcement-bar-top y sus hijos */
+  .announcement-bar.announcement-bar-top:hover,
+  .announcement-bar.announcement-bar-top *:hover {
+    background: inherit !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    cursor: default !important;
+    transform: none !important;
+    translate: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+    z-index: inherit !important;
+    position: inherit !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    bottom: inherit !important;
+    margin: inherit !important;
+    padding: inherit !important;
+  }
+  
+  /* Asegurar que no haya cambios de z-index o position en hover */
+  .announcement-bar.announcement-bar-top,
+  .announcement-bar.announcement-bar-top * {
+    position: relative !important;
+    z-index: auto !important;
+  }
+  
+  .announcement-bar.announcement-bar-top:hover,
+  .announcement-bar.announcement-bar-top *:hover {
+    position: relative !important;
+    z-index: auto !important;
+  }
+  
+  .announcement-bar.announcement-bar-top * {
+    pointer-events: auto;
   }
 </style>
 
