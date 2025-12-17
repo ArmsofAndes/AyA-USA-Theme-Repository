@@ -121,6 +121,7 @@ if (!customElements.get('theme-header')) {
     }
     setAnnouncementHeight() {
       const a_bar = document.querySelector('.announcement-bar-top-section');
+      const simple_item = document.querySelector('.simple-announcement-item-section');
       const countdown_bar = document.querySelector('.announcement-bar-countdown-section');
       const headerSection = document.querySelector('.header-section');
       let totalHeight = 0;
@@ -146,6 +147,12 @@ if (!customElements.get('theme-header')) {
           return innerBar !== null;
         }
         
+        // Para simple-announcement-item, verificar data-sticky-enabled en el elemento interno
+        if (element.classList.contains('simple-announcement-item-section')) {
+          const innerItem = element.querySelector('.simple-announcement-item[data-sticky-enabled="true"]');
+          return innerItem !== null;
+        }
+        
         // Para countdown, verificar data-sticky-enabled en el elemento interno
         if (element.classList.contains('announcement-bar-countdown-section')) {
           const innerBar = element.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
@@ -155,7 +162,7 @@ if (!customElements.get('theme-header')) {
         return false;
       };
       
-      // Calcular altura del announcement-bar-top
+      // Calcular altura del announcement-bar-top (primero en el orden)
       if (a_bar && shouldBeSticky(a_bar)) {
         topHeight = isMobile ? 46 : 42;
         totalHeight += topHeight;
@@ -164,8 +171,13 @@ if (!customElements.get('theme-header')) {
         document.documentElement.style.setProperty('--announcement-top-height', '0px');
       }
       
-      // Calcular altura del countdown si está sticky (independientemente del top)
-      // El countdown debe usar top: var(--announcement-top-height) para posicionarse correctamente
+      // Calcular altura del simple-announcement-item (segundo en el orden)
+      if (simple_item && shouldBeSticky(simple_item)) {
+        const simpleItemHeight = simple_item.clientHeight || simple_item.offsetHeight || (isMobile ? 46 : 42);
+        totalHeight += simpleItemHeight;
+      }
+      
+      // Calcular altura del countdown si está sticky (tercero en el orden)
       if (countdown_bar && shouldBeSticky(countdown_bar)) {
         const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
         totalHeight += countdownHeight;

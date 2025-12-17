@@ -230,6 +230,7 @@
               specificSection.classList.add('sticky-enabled-section');
               
               // Calcular el top basado en otros elementos sticky arriba
+              // El orden correcto es: announcement-bar-top -> simple-announcement-item -> countdown
               const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
               let topValue = '0px';
               if (announcementBarTop && announcementBarTop !== specificSection) {
@@ -237,13 +238,7 @@
                 topValue = topHeight + 'px';
               }
               
-              // Verificar si hay countdown sticky arriba
-              const countdownBar = document.querySelector('.announcement-bar-countdown-section.sticky-enabled-section');
-              if (countdownBar && countdownBar !== specificSection) {
-                const countdownHeight = countdownBar.offsetHeight || 42.3;
-                const currentTop = parseInt(topValue) || 0;
-                topValue = (currentTop + countdownHeight) + 'px';
-              }
+              // NO considerar countdown aquí, porque countdown va DESPUÉS de simple-announcement-item
               
               // Forzar position sticky SIEMPRE, sin importar lo que otros scripts hagan
               const computedStyle = window.getComputedStyle(specificSection);

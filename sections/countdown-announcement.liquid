@@ -788,21 +788,28 @@
         section.classList.add('sticky-enabled-section');
         
         // Calcular el top basado en otros elementos sticky arriba
-        const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
+        // El orden correcto es: announcement-bar-top -> simple-announcement-item -> countdown
         let topValue = '0px';
+        let totalHeight = 0;
+        
+        // 1. Primero considerar announcement-bar-top
+        const announcementBarTop = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
         if (announcementBarTop && announcementBarTop !== section) {
           const topHeight = announcementBarTop.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
-          topValue = topHeight + 'px';
-          document.documentElement.style.setProperty('--announcement-top-height', topValue);
+          totalHeight += topHeight;
+          document.documentElement.style.setProperty('--announcement-top-height', topHeight + 'px');
+        } else {
+          document.documentElement.style.setProperty('--announcement-top-height', '0px');
         }
         
-        // Verificar si hay simple-announcement-item sticky arriba
+        // 2. Luego considerar simple-announcement-item (si existe)
         const simpleItem = document.querySelector('.simple-announcement-item-section.sticky-enabled-section');
         if (simpleItem && simpleItem !== section) {
-          const simpleItemHeight = simpleItem.offsetHeight || 42;
-          const currentTop = parseInt(topValue) || 0;
-          topValue = (currentTop + simpleItemHeight) + 'px';
+          const simpleItemHeight = simpleItem.offsetHeight || (window.matchMedia('(max-width: 767px)').matches ? 46 : 42);
+          totalHeight += simpleItemHeight;
         }
+        
+        topValue = totalHeight + 'px';
         
         // Forzar position sticky directamente en el elemento - SIEMPRE
         const computedStyle = window.getComputedStyle(section);
