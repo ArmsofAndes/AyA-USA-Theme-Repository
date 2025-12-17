@@ -35,8 +35,8 @@ if (!customElements.get('theme-header')) {
         if (e.code) {
           if (e.code.toUpperCase() === 'ESCAPE') {
             if (this.toggle) {
-              this.toggle.removeAttribute('open');
-              this.toggle.classList.remove('active');
+            this.toggle.removeAttribute('open');
+            this.toggle.classList.remove('active');
             }
           }
         }
@@ -57,7 +57,7 @@ if (!customElements.get('theme-header')) {
           });
         }
         window.dispatchEvent(new Event('resize.resize-select'));
-          });
+      });
         }
       }
 
@@ -89,17 +89,13 @@ if (!customElements.get('theme-header')) {
      * Inicializar sistema de sticky para los 3 elementos específicos
      */
     initStickySystem() {
-      // IDs específicos de los elementos
-      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
-      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
-      const headerId = 'shopify-section-sections--20693129429238__header';
+      // Usar selectores de clase en lugar de IDs específicos para mayor compatibilidad
+      const simpleItemSections = document.querySelectorAll('.simple-announcement-item-section');
+      const countdownSections = document.querySelectorAll('.announcement-bar-countdown-section');
+      const headerSections = document.querySelectorAll('.header-section');
       
-      // Verificar si existen los elementos específicos
-      const simpleItem = document.getElementById(simpleItemId);
-      const countdown = document.getElementById(countdownId);
-      const header = document.getElementById(headerId);
-      
-      if (simpleItem || countdown || header) {
+      // Verificar si existen los elementos
+      if (simpleItemSections.length > 0 || countdownSections.length > 0 || headerSections.length > 0) {
         // Establecer altura inicial después de un pequeño delay para asegurar que el DOM esté listo
         setTimeout(() => {
           this.setAnnouncementHeight();
@@ -145,70 +141,73 @@ if (!customElements.get('theme-header')) {
      * El header DEBE usar solo la variable CSS --announcement-height
      */
     preventHeaderTopInline() {
-      const headerId = 'shopify-section-sections--20693129429238__header';
-      const header = document.getElementById(headerId);
+      // Usar selector de clase en lugar de ID específico
+      const headers = document.querySelectorAll('.header-section');
       
-      if (!header) return;
+      if (headers.length === 0) return;
       
-      // Observer para detectar cuando se aplica top inline al header
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-            const target = mutation.target;
-            // Si el header tiene top inline, removerlo inmediatamente
-            if (target.id === headerId && target.style.top) {
-              // Usar requestAnimationFrame para evitar conflictos
-              requestAnimationFrame(() => {
-                if (target.style.top) {
-                  target.style.removeProperty('top');
-                }
-              });
+      // Aplicar a todos los headers encontrados
+      headers.forEach(header => {
+        // Observer para detectar cuando se aplica top inline al header
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+              const target = mutation.target;
+              // Si el header tiene top inline, removerlo inmediatamente
+              if (target.classList.contains('header-section') && target.style.top) {
+                // Usar requestAnimationFrame para evitar conflictos
+                requestAnimationFrame(() => {
+                  if (target.style.top) {
+                    target.style.removeProperty('top');
+                  }
+                });
+              }
+            }
+          });
+        });
+        
+        // Observar cambios en el atributo style del header
+        observer.observe(header, {
+          attributes: true,
+          attributeFilter: ['style']
+        });
+        
+        // También verificar periódicamente si se aplicó top inline
+        // Esto es necesario porque algunos scripts pueden aplicar estilos después de nuestro observer
+        const checkInterval = setInterval(() => {
+          if (header && header.classList.contains('header-section')) {
+            // Remover cualquier top inline
+            if (header.style.top) {
+              header.style.removeProperty('top');
+            }
+            // Asegurar que use la variable CSS
+            const computedTop = window.getComputedStyle(header).top;
+            const announcementHeight = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
+            // Si el top calculado no coincide con la variable, forzar la actualización
+            if (computedTop && announcementHeight && computedTop !== announcementHeight) {
+              header.style.setProperty('top', 'var(--announcement-height, 0px)', 'important');
             }
           }
+        }, 50);
+        
+        // Limpiar el intervalo cuando el elemento se remueva del DOM
+        const disconnectObserver = () => {
+          observer.disconnect();
+          clearInterval(checkInterval);
+        };
+        
+        // Limpiar cuando el header se remueva
+        const headerObserver = new MutationObserver(() => {
+          if (!header.parentNode || !document.body.contains(header)) {
+            disconnectObserver();
+            headerObserver.disconnect();
+          }
         });
-      });
-      
-      // Observar cambios en el atributo style del header
-      observer.observe(header, {
-        attributes: true,
-        attributeFilter: ['style']
-      });
-      
-      // También verificar periódicamente si se aplicó top inline
-      // Esto es necesario porque algunos scripts pueden aplicar estilos después de nuestro observer
-      const checkInterval = setInterval(() => {
-        if (header) {
-          // Remover cualquier top inline
-          if (header.style.top) {
-            header.style.removeProperty('top');
-          }
-          // Asegurar que use la variable CSS
-          const computedTop = window.getComputedStyle(header).top;
-          const announcementHeight = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
-          // Si el top calculado no coincide con la variable, forzar la actualización
-          if (computedTop && announcementHeight && computedTop !== announcementHeight) {
-            header.style.setProperty('top', 'var(--announcement-height, 0px)', 'important');
-          }
-        }
-      }, 50);
-      
-      // Limpiar el intervalo cuando el elemento se remueva del DOM
-      const disconnectObserver = () => {
-        observer.disconnect();
-        clearInterval(checkInterval);
-      };
-      
-      // Limpiar cuando el header se remueva
-      const headerObserver = new MutationObserver(() => {
-        if (!document.getElementById(headerId)) {
-          disconnectObserver();
-          headerObserver.disconnect();
-        }
-      });
-      
-      headerObserver.observe(document.body, {
-        childList: true,
-        subtree: true
+        
+        headerObserver.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
       });
     }
 
@@ -216,24 +215,28 @@ if (!customElements.get('theme-header')) {
      * Observar cambios en elementos sticky
      */
     observeStickyChanges() {
-      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
-      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
-      const headerId = 'shopify-section-sections--20693129429238__header';
+      // Usar selectores de clase en lugar de IDs específicos
+      const simpleItemSections = document.querySelectorAll('.simple-announcement-item-section');
+      const countdownSections = document.querySelectorAll('.announcement-bar-countdown-section');
+      const headerSections = document.querySelectorAll('.header-section');
       
       const observer = new MutationObserver((mutations) => {
         let shouldRecalculate = false;
         mutations.forEach((mutation) => {
           const target = mutation.target;
           
-          // Observar cambios en clases de los elementos específicos
+          // Observar cambios en clases de los elementos
           if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-            if (target.id === simpleItemId || target.id === countdownId || target.id === headerId) {
+            if (target.classList.contains('simple-announcement-item-section') ||
+                target.classList.contains('announcement-bar-countdown-section') ||
+                target.classList.contains('header-section') ||
+                target.classList.contains('sticky-enabled-section')) {
               shouldRecalculate = true;
             }
             // También observar cambios en el elemento theme-header dentro del header
             if (target.classList && (target.classList.contains('header-sticky--active') || target.classList.contains('theme-header'))) {
               const headerSection = target.closest('.header-section');
-              if (headerSection && headerSection.id === headerId) {
+              if (headerSection) {
                 shouldRecalculate = true;
               }
             }
@@ -242,7 +245,7 @@ if (!customElements.get('theme-header')) {
           // Observar cambios en data-sticky-enabled del elemento interno
           if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
             const parentSection = target.closest('.simple-announcement-item-section, .announcement-bar-countdown-section');
-            if (parentSection && (parentSection.id === simpleItemId || parentSection.id === countdownId)) {
+            if (parentSection) {
               shouldRecalculate = true;
             }
           }
@@ -251,14 +254,18 @@ if (!customElements.get('theme-header')) {
           if (mutation.type === 'childList') {
             mutation.addedNodes.forEach(node => {
               if (node.nodeType === 1) {
-                if (node.id === simpleItemId || node.id === countdownId || node.id === headerId) {
+                if (node.classList && (
+                    node.classList.contains('simple-announcement-item-section') ||
+                    node.classList.contains('announcement-bar-countdown-section') ||
+                    node.classList.contains('header-section')
+                )) {
                   shouldRecalculate = true;
                 }
                 // Verificar si el nodo agregado contiene nuestros elementos
                 if (node.querySelector && (
-                    node.querySelector(`#${simpleItemId}`) ||
-                    node.querySelector(`#${countdownId}`) ||
-                    node.querySelector(`#${headerId}`)
+                    node.querySelector('.simple-announcement-item-section') ||
+                    node.querySelector('.announcement-bar-countdown-section') ||
+                    node.querySelector('.header-section')
                 )) {
                   shouldRecalculate = true;
                 }
@@ -276,12 +283,8 @@ if (!customElements.get('theme-header')) {
         }
       });
       
-      const simpleItem = document.getElementById(simpleItemId);
-      const countdown = document.getElementById(countdownId);
-      const header = document.getElementById(headerId);
-      
-      // Observar los elementos principales
-      if (simpleItem) {
+      // Observar todos los elementos encontrados
+      simpleItemSections.forEach(simpleItem => {
         observer.observe(simpleItem, { 
           attributes: true, 
           attributeFilter: ['class', 'style'],
@@ -296,9 +299,9 @@ if (!customElements.get('theme-header')) {
             attributeFilter: ['data-sticky-enabled']
           });
         }
-      }
+      });
       
-      if (countdown) {
+      countdownSections.forEach(countdown => {
         observer.observe(countdown, { 
           attributes: true, 
           attributeFilter: ['class', 'style'],
@@ -313,9 +316,9 @@ if (!customElements.get('theme-header')) {
             attributeFilter: ['data-sticky-enabled']
           });
         }
-      }
+      });
       
-      if (header) {
+      headerSections.forEach(header => {
         observer.observe(header, { 
           attributes: true, 
           attributeFilter: ['class', 'style'],
@@ -330,18 +333,24 @@ if (!customElements.get('theme-header')) {
             attributeFilter: ['class']
           });
         }
-      }
+      });
     }
 
     /**
      * Calcular y establecer altura de elementos sticky
      */
     setAnnouncementHeight() {
-      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
-      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
+      // Usar selectores de clase en lugar de IDs específicos para mayor compatibilidad
+      // Buscar el primer elemento con la clase correspondiente que tenga data-sticky-enabled="true"
+      const simpleItem = Array.from(document.querySelectorAll('.simple-announcement-item-section')).find(section => {
+        const innerItem = section.querySelector('.simple-announcement-item');
+        return innerItem && innerItem.getAttribute('data-sticky-enabled') === 'true';
+      });
       
-      const simpleItem = document.getElementById(simpleItemId);
-      const countdown = document.getElementById(countdownId);
+      const countdown = Array.from(document.querySelectorAll('.announcement-bar-countdown-section')).find(section => {
+        const innerCountdown = section.querySelector('.announcement-bar-countdown');
+        return innerCountdown && innerCountdown.getAttribute('data-sticky-enabled') === 'true';
+      });
       
       let totalHeight = 0;
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
@@ -433,9 +442,8 @@ if (!customElements.get('theme-header')) {
       const computedValue = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
       console.log('[Header.js] Variable CSS establecida:', computedValue);
       
-      // Manejar sticky del header
-      const headerId = 'shopify-section-sections--20693129429238__header';
-      const header = document.getElementById(headerId);
+      // Manejar sticky del header - usar selector de clase
+      const header = document.querySelector('.header-section');
       
       if (header) {
         // Verificar si el header tiene la clase header-sticky--active en el elemento theme-header
@@ -476,9 +484,9 @@ if (!customElements.get('theme-header')) {
     
     setHeaderOffset() {
       if (this.header_section) {
-        let h = this.header_section.getBoundingClientRect().top;
-        document.documentElement.style.setProperty('--header-offset', h + 'px');
-      }
+      let h = this.header_section.getBoundingClientRect().top;
+      document.documentElement.style.setProperty('--header-offset', h + 'px');
+    }
     }
     
     setHeaderHeight() {
