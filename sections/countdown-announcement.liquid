@@ -132,7 +132,7 @@
 -%}
 
 {%- if enable_countdown -%}
-<div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section" style="background-color: {{ color_bg }}; color: {{ color_text }};">
+<div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section {% if enable_sticky %}sticky-enabled-section{% endif %}" style="background-color: {{ color_bg }}; color: {{ color_text }};">
   <div class="announcement-bar announcement-bar-countdown" data-sticky-enabled="{{ enable_sticky }}">
     <div class="announcement-bar--inner">
       

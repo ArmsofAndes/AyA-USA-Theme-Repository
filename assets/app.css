@@ -2046,6 +2046,33 @@ h6,
   z-index: 50 !important;
 }
 
+/* Header específico con ID actual */
+/* IMPORTANTE: El header DEBE usar la variable CSS --announcement-height que contiene la suma de las alturas */
+#shopify-section-sections--20693129429238__header.header-section {
+  position: sticky !important;
+  top: var(--announcement-height, 0px) !important;
+  z-index: 50 !important;
+  left: 0;
+  width: 100%;
+}
+
+/* Forzar que el header NO tenga top inline - debe usar solo la variable CSS */
+/* Máxima especificidad para sobrescribir cualquier estilo inline */
+#shopify-section-sections--20693129429238__header.header-section[style*="top"],
+#shopify-section-sections--20693129429238__header.header-section[style],
+#shopify-section-sections--20693129429238__header.shopify-section.header-section,
+#shopify-section-sections--20693129429238__header.shopify-section-group-header-group.header-section {
+  top: var(--announcement-height, 0px) !important;
+}
+
+/* Asegurar que cualquier estilo inline de top sea sobrescrito */
+#shopify-section-sections--20693129429238__header.header-section[style*="top: 42px"],
+#shopify-section-sections--20693129429238__header.header-section[style*="top:42px"],
+#shopify-section-sections--20693129429238__header.header-section[style*="top: 42"],
+#shopify-section-sections--20693129429238__header.header-section[style*="top:42"] {
+  top: var(--announcement-height, 0px) !important;
+}
+
 /* Asegurar que el countdown siempre tenga z-index mayor que el header */
 /* El countdown DEBE tener z-index 51 para quedar por encima del header (z-index 50) */
 #shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section,
@@ -4061,15 +4088,12 @@ input[type="radio"], .field label, .custom-checkbox[type="checkbox"], .custom-ch
     --jdgm-paginate-color: #0E355E;
     --jdgm-border-radius: 0;
     --jdgm-reviewer-name-color: #108474;
+}
 
 .color-background-1 {
     --color-foreground: var(--color-base-text);
-    --color-background
-255, 255, 255
-: var(--color-base-background-1);
+    --color-background: var(--color-base-background-1);
     --gradient-background: var(--gradient-base-background-1);
-
-}
 }
 
 
@@ -4198,9 +4222,9 @@ div .jdgm-rev__replier-wrapper{
   .jdgm-histogram__bar{
    width: 160px!important;
   }
-..jdgm-histogram .jdgm-star{
-  padding-right: 0!important;
-}
+  .jdgm-histogram .jdgm-star{
+    padding-right: 0!important;
+  }
   .jdgm-sort-dropdown-arrow{
     border-top: 6px solid #878787!important;
   }
@@ -4217,10 +4241,6 @@ div .jdgm-rev__replier-wrapper{
     margin-top: 2rem!important;
   }
 
-.jdgm-rev.jdgm-divider-top.jdgm--done--setup{
-  
-}
-
   .jdgm-sort-dropdown-wrapper{
     border: 1px solid #787878!important;
     width: 15rem!important;
@@ -4229,7 +4249,7 @@ div .jdgm-rev__replier-wrapper{
 
   .jdgm-sort-dropdown{
     color: #878787!important;
-    font-family: :var(--font-body-family)!important;
+    font-family: var(--font-body-family)!important;
     font-weight: 300!important;
     border: none!important;
   }

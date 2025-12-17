@@ -15,41 +15,36 @@ if (!customElements.get('theme-header')) {
   class ThemeHeader extends HTMLElement {
     constructor() {
       super();
-      // Exponer instancia globalmente para que otros scripts puedan llamar a métodos
-      window.themeHeader = this;
-      
-      // IDs específicos de los elementos que necesitan sticky
-      this.SPECIFIC_IDS = {
-        simpleItem: 'shopify-section-sections--20691356287222__simple_announcement_item_46z49M',
-        countdown: 'shopify-section-sections--20691356287222__announcement-bar-countdown',
-        header: 'shopify-section-sections--20691356287222__header'
-      };
-      
-      // Orden de elementos sticky (de arriba hacia abajo)
-      this.STICKY_ORDER = ['simpleItem', 'countdown', 'header'];
-      
-      // Z-index para cada elemento
-      this.Z_INDEX = {
-        simpleItem: 52,
-        countdown: 51,
-        header: 50
-      };
     }
-    
     connectedCallback() {
       this.header_section = document.querySelector('.header-section');
       this.menu = this.querySelector('#mobile-menu');
       this.toggle = document.querySelector('.mobile-toggle-wrapper');
 
+      // Calcular offset inicial una sola vez para header sticky
+      if (this.classList.contains('header-sticky--active')) {
+        // Para headers transparentes (position: absolute), el offset es 0
+        // Para headers normales, usar la posición inicial
+        this.stickyOffset = this.classList.contains('transparent--true') ? 0 : this.offsetTop;
+      } else {
+        // Si no está sticky, no hay offset
+        this.stickyOffset = null;
+      }
+
       document.addEventListener('keyup', (e) => {
         if (e.code) {
           if (e.code.toUpperCase() === 'ESCAPE') {
-            this.toggle.removeAttribute('open');
-            this.toggle.classList.remove('active');
+            if (this.toggle) {
+              this.toggle.removeAttribute('open');
+              this.toggle.classList.remove('active');
+            }
           }
         }
       });
-      this.toggle.querySelector('.mobile-toggle').addEventListener('click', (e) => {
+      if (this.toggle) {
+        const mobileToggle = this.toggle.querySelector('.mobile-toggle');
+        if (mobileToggle) {
+          mobileToggle.addEventListener('click', (e) => {
         if (this.toggle.classList.contains('active')) {
           e.preventDefault();
           document.body.classList.remove('overflow-hidden');
@@ -62,7 +57,9 @@ if (!customElements.get('theme-header')) {
           });
         }
         window.dispatchEvent(new Event('resize.resize-select'));
-      });
+          });
+        }
+      }
 
       // Sticky Header Class
       window.addEventListener('scroll', this.setStickyClass.bind(this), {
@@ -78,433 +75,410 @@ if (!customElements.get('theme-header')) {
 
       window.dispatchEvent(new Event('scroll'));
 
-      // Inicializar sistema de sticky para elementos específicos
+      // Inicializar sistema de sticky para los 3 elementos específicos
       this.initStickySystem();
       
       // Buttons.
-      this.menu.querySelectorAll('summary').forEach(summary => summary.addEventListener('click', this.onSummaryClick.bind(this)));
-      this.menu.querySelectorAll('.parent-link-back--button').forEach(button => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
+      if (this.menu) {
+        this.menu.querySelectorAll('summary').forEach(summary => summary.addEventListener('click', this.onSummaryClick.bind(this)));
+        this.menu.querySelectorAll('.parent-link-back--button').forEach(button => button.addEventListener('click', this.onCloseButtonClick.bind(this)));
+      }
     }
 
     /**
-     * Inicializar el sistema de sticky para los elementos específicos
+     * Inicializar sistema de sticky para los 3 elementos específicos
      */
     initStickySystem() {
-      // Verificar si existen los elementos específicos
-      const hasSpecificElements = Object.values(this.SPECIFIC_IDS).some(id => document.getElementById(id));
+      // IDs específicos de los elementos
+      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
+      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
+      const headerId = 'shopify-section-sections--20693129429238__header';
       
-      if (hasSpecificElements) {
-        // Aplicar sticky inicialmente
-        this.updateAllStickyElements();
-        
-        // Observar cambios
-        this.setupStickyObservers();
-        
-        // Escuchar eventos personalizados
-        window.addEventListener('sticky-element-changed', () => {
-          setTimeout(() => this.updateAllStickyElements(), 50);
-        });
-        
-        // Recalcular en scroll
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-          this.updateAllStickyElements();
-          clearTimeout(scrollTimeout);
-          scrollTimeout = setTimeout(() => this.updateAllStickyElements(), 100);
-        }, { passive: true });
+      // Verificar si existen los elementos específicos
+      const simpleItem = document.getElementById(simpleItemId);
+      const countdown = document.getElementById(countdownId);
+      const header = document.getElementById(headerId);
+      
+      if (simpleItem || countdown || header) {
+        // Establecer altura inicial después de un pequeño delay para asegurar que el DOM esté listo
+        setTimeout(() => {
+          this.setAnnouncementHeight();
+        }, 50);
         
         // Recalcular en resize
-        window.addEventListener('resize', () => {
-          this.updateAllStickyElements();
-        });
+        window.addEventListener('resize', debounce(this.setAnnouncementHeight.bind(this), 100));
         
-        // Escuchar eventos de Shopify
+        // Observar cambios en las clases para recalcular cuando cambie el sticky
+        this.observeStickyChanges();
+        
+        // Observar y prevenir top inline en el header
+        this.preventHeaderTopInline();
+        
+        // Escuchar eventos de Shopify Theme Editor
         if (typeof Shopify !== 'undefined') {
           document.addEventListener('shopify:section:load', () => {
-            setTimeout(() => this.updateAllStickyElements(), 100);
+            setTimeout(() => this.setAnnouncementHeight(), 100);
           });
           document.addEventListener('shopify:section:select', () => {
-            setTimeout(() => this.updateAllStickyElements(), 100);
+            setTimeout(() => this.setAnnouncementHeight(), 100);
+          });
+          document.addEventListener('shopify:section:deselect', () => {
+            setTimeout(() => this.setAnnouncementHeight(), 100);
           });
         }
         
-        // Ejecutar después de delays para asegurar que todos los elementos estén disponibles
-        setTimeout(() => this.updateAllStickyElements(), 50);
-        setTimeout(() => this.updateAllStickyElements(), 100);
-        setTimeout(() => this.updateAllStickyElements(), 200);
-      }
-    }
-
-    /**
-     * Verificar si un elemento debería ser sticky basándose en sus atributos y visibilidad
-     */
-    shouldBeSticky(element, elementType) {
-      if (!element) return false;
-      
-      // Verificar visibilidad
-      const computedStyle = window.getComputedStyle(element);
-      if (computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
-        return false;
-      }
-      
-      // Verificar data-sticky-enabled según el tipo de elemento
-      if (elementType === 'simpleItem') {
-        const innerElement = element.querySelector('.simple-announcement-item[data-sticky-enabled="true"]');
-        return innerElement !== null;
-      } else if (elementType === 'countdown') {
-        const innerElement = element.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
-        return innerElement !== null;
-      } else if (elementType === 'header') {
-        // Para el header, verificar si tiene la clase header-sticky--active en el elemento theme-header
-        const headerElement = element.querySelector('theme-header.header-sticky--active, .header.header-sticky--active');
-        return headerElement !== null;
-      }
-      
-      return false;
-    }
-
-    /**
-     * Obtener TODOS los elementos de un tipo específico
-     */
-    getAllElementsByType(type) {
-      const elements = [];
-      
-      // Primero buscar por ID específico si existe
-      const id = this.SPECIFIC_IDS[type];
-      if (id) {
-        const specificElement = document.getElementById(id);
-        if (specificElement) {
-          elements.push(specificElement);
+        // Ejecutar después de que la página esté completamente cargada
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => this.setAnnouncementHeight(), 100);
+          });
         }
-      }
-      
-      // Luego buscar todos los elementos por clase
-      let selector = '';
-      if (type === 'simpleItem') {
-        selector = '.simple-announcement-item-section';
-      } else if (type === 'countdown') {
-        selector = '.announcement-bar-countdown-section';
-      } else if (type === 'header') {
-        selector = '.header-section';
-      }
-      
-      if (selector) {
-        const allElements = document.querySelectorAll(selector);
-        allElements.forEach(element => {
-          // Evitar duplicados si ya está en la lista
-          if (!elements.includes(element)) {
-            elements.push(element);
-          }
+        
+        window.addEventListener('load', () => {
+          setTimeout(() => this.setAnnouncementHeight(), 100);
         });
       }
-      
-      // Ordenar por posición natural en el DOM (usar compareDocumentPosition para orden correcto)
-      // NO usar getBoundingClientRect porque puede estar distorsionado por sticky
-      elements.sort((a, b) => {
-        // Usar compareDocumentPosition para ordenar por posición natural en el DOM
-        const position = a.compareDocumentPosition(b);
-        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
-          return -1; // a viene antes que b en el DOM
-        } else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
-          return 1; // b viene antes que a en el DOM
-        }
-        return 0; // Mismo nodo o no relacionados
-      });
-      
-      return elements;
-    }
-    
-    /**
-     * Obtener elemento por tipo (mantener para compatibilidad, pero ahora devuelve el primero)
-     */
-    getElementByType(type) {
-      const allElements = this.getAllElementsByType(type);
-      return allElements.length > 0 ? allElements[0] : null;
     }
 
     /**
-     * Aplicar sticky a un elemento específico
+     * Prevenir que se aplique top inline al header
+     * El header DEBE usar solo la variable CSS --announcement-height
      */
-    applyStickyToElement(element, elementType, topValue) {
-      if (!element) return;
+    preventHeaderTopInline() {
+      const headerId = 'shopify-section-sections--20693129429238__header';
+      const header = document.getElementById(headerId);
       
-      const isSticky = this.shouldBeSticky(element, elementType);
-      const zIndex = this.Z_INDEX[elementType];
+      if (!header) return;
       
-      if (isSticky) {
-        // Agregar clase sticky
-        element.classList.add('sticky-enabled-section');
-        
-        // Aplicar estilos sticky
-        element.style.setProperty('position', 'sticky', 'important');
-        element.style.setProperty('top', topValue + 'px', 'important');
-        element.style.setProperty('z-index', zIndex.toString(), 'important');
-        element.style.setProperty('width', '100%', 'important');
-        element.style.setProperty('left', '0', 'important');
-        element.style.setProperty('right', '0', 'important');
-        element.style.setProperty('margin', '0', 'important');
-        element.style.setProperty('padding', '0', 'important');
-        
-        // Asegurar que el contenedor padre no bloquee
-        const parentSection = element.closest('.shopify-section-group-header-group');
-        if (parentSection) {
-          parentSection.style.setProperty('overflow', 'visible', 'important');
-        }
-      } else {
-        // Remover sticky
-        element.classList.remove('sticky-enabled-section');
-        element.style.removeProperty('position');
-        element.style.removeProperty('top');
-        element.style.removeProperty('z-index');
-        element.style.removeProperty('width');
-        element.style.removeProperty('left');
-        element.style.removeProperty('right');
-        element.style.removeProperty('margin');
-        element.style.removeProperty('padding');
-        
-        const parentSection = element.closest('.shopify-section-group-header-group');
-        if (parentSection) {
-          parentSection.style.removeProperty('overflow');
-        }
-      }
-    }
-
-    /**
-     * Calcular altura de un elemento
-     */
-    getElementHeight(element, elementType) {
-      if (!element) return 0;
-      
-      const isMobile = window.matchMedia('(max-width: 767px)').matches;
-      
-      if (elementType === 'simpleItem') {
-        return element.clientHeight || element.offsetHeight || (isMobile ? 46 : 42);
-      } else if (elementType === 'countdown') {
-        return element.clientHeight || element.offsetHeight || 42.3;
-      } else if (elementType === 'header') {
-        return element.clientHeight || element.offsetHeight || 0;
-      }
-      
-      return 0;
-    }
-
-    /**
-     * Actualizar todos los elementos sticky y calcular posiciones
-     */
-    updateAllStickyElements() {
-      // Obtener TODOS los elementos de cada tipo, ordenados por posición en el DOM
-      const allSimpleItems = this.getAllElementsByType('simpleItem');
-      const allCountdowns = this.getAllElementsByType('countdown');
-      const allHeaders = this.getAllElementsByType('header');
-      
-      // Crear una lista de todos los elementos sticky en orden del DOM
-      const allStickyElements = [];
-      
-      // Agregar todos los simple items
-      allSimpleItems.forEach(element => {
-        if (this.shouldBeSticky(element, 'simpleItem')) {
-          allStickyElements.push({
-            element: element,
-            type: 'simpleItem',
-            zIndex: this.Z_INDEX.simpleItem
-          });
-        }
-      });
-      
-      // Agregar todos los countdowns
-      allCountdowns.forEach(element => {
-        if (this.shouldBeSticky(element, 'countdown')) {
-          allStickyElements.push({
-            element: element,
-            type: 'countdown',
-            zIndex: this.Z_INDEX.countdown
-          });
-        }
-      });
-      
-      // Ordenar todos los elementos sticky por su posición NATURAL en el DOM
-      // IMPORTANTE: Usar compareDocumentPosition, NO getBoundingClientRect
-      // porque getBoundingClientRect puede estar distorsionado por sticky
-      allStickyElements.sort((a, b) => {
-        const position = a.element.compareDocumentPosition(b.element);
-        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
-          return -1; // a viene antes que b en el DOM
-        } else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
-          return 1; // b viene antes que a en el DOM
-        }
-        return 0; // Mismo nodo o no relacionados
-      });
-      
-      // IMPORTANTE: Procesar elementos en el orden correcto del DOM
-      // 1. Primero todos los simple items (ordenados por posición en DOM)
-      // 2. Luego todos los countdowns (ordenados por posición en DOM)
-      // 3. Finalmente todos los headers (ordenados por posición en DOM)
-      
-      // Calcular top para cada elemento en orden
-      let cumulativeTop = 0;
-      
-      // 1. Procesar todos los simple items sticky
-      allSimpleItems.forEach(element => {
-        if (this.shouldBeSticky(element, 'simpleItem')) {
-          // Aplicar sticky con el cumulativeTop actual
-          this.applyStickyToElement(element, 'simpleItem', cumulativeTop);
-          // Sumar la altura de este elemento al cumulativeTop para el siguiente
-          const height = this.getElementHeight(element, 'simpleItem');
-          cumulativeTop += height;
-        }
-      });
-      
-      // 2. Procesar todos los countdowns sticky (DESPUÉS de simple items)
-      allCountdowns.forEach(element => {
-        if (this.shouldBeSticky(element, 'countdown')) {
-          // Aplicar sticky con el cumulativeTop actual (que incluye simple items)
-          this.applyStickyToElement(element, 'countdown', cumulativeTop);
-          // Sumar la altura de este elemento al cumulativeTop para el siguiente
-          const height = this.getElementHeight(element, 'countdown');
-          cumulativeTop += height;
-        }
-      });
-      
-      // Procesar elementos que NO son sticky pero necesitan respetar el espacio
-      // (por ejemplo, simple items o countdowns que no están activos como sticky)
-      allSimpleItems.forEach(element => {
-        if (!this.shouldBeSticky(element, 'simpleItem')) {
-          // Remover sticky si no debería serlo
-          element.classList.remove('sticky-enabled-section');
-          element.style.removeProperty('position');
-          element.style.removeProperty('top');
-          element.style.removeProperty('z-index');
-        }
-      });
-      
-      allCountdowns.forEach(element => {
-        if (!this.shouldBeSticky(element, 'countdown')) {
-          // Remover sticky si no debería serlo
-          element.classList.remove('sticky-enabled-section');
-          element.style.removeProperty('position');
-          element.style.removeProperty('top');
-          element.style.removeProperty('z-index');
-        }
-      });
-      
-      // 3. Headers (todos los headers, no solo el específico)
-      // Aplicar a TODOS los headers para que respeten el espacio de elementos sticky arriba
-      allHeaders.forEach(headerSection => {
-        // Verificar si este header debería ser sticky
-        const isHeaderSticky = this.shouldBeSticky(headerSection, 'header');
-        
-        if (isHeaderSticky) {
-          // Si el header es sticky, aplicar sticky con el cumulativeTop calculado
-          this.applyStickyToElement(headerSection, 'header', cumulativeTop);
-        } else {
-          // Si el header NO es sticky pero hay elementos sticky arriba,
-          // aún necesita respetar el espacio usando la variable CSS
-          // El CSS ya maneja esto con: top: var(--announcement-height, 0px)
-          // Pero también lo aplicamos directamente para asegurar
-          if (cumulativeTop > 0) {
-            // Solo actualizar si hay elementos sticky arriba
-            const headerComputedStyle = window.getComputedStyle(headerSection);
-            // Si el header tiene position sticky (aunque no esté activo el sticky),
-            // actualizar su top para respetar el espacio
-            if (headerComputedStyle.position === 'sticky') {
-              headerSection.style.setProperty('top', cumulativeTop + 'px', 'important');
-            }
-          }
-        }
-      });
-      
-      // Actualizar CSS variable para compatibilidad (todos los headers la usan)
-      document.documentElement.style.setProperty('--announcement-height', cumulativeTop + 'px');
-    }
-
-    /**
-     * Configurar observadores para detectar cambios
-     */
-    setupStickyObservers() {
-      // ResizeObserver para detectar cambios en altura
-      const resizeObserver = new ResizeObserver(() => {
-        this.updateAllStickyElements();
-      });
-      
-      // Observar TODOS los elementos de cada tipo, no solo los específicos
-      const allSimpleItems = this.getAllElementsByType('simpleItem');
-      const allCountdowns = this.getAllElementsByType('countdown');
-      const allHeaders = this.getAllElementsByType('header');
-      
-      // Observar todos los elementos encontrados
-      [...allSimpleItems, ...allCountdowns, ...allHeaders].forEach(element => {
-        resizeObserver.observe(element);
-      });
-      
-      // MutationObserver para detectar cambios en atributos y clases
-      const mutationObserver = new MutationObserver((mutations) => {
-        let shouldUpdate = false;
+      // Observer para detectar cuando se aplica top inline al header
+      const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes') {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
             const target = mutation.target;
-            // Verificar si el cambio es en un elemento sticky relevante
-            if (target.classList?.contains('sticky-enabled-section') ||
-                target.classList?.contains('simple-announcement-item-section') ||
-                target.classList?.contains('announcement-bar-countdown-section') ||
-                target.classList?.contains('header-section') ||
-                target.hasAttribute('data-sticky-enabled') ||
-                target.closest('.simple-announcement-item-section') ||
-                target.closest('.announcement-bar-countdown-section') ||
-                target.closest('.header-section')) {
-              shouldUpdate = true;
+            // Si el header tiene top inline, removerlo inmediatamente
+            if (target.id === headerId && target.style.top) {
+              // Usar requestAnimationFrame para evitar conflictos
+              requestAnimationFrame(() => {
+                if (target.style.top) {
+                  target.style.removeProperty('top');
+                }
+              });
             }
-          } else if (mutation.type === 'childList') {
-            const target = mutation.target;
-            // Verificar si se agregaron o removieron elementos sticky
-            if (target.closest && (
-                target.closest('.simple-announcement-item-section') ||
-                target.closest('.announcement-bar-countdown-section') ||
-                target.closest('.header-section'))) {
-              shouldUpdate = true;
-            }
-            // Verificar si los nodos agregados son elementos sticky
-            mutation.addedNodes.forEach(node => {
-              if (node.nodeType === 1 && (
-                  node.classList?.contains('simple-announcement-item-section') ||
-                  node.classList?.contains('announcement-bar-countdown-section') ||
-                  node.classList?.contains('header-section'))) {
-                shouldUpdate = true;
-              }
-            });
           }
         });
-        if (shouldUpdate) {
-          setTimeout(() => this.updateAllStickyElements(), 50);
+      });
+      
+      // Observar cambios en el atributo style del header
+      observer.observe(header, {
+        attributes: true,
+        attributeFilter: ['style']
+      });
+      
+      // También verificar periódicamente si se aplicó top inline
+      // Esto es necesario porque algunos scripts pueden aplicar estilos después de nuestro observer
+      const checkInterval = setInterval(() => {
+        if (header) {
+          // Remover cualquier top inline
+          if (header.style.top) {
+            header.style.removeProperty('top');
+          }
+          // Asegurar que use la variable CSS
+          const computedTop = window.getComputedStyle(header).top;
+          const announcementHeight = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
+          // Si el top calculado no coincide con la variable, forzar la actualización
+          if (computedTop && announcementHeight && computedTop !== announcementHeight) {
+            header.style.setProperty('top', 'var(--announcement-height, 0px)', 'important');
+          }
+        }
+      }, 50);
+      
+      // Limpiar el intervalo cuando el elemento se remueva del DOM
+      const disconnectObserver = () => {
+        observer.disconnect();
+        clearInterval(checkInterval);
+      };
+      
+      // Limpiar cuando el header se remueva
+      const headerObserver = new MutationObserver(() => {
+        if (!document.getElementById(headerId)) {
+          disconnectObserver();
+          headerObserver.disconnect();
         }
       });
       
-      // Observar todos los elementos de cada tipo
-      [...allSimpleItems, ...allCountdowns, ...allHeaders].forEach(element => {
-        mutationObserver.observe(element, {
-          attributes: true,
-          attributeFilter: ['class', 'style', 'data-sticky-enabled'],
-          childList: true,
-          subtree: true
-        });
-      });
-      
-      // También observar el body para detectar cuando se agregan nuevos elementos
-      mutationObserver.observe(document.body, {
+      headerObserver.observe(document.body, {
         childList: true,
         subtree: true
       });
     }
 
+    /**
+     * Observar cambios en elementos sticky
+     */
+    observeStickyChanges() {
+      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
+      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
+      const headerId = 'shopify-section-sections--20693129429238__header';
+      
+      const observer = new MutationObserver((mutations) => {
+        let shouldRecalculate = false;
+        mutations.forEach((mutation) => {
+          const target = mutation.target;
+          
+          // Observar cambios en clases de los elementos específicos
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            if (target.id === simpleItemId || target.id === countdownId || target.id === headerId) {
+              shouldRecalculate = true;
+            }
+            // También observar cambios en el elemento theme-header dentro del header
+            if (target.classList && (target.classList.contains('header-sticky--active') || target.classList.contains('theme-header'))) {
+              const headerSection = target.closest('.header-section');
+              if (headerSection && headerSection.id === headerId) {
+                shouldRecalculate = true;
+              }
+            }
+          }
+          
+          // Observar cambios en data-sticky-enabled del elemento interno
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+            const parentSection = target.closest('.simple-announcement-item-section, .announcement-bar-countdown-section');
+            if (parentSection && (parentSection.id === simpleItemId || parentSection.id === countdownId)) {
+              shouldRecalculate = true;
+            }
+          }
+          
+          // Observar cambios en childList (cuando se agregan/remueven elementos)
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === 1) {
+                if (node.id === simpleItemId || node.id === countdownId || node.id === headerId) {
+                  shouldRecalculate = true;
+                }
+                // Verificar si el nodo agregado contiene nuestros elementos
+                if (node.querySelector && (
+                    node.querySelector(`#${simpleItemId}`) ||
+                    node.querySelector(`#${countdownId}`) ||
+                    node.querySelector(`#${headerId}`)
+                )) {
+                  shouldRecalculate = true;
+                }
+              }
+            });
+          }
+        });
+        
+        if (shouldRecalculate) {
+          // Usar debounce para evitar recálculos excesivos
+          clearTimeout(this.recalculateTimeout);
+          this.recalculateTimeout = setTimeout(() => {
+            this.setAnnouncementHeight();
+          }, 50);
+        }
+      });
+      
+      const simpleItem = document.getElementById(simpleItemId);
+      const countdown = document.getElementById(countdownId);
+      const header = document.getElementById(headerId);
+      
+      // Observar los elementos principales
+      if (simpleItem) {
+        observer.observe(simpleItem, { 
+          attributes: true, 
+          attributeFilter: ['class', 'style'],
+          childList: true,
+          subtree: true
+        });
+        // También observar el elemento interno con data-sticky-enabled
+        const innerSimpleItem = simpleItem.querySelector('.simple-announcement-item');
+        if (innerSimpleItem) {
+          observer.observe(innerSimpleItem, { 
+            attributes: true, 
+            attributeFilter: ['data-sticky-enabled']
+          });
+        }
+      }
+      
+      if (countdown) {
+        observer.observe(countdown, { 
+          attributes: true, 
+          attributeFilter: ['class', 'style'],
+          childList: true,
+          subtree: true
+        });
+        // También observar el elemento interno con data-sticky-enabled
+        const innerCountdown = countdown.querySelector('.announcement-bar-countdown');
+        if (innerCountdown) {
+          observer.observe(innerCountdown, { 
+            attributes: true, 
+            attributeFilter: ['data-sticky-enabled']
+          });
+        }
+      }
+      
+      if (header) {
+        observer.observe(header, { 
+          attributes: true, 
+          attributeFilter: ['class', 'style'],
+          childList: true,
+          subtree: true
+        });
+        // Observar el elemento theme-header dentro del header
+        const themeHeader = header.querySelector('theme-header');
+        if (themeHeader) {
+          observer.observe(themeHeader, { 
+            attributes: true, 
+            attributeFilter: ['class']
+          });
+        }
+      }
+    }
+
+    /**
+     * Calcular y establecer altura de elementos sticky
+     */
+    setAnnouncementHeight() {
+      const simpleItemId = 'shopify-section-sections--20693129429238__simple_announcement_item_46z49M';
+      const countdownId = 'shopify-section-sections--20693129429238__announcement-bar-countdown';
+      
+      const simpleItem = document.getElementById(simpleItemId);
+      const countdown = document.getElementById(countdownId);
+      
+      let totalHeight = 0;
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      
+      // Calcular altura del simple-item si está sticky
+      let simpleItemHeight = 0;
+      if (simpleItem) {
+        // Verificar clase sticky-enabled-section o data-sticky-enabled del elemento interno
+        const hasStickyClass = simpleItem.classList.contains('sticky-enabled-section');
+        const innerSimpleItem = simpleItem.querySelector('.simple-announcement-item');
+        const dataStickyEnabled = innerSimpleItem && innerSimpleItem.getAttribute('data-sticky-enabled') === 'true';
+        const isSticky = hasStickyClass || dataStickyEnabled;
+        
+        const computedStyle = window.getComputedStyle(simpleItem);
+        
+        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+          // Asegurar que tenga la clase sticky-enabled-section
+          if (!hasStickyClass) {
+            simpleItem.classList.add('sticky-enabled-section');
+          }
+          
+          // Usar altura real o valor fijo
+          simpleItemHeight = simpleItem.clientHeight || simpleItem.offsetHeight || (isMobile ? 46 : 42);
+          totalHeight += simpleItemHeight;
+          
+          // Aplicar sticky al simple-item
+          simpleItem.style.setProperty('position', 'sticky', 'important');
+          simpleItem.style.setProperty('top', '0px', 'important');
+          simpleItem.style.setProperty('z-index', '52', 'important');
+        } else {
+          // Remover sticky si no debería serlo
+          simpleItem.classList.remove('sticky-enabled-section');
+          simpleItem.style.removeProperty('position');
+          simpleItem.style.removeProperty('top');
+          simpleItem.style.removeProperty('z-index');
+        }
+      }
+      
+      // Calcular altura del countdown si está sticky
+      let countdownHeight = 0;
+      if (countdown) {
+        // Verificar clase sticky-enabled-section o data-sticky-enabled del elemento interno
+        const hasStickyClass = countdown.classList.contains('sticky-enabled-section');
+        const innerCountdown = countdown.querySelector('.announcement-bar-countdown');
+        const dataStickyEnabled = innerCountdown && innerCountdown.getAttribute('data-sticky-enabled') === 'true';
+        const isSticky = hasStickyClass || dataStickyEnabled;
+        
+        const computedStyle = window.getComputedStyle(countdown);
+        
+        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+          // Asegurar que tenga la clase sticky-enabled-section
+          if (!hasStickyClass) {
+            countdown.classList.add('sticky-enabled-section');
+          }
+          // Usar altura real o valor fijo
+          countdownHeight = countdown.clientHeight || countdown.offsetHeight || 42.3;
+          totalHeight += countdownHeight;
+          
+          // Aplicar sticky al countdown con top basado en simple-item
+          countdown.style.setProperty('position', 'sticky', 'important');
+          countdown.style.setProperty('top', simpleItemHeight + 'px', 'important');
+          countdown.style.setProperty('z-index', '51', 'important');
+        } else {
+          // Remover sticky si no debería serlo
+          countdown.classList.remove('sticky-enabled-section');
+          countdown.style.removeProperty('position');
+          countdown.style.removeProperty('top');
+          countdown.style.removeProperty('z-index');
+        }
+      }
+      
+      // Establecer --announcement-height para el header
+      // El header usa esta variable en CSS: top: var(--announcement-height, 0px)
+      // totalHeight es la suma de las alturas de simple-item + countdown cuando están sticky
+      // IMPORTANTE: totalHeight debe ser la suma de AMBOS elementos si ambos están sticky
+      console.log('[Header.js] Cálculo de alturas:', {
+        simpleItemHeight: simpleItemHeight,
+        countdownHeight: countdownHeight,
+        totalHeight: totalHeight
+      });
+      
+      // Establecer la variable CSS en :root y html para máxima compatibilidad
+      document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
+      if (document.body) {
+        document.body.style.setProperty('--announcement-height', totalHeight + 'px');
+      }
+      
+      // Verificar que se estableció correctamente
+      const computedValue = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
+      console.log('[Header.js] Variable CSS establecida:', computedValue);
+      
+      // Manejar sticky del header
+      const headerId = 'shopify-section-sections--20693129429238__header';
+      const header = document.getElementById(headerId);
+      
+      if (header) {
+        // Verificar si el header tiene la clase header-sticky--active en el elemento theme-header
+        const themeHeader = header.querySelector('theme-header');
+        const isHeaderSticky = themeHeader && themeHeader.classList.contains('header-sticky--active');
+        
+        if (isHeaderSticky) {
+          // Asegurar que el header tenga position sticky
+          const headerComputedStyle = window.getComputedStyle(header);
+          if (headerComputedStyle.position !== 'sticky') {
+            header.style.setProperty('position', 'sticky', 'important');
+          }
+          
+          // IMPORTANTE: NO aplicar top inline, dejar que CSS use --announcement-height
+          // La variable CSS --announcement-height ya contiene la suma de las alturas
+          // Asegurar que no haya top inline que sobrescriba la variable CSS
+          header.style.removeProperty('top');
+          
+          // Solo asegurar z-index
+          header.style.setProperty('z-index', '50', 'important');
+        } else {
+          // Si el header NO es sticky, remover position sticky
+          header.style.removeProperty('position');
+          header.style.removeProperty('top');
+          header.style.removeProperty('z-index');
+        }
+      }
+    }
+
     setStickyClass() {
       if (this.classList.contains('header-sticky--active')) {
-        let offset = parseInt(this.getBoundingClientRect().top, 10) + document.documentElement.scrollTop;
-        this.classList.toggle('is-sticky', window.scrollY >= offset && window.scrollY > 0);
+        // Usar offset calculado al inicio en lugar de recalcular cada vez
+        const offset = this.stickyOffset || 0;
+        const isSticky = window.scrollY > offset;
+        this.classList.toggle('is-sticky', isSticky);
       }
     }
     
     setHeaderOffset() {
-      let h = this.header_section.getBoundingClientRect().top;
-      document.documentElement.style.setProperty('--header-offset', h + 'px');
+      if (this.header_section) {
+        let h = this.header_section.getBoundingClientRect().top;
+        document.documentElement.style.setProperty('--header-offset', h + 'px');
+      }
     }
     
     setHeaderHeight() {
