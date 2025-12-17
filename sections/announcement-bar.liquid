@@ -270,12 +270,16 @@
         background: #000000 !important;
       }
       
+      /* Eliminar todos los estilos del schema para announcement-bar-item-custom */
       #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom,
-      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item {
-        background-color: #000000 !important;
-        color: #ffffff !important;
-        --hover-bg: transparent !important;
-        --hover-text: inherit !important;
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] {
+        background-color: initial !important;
+        background: initial !important;
+        color: inherit !important;
+        --hover-bg: initial !important;
+        --hover-text: initial !important;
+        font-size: inherit !important;
+        font-weight: inherit !important;
         border: none !important;
         border-top: none !important;
         border-bottom: none !important;
@@ -283,24 +287,30 @@
         border-right: none !important;
         outline: none !important;
         box-shadow: none !important;
+        padding: initial !important;
+        margin: initial !important;
       }
       
       #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a,
-      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item a {
-        color: #ffffff !important;
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] a {
+        color: inherit !important;
+        background-color: initial !important;
+        background: initial !important;
       }
       
       #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom:hover,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"]:hover,
       #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a:hover,
-      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item:hover,
-      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item a:hover {
-        background-color: #000000 !important;
-        background: #000000 !important;
-        color: #ffffff !important;
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] a:hover {
+        background-color: initial !important;
+        background: initial !important;
+        color: inherit !important;
         transform: none !important;
         translate: none !important;
         box-shadow: none !important;
         cursor: default !important;
+        font-size: inherit !important;
+        font-weight: inherit !important;
       }
       
       /* Eliminar espacio blanco - remover padding-top del body */
@@ -733,10 +743,24 @@
               element.removeAttribute('style');
             }
             
-            // Eliminar estilos inline de todos los hijos
+            // Eliminar estilos inline de todos los hijos, especialmente announcement-bar-item-custom
             const elementsWithStyle = element.querySelectorAll('[style]');
             elementsWithStyle.forEach(function(el) {
-              el.removeAttribute('style');
+              // Eliminar estilos inline de elementos con data-no-inline-styles
+              if (el.hasAttribute('data-no-inline-styles') || el.classList.contains('announcement-bar-item-custom')) {
+                el.removeAttribute('style');
+              }
+            });
+            
+            // Específicamente eliminar estilos de announcement-bar-item-custom
+            const customItems = element.querySelectorAll('.announcement-bar-item-custom[data-no-inline-styles="true"]');
+            customItems.forEach(function(item) {
+              item.removeAttribute('style');
+              // También eliminar estilos de los enlaces dentro
+              const links = item.querySelectorAll('a[style]');
+              links.forEach(function(link) {
+                link.removeAttribute('style');
+              });
             });
           };
           
