@@ -137,47 +137,43 @@
   background: #000000 !important;
 }
 
-/* Eliminar todos los estilos del schema para announcement-bar-item-custom */
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom,
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] {
-  background-color: initial !important;
-  background: initial !important;
-  color: inherit !important;
-  --hover-bg: initial !important;
-  --hover-text: initial !important;
-  font-size: inherit !important;
-  font-weight: inherit !important;
+/* Estilos para announcement-bar-item-simple - solo los estilos esenciales */
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  padding: 0 !important;
+  margin: 0 !important;
   border: none !important;
-  border-top: none !important;
-  border-bottom: none !important;
-  border-left: none !important;
-  border-right: none !important;
   outline: none !important;
   box-shadow: none !important;
-  padding: initial !important;
-  margin: initial !important;
 }
 
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a,
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] a {
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a {
   color: inherit !important;
-  background-color: initial !important;
-  background: initial !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom:hover,
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"]:hover,
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom a:hover,
-#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[data-no-inline-styles="true"] a:hover {
-  background-color: initial !important;
-  background: initial !important;
-  color: inherit !important;
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"]:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a:hover {
   transform: none !important;
   translate: none !important;
   box-shadow: none !important;
   cursor: default !important;
-  font-size: inherit !important;
-  font-weight: inherit !important;
 }
 
 /* Forzar eliminación de estilos inline usando selectores de atributo */
