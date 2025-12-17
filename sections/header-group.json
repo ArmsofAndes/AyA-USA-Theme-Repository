@@ -27,26 +27,10 @@
             "hide_on_desktop": false,
             "hide_on_mobile": false
           }
-        },
-        "text_7h8AFx": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "icon": "none",
-            "text": "Free Shipping on U.S. Orders Over $100",
-            "link": "",
-            "item_bg_color": "#536191",
-            "item_text_color": "#ffffff",
-            "item_hover_bg_color": "rgba(0,0,0,0)",
-            "item_hover_text_color": "rgba(0,0,0,0)",
-            "hide_on_desktop": false,
-            "hide_on_mobile": false
-          }
         }
       },
       "block_order": [
-        "text_Vh99jf",
-        "text_7h8AFx"
+        "text_Vh99jf"
       ],
       "custom_css": [],
       "settings": {
