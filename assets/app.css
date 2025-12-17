@@ -2036,6 +2036,11 @@ h6,
   left: 0;
   z-index: 50;
   width: 100%; }
+  
+/* Asegurar que el header específico tenga z-index correcto */
+#shopify-section-sections--20691356287222__header.header-section {
+  z-index: 50 !important;
+}
 
 .header {
   display: block;

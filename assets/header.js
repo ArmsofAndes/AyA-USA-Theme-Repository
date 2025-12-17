@@ -200,17 +200,46 @@ if (!customElements.get('theme-header')) {
       
       // Calcular altura del countdown si está sticky (tercero en el orden)
       // Priorizar el elemento específico si existe
+      let countdownHeight = 0;
       if (countdown_bar && shouldBeSticky(countdown_bar)) {
-        const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
+        countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
         totalHeight += countdownHeight;
       }
       
-      // Actualizar la altura total
+      // Actualizar la altura total en CSS variable
       document.documentElement.style.setProperty('--announcement-height', totalHeight + 'px');
       
       // Actualizar el top del header (priorizar el elemento específico si existe)
+      // El header debe estar DESPUÉS del countdown, así que su top debe incluir la altura del countdown
       if (headerSection) {
-        headerSection.style.setProperty('top', totalHeight + 'px', 'important');
+        // Asegurar que el header tenga position sticky si no la tiene
+        const headerComputedStyle = window.getComputedStyle(headerSection);
+        if (headerComputedStyle.position !== 'sticky') {
+          headerSection.style.setProperty('position', 'sticky', 'important');
+        }
+        
+        // El top del header debe ser la suma de todas las alturas de elementos sticky arriba
+        // Esto incluye: announcement-bar-top + simple-announcement-item + countdown
+        // El header DEBE estar por debajo del countdown, así que su top debe ser mayor
+        
+        // Verificar el top actual del countdown para asegurar que el header esté por debajo
+        let finalTop = totalHeight;
+        if (countdown_bar && shouldBeSticky(countdown_bar)) {
+          const countdownSection = countdown_bar.closest('.announcement-bar-countdown-section');
+          if (countdownSection) {
+            // Obtener el top calculado del countdown
+            const countdownTopStr = countdownSection.style.top || window.getComputedStyle(countdownSection).top;
+            const countdownTop = parseInt(countdownTopStr) || 0;
+            
+            // El header debe estar por debajo del countdown
+            // Su top debe ser: top del countdown + altura del countdown
+            finalTop = countdownTop + countdownHeight;
+          }
+        }
+        
+        headerSection.style.setProperty('top', finalTop + 'px', 'important');
+        headerSection.style.setProperty('z-index', '50', 'important');
+        
       }
     }
     
