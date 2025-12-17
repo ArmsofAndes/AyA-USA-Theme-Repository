@@ -195,7 +195,7 @@
       "settings": {
         "enable_countdown": true,
         "enable_sticky": true,
-        "sticky_on_home": false,
+        "sticky_on_home": true,
         "sticky_on_collection": true,
         "sticky_on_product": true,
         "sticky_on_blog": true,
