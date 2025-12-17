@@ -2038,8 +2038,20 @@ h6,
   width: 100%; }
   
 /* Asegurar que el header específico tenga z-index correcto */
-#shopify-section-sections--20691356287222__header.header-section {
+/* El header DEBE tener z-index menor que el countdown (51) para que el countdown quede por encima */
+/* IMPORTANTE: No cambiar este z-index a un valor mayor que 50, ya que el countdown tiene z-index 51 */
+#shopify-section-sections--20691356287222__header.header-section,
+#shopify-section-sections--20691356287222__header.header-section[style],
+#shopify-section-sections--20691356287222__header.header-section.is-sticky {
   z-index: 50 !important;
+}
+
+/* Asegurar que el countdown siempre tenga z-index mayor que el header */
+/* El countdown DEBE tener z-index 51 para quedar por encima del header (z-index 50) */
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section,
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section,
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section[style] {
+  z-index: 51 !important;
 }
 
 .header {

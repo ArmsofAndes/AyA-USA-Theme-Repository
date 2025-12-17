@@ -238,6 +238,8 @@ if (!customElements.get('theme-header')) {
         }
         
         headerSection.style.setProperty('top', finalTop + 'px', 'important');
+        // El header DEBE tener z-index 50 (menor que el countdown que tiene 51)
+        // para que el countdown quede por encima cuando ambos son sticky
         headerSection.style.setProperty('z-index', '50', 'important');
         
       }
