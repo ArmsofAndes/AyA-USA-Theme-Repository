@@ -342,7 +342,7 @@
 .shopify-section-group-header-group #shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section {
   position: sticky !important;
   top: var(--announcement-top-height, 0) !important;
-  z-index: 52 !important;
+  z-index: 51 !important;
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
