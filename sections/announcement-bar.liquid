@@ -82,13 +82,13 @@
       endif
     -%}
 
-    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if is_specific_section %}announcement-bar-top-custom{% endif %}">
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if is_specific_section %}announcement-bar-top-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% endif %}>
     <div class="announcement-bar announcement-bar-top {% if is_specific_section %}announcement-bar-top-custom{% endif %}" 
          data-sticky-enabled="{{ enable_sticky }}"
          role="region"
          aria-label="Announcement bar"
-         {% unless is_specific_section %}style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};"{% endunless %}>
-      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }} {% if is_specific_section %}announcement-bar-inner-custom{% endif %}" {% unless is_specific_section %}style="--marquee-speed: {{ speed }}"{% endunless %}>
+         {% if is_specific_section %}data-no-inline-styles="true"{% else %}style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};"{% endif %}>
+      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }} {% if is_specific_section %}announcement-bar-inner-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% else %}style="--marquee-speed: {{ speed }}"{% endif %}>
         {%- if announcement_bar_layout == 'marquee' -%}
           {%- capture scrolling_text -%}
             <div>
@@ -127,7 +127,7 @@
           <div class="announcement-bar--stacked">
             {%- for block in section.blocks -%}
               <div class="announcement-bar--item {% if block.settings.hide_on_desktop %}hide-desktop{% endif %} {% if block.settings.hide_on_mobile %}hide-mobile{% endif %} {% if is_specific_section %}announcement-bar-item-custom{% endif %}" 
-                   {{ block.shopify_attributes }}
+                   {% if is_specific_section %}data-no-inline-styles="true"{% else %}{{ block.shopify_attributes }}{% endif %}
                    {% unless is_specific_section %}style="background-color: {{ block.settings.item_bg_color }}; color: {{ block.settings.item_text_color }}; --hover-bg: {{ block.settings.item_hover_bg_color }}; --hover-text: {{ block.settings.item_hover_text_color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};"{% endunless %}>
                 {%- if block.settings.link -%}<a href="{{ block.settings.link }}" target="_blank" {% unless is_specific_section %}style="color: {{ block.settings.item_text_color }};"{% endunless %}>{%- endif -%}
                   {%- if block.settings.icon -%}{% render 'svg-icons-inline', icon: block.settings.icon %}{%- endif -%}
@@ -623,6 +623,103 @@
           if (section) {
             section.classList.add('sticky-enabled-section');
           }
+        }
+        
+        // Eliminar estilos inline del elemento específico sections--20691356287222
+        const specificSectionId = 'shopify-section-sections--20691356287222__announcement-bar';
+        const specificSection = document.getElementById(specificSectionId);
+        
+        if (specificSection) {
+          // Función para eliminar estilos inline de un elemento y sus hijos
+          const removeInlineStyles = function(element) {
+            if (!element) return;
+            
+            // Eliminar estilos inline del elemento mismo
+            if (element.hasAttribute('style')) {
+              element.removeAttribute('style');
+            }
+            
+            // Eliminar estilos inline de todos los hijos
+            const elementsWithStyle = element.querySelectorAll('[style]');
+            elementsWithStyle.forEach(function(el) {
+              el.removeAttribute('style');
+            });
+          };
+          
+          // Función para ejecutar la limpieza
+          const cleanInlineStyles = function() {
+            removeInlineStyles(specificSection);
+          };
+          
+          // Ejecutar inmediatamente
+          cleanInlineStyles();
+          
+          // Usar MutationObserver para eliminar estilos inline que se agreguen después
+          const observer = new MutationObserver(function(mutations) {
+            let shouldClean = false;
+            mutations.forEach(function(mutation) {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                const target = mutation.target;
+                if (specificSection.contains(target) || target === specificSection) {
+                  shouldClean = true;
+                }
+              }
+              if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(function(node) {
+                  if (node.nodeType === 1 && (specificSection.contains(node) || node === specificSection)) {
+                    shouldClean = true;
+                  }
+                });
+              }
+            });
+            if (shouldClean) {
+              cleanInlineStyles();
+            }
+          });
+          
+          // Observar cambios en el elemento y sus hijos
+          observer.observe(specificSection, {
+            attributes: true,
+            attributeFilter: ['style'],
+            childList: true,
+            subtree: true
+          });
+          
+          // Ejecutar en múltiples momentos para asegurar que se eliminen los estilos
+          setTimeout(cleanInlineStyles, 50);
+          setTimeout(cleanInlineStyles, 100);
+          setTimeout(cleanInlineStyles, 200);
+          setTimeout(cleanInlineStyles, 500);
+          
+          // Ejecutar cuando el DOM esté completamente cargado
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', cleanInlineStyles);
+          }
+          
+          // Ejecutar cuando la ventana se carga completamente
+          window.addEventListener('load', cleanInlineStyles);
+          
+          // Ejecutar cuando se detecta que Shopify ha terminado de procesar (si está disponible)
+          if (typeof Shopify !== 'undefined') {
+            if (Shopify.designMode) {
+              document.addEventListener('shopify:section:load', function(event) {
+                if (event.detail && event.detail.sectionId && event.detail.sectionId.includes('20691356287222')) {
+                  setTimeout(cleanInlineStyles, 100);
+                }
+              });
+              document.addEventListener('shopify:section:select', function(event) {
+                if (event.detail && event.detail.sectionId && event.detail.sectionId.includes('20691356287222')) {
+                  setTimeout(cleanInlineStyles, 100);
+                }
+              });
+            }
+          }
+          
+          // También escuchar eventos de recarga de sección (para compatibilidad con diferentes versiones de Shopify)
+          document.addEventListener('shopify:section:reorder', cleanInlineStyles);
+          document.addEventListener('shopify:section:unload', function() {
+            setTimeout(cleanInlineStyles, 100);
+          });
         }
       })();
     </script>

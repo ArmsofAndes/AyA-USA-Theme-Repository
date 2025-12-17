@@ -59,7 +59,18 @@ if (!customElements.get('theme-header')) {
       window.dispatchEvent(new Event('scroll'));
 
       if (document.querySelector('.announcement-bar-top-section') || document.querySelector('.announcement-bar-countdown-section')) {
+        // Aplicar clases sticky inmediatamente
         this.applyStickyClasses();
+        
+        // Aplicar clases sticky después de un pequeño delay para asegurar que todos los elementos estén disponibles
+        setTimeout(() => {
+          this.applyStickyClasses();
+        }, 50);
+        
+        setTimeout(() => {
+          this.applyStickyClasses();
+        }, 100);
+        
         this.observeStickyChanges();
         this.setupStickyObservers();
         this.setAnnouncementHeight();
@@ -80,8 +91,20 @@ if (!customElements.get('theme-header')) {
         });
         
         window.addEventListener('resize', () => {
+          this.applyStickyClasses();
           this.setAnnouncementHeight();
         });
+        
+        // Escuchar eventos de Shopify para aplicar clases cuando se recarga una sección
+        if (typeof Shopify !== 'undefined') {
+          document.addEventListener('shopify:section:load', () => {
+            setTimeout(() => {
+              this.applyStickyClasses();
+              this.setAnnouncementHeight();
+            }, 100);
+          });
+        }
+        
         window.dispatchEvent(new Event('resize'));
       }
 
@@ -105,23 +128,35 @@ if (!customElements.get('theme-header')) {
       
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
       
-      // Función helper para verificar si un elemento está realmente sticky
-      const isElementSticky = (element) => {
+      // Función helper para verificar si un elemento debería ser sticky basándose en sus atributos
+      const shouldBeSticky = (element) => {
         if (!element) return false;
         
+        // Verificar si tiene la clase sticky-enabled-section
+        if (!element.classList.contains('sticky-enabled-section')) return false;
+        
+        // Verificar si está visible
         const computedStyle = window.getComputedStyle(element);
-        const isStickyPosition = computedStyle.position === 'sticky';
         const isVisible = computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
+        if (!isVisible) return false;
         
-        if (!isStickyPosition || !isVisible) return false;
+        // Para announcement-bar-top, verificar data-sticky-enabled en el elemento interno
+        if (element.classList.contains('announcement-bar-top-section')) {
+          const innerBar = element.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
+          return innerBar !== null;
+        }
         
-        const rect = element.getBoundingClientRect();
-        // Un elemento sticky está activo si está visible en el viewport
-        return rect.bottom > 0 && rect.top < window.innerHeight;
+        // Para countdown, verificar data-sticky-enabled en el elemento interno
+        if (element.classList.contains('announcement-bar-countdown-section')) {
+          const innerBar = element.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
+          return innerBar !== null;
+        }
+        
+        return false;
       };
       
       // Calcular altura del announcement-bar-top
-      if (a_bar && isElementSticky(a_bar)) {
+      if (a_bar && shouldBeSticky(a_bar)) {
         topHeight = isMobile ? 46 : 42;
         totalHeight += topHeight;
         document.documentElement.style.setProperty('--announcement-top-height', topHeight + 'px');
@@ -129,8 +164,9 @@ if (!customElements.get('theme-header')) {
         document.documentElement.style.setProperty('--announcement-top-height', '0px');
       }
       
-      // Calcular altura del countdown (solo si el top está sticky)
-      if (countdown_bar && topHeight > 0 && isElementSticky(countdown_bar)) {
+      // Calcular altura del countdown si está sticky (independientemente del top)
+      // El countdown debe usar top: var(--announcement-top-height) para posicionarse correctamente
+      if (countdown_bar && shouldBeSticky(countdown_bar)) {
         const countdownHeight = countdown_bar.clientHeight || countdown_bar.offsetHeight || 42.3;
         totalHeight += countdownHeight;
       }
@@ -146,8 +182,8 @@ if (!customElements.get('theme-header')) {
     
     applyStickyClasses() {
       // Aplicar clase sticky al announcement-bar-top-section si está habilitado
-      const topBar = document.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
-      if (topBar) {
+      const topBars = document.querySelectorAll('.announcement-bar-top[data-sticky-enabled="true"]');
+      topBars.forEach((topBar) => {
         const topSection = topBar.closest('.announcement-bar-top-section');
         if (topSection) {
           const shouldBeSticky = topBar.getAttribute('data-sticky-enabled') === 'true';
@@ -159,11 +195,11 @@ if (!customElements.get('theme-header')) {
             this.setAnnouncementHeight();
           }
         }
-      }
+      });
       
       // Aplicar clase sticky al countdown si está habilitado
-      const countdownBar = document.querySelector('.announcement-bar-countdown[data-sticky-enabled="true"]');
-      if (countdownBar) {
+      const countdownBars = document.querySelectorAll('.announcement-bar-countdown[data-sticky-enabled="true"]');
+      countdownBars.forEach((countdownBar) => {
         const countdownSection = countdownBar.closest('.announcement-bar-countdown-section');
         if (countdownSection) {
           const shouldBeSticky = countdownBar.getAttribute('data-sticky-enabled') === 'true';
@@ -175,7 +211,7 @@ if (!customElements.get('theme-header')) {
             this.setAnnouncementHeight();
           }
         }
-      }
+      });
     }
     
     observeStickyChanges() {
@@ -236,14 +272,20 @@ if (!customElements.get('theme-header')) {
         this.setAnnouncementHeight();
       });
       
-      const topSection = document.querySelector('.announcement-bar-top-section.sticky-enabled-section');
-      const countdownSection = document.querySelector('.announcement-bar-countdown-section.sticky-enabled-section');
+      // Observar todos los elementos, no solo los que tienen la clase sticky-enabled-section
+      // porque pueden agregarse después
+      const topSection = document.querySelector('.announcement-bar-top-section');
+      const countdownSection = document.querySelector('.announcement-bar-countdown-section');
+      const headerSection = document.querySelector('.header-section');
       
       if (topSection) {
         resizeObserver.observe(topSection);
       }
       if (countdownSection) {
         resizeObserver.observe(countdownSection);
+      }
+      if (headerSection) {
+        resizeObserver.observe(headerSection);
       }
       
       // También observar el contenedor padre para detectar cuando los elementos salen de la vista
@@ -369,4 +411,5 @@ if (!customElements.get('full-menu')) {
     }
   }
   customElements.define('full-menu', FullMenu);
+}
 }
