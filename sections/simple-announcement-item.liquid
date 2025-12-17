@@ -51,6 +51,10 @@
   assign sticky_on_product = section.settings.sticky_on_product
   assign sticky_on_blog = section.settings.sticky_on_blog
   
+  if enable_sticky == blank
+    assign enable_sticky = true
+  endif
+  
   if sticky_on_home == blank
     assign sticky_on_home = true
   endif
@@ -93,7 +97,7 @@
 
 {%- if enable_item and show_item -%}
 <div id="shopify-section-{{ section.id }}" class="simple-announcement-item-section {% if enable_sticky %}sticky-enabled-section{% endif %}" style="background-color: {{ background_color }}; color: {{ text_color }};">
-  <div class="simple-announcement-item" data-sticky-enabled="{{ enable_sticky }}">
+  <div class="simple-announcement-item" data-sticky-enabled="{% if enable_sticky %}true{% else %}false{% endif %}">
     <div class="simple-announcement-item--inner">
       <div class="simple-announcement-item--content">
         {%- if icon != blank -%}

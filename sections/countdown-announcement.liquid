@@ -40,6 +40,10 @@
   assign sticky_on_product = section.settings.sticky_on_product
   assign sticky_on_blog = section.settings.sticky_on_blog
   
+  if enable_sticky == blank
+    assign enable_sticky = true
+  endif
+  
   if sticky_on_home == blank
     assign sticky_on_home = true
   endif
@@ -131,7 +135,7 @@
 
 {%- if enable_countdown -%}
 <div id="shopify-section-{{ section.id }}" class="announcement-bar-countdown-section {% if enable_sticky %}sticky-enabled-section{% endif %}" style="background-color: {{ color_bg }}; color: {{ color_text }};">
-  <div class="announcement-bar announcement-bar-countdown" data-sticky-enabled="{{ enable_sticky }}">
+  <div class="announcement-bar announcement-bar-countdown" data-sticky-enabled="{% if enable_sticky %}true{% else %}false{% endif %}">
     <div class="announcement-bar--inner">
       
       <!-- Text Rotation Container -->
