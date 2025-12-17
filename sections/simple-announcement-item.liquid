@@ -1,0 +1,379 @@
+{{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign enable_item = section.settings.enable_item
+  assign text = section.settings.text
+  assign link_url = section.settings.link_url
+  assign link_label = section.settings.link_label
+  assign icon = section.settings.icon
+  
+  assign show_on_home = section.settings.show_on_home
+  assign show_on_collection = section.settings.show_on_collection
+  assign show_on_product = section.settings.show_on_product
+  assign show_on_blog = section.settings.show_on_blog
+  
+  assign show_item = true
+  
+  if show_on_home == blank
+    assign show_on_home = true
+  endif
+  if show_on_collection == blank
+    assign show_on_collection = true
+  endif
+  if show_on_product == blank
+    assign show_on_product = true
+  endif
+  if show_on_blog == blank
+    assign show_on_blog = true
+  endif
+  
+  if template == 'index'
+    if show_on_home == false
+      assign show_item = false
+    endif
+  elsif template.name == 'collection'
+    if show_on_collection == false
+      assign show_item = false
+    endif
+  elsif template.name == 'product'
+    if show_on_product == false
+      assign show_item = false
+    endif
+  elsif template.name == 'blog' or template.name == 'article'
+    if show_on_blog == false
+      assign show_item = false
+    endif
+  endif
+  
+  assign enable_sticky = section.settings.enable_sticky
+  assign sticky_on_home = section.settings.sticky_on_home
+  assign sticky_on_collection = section.settings.sticky_on_collection
+  assign sticky_on_product = section.settings.sticky_on_product
+  assign sticky_on_blog = section.settings.sticky_on_blog
+  
+  if sticky_on_home == blank
+    assign sticky_on_home = true
+  endif
+  if sticky_on_collection == blank
+    assign sticky_on_collection = true
+  endif
+  if sticky_on_product == blank
+    assign sticky_on_product = true
+  endif
+  if sticky_on_blog == blank
+    assign sticky_on_blog = true
+  endif
+  
+  if enable_sticky
+    if template == 'index'
+      if sticky_on_home == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'collection'
+      if sticky_on_collection == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'product'
+      if sticky_on_product == false
+        assign enable_sticky = false
+      endif
+    elsif template.name == 'blog' or template.name == 'article'
+      if sticky_on_blog == false
+        assign enable_sticky = false
+      endif
+    endif
+  endif
+-%}
+
+{%- if enable_item and show_item -%}
+<div id="shopify-section-{{ section.id }}" class="simple-announcement-item-section {% if enable_sticky %}sticky-enabled-section{% endif %}">
+  <div class="simple-announcement-item" data-sticky-enabled="{{ enable_sticky }}">
+    <div class="simple-announcement-item--inner">
+      <div class="simple-announcement-item--content">
+        {%- if icon != blank -%}
+          {% render 'svg-icons-inline', icon: icon %}
+        {%- endif -%}
+        {%- if link_url != blank -%}
+          <a href="{{ link_url }}" {% if link_label != blank %}aria-label="{{ link_label }}"{% endif %}>
+            {{ text }}
+          </a>
+        {%- else -%}
+          {{ text }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    /* Estilos esenciales para simple-announcement-item */
+    .simple-announcement-item-section {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    
+    .simple-announcement-item-section.sticky-enabled-section {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 52 !important;
+      width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
+    
+    .simple-announcement-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .simple-announcement-item {
+        height: 46px;
+        min-height: 46px;
+        max-height: 46px;
+      }
+    }
+    
+    .simple-announcement-item--inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0 15px;
+    }
+    
+    .simple-announcement-item--content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .simple-announcement-item--content a {
+      color: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .simple-announcement-item--content svg {
+      margin: 0 8px 0 0;
+      flex-shrink: 0;
+      height: auto;
+      width: auto;
+      max-height: 18px;
+      max-width: 18px;
+    }
+    
+    .simple-announcement-item:hover,
+    .simple-announcement-item *:hover {
+      transform: none !important;
+      translate: none !important;
+      box-shadow: none !important;
+      cursor: default !important;
+    }
+  </style>
+  
+  <script>
+    (function() {
+      // Función para aplicar clase sticky
+      function applyStickyClass() {
+        const item = document.querySelector('.simple-announcement-item[data-sticky-enabled="true"]');
+        if (item) {
+          const section = item.closest('.simple-announcement-item-section');
+          if (section && item.getAttribute('data-sticky-enabled') === 'true') {
+            section.classList.add('sticky-enabled-section');
+            
+            // Forzar position sticky
+            const computedStyle = window.getComputedStyle(section);
+            if (computedStyle.position !== 'sticky') {
+              section.style.setProperty('position', 'sticky', 'important');
+              section.style.setProperty('top', '0', 'important');
+              section.style.setProperty('z-index', '52', 'important');
+              section.style.setProperty('width', '100%', 'important');
+              section.style.setProperty('left', '0', 'important');
+              section.style.setProperty('right', '0', 'important');
+            }
+          }
+        }
+      }
+      
+      // Ejecutar inmediatamente
+      applyStickyClass();
+      
+      // Ejecutar cuando el DOM esté listo
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyStickyClass);
+      }
+      
+      // Ejecutar después de delays
+      setTimeout(applyStickyClass, 50);
+      setTimeout(applyStickyClass, 100);
+      
+      // Ejecutar cuando la ventana se carga completamente
+      window.addEventListener('load', applyStickyClass);
+      
+      // Escuchar eventos de Shopify
+      if (typeof Shopify !== 'undefined') {
+        document.addEventListener('shopify:section:load', function(event) {
+          setTimeout(applyStickyClass, 50);
+        });
+        document.addEventListener('shopify:section:select', function(event) {
+          setTimeout(applyStickyClass, 50);
+        });
+      }
+      
+      // Usar MutationObserver para detectar cambios
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+            const target = mutation.target;
+            if (target.classList && target.classList.contains('simple-announcement-item')) {
+              setTimeout(applyStickyClass, 50);
+            }
+          }
+        });
+      });
+      
+      // Observar cambios en el body
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['data-sticky-enabled']
+      });
+    })();
+  </script>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Simple Announcement Item",
+  "class": "simple-announcement-item-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_item",
+      "label": "Enable item",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Fashion crafted from the finest Pima & Alpaca... and not a drop of plastic"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "info": "Accessibility label for the link"
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon name",
+      "info": "Icon name from the theme's icon library"
+    },
+    {
+      "type": "header",
+      "content": "Sticky Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable sticky",
+      "default": true,
+      "info": "When enabled, this item will stay fixed when scrolling"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_home",
+      "label": "Apply sticky on home page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_collection",
+      "label": "Apply sticky on collection pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_product",
+      "label": "Apply sticky on product pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_on_blog",
+      "label": "Apply sticky on blog pages",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Visibility Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_home",
+      "label": "Show on home page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_collection",
+      "label": "Show on collection pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_product",
+      "label": "Show on product pages",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_blog",
+      "label": "Show on blog pages",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Simple Announcement Item"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["*"],
+    "groups": ["header"]
+  }
+}
+{% endschema %}
+
