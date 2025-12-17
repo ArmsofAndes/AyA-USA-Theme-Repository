@@ -32,6 +32,7 @@
       "block_order": [
         "text_Vh99jf"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "enable_sticky": true,
@@ -52,6 +53,26 @@
         "autoplay_length": 5,
         "announcement_bg": "#242c48",
         "announcement_text": "#ffffff"
+      }
+    },
+    "simple_announcement_item_46z49M": {
+      "type": "simple-announcement-item",
+      "name": "Simple Announcement Item",
+      "settings": {
+        "enable_item": true,
+        "text": "Fashion crafted from the finest Pima & Alpaca... and not a drop of plastic",
+        "link_url": "",
+        "link_label": "",
+        "icon": "",
+        "enable_sticky": true,
+        "sticky_on_home": true,
+        "sticky_on_collection": true,
+        "sticky_on_product": true,
+        "sticky_on_blog": true,
+        "show_on_home": true,
+        "show_on_collection": true,
+        "show_on_product": true,
+        "show_on_blog": true
       }
     },
     "announcement-bar-countdown": {
@@ -311,6 +332,7 @@
   },
   "order": [
     "announcement-bar",
+    "simple_announcement_item_46z49M",
     "announcement-bar-countdown",
     "header"
   ]
