@@ -275,7 +275,7 @@
             "wrap_season_text_shadow_blur_mobile": 4,
             "wrap_season_text_shadow_color_mobile": "#00000040",
             "margin_top": 0,
-            "margin_bottom": 0
+            "margin_bottom": 1.1
           }
         },
         "pima_alpaca_Q8DEGD": {
@@ -291,10 +291,12 @@
             "pima_alpaca_text_shadow_y_desktop": 0,
             "pima_alpaca_text_shadow_blur_desktop": 0,
             "pima_alpaca_text_shadow_color_desktop": "#00000040",
+            "pima_alpaca_text_margin_top_desktop": 1,
             "pima_alpaca_color_mobile": "#ffffff",
             "pima_alpaca_font_size_mobile": 15,
             "pima_alpaca_font_weight_mobile": 700,
             "pima_alpaca_line_height_mobile": 22.5,
+            "pima_alpaca_text_margin_top_mobile": 0,
             "margin_top": 0,
             "margin_bottom": 0
           }
