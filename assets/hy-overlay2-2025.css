@@ -1,0 +1,1260 @@
+/* ============================================
+   HY OVERLAY2 2025 - BASE STYLES
+   ============================================ */
+
+.image-with-text-overlay {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 40px 0;
+  height: var(--section-desktop-height, 80vh);
+}
+
+@media only screen and (min-width: 768px) {
+  .image-with-text-overlay {
+    padding: 0px 55px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay {
+    padding: 94px 0;
+  }
+}
+
+/* ============================================
+   BACKGROUND IMAGE
+   ============================================ */
+
+.image-with-text-overlay--bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.image-with-text-overlay--bg svg,
+.image-with-text-overlay--bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-with-text-overlay--bg:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  background-color: rgba(var(--color-overlay-rgb), var(--overlay-opacity));
+  pointer-events: none;
+}
+
+/* Gradient shadow from bottom (25% of image) - Mobile only */
+/* HIDDEN: Temporarily disabled to remove darkening effect */
+/*
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--bg:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    z-index: 12;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+    pointer-events: none;
+  }
+}
+*/
+
+/* Desktop image positioning */
+@media only screen and (min-width: 1024px) {
+  .image-with-text-overlay--bg img {
+    object-position: center top !important;
+  }
+}
+
+/* Desktop/Mobile image visibility */
+.image-with-text-overlay--desktop {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .image-with-text-overlay--desktop {
+    display: block;
+  }
+  .image-with-text-overlay--mobile {
+    display: none;
+  }
+}
+
+.image-with-text-overlay--mobile {
+  display: block;
+}
+
+/* ============================================
+   CONTENT CONTAINER
+   ============================================ */
+
+.image-with-text-overlay--content {
+  display: flex;
+  padding: 0;
+  max-width: none;
+  color: #fff;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  margin: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .image-with-text-overlay--content {
+    padding: 0 0px;
+  }
+}
+
+/* Content positioning */
+.image-with-text-overlay--content.content-middle-left {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image-with-text-overlay--content.content-middle-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.image-with-text-overlay--content.content-middle-right {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.image-with-text-overlay--content.content-bottom-left {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.image-with-text-overlay--content.content-bottom-center {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@media only screen and (min-width: 768px) {
+  .image-with-text-overlay--content.content-bottom-center {
+    max-width: 1570px;
+    margin: 0 auto;
+    padding-top: 0px;
+    align-items: flex-start;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--content.content-bottom-center {
+    align-items: flex-end;
+  }
+}
+
+.image-with-text-overlay--content.content-bottom-right {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* Content inner width */
+.image-with-text-overlay--content-inner {
+  width: auto;
+  max-width: none;
+}
+
+.image-with-text-overlay--content-inner.content-width-small,
+.image-with-text-overlay--content-inner.content-width-medium,
+.image-with-text-overlay--content-inner.content-width-large {
+  max-width: none;
+  width: auto;
+}
+
+/* Mobile content padding */
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--content-inner {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+/* Font families */
+.font-helvetica { 
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
+.font-arimo { 
+  font-family: 'Arimo', sans-serif; 
+}
+
+.font-roboto { 
+  font-family: 'Roboto', sans-serif; 
+}
+
+.font-poppins { 
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 300; 
+}
+
+.font-source-sans { 
+  font-family: 'Source Sans Pro', sans-serif; 
+}
+
+.font-montserrat { 
+  font-family: 'Montserrat', sans-serif; 
+}
+
+/* Apply section font family to all content */
+.image-with-text-overlay--content,
+.image-with-text-overlay--content * {
+  font-family: var(--section-font-family, inherit) !important;
+}
+
+/* Block wrapper - contains CSS custom properties */
+.block-wrapper {
+  margin-top: var(--block-margin-top, 0);
+  margin-bottom: var(--block-margin-bottom, 0);
+}
+
+/* Heading - uses CSS custom properties from wrapper */
+.image-with-text-overlay--content .image-with-text-overlay--heading {
+  color: #fff;
+  overflow: visible;
+}
+
+.block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
+  font-size: var(--block-font-size);
+  font-weight: var(--block-font-weight);
+  color: var(--block-color);
+  line-height: var(--block-line-height);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  .block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
+    font-size: 3.188rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .block-wrapper[data-block-type="heading"] .image-with-text-overlay--heading {
+    font-size: 1.536rem !important;
+  }
+}
+
+@media only screen and (min-width: 485px) {
+  .image-with-text-overlay--heading:not(.block-wrapper *) {
+    font-size: 35px;
+  }
+}
+
+/* Subheading - uses CSS custom properties from wrapper */
+.image-with-text-overlay--content .subheading {
+  color: #fff;
+}
+
+.block-wrapper[data-block-type="subheading"] .subheading {
+  font-size: var(--block-font-size) !important;
+  font-weight: var(--block-font-weight);
+  color: var(--block-color);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Rich text / Description - uses CSS custom properties from wrapper */
+.image-with-text-overlay--content .rte p {
+  font-size: inherit;
+  margin-bottom: 0;
+}
+
+.block-wrapper[data-block-type="text"] {
+  margin-top: var(--block-margin-top, 0);
+  margin-bottom: var(--block-margin-bottom, 0);
+}
+
+.block-wrapper[data-block-type="text"] .rte {
+  font-size: var(--block-font-size);
+  font-weight: var(--block-font-weight);
+  color: var(--block-color);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Override font-weight for description-size--medium in dropdown */
+.block-wrapper[data-block-type="text"] .rte.description-size--medium,
+.text-dropdown-content .rte.description-size--medium {
+  font-weight: 400 !important;
+}
+
+/* Ensure p elements inside description-size--medium also have font-weight 400 */
+.block-wrapper[data-block-type="text"] .rte.description-size--medium p,
+.text-dropdown-content .rte.description-size--medium p {
+  font-weight: 400 !important;
+}
+
+.block-wrapper[data-block-type="text"] .rte p {
+  line-height: var(--block-line-height);
+}
+
+/* Text Dropdown / Accordion */
+.text-dropdown-wrapper {
+  width: 100%;
+}
+
+.block-wrapper[data-block-type="text"].text-dropdown-wrapper {
+  padding-right: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .block-wrapper[data-block-type="text"].text-dropdown-wrapper {
+    padding-right: 12%;
+  }
+}
+
+.text-dropdown {
+  border: none;
+  margin: 0;
+  padding: 0 4%;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+}
+
+.text-dropdown summary {
+  list-style: none;
+  cursor: pointer;
+  font-family: 'Baskervville', serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+  line-height: 34.56px;
+  letter-spacing: 0;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.5px solid #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  margin-bottom: 0;
+  min-width: 250px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown summary {
+    font-size: 0.938rem;
+    line-height: 20px;
+  }
+}
+
+.text-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.text-dropdown summary::after {
+  content: '+';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(0deg);
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-left: auto;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+}
+
+.text-dropdown[open] summary::after {
+  content: '−';
+  transform: rotate(0deg);
+}
+
+/* Desktop - enhanced icon rotation */
+@media only screen and (min-width: 768px) {
+  .text-dropdown summary::after {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease;
+  }
+
+  .text-dropdown[open] summary::after {
+    transform: rotate(180deg);
+  }
+}
+
+.text-dropdown-content {
+  padding-top: 1rem;
+  overflow: hidden;
+}
+
+/* Remove padding-top in mobile */
+@media only screen and (max-width: 767px) {
+  .text-dropdown-content {
+    padding-top: 0;
+  }
+}
+
+/* Disable animations for dropdowns when animations are disabled via schema */
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content,
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content .rte,
+.text-dropdown.dropdown-animations-disabled-desktop .text-dropdown-content .rte p,
+.text-dropdown.dropdown-animations-disabled-desktop summary {
+  transition: none !important;
+  animation: none !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content,
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content .rte,
+  .text-dropdown.dropdown-animations-disabled-mobile .text-dropdown-content .rte p,
+  .text-dropdown.dropdown-animations-disabled-mobile summary {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Desktop animation - smooth slide down with minimal upward movement */
+@media only screen and (min-width: 768px) {
+  /* Skip animations if disabled */
+  .text-dropdown.dropdown-animations-disabled-desktop:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    transition: none !important;
+  }
+
+  .text-dropdown.dropdown-animations-disabled-desktop[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    /* max-height y padding esperan a que los párrafos terminen su animación */
+    /* Último párrafo: delay 0.5s + duración 0.75s = 1.25s, más margen = 1.35s */
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                padding-top 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.7s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.7s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s !important;
+  }
+
+  /* Smooth summary movement on open/close - synchronized with content */
+  .text-dropdown summary {
+    transition: margin-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .text-dropdown[open] summary {
+    margin-bottom: 0.75rem !important;
+    transition: margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+  }
+
+  /* Summary baje lentamente cuando se cierra - después de que los párrafos desaparezcan */
+  .text-dropdown:not([open]) summary {
+    margin-bottom: 0 !important;
+    transition: margin-bottom 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.25s !important;
+  }
+
+  /* Content text animation on close - visible fade out */
+  /* Se sincroniza con los párrafos, termina antes del colapso del contenedor */
+  .text-dropdown:not([open]) .text-dropdown-content .rte {
+    opacity: 0 !important;
+    transform: translateY(-8px) !important;
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.35s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.35s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.15s,
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s !important;
+  }
+
+  /* Animated paragraph exit - visible movement down */
+  .text-dropdown:not([open]) .text-dropdown-content .rte p {
+    opacity: 0 !important;
+    transform: translateY(15px) !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Fast staggered animation delays for opening - synchronized with dropdown movement */
+  /* Párrafos aparecen rápidamente mientras el dropdown se desplaza */
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(1) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.12s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.12s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(2) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.16s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.16s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(3) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(4) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.24s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.24s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(5) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.28s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.28s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(6) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.32s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.32s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(7) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.36s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.36s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(n+8) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.4s !important;
+  }
+
+  /* Staggered animation delays for closing - MUCH slower, more visible exit animation (last to first - reverse order) */
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(1) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.5s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(2) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.45s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.45s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(3) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.4s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(4) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.35s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.35s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(5) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.3s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(6) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.25s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(7),
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(n+8) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+  }
+}
+
+/* Mobile - animations similar to desktop */
+@media only screen and (max-width: 767px) {
+  /* Skip animations if disabled */
+  .text-dropdown.dropdown-animations-disabled-mobile:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    transition: none !important;
+  }
+
+  .text-dropdown.dropdown-animations-disabled-mobile[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: none !important;
+  }
+
+  /* Dropdown content container - closing */
+  .text-dropdown:not([open]) .text-dropdown-content {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(-5px) !important;
+    overflow: hidden;
+    /* max-height y padding esperan a que los párrafos terminen su animación */
+    /* Último párrafo: delay 0.5s + duración 0.75s = 1.25s, más margen = 1.35s */
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                padding-top 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                padding-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.35s,
+                opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.7s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.7s !important;
+  }
+
+  /* Dropdown content container - opening */
+  .text-dropdown[open] .text-dropdown-content {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s !important;
+  }
+
+  /* Summary movement on open/close */
+  .text-dropdown summary {
+    transition: margin-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .text-dropdown[open] summary {
+    margin-bottom: 0.75rem !important;
+    transition: margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+  }
+
+  /* Summary baje lentamente cuando se cierra - después de que los párrafos desaparezcan */
+  .text-dropdown:not([open]) summary {
+    margin-bottom: 0 !important;
+    transition: margin-bottom 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.25s !important;
+  }
+
+  /* Content text animation on close - visible fade out */
+  .text-dropdown:not([open]) .text-dropdown-content .rte {
+    opacity: 0 !important;
+    transform: translateY(-8px) !important;
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.35s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.35s !important;
+  }
+
+  /* Content text animation on open */
+  .text-dropdown[open] .text-dropdown-content .rte {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.15s,
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s !important;
+  }
+
+  /* Paragraph exit - visible movement down */
+  .text-dropdown:not([open]) .text-dropdown-content .rte p {
+    opacity: 0 !important;
+    transform: translateY(15px) !important;
+  }
+
+  /* Paragraph entrance */
+  .text-dropdown[open] .text-dropdown-content .rte p {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Staggered animation delays for opening - synchronized with dropdown movement */
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(1) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.12s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.12s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(2) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.16s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.16s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(3) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(4) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.24s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.24s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(5) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.28s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.28s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(6) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.32s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.32s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(7) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.36s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.36s !important;
+  }
+
+  .text-dropdown[open] .text-dropdown-content .rte p:nth-child(n+8) {
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.4s !important;
+  }
+
+  /* Staggered animation delays for closing - MUCH slower, more visible exit animation (last to first - reverse order) */
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(1) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.5s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.5s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(2) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.45s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.45s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(3) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.4s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(4) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.35s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.35s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(5) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.3s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.3s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(6) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.25s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.25s !important;
+  }
+
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(7),
+  .text-dropdown:not([open]) .text-dropdown-content .rte p:nth-child(n+8) {
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.2s !important;
+  }
+}
+
+.text-dropdown-content .rte {
+  font-size: var(--block-font-size);
+  font-weight: var(--block-font-weight);
+  color: var(--block-color);
+}
+
+.text-dropdown-content .rte p {
+  line-height: var(--block-line-height);
+  margin-bottom: 0.5rem;
+}
+
+.image-with-text-overlay--content .rte.description-size--small:not(.block-wrapper *) {
+  font-size: 0.875rem;
+}
+
+.image-with-text-overlay--content .rte.description-size--medium:not(.block-wrapper *) {
+  font-size: 1.2rem;
+}
+
+@media only screen and (min-width: 1068px) {
+  .image-with-text-overlay--content .rte.description-size--medium:not(.block-wrapper *) {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mobile styles for description-size--medium - must override .text-dropdown-content .rte */
+@media only screen and (max-width: 767px) {
+  .image-with-text-overlay--content .rte.description-size--medium,
+  .text-dropdown-content .rte.description-size--medium,
+  .block-wrapper[data-block-type="text"] .rte.description-size--medium {
+    font-size: 0.688rem !important;
+    font-weight: 400 !important;
+  }
+  
+  /* Ensure p elements inside description-size--medium also have correct font size */
+  .image-with-text-overlay--content .rte.description-size--medium p,
+  .text-dropdown-content .rte.description-size--medium p,
+  .block-wrapper[data-block-type="text"] .rte.description-size--medium p {
+    font-size: 0.688rem !important;
+    font-weight: 400 !important;
+  }
+}
+
+.image-with-text-overlay--content .rte.description-size--large:not(.block-wrapper *) {
+  font-size: 1.5rem;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+/* Buttons wrapper - using flexbox instead of grid */
+.buttons-grid-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 45.7px;
+  width: auto;
+  margin: 0 auto;
+  margin-right: 22%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Remove all margins and padding from button wrappers */
+.buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto;
+  min-width: 0;
+  /* Disable any transitions that might interfere with dropdown animations */
+  transition: none !important;
+  transform: none !important;
+}
+
+.buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+  margin: 0 !important;
+  display: inline-flex;
+  width: 175.3px;
+  /* Only allow button-specific transitions (hover effects) */
+  /* Position and layout transitions are disabled to prevent movement during dropdown close */
+}
+
+@media only screen and (max-width: 767px) {
+  .buttons-grid-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+    /* justify-content: center; */
+    align-items: center;
+    flex-wrap: wrap;
+    padding-right: 0%;
+  }
+  
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
+    flex: 1;
+    min-width: 0;
+    --btn-font-size: 15px;
+    --btn-font-weight: 400;
+    /* Disable transitions that might interfere with dropdown animations */
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
+    width: 100%;
+    /* Ensure buttons don't move during dropdown animations */
+    transform: none !important;
+  }
+  
+  /* Ensure mobile button styles use the CSS variables */
+  .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button[class*="custom-btn"] {
+    font-size: var(--btn-font-size) !important;
+    font-weight: var(--btn-font-weight) !important;
+  }
+}
+
+.image-with-text-overlay--content .button {
+  border: none;
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  text-decoration: none;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Custom button styles - using CSS custom properties from wrapper */
+.block-wrapper[data-block-type="button"] .button[class*="custom-btn"] {
+  transition: all 0.3s ease !important;
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  color: var(--btn-color);
+  background-color: var(--btn-bg-color);
+  border: var(--btn-border-width) var(--btn-border-style) var(--btn-border-color);
+  border-radius: var(--btn-border-radius);
+  padding: 0.6em 1.5em;
+  line-height: 1.2;
+}
+
+/* Buttons inside buttons-grid-wrapper - specific color override */
+.buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button[class*="custom-btn"] {
+  background-color: #01264a !important;
+}
+
+.block-wrapper[data-block-type="button"] .button[class*="custom-btn"]:hover {
+  color: var(--btn-hover-color) !important;
+  background-color: var(--btn-hover-bg-color) !important;
+  border-color: var(--btn-hover-border-color) !important;
+}
+
+/* ============================================
+   ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* Disable animations for content (except buttons and dropdown elements) */
+/* Note: :not(.text-dropdown *) doesn't work in CSS, so we use specific overrides below */
+/* IMPORTANT: Dropdown animations MUST come AFTER this rule and use higher specificity */
+.image-with-text-overlay--content *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *):not([class*="hy-overlay2-2025"]),
+.image-with-text-overlay--content-inner *:not([class*="custom-btn"]):not(.text-dropdown):not(.text-dropdown-content):not(.text-dropdown-content *):not([class*="hy-overlay2-2025"]) {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  text-align: left;
+  margin-top: -10px;
+}
+
+/* CRITICAL: Dropdown animations in media queries below use higher specificity */
+/* They explicitly override the general disabling rule with !important flags */
+
+/* Disable parallax animations */
+.thb-parallax-image,
+.image-with-text-overlay--bg {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ============================================
+   RESPONSIVE HEIGHTS
+   ============================================ */
+
+@media only screen and (max-width: 749px) {
+  .image-with-text-overlay {
+    height: 620px !important;
+  }
+}
+
+/* Space block */
+.block-wrapper[data-block-type="space"].block-space {
+  height: var(--space-height);
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Mobile height classes */
+.mobile-height-350 {
+  min-height: 350px;
+}
+
+.mobile-height-400 {
+  min-height: 400px;
+}
+
+.mobile-height-450 {
+  min-height: 450px;
+}
+
+.mobile-height-500 {
+  min-height: 620px;
+}
+
+.mobile-height-full {
+  min-height: 100vh;
+}
+
+/* Desktop height classes */
+@media only screen and (min-width: 768px) {
+  .desktop-height-450 {
+    min-height: 450px;
+  }
+
+  .desktop-height-550 {
+    min-height: 550px;
+  }
+
+  .desktop-height-650 {
+    min-height: 650px;
+  }
+
+  .desktop-height-750 {
+    min-height: 750px;
+  }
+
+  .desktop-height-full {
+    min-height: 100vh;
+  }
+}
+
+/* ============================================
+   TEXT ALIGNMENT
+   ============================================ */
+
+.image-with-text-overlay.text-left {
+  text-align: left;
+}
+
+.image-with-text-overlay.text-center {
+  text-align: center;
+}
+
+.image-with-text-overlay.text-right {
+  text-align: right;
+}
+
+/* ============================================
+   HY OVERLAY2 2025 - DISCOUNT STYLES
+   ============================================ */
+
+/* discount-tier - Desktop */
+@media only screen and (min-width: 768px) {
+  .hy-overlay2-2025--discount-tier {
+    margin: 0;
+    padding: 0;
+    height: 180px;
+  }
+}
+
+/* discount-footer */
+.hy-overlay2-2025--discount-footer {
+  display: block;
+  height: auto;
+}
+
+/* discount-footer-grid */
+.hy-overlay2-2025--discount-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(auto, 60px) max-content;
+  gap: 0;
+  width: fit-content;
+  height: auto;
+  align-items: center;
+  justify-items: center;
+}
+
+/* discount-footer-col-1 */
+.hy-overlay2-2025--discount-footer-col-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: none;
+  transform-origin: center;
+  width: fit-content;
+  height: fit-content;
+}
+
+/* "UP TO" */
+.hy-overlay2-2025--discount-footer-up-to {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 49px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 49px;
+  transform: rotate(-90deg) !important;
+  transform-origin: center;
+}
+
+/* discount-footer-col-2 */
+.hy-overlay2-2025--discount-footer-col-2 {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 100%;
+}
+
+/* discount-footer-inner-grid */
+.hy-overlay2-2025--discount-footer-inner-grid {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 0;
+  width: fit-content;
+  height: 100%;
+}
+
+/* discount-footer-inner-col-1 */
+.hy-overlay2-2025--discount-footer-inner-col-1 {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: visible;
+}
+
+/* "20" */
+.hy-overlay2-2025--discount-footer-number {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 190px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 190px;
+}
+
+/* discount-footer-inner-col-2 */
+.hy-overlay2-2025--discount-footer-inner-col-2 {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: visible;
+}
+
+/* discount-footer-inner-col-2-grid */
+.hy-overlay2-2025--discount-footer-inner-col-2-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content max-content;
+  gap: 0;
+  width: fit-content;
+}
+
+/* discount-footer-inner-col-2-row-1 and row-2 */
+.hy-overlay2-2025--discount-footer-inner-col-2-row-1,
+.hy-overlay2-2025--discount-footer-inner-col-2-row-2 {
+  display: flex;
+  align-items: center;
+  min-height: fit-content;
+  overflow: visible;
+}
+
+/* "%" */
+.hy-overlay2-2025--discount-footer-percent {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 130px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 130px;
+}
+
+/* "OFF" */
+.hy-overlay2-2025--discount-footer-off {
+  color: #ffc25e;
+  font-family: Montserrat, sans-serif;
+  font-size: 49px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  min-height: 49px;
+}
+
+/* "& Free Shipping" - Desktop */
+.hy-overlay2-2025--discount-shipping {
+  color: #FFC25E;
+  font-family: Montserrat;
+  font-size: 41px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 2.95px;
+  text-transform: uppercase;
+}
+
+/* "& Free Shipping" - Mobile */
+@media only screen and (max-width: 767px) {
+  .hy-overlay2-2025--discount-shipping {
+    color: #FFC25E;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+  }
+
+  /* Discount footer elements - Mobile */
+  .hy-overlay2-2025--discount-footer-off {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 30px;
+  }
+
+  .hy-overlay2-2025--discount-footer-percent {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 60px;
+  }
+
+  .hy-overlay2-2025--discount-footer-number {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 110px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 110px;
+  }
+
+  .hy-overlay2-2025--discount-footer-up-to {
+    color: #ffc25e;
+    font-family: Montserrat, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-block;
+    min-height: 24px;
+    transform: rotate(-90deg) !important;
+    transform-origin: center;
+  }
+}
