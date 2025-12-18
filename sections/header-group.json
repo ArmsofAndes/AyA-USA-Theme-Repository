@@ -82,7 +82,7 @@
       "type": "countdown-announcement",
       "settings": {
         "enable_countdown": true,
-        "enable_sticky": false,
+        "enable_sticky": true,
         "sticky_on_home": true,
         "sticky_on_collection": true,
         "sticky_on_product": true,
