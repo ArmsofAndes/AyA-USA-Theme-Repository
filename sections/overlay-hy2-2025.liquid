@@ -17,6 +17,13 @@
   assign text_alignment = section.settings.text_alignment
   assign overlay_color = section.settings.overlay_color
   assign overlay_opacity = section.settings.overlay_opacity
+  assign discount_color_desktop = section.settings.discount_color_desktop | default: '#ffc25e'
+  assign discount_color_mobile = section.settings.discount_color_mobile | default: '#ffc25e'
+  assign discount_up_to_text = section.settings.discount_up_to_text | default: 'UP TO'
+  assign discount_number = section.settings.discount_number | default: '20'
+  assign discount_percent_symbol = section.settings.discount_percent_symbol | default: '%'
+  assign discount_off_text = section.settings.discount_off_text | default: 'OFF'
+  assign discount_shipping_text = section.settings.discount_shipping_text | default: '& FREE SHIPPING'
   assign disable_top_spacing = section.settings.disable_top_spacing
   assign disable_bottom_spacing = section.settings.disable_bottom_spacing
 
@@ -50,7 +57,7 @@
 <div class="row {{ section_width }}" style="--section-font-family: {{ section_font }};">
   <div class="small-12 columns">
     <image-with-text-overlay-hy2 id="overlay-hy2-2025-{{ section.id }}" class="image-with-text-overlay-hy2 text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
-      style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};">
+      style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};--discount-color-desktop: {{ discount_color_desktop }};--discount-color-mobile: {{ discount_color_mobile }};">
       
       <div id="overlay-hy2-2025-bg-{{ section.id }}" class="image-with-text-overlay-hy2--bg parallax--{{ image_parallax }}">
         {% if image %}
@@ -90,9 +97,8 @@
             assign button_count = 0
             assign header_group_started = false
             assign footer_group_started = false
-            assign discount_count = 0
-            assign discount_group_started = false
             assign bottom_group_started = false
+            assign discount_tier_rendered = false
           -%}
           
           {% for block in section.blocks %}
@@ -129,42 +135,30 @@
                 {%- if header_group_started -%}
                   </div>
                   {%- assign header_group_started = false -%}
-                {%- endif -%}
-
-              {%- when 'discount_offer' -%}
-                {% if button_group_started %}
-                  </div>
-                  {% assign button_group_started = false %}
-                  {% assign button_count = 0 %}
-                {% endif %}
-                {%- if header_group_started -%}
-                  </div>
-                  {%- assign header_group_started = false -%}
-                {%- endif -%}
-                {%- assign discount_count = discount_count | plus: 1 -%}
-                {%- if discount_count == 1 -%}
-                  {%- assign footer_group_started = true -%}
-                  <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
-                  {%- assign discount_group_started = true -%}
-                  <div id="overlay-hy2-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
-                    <div class="hy2-overlay-2025--discount-tier">
-                      <div class="hy2-overlay-2025--discount-footer">
-                        <div class="hy2-overlay-2025--discount-footer-grid">
-                          <div class="hy2-overlay-2025--discount-footer-col-1">
-                            <span class="hy2-overlay-2025--discount-footer-up-to">UP TO</span>
-                          </div>
-                          <div class="hy2-overlay-2025--discount-footer-col-2">
-                            <div class="hy2-overlay-2025--discount-footer-inner-grid">
-                              <div class="hy2-overlay-2025--discount-footer-inner-col-1">
-                                <span class="hy2-overlay-2025--discount-footer-number">20</span>
+                  {%- comment -%} Render discount-tier después del header-group {%- endcomment -%}
+                  {%- unless discount_tier_rendered -%}
+                    <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                      <div id="overlay-hy2-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
+                        <div class="hy2-overlay-2025--discount-tier">
+                          <div class="hy2-overlay-2025--discount-footer">
+                            <div class="hy2-overlay-2025--discount-footer-grid">
+                              <div class="hy2-overlay-2025--discount-footer-col-1">
+                                <span class="hy2-overlay-2025--discount-footer-up-to">{{ discount_up_to_text }}</span>
                               </div>
-                              <div class="hy2-overlay-2025--discount-footer-inner-col-2">
-                                <div class="hy2-overlay-2025--discount-footer-inner-col-2-grid">
-                                  <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-1">
-                                    <span class="hy2-overlay-2025--discount-footer-percent">%</span>
+                              <div class="hy2-overlay-2025--discount-footer-col-2">
+                                <div class="hy2-overlay-2025--discount-footer-inner-grid">
+                                  <div class="hy2-overlay-2025--discount-footer-inner-col-1">
+                                    <span class="hy2-overlay-2025--discount-footer-number">{{ discount_number }}</span>
                                   </div>
-                                  <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-2">
-                                    <span class="hy2-overlay-2025--discount-footer-off">OFF</span>
+                                  <div class="hy2-overlay-2025--discount-footer-inner-col-2">
+                                    <div class="hy2-overlay-2025--discount-footer-inner-col-2-grid">
+                                      <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-1">
+                                        <span class="hy2-overlay-2025--discount-footer-percent">{{ discount_percent_symbol }}</span>
+                                      </div>
+                                      <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-2">
+                                        <span class="hy2-overlay-2025--discount-footer-off">{{ discount_off_text }}</span>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -173,7 +167,11 @@
                         </div>
                       </div>
                     </div>
+                    <span class="hy2-overlay-2025--discount-shipping">{{ discount_shipping_text }}</span>
+                    {%- assign discount_tier_rendered = true -%}
+                  {%- endunless -%}
                 {%- endif -%}
+
 
               {%- when 'pima_alpaca' -%}
                 {% if button_group_started %}
@@ -185,12 +183,42 @@
                   </div>
                   {%- assign header_group_started = false -%}
                 {%- endif -%}
-                {%- if discount_group_started -%}
+                {%- comment -%} Render discount-tier si no se ha renderizado aún {%- endcomment -%}
+                {%- unless discount_tier_rendered -%}
+                  <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                    <div id="overlay-hy2-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
+                      <div class="hy2-overlay-2025--discount-tier">
+                        <div class="hy2-overlay-2025--discount-footer">
+                          <div class="hy2-overlay-2025--discount-footer-grid">
+                            <div class="hy2-overlay-2025--discount-footer-col-1">
+                              <span class="hy2-overlay-2025--discount-footer-up-to">{{ discount_up_to_text }}</span>
+                            </div>
+                            <div class="hy2-overlay-2025--discount-footer-col-2">
+                              <div class="hy2-overlay-2025--discount-footer-inner-grid">
+                                <div class="hy2-overlay-2025--discount-footer-inner-col-1">
+                                  <span class="hy2-overlay-2025--discount-footer-number">{{ discount_number }}</span>
+                                </div>
+                                <div class="hy2-overlay-2025--discount-footer-inner-col-2">
+                                  <div class="hy2-overlay-2025--discount-footer-inner-col-2-grid">
+                                    <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-1">
+                                      <span class="hy2-overlay-2025--discount-footer-percent">{{ discount_percent_symbol }}</span>
+                                    </div>
+                                    <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-2">
+                                      <span class="hy2-overlay-2025--discount-footer-off">{{ discount_off_text }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  {%- assign discount_group_started = false -%}
-                  <span class="hy2-overlay-2025--discount-shipping">& FREE SHIPPING</span>
-                {%- endif -%}
-                {%- if discount_count > 0 and footer_group_started == false -%}
+                  <span class="hy2-overlay-2025--discount-shipping">{{ discount_shipping_text }}</span>
+                  {%- assign discount_tier_rendered = true -%}
+                {%- endunless -%}
+                {%- if footer_group_started == false -%}
                   {%- assign footer_group_started = true -%}
                   <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
                 {%- endif -%}
@@ -211,12 +239,42 @@
                   </div>
                   {%- assign header_group_started = false -%}
                 {%- endif -%}
-                {%- if discount_group_started -%}
+                {%- comment -%} Render discount-tier si no se ha renderizado aún {%- endcomment -%}
+                {%- unless discount_tier_rendered -%}
+                  <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
+                    <div id="overlay-hy2-2025-discount-group-{{ section.id }}" class="discount-group-wrapper">
+                      <div class="hy2-overlay-2025--discount-tier">
+                        <div class="hy2-overlay-2025--discount-footer">
+                          <div class="hy2-overlay-2025--discount-footer-grid">
+                            <div class="hy2-overlay-2025--discount-footer-col-1">
+                              <span class="hy2-overlay-2025--discount-footer-up-to">{{ discount_up_to_text }}</span>
+                            </div>
+                            <div class="hy2-overlay-2025--discount-footer-col-2">
+                              <div class="hy2-overlay-2025--discount-footer-inner-grid">
+                                <div class="hy2-overlay-2025--discount-footer-inner-col-1">
+                                  <span class="hy2-overlay-2025--discount-footer-number">{{ discount_number }}</span>
+                                </div>
+                                <div class="hy2-overlay-2025--discount-footer-inner-col-2">
+                                  <div class="hy2-overlay-2025--discount-footer-inner-col-2-grid">
+                                    <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-1">
+                                      <span class="hy2-overlay-2025--discount-footer-percent">{{ discount_percent_symbol }}</span>
+                                    </div>
+                                    <div class="hy2-overlay-2025--discount-footer-inner-col-2-row-2">
+                                      <span class="hy2-overlay-2025--discount-footer-off">{{ discount_off_text }}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  {%- assign discount_group_started = false -%}
-                  <span class="hy2-overlay-2025--discount-shipping">& FREE SHIPPING</span>
-                {%- endif -%}
-                {%- if discount_count > 0 and footer_group_started == false -%}
+                  <span class="hy2-overlay-2025--discount-shipping">{{ discount_shipping_text }}</span>
+                  {%- assign discount_tier_rendered = true -%}
+                {%- endunless -%}
+                {%- if footer_group_started == false -%}
                   {%- assign footer_group_started = true -%}
                   <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
                 {%- endif -%}
@@ -275,9 +333,6 @@
             </div>
           {% endif %}
           
-          {% if discount_group_started %}
-            </div>
-          {% endif %}
           
           {% if bottom_group_started %}
             </div>
@@ -366,11 +421,6 @@
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --space-height: {{ block.settings.height }}px;
       }
-    {%- when 'discount_offer' -%}
-      #shopify-section-{{ section.id }} .block-{{ block.id }} {
-        --block-margin-top: {{ block.settings.margin_top }}rem;
-        --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
-      }
   {%- endcase -%}
 {% endfor %}
 
@@ -383,11 +433,12 @@
   flex-wrap: nowrap !important;
   gap: {{ section.settings.buttons_gap_desktop | default: 46 | divided_by: 16.0 }}rem !important;
   width: auto !important;
-  margin: 0 auto !important;
+  margin-top: {{ section.settings.buttons_margin_top_desktop | default: 0 }}rem !important;
+  margin-left: {{ section.settings.buttons_margin_left_desktop | default: 0 }}rem !important;
   margin-right: {{ section.settings.buttons_margin_right_desktop | default: 22 }}% !important;
+  margin-bottom: 2rem !important;
   justify-content: flex-start !important;
   align-items: center !important;
-  margin-bottom: 2rem !important;
 }
 
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button {
@@ -685,7 +736,9 @@
     width: 100% !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: 0 auto !important;
+    margin-top: {{ section.settings.buttons_margin_top_mobile | default: 0 }}rem !important;
+    margin-left: {{ section.settings.buttons_margin_left_mobile | default: 0 }}rem !important;
+    margin-right: {{ section.settings.buttons_margin_right_mobile | default: 0 }}rem !important;
     margin-bottom: 2rem !important;
   }
   
@@ -1066,120 +1119,6 @@
   width: 100% !important;
 }
 
-{% for block in section.blocks %}
-  {%- if block.type == 'discount_offer' -%}
-    #shopify-section-{{ section.id }} .block-{{ block.id }} .rte,
-    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-offer-content,
-    #overlay-hy2-2025-discount-content-{{ block.id }} {
-      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
-      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
-      font-family: Montserrat, sans-serif !important;
-      font-style: normal !important;
-      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      overflow: visible !important;
-      min-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
-    }
-  {%- endif -%}
-{% endfor %}
-
-{% for block in section.blocks %}
-  {%- if block.type == 'discount_offer' -%}
-    /* Desktop: "Buy x," part */
-    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-buy-part,
-    #overlay-hy2-2025-discount-buy-{{ block.id }} {
-      color: {{ block.settings.discount_buy_color_desktop | default: '#FFC25E' }} !important;
-      text-shadow: {{ block.settings.discount_text_shadow_x_desktop | default: 0 }}px {{ block.settings.discount_text_shadow_y_desktop | default: 4 }}px {{ block.settings.discount_text_shadow_blur_desktop | default: 4 }}px {{ block.settings.discount_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
-      font-family: Montserrat, sans-serif !important;
-      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
-      font-style: normal !important;
-      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
-      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
-      display: inline !important;
-    }
-
-    /* Desktop: "Get XX% Off" part */
-    #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-get-part,
-    #overlay-hy2-2025-discount-get-{{ block.id }} {
-      color: {{ block.settings.discount_get_color_desktop | default: '#FFFFFF' }} !important;
-      font-family: Montserrat, sans-serif !important;
-      font-size: {{ block.settings.discount_font_size_desktop | default: 60 }}px !important;
-      font-style: normal !important;
-      font-weight: {{ block.settings.discount_font_weight_desktop | default: 700 }} !important;
-      line-height: {{ block.settings.discount_line_height_desktop | default: 45 }}px !important;
-      display: inline !important;
-      margin-left: 0.5rem !important;
-    }
-  {%- endif -%}
-{% endfor %}
-
-/* Desktop: Estilo específico para el primer discount offer */
-@media only screen and (min-width: 768px) {
-  #overlay-hy2-2025-discount-get-discount_offer_A6gkAF {
-    margin-left: 0.5rem !important;
-  }
-}
-
-/* Mobile styles */
-@media only screen and (max-width: 767px) {
-  /* Mobile: Contenedor de descuentos - centrado */
-  #shopify-section-{{ section.id }} .block-wrapper[data-block-type="text"].discount-offer,
-  #shopify-section-{{ section.id }} .discount-offer {
-    text-align: center !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  
-  {% for block in section.blocks %}
-    {%- if block.type == 'discount_offer' -%}
-      #shopify-section-{{ section.id }} .block-{{ block.id }} .rte,
-      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-offer-content,
-      #overlay-hy2-2025-discount-content-{{ block.id }} {
-        text-align: center !important;
-        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
-        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
-        display: block !important;
-        width: 100% !important;
-        margin: 0 auto !important;
-      }
-    {%- endif -%}
-  {% endfor %}
-  
-  {% for block in section.blocks %}
-    {%- if block.type == 'discount_offer' -%}
-      /* Mobile: "Buy x," part */
-      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-buy-part,
-      #overlay-hy2-2025-discount-buy-{{ block.id }} {
-        color: {{ block.settings.discount_buy_color_mobile | default: '#FFC25E' }} !important;
-        text-align: center !important;
-        font-family: Montserrat, sans-serif !important;
-        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
-        font-style: normal !important;
-        font-weight: {{ block.settings.discount_font_weight_mobile | default: 700 }} !important;
-        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
-        display: inline !important;
-      }
-      
-      /* Mobile: "Get XX% Off" part */
-      #shopify-section-{{ section.id }} .block-{{ block.id }} .discount-get-part,
-      #overlay-hy2-2025-discount-get-{{ block.id }} {
-        color: {{ block.settings.discount_get_color_mobile | default: '#FFFFFF' }} !important;
-        font-family: Montserrat, sans-serif !important;
-        font-size: {{ block.settings.discount_font_size_mobile | default: 31 }}px !important;
-        font-style: normal !important;
-        font-weight: {{ block.settings.discount_font_weight_mobile | default: 700 }} !important;
-        line-height: {{ block.settings.discount_line_height_mobile | default: 45 }}px !important;
-        display: inline !important;
-        margin-left: 0.25rem !important;
-      }
-    {%- endif -%}
-  {% endfor %}
-}
 
 /* Text 8: "Luxuriously Soft Pima & Alpaca" - Text */
 /* Force visibility - Desktop styles */
@@ -1517,6 +1456,63 @@
     },
     {
       "type": "header",
+      "content": "Discount Colors"
+    },
+    {
+      "type": "color",
+      "id": "discount_color_desktop",
+      "label": "Discount color (Desktop)",
+      "default": "#ffc25e",
+      "info": "Color compartido para discount-tier y discount-shipping en desktop"
+    },
+    {
+      "type": "color",
+      "id": "discount_color_mobile",
+      "label": "Discount color (Mobile)",
+      "default": "#ffc25e",
+      "info": "Color compartido para discount-tier y discount-shipping en mobile"
+    },
+    {
+      "type": "header",
+      "content": "Discount Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "discount_up_to_text",
+      "label": "Texto 'UP TO'",
+      "default": "UP TO",
+      "info": "Texto que aparece antes del número de descuento"
+    },
+    {
+      "type": "text",
+      "id": "discount_number",
+      "label": "Número de descuento",
+      "default": "20",
+      "info": "Número del porcentaje de descuento"
+    },
+    {
+      "type": "text",
+      "id": "discount_percent_symbol",
+      "label": "Símbolo de porcentaje",
+      "default": "%",
+      "info": "Símbolo que aparece después del número"
+    },
+    {
+      "type": "text",
+      "id": "discount_off_text",
+      "label": "Texto 'OFF'",
+      "default": "OFF",
+      "info": "Texto que aparece después del símbolo de porcentaje"
+    },
+    {
+      "type": "text",
+      "id": "discount_shipping_text",
+      "label": "Texto de envío gratis",
+      "default": "& FREE SHIPPING",
+      "info": "Texto que aparece después del descuento"
+    },
+    {
+      "type": "header",
       "content": "Buttons Layout - Desktop"
     },
     {
@@ -1527,6 +1523,26 @@
       "max": 100,
       "step": 1,
       "default": 46
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_top_desktop",
+      "label": "Margen superior (rem) - Desktop",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "default": 0,
+      "info": "Margen superior del contenedor de botones"
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_left_desktop",
+      "label": "Margen izquierdo (rem) - Desktop",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "default": 0,
+      "info": "Margen izquierdo del contenedor de botones"
     },
     {
       "type": "range",
@@ -1549,6 +1565,36 @@
       "max": 5,
       "step": 0.1,
       "default": 1.0
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_top_mobile",
+      "label": "Margen superior (rem) - Mobile",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "default": 0,
+      "info": "Margen superior del contenedor de botones"
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_left_mobile",
+      "label": "Margen izquierdo (rem) - Mobile",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "default": 0,
+      "info": "Margen izquierdo del contenedor de botones"
+    },
+    {
+      "type": "range",
+      "id": "buttons_margin_right_mobile",
+      "label": "Margen derecho (rem) - Mobile",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "default": 0,
+      "info": "Margen derecho del contenedor de botones"
     },
     {
       "type": "header",
@@ -1797,6 +1843,20 @@
           "default": "#FFFFFF"
         },
         {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "default": "h1",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "h6", "label": "H6" }
+          ]
+        },
+        {
           "type": "header",
           "content": "Desktop Settings"
         },
@@ -2028,166 +2088,6 @@
           "id": "wrap_season_text_shadow_color_mobile",
           "label": "Color de sombra - Mobile",
           "default": "rgba(0, 0, 0, 0.25)"
-        },
-        {
-          "type": "range",
-          "id": "margin_top",
-          "label": "Margin Top",
-          "min": 0,
-          "max": 5,
-          "step": 0.1,
-          "unit": "rem",
-          "default": 0
-        },
-        {
-          "type": "range",
-          "id": "margin_bottom",
-          "label": "Margin Bottom",
-          "min": 0,
-          "max": 5,
-          "step": 0.1,
-          "unit": "rem",
-          "default": 1
-        }
-      ]
-    },
-    {
-      "type": "discount_offer",
-      "name": "Discount Offer",
-      "limit": 3,
-      "settings": [
-        {
-          "type": "text",
-          "id": "buy_text",
-          "label": "Buy text (e.g., 'Buy 2, ' or 'Buy 3, ' or 'Buy 4, ')",
-          "default": "Buy 2, ",
-          "info": "Esta parte aparecerá en color dorado (#FFC25E)"
-        },
-        {
-          "type": "text",
-          "id": "get_text",
-          "label": "Get text (e.g., 'Get 10% Off' or 'Get 15% Off' or 'Get 20% Off')",
-          "default": "Get 10% Off",
-          "info": "Esta parte aparecerá en color blanco"
-        },
-        {
-          "type": "header",
-          "content": "Discount Offer - Desktop"
-        },
-        {
-          "type": "color",
-          "id": "discount_buy_color_desktop",
-          "label": "Color 'Buy X,' (Desktop)",
-          "default": "#FFC25E"
-        },
-        {
-          "type": "color",
-          "id": "discount_get_color_desktop",
-          "label": "Color 'Get XX% Off' (Desktop)",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "range",
-          "id": "discount_font_size_desktop",
-          "label": "Tamaño de fuente (px) - Desktop",
-          "min": 20,
-          "max": 120,
-          "step": 1,
-          "default": 60
-        },
-        {
-          "type": "range",
-          "id": "discount_font_weight_desktop",
-          "label": "Peso de fuente - Desktop",
-          "min": 100,
-          "max": 900,
-          "step": 100,
-          "default": 700
-        },
-        {
-          "type": "range",
-          "id": "discount_line_height_desktop",
-          "label": "Altura de línea (px) - Desktop",
-          "min": 20,
-          "max": 80,
-          "step": 1,
-          "default": 45
-        },
-        {
-          "type": "range",
-          "id": "discount_text_shadow_x_desktop",
-          "label": "Sombra X (px) - Desktop",
-          "min": 0,
-          "max": 20,
-          "step": 1,
-          "default": 0
-        },
-        {
-          "type": "range",
-          "id": "discount_text_shadow_y_desktop",
-          "label": "Sombra Y (px) - Desktop",
-          "min": 0,
-          "max": 20,
-          "step": 1,
-          "default": 4
-        },
-        {
-          "type": "range",
-          "id": "discount_text_shadow_blur_desktop",
-          "label": "Desenfoque de sombra (px) - Desktop",
-          "min": 0,
-          "max": 20,
-          "step": 1,
-          "default": 4
-        },
-        {
-          "type": "color",
-          "id": "discount_text_shadow_color_desktop",
-          "label": "Color de sombra - Desktop",
-          "default": "rgba(0, 0, 0, 0.25)"
-        },
-        {
-          "type": "header",
-          "content": "Discount Offer - Mobile"
-        },
-        {
-          "type": "color",
-          "id": "discount_buy_color_mobile",
-          "label": "Color 'Buy X,' (Mobile)",
-          "default": "#FFC25E"
-        },
-        {
-          "type": "color",
-          "id": "discount_get_color_mobile",
-          "label": "Color 'Get XX% Off' (Mobile)",
-          "default": "#FFFFFF"
-        },
-        {
-          "type": "range",
-          "id": "discount_font_size_mobile",
-          "label": "Tamaño de fuente (px) - Mobile",
-          "min": 12,
-          "max": 60,
-          "step": 1,
-          "default": 31
-        },
-        {
-          "type": "range",
-          "id": "discount_font_weight_mobile",
-          "label": "Peso de fuente - Mobile",
-          "min": 100,
-          "max": 900,
-          "step": 100,
-          "default": 700
-        },
-        {
-          "type": "range",
-          "id": "discount_line_height_mobile",
-          "label": "Altura de línea (px) - Mobile",
-          "min": 20,
-          "max": 80,
-          "step": 1,
-          "default": 45
         },
         {
           "type": "range",
@@ -2528,33 +2428,6 @@
           "type": "wrap_season_text",
           "settings": {
             "text": "Wrap the Season in Plastic-Free Softness",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        {
-          "type": "discount_offer",
-          "settings": {
-            "buy_text": "Buy 2, ",
-            "get_text": "Get 10% Off",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        {
-          "type": "discount_offer",
-          "settings": {
-            "buy_text": "Buy 3, ",
-            "get_text": "Get 15% Off",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        {
-          "type": "discount_offer",
-          "settings": {
-            "buy_text": "Buy 4, ",
-            "get_text": "Get 20% Off",
             "margin_top": 0,
             "margin_bottom": 0
           }

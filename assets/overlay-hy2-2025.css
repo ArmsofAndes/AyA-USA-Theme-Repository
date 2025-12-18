@@ -1089,7 +1089,7 @@
 
 /* "UP TO" */
 .hy2-overlay-2025--discount-footer-up-to {
-  color: #ffc25e;
+  color: var(--discount-color-desktop, #ffc25e);
   font-family: Montserrat, sans-serif;
   font-size: 49px;
   font-weight: 700;
@@ -1128,7 +1128,7 @@
 
 /* "20" */
 .hy2-overlay-2025--discount-footer-number {
-  color: #ffc25e;
+  color: var(--discount-color-desktop, #ffc25e);
   font-family: Montserrat, sans-serif;
   font-size: 190px;
   font-weight: 500;
@@ -1166,7 +1166,7 @@
 
 /* "%" */
 .hy2-overlay-2025--discount-footer-percent {
-  color: #ffc25e;
+  color: var(--discount-color-desktop, #ffc25e);
   font-family: Montserrat, sans-serif;
   font-size: 130px;
   font-weight: 500;
@@ -1178,7 +1178,7 @@
 
 /* "OFF" */
 .hy2-overlay-2025--discount-footer-off {
-  color: #ffc25e;
+  color: var(--discount-color-desktop, #ffc25e);
   font-family: Montserrat, sans-serif;
   font-size: 49px;
   font-weight: 500;
@@ -1190,7 +1190,7 @@
 
 /* "& Free Shipping" - Desktop */
 .hy2-overlay-2025--discount-shipping {
-  color: #FFC25E;
+  color: var(--discount-color-desktop, #ffc25e);
   font-family: Montserrat;
   font-size: 41px;
   font-style: normal;
@@ -1202,7 +1202,7 @@
 /* "& Free Shipping" - Mobile */
 @media only screen and (max-width: 767px) {
   .hy2-overlay-2025--discount-shipping {
-    color: #FFC25E;
+    color: var(--discount-color-mobile, #ffc25e);
     text-align: center;
     font-family: Montserrat;
     font-size: 30px;
@@ -1213,7 +1213,7 @@
 
   /* Discount footer elements - Mobile */
   .hy2-overlay-2025--discount-footer-off {
-    color: #ffc25e;
+    color: var(--discount-color-mobile, #ffc25e);
     font-family: Montserrat, sans-serif;
     font-size: 30px;
     font-weight: 500;
@@ -1224,7 +1224,7 @@
   }
 
   .hy2-overlay-2025--discount-footer-percent {
-    color: #ffc25e;
+    color: var(--discount-color-mobile, #ffc25e);
     font-family: Montserrat, sans-serif;
     font-size: 60px;
     font-weight: 500;
@@ -1235,7 +1235,7 @@
   }
 
   .hy2-overlay-2025--discount-footer-number {
-    color: #ffc25e;
+    color: var(--discount-color-mobile, #ffc25e);
     font-family: Montserrat, sans-serif;
     font-size: 110px;
     font-weight: 500;
@@ -1246,7 +1246,7 @@
   }
 
   .hy2-overlay-2025--discount-footer-up-to {
-    color: #ffc25e;
+    color: var(--discount-color-mobile, #ffc25e);
     font-family: Montserrat, sans-serif;
     font-size: 24px;
     font-weight: 700;
