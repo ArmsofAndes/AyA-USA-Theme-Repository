@@ -403,6 +403,11 @@
         --block-margin-top: {{ block.settings.margin_top }}rem;
         --block-margin-bottom: {{ block.settings.margin_bottom }}rem;
       }
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .rte,
+      #overlay-hy2-2025-pima-alpaca-text-{{ block.id }} {
+        --pima-alpaca-text-margin-top-desktop: {{ block.settings.pima_alpaca_text_margin_top_desktop | default: 1.0 }}rem;
+        --pima-alpaca-text-margin-top-mobile: {{ block.settings.pima_alpaca_text_margin_top_mobile | default: 0 }}rem;
+      }
     {%- when 'button' -%}
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --btn-font-size: {{ block.settings.button_font_size }}px;
@@ -509,7 +514,7 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-bottom: {{ section.settings.header_group_margin_bottom_mobile | default: 1.5 }}rem !important;
+    margin-bottom: 9.5rem !important;
   }
   
   #shopify-section-{{ section.id }} .header-group-wrapper .block-wrapper[data-block-type="heading"].holiday-sale-heading {
@@ -546,7 +551,7 @@
     align-items: center !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-top: 1.5rem !important;
+    margin-top: 1rem !important;
     gap: 0rem !important;
   }
   
@@ -732,14 +737,14 @@
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: {{ section.settings.buttons_gap_mobile | default: 1.0 }}rem !important;
+    gap: 1rem !important;
     width: 100% !important;
     justify-content: center !important;
     align-items: center !important;
-    margin-top: {{ section.settings.buttons_margin_top_mobile | default: 0 }}rem !important;
-    margin-left: {{ section.settings.buttons_margin_left_mobile | default: 0 }}rem !important;
-    margin-right: {{ section.settings.buttons_margin_right_mobile | default: 0 }}rem !important;
-    margin-bottom: 2rem !important;
+    margin-top: 0rem !important;
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
+    margin-bottom: 1rem !important;
   }
   
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] {
@@ -874,7 +879,7 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 7.5rem !important;
+    gap: 0rem !important;
   }
   
   /* Mobile: Forzar que todos los bloques estén centrados */
@@ -1163,6 +1168,7 @@
   color: #FFF !important;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
   margin: 0 !important;
+  margin-top: var(--pima-alpaca-text-margin-top-desktop, 1rem) !important;
   padding: 0 !important;
   display: block !important;
   visibility: visible !important;
@@ -1172,6 +1178,15 @@
   min-height: auto !important;
   max-height: none !important;
 }
+
+/* Aplicar margin-top específico por bloque */
+{% for block in section.blocks %}
+  {%- if block.type == 'pima_alpaca' -%}
+    #overlay-hy2-2025-pima-alpaca-text-{{ block.id }} {
+      margin-top: var(--pima-alpaca-text-margin-top-desktop, 1rem) !important;
+    }
+  {%- endif -%}
+{% endfor %}
 
 /* Estilos de tipografía personalizados (solo cuando NO se usa la tipografía del tema) */
 #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
@@ -1253,7 +1268,7 @@
     color: #FFF !important;
     text-align: center !important;
     margin: 0 !important;
-    margin-top: 0 !important;
+    margin-top: var(--pima-alpaca-text-margin-top-mobile, 0) !important;
     margin-bottom: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -1271,6 +1286,15 @@
     display: block !important;
   }
   
+  /* Aplicar margin-top específico por bloque en mobile */
+  {% for block in section.blocks %}
+    {%- if block.type == 'pima_alpaca' -%}
+      #overlay-hy2-2025-pima-alpaca-text-{{ block.id }} {
+        margin-top: var(--pima-alpaca-text-margin-top-mobile, 0) !important;
+      }
+    {%- endif -%}
+  {% endfor %}
+
   /* Estilos de tipografía personalizados para mobile (solo cuando NO se usa la tipografía del tema) */
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte,
   #shopify-section-{{ section.id }} .block-wrapper[data-block-type="pima_alpaca"]:not(.use-theme-font) .rte *,
@@ -2200,6 +2224,16 @@
           "default": "rgba(0, 0, 0, 0.25)"
         },
         {
+          "type": "range",
+          "id": "pima_alpaca_text_margin_top_desktop",
+          "label": "Margen superior del texto (rem) - Desktop",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "default": 1.0,
+          "info": "Margen superior del texto Pima & Alpaca en desktop"
+        },
+        {
           "type": "header",
           "content": "Pima & Alpaca - Mobile"
         },
@@ -2235,6 +2269,16 @@
           "max": 50,
           "step": 0.5,
           "default": 22.5
+        },
+        {
+          "type": "range",
+          "id": "pima_alpaca_text_margin_top_mobile",
+          "label": "Margen superior del texto (rem) - Mobile",
+          "min": 0,
+          "max": 10,
+          "step": 0.1,
+          "default": 0,
+          "info": "Margen superior del texto Pima & Alpaca en mobile"
         },
         {
           "type": "range",
