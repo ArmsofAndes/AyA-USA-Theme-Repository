@@ -101,14 +101,15 @@
             assign discount_tier_rendered = false
           -%}
           
+          {%- comment -%} theme-check-disable UnclosedHTMLElement {%- endcomment -%}
           {% for block in section.blocks %}
             {%- case block.type -%}
               {%- when 'heading' -%}
-                {% if button_group_started %}
+                {%- if button_group_started -%}
                   </div>
-                  {% assign button_group_started = false %}
-                  {% assign button_count = 0 %}
-                {% endif %}
+                  {%- assign button_group_started = false -%}
+                  {%- assign button_count = 0 -%}
+                {%- endif -%}
                 {%- if block.settings.is_holiday_sale_heading -%}
                   {%- assign header_group_started = true -%}
                   <div id="overlay-hy2-2025-header-group-{{ section.id }}" class="header-group-wrapper">
@@ -122,11 +123,11 @@
                 </div>
 
               {%- when 'wrap_season_text' -%}
-                {% if button_group_started %}
+                {%- if button_group_started -%}
                   </div>
-                  {% assign button_group_started = false %}
-                  {% assign button_count = 0 %}
-                {% endif %}
+                  {%- assign button_group_started = false -%}
+                  {%- assign button_count = 0 -%}
+                {%- endif -%}
                 <div id="overlay-hy2-2025-wrap-season-{{ block.id }}" class="block-wrapper block-{{ block.id }} wrap-season-text" 
                      data-block-type="wrap_season_text"
                      {{ block.shopify_attributes }}>
@@ -174,11 +175,11 @@
 
 
               {%- when 'pima_alpaca' -%}
-                {% if button_group_started %}
+                {%- if button_group_started -%}
                   </div>
-                  {% assign button_group_started = false %}
-                  {% assign button_count = 0 %}
-                {% endif %}
+                  {%- assign button_group_started = false -%}
+                  {%- assign button_count = 0 -%}
+                {%- endif -%}
                 {%- if header_group_started -%}
                   </div>
                   {%- assign header_group_started = false -%}
@@ -218,14 +219,14 @@
                   <span class="hy2-overlay-2025--discount-shipping">{{ discount_shipping_text }}</span>
                   {%- assign discount_tier_rendered = true -%}
                 {%- endunless -%}
-                {%- if footer_group_started == false -%}
+                {%- unless footer_group_started -%}
                   {%- assign footer_group_started = true -%}
                   <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
-                {%- endif -%}
-                {%- if bottom_group_started == false -%}
+                {%- endunless -%}
+                {%- unless bottom_group_started -%}
                   {%- assign bottom_group_started = true -%}
                   <div id="overlay-hy2-2025-bottom-group-{{ section.id }}" class="bottom-group-wrapper">
-                {%- endif -%}
+                {%- endunless -%}
                 {%- if block.settings.text != blank -%}
                   <div id="overlay-hy2-2025-pima-alpaca-{{ block.id }}" class="block-wrapper block-{{ block.id }} pima-alpaca-text{% if block.settings.use_theme_font %} use-theme-font{% endif %}" 
                        data-block-type="pima_alpaca"
@@ -274,20 +275,20 @@
                   <span class="hy2-overlay-2025--discount-shipping">{{ discount_shipping_text }}</span>
                   {%- assign discount_tier_rendered = true -%}
                 {%- endunless -%}
-                {%- if footer_group_started == false -%}
+                {%- unless footer_group_started -%}
                   {%- assign footer_group_started = true -%}
                   <div id="overlay-hy2-2025-footer-group-{{ section.id }}" class="footer-group-wrapper">
-                {%- endif -%}
-                {%- if bottom_group_started == false -%}
+                {%- endunless -%}
+                {%- unless bottom_group_started -%}
                   {%- assign bottom_group_started = true -%}
                   <div id="overlay-hy2-2025-bottom-group-{{ section.id }}" class="bottom-group-wrapper">
-                {%- endif -%}
-                {% if block.settings.button_text != blank %}
-                  {% if button_count == 0 %}
+                {%- endunless -%}
+                {%- if block.settings.button_text != blank -%}
+                  {%- if button_count == 0 -%}
                     <div id="overlay-hy2-2025-buttons-wrapper-{{ section.id }}" class="buttons-grid-wrapper">
-                    {% assign button_group_started = true %}
-                  {% endif %}
-                  {% assign button_count = button_count | plus: 1 %}
+                    {%- assign button_group_started = true -%}
+                  {%- endif -%}
+                  {%- assign button_count = button_count | plus: 1 -%}
                   <div id="overlay-hy2-2025-button-{{ block.id }}" class="block-wrapper block-{{ block.id }}" 
                        data-block-type="button"
                        {{ block.shopify_attributes }}>
@@ -297,11 +298,11 @@
                       {{ block.settings.button_text }}
                     </a>
                   </div>
-                  {% assign next_block = section.blocks[forloop.index] %}
-                  {% if next_block.type != 'button' or forloop.last %}
+                  {%- assign next_block = section.blocks[forloop.index] -%}
+                  {%- if next_block.type != 'button' or forloop.last -%}
                     </div>
-                    {% assign button_group_started = false %}
-                    {% assign button_count = 0 %}
+                    {%- assign button_group_started = false -%}
+                    {%- assign button_count = 0 -%}
                     {%- if bottom_group_started -%}
                       </div>
                       {%- assign bottom_group_started = false -%}
@@ -310,37 +311,38 @@
                       </div>
                       {%- assign footer_group_started = false -%}
                     {%- endif -%}
-                  {% endif %}
-                {% endif %}
+                  {%- endif -%}
+                {%- endif -%}
 
               {%- when 'space' -%}
-                {% if button_group_started %}
+                {%- if button_group_started -%}
                   </div>
-                  {% assign button_group_started = false %}
-                  {% assign button_count = 0 %}
-                {% endif %}
+                  {%- assign button_group_started = false -%}
+                  {%- assign button_count = 0 -%}
+                {%- endif -%}
                 <div class="block-wrapper block-space block-{{ block.id }}" 
                      data-block-type="space"
                      {{ block.shopify_attributes }}></div>
             {%- endcase -%}
-          {% endfor %}
+          {%- endfor -%}
           
-          {% if button_group_started %}
+          {%- comment -%} theme-check-disable UnclosedHTMLElement - Estos tags se cierran condicionalmente al final si estaban abiertos {%- endcomment -%}
+          {%- if button_group_started -%}
             </div>
-          {% endif %}
+          {%- endif -%}
           
-          {% if header_group_started %}
+          {%- if header_group_started -%}
             </div>
-          {% endif %}
+          {%- endif -%}
           
-          
-          {% if bottom_group_started %}
+          {%- if bottom_group_started -%}
             </div>
-          {% endif %}
+          {%- endif -%}
           
-          {% if footer_group_started %}
+          {%- if footer_group_started -%}
             </div>
-          {% endif %}
+          {%- endif -%}
+          {%- comment -%} theme-check-enable UnclosedHTMLElement {%- endcomment -%}
         </div>
       </div>
     </image-with-text-overlay-hy2>
@@ -422,11 +424,51 @@
         --btn-hover-bg-color: {{ block.settings.hover_background_color }};
         --btn-hover-border-color: {{ block.settings.hover_border_color }};
       }
+      #overlay-hy2-2025-button-link-{{ block.id }}:hover,
+      #shopify-section-{{ section.id }} .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover,
+      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover,
+      #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"].block-{{ block.id }} .button[class*="custom-btn"]:hover {
+        color: {{ block.settings.hover_text_color | default: '#000000' }} !important;
+        background-color: {{ block.settings.hover_background_color | default: '#ffffff' }} !important;
+        border-color: {{ block.settings.hover_border_color | default: '#000000' }} !important;
+      }
     {%- when 'space' -%}
       #shopify-section-{{ section.id }} .block-{{ block.id }} {
         --space-height: {{ block.settings.height }}px;
       }
   {%- endcase -%}
+{% endfor %}
+
+/* Estilos de hover específicos para botones - mayor especificidad para sobrescribir estilos globales */
+{% for block in section.blocks %}
+  {%- if block.type == 'button' -%}
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}.button:hover,
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}:hover,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"].block-{{ block.id }} .button[class*="custom-btn"]:hover,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"].block-{{ block.id }} a.button:hover,
+    #overlay-hy2-2025-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover {
+      color: {{ block.settings.hover_text_color | default: '#000000' }} !important;
+      background-color: {{ block.settings.hover_background_color | default: '#ffffff' }} !important;
+      border-color: {{ block.settings.hover_border_color | default: '#000000' }} !important;
+    }
+    /* Asegurar que el botón tenga position relative y z-index para crear contexto de apilamiento */
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}.button:hover,
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}:hover,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"].block-{{ block.id }} .button[class*="custom-btn"]:hover {
+      position: relative !important;
+      z-index: 10 !important;
+      isolation: isolate !important;
+    }
+    /* Deshabilitar el ::before en hover para que no cubra el texto - usar solo background-color del botón */
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}.button:hover::before,
+    #shopify-section-{{ section.id }} #overlay-hy2-2025-button-link-{{ block.id }}:hover::before,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-{{ block.id }} .button.custom-btn-{{ block.id }}:hover::before,
+    #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"].block-{{ block.id }} .button[class*="custom-btn"]:hover::before {
+      display: none !important;
+    }
+  {%- endif -%}
 {% endfor %}
 
 /* Buttons grid wrapper - desktop styles */
