@@ -2,16 +2,89 @@
   {%- liquid
     assign announcement_bar_layout = section.settings.announcement_bar_layout
     assign speed = section.settings.speed
-    assign sticky_announcement_bar = section.settings['sticky_announcement-bar']
+    assign enable_sticky = section.settings.enable_sticky
     assign direction = section.settings.direction
     assign show_announcement_bar = true
 
     assign autoplay = section.settings.autoplay
+    
+    assign show_on_home = section.settings.show_on_home
+    assign show_on_collection = section.settings.show_on_collection
+    assign show_on_product = section.settings.show_on_product
+    assign show_on_blog = section.settings.show_on_blog
+    
     if section.settings.announcement_bar_homepage_only
-      if template == 'index'
-        assign show_announcement_bar = true
-      else
+      if template != 'index'
         assign show_announcement_bar = false
+      endif
+    else
+      if show_on_home == false and template == 'index'
+        assign show_announcement_bar = false
+      endif
+      
+      if show_on_collection == false and template.name == 'collection'
+        assign show_announcement_bar = false
+      endif
+      
+      if show_on_product == false and template.name == 'product'
+        assign show_announcement_bar = false
+      endif
+      
+      if show_on_blog == false
+        if template.name == 'blog' or template.name == 'article'
+          assign show_announcement_bar = false
+        endif
+      endif
+    endif
+    
+    assign sticky_on_home = section.settings.sticky_on_home
+    assign sticky_on_collection = section.settings.sticky_on_collection
+    assign sticky_on_product = section.settings.sticky_on_product
+    assign sticky_on_blog = section.settings.sticky_on_blog
+    
+    # Si enable_sticky es false explícitamente, mantenerlo como false
+    # Si es blank, usar true por defecto
+    if enable_sticky == blank
+      assign enable_sticky = true
+    elsif enable_sticky == false
+      assign enable_sticky = false
+    endif
+    
+    if sticky_on_home == blank
+      assign sticky_on_home = true
+    endif
+    if sticky_on_collection == blank
+      assign sticky_on_collection = true
+    endif
+    if sticky_on_product == blank
+      assign sticky_on_product = true
+    endif
+    if sticky_on_blog == blank
+      assign sticky_on_blog = true
+    endif
+    
+    # Solo verificar controles por página si enable_sticky está activado
+    if enable_sticky
+      if template == 'index'
+        if sticky_on_home == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'collection'
+        if sticky_on_collection == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'product'
+        if sticky_on_product == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'blog'
+        if sticky_on_blog == false
+          assign enable_sticky = false
+        endif
+      elsif template.name == 'article'
+        if sticky_on_blog == false
+          assign enable_sticky = false
+        endif
       endif
     endif
 
@@ -22,13 +95,22 @@
 
   {%- if show_announcement_bar -%}
     {{- 'announcement-bar.css' | asset_url | stylesheet_tag -}}
+    
+    {%- liquid
+      assign section_id = 'shopify-section-' | append: section.id
+      assign is_specific_section = false
+      if section_id == 'shopify-section-sections--20597477474550__announcement-bar' or section_id == 'shopify-section-sections--20691356287222__announcement-bar'
+        assign is_specific_section = true
+      endif
+    -%}
 
-    <div id="shopify-section-{{ section.id }}" class="announcement-bar-section {% if sticky_announcement_bar %}announcement-bar-section--sticky{% endif %}">
-    <div class="announcement-bar {% if sticky_announcement_bar %}announcement-bar--fixed{% endif %}"
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if enable_sticky %}sticky-enabled-section{% endif %} {% if is_specific_section %}announcement-bar-top-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% endif %}>
+    <div class="announcement-bar announcement-bar-top {% if is_specific_section %}announcement-bar-top-custom{% endif %}" 
+         data-sticky-enabled="{% if enable_sticky %}true{% else %}false{% endif %}"
          role="region"
          aria-label="Announcement bar"
-         style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};">
-      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }}" style="--marquee-speed: {{ speed }}">
+         {% if is_specific_section %}data-no-inline-styles="true"{% else %}style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};"{% endif %}>
+      <div class="announcement-bar--inner direction-{{ direction }} announcement-bar--{{ announcement_bar_layout }} {% if is_specific_section %}announcement-bar-inner-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% else %}style="--marquee-speed: {{ speed }}"{% endif %}>
         {%- if announcement_bar_layout == 'marquee' -%}
           {%- capture scrolling_text -%}
             <div>
@@ -66,10 +148,10 @@
           {%- comment -%} NUEVO LAYOUT: STACKED (apilado verticalmente) CON COLORES INDEPENDIENTES {%- endcomment -%}
           <div class="announcement-bar--stacked">
             {%- for block in section.blocks -%}
-              <div class="announcement-bar--item {% if block.settings.hide_on_desktop %}hide-desktop{% endif %} {% if block.settings.hide_on_mobile %}hide-mobile{% endif %}" 
-                   {{ block.shopify_attributes }}
-                   style="background-color: {{ block.settings.item_bg_color }}; color: {{ block.settings.item_text_color }}; --hover-bg: {{ block.settings.item_hover_bg_color }}; --hover-text: {{ block.settings.item_hover_text_color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};">
-                {%- if block.settings.link -%}<a href="{{ block.settings.link }}" target="_blank" style="color: {{ block.settings.item_text_color }};">{%- endif -%}
+              <div class="announcement-bar--item {% if block.settings.hide_on_desktop %}hide-desktop{% endif %} {% if block.settings.hide_on_mobile %}hide-mobile{% endif %} {% if is_specific_section %}announcement-bar-item-simple{% endif %}" 
+                   {% if is_specific_section %}data-no-inline-styles="true"{% else %}{{ block.shopify_attributes }}{% endif %}
+                   {% unless is_specific_section %}style="background-color: {{ block.settings.item_bg_color }}; color: {{ block.settings.item_text_color }}; --hover-bg: {{ block.settings.item_hover_bg_color }}; --hover-text: {{ block.settings.item_hover_text_color }}; font-size: {{ block.settings.font_size }}px; font-weight: {{ block.settings.font_weight }};"{% endunless %}>
+                {%- if block.settings.link -%}<a href="{{ block.settings.link }}" target="_blank" {% unless is_specific_section %}style="color: {{ block.settings.item_text_color }};"{% endunless %}>{%- endif -%}
                   {%- if block.settings.icon -%}{% render 'svg-icons-inline', icon: block.settings.icon %}{%- endif -%}
                   {{- block.settings.text -}}
                 {%- if block.settings.link -%}</a>{%- endif -%}
@@ -82,31 +164,233 @@
     </div>
 
     <style>
+      /* Estilos específicos para el elemento con ID shopify-section-sections--20597477474550__announcement-bar */
+      #shopify-section-sections--20597477474550__announcement-bar,
+      #shopify-section-sections--20597477474550__announcement-bar.announcement-bar-top-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top {
+        background-color: #000000 !important;
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar * {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-inner-custom,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--inner,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--stacked {
+        --marquee-speed: 20s;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        --hover-bg: transparent !important;
+        --hover-text: inherit !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a {
+        color: #ffffff !important;
+      }
+      
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a:hover {
+        background-color: inherit !important;
+        color: inherit !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+      }
+      
+      /* Estilos específicos para el elemento con ID shopify-section-sections--20691356287222__announcement-bar */
+      #shopify-section-sections--20691356287222__announcement-bar,
+      #shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-custom,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-custom,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar.announcement-bar-top {
+        background-color: #000000 !important;
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      /* Solo aplicar a contenedores, no a elementos de texto */
+      #shopify-section-sections--20691356287222__announcement-bar > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+      }
+      
+      /* Aplicar fondo negro solo a contenedores principales */
+      #shopify-section-sections--20691356287222__announcement-bar > *,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar {
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-inner-custom,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
+        --marquee-speed: 20s;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      /* Estilos para announcement-bar-item-simple - solo los estilos esenciales */
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a {
+        color: inherit !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple:hover,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"]:hover,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a:hover,
+      #shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a:hover {
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+      }
+      
       /* Eliminar espacio blanco - remover padding-top del body */
       body {
         padding-top: 0 !important;
       }
 
-      /* Barra sticky - aplicar al contenedor de la sección */
-      .announcement-bar-section--sticky {
+      /* Valores fijos de altura para evitar cálculos dinámicos cuando está sticky */
+      .announcement-bar-top-section {
+        --announcement-top-height-desktop: 42px;
+        --announcement-top-height-mobile: 46px;
+      }
+
+      .announcement-bar-top-section.sticky-enabled-section {
         position: sticky !important;
         top: 0 !important;
         z-index: 52 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      .announcement-bar--fixed {
-        position: relative !important;
         width: 100% !important;
-        margin: 0 !important;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        left: 0 !important;
+        right: 0 !important;
+      }
+      
+      /* Asegurar sticky para el ID específico */
+      #shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-section.sticky-enabled-section {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 52 !important;
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
+      
+      /* Asegurar que el z-index no cambie en hover */
+      .announcement-bar-top-section.sticky-enabled-section:hover {
+        z-index: 52 !important;
+      }
+      
+      .announcement-bar-top-section.sticky-enabled-section *:hover {
+        z-index: auto !important;
+        position: relative !important;
       }
 
-      /* Asegurar que el contenedor interno se mueva con el sticky */
-      .announcement-bar--fixed .announcement-bar--inner {
-        position: relative;
-        z-index: 1;
+      .announcement-bar-top-section:not(.sticky-enabled-section) {
+        position: static;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar.announcement-bar-top {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar--inner {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
       }
 
       /* ajustes visuales */
@@ -116,13 +400,133 @@
         line-height: 1;
       }
       
+      /* Estilos específicos para announcement-bar-top */
+      .announcement-bar.announcement-bar-top,
+      .announcement-bar.announcement-bar-top[style] {
+        margin: 0 !important;
+        padding: 0 !important;
+        cursor: default !important;
+        pointer-events: auto !important;
+        height: 42px;
+        min-height: 42px;
+        max-height: 42px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+      }
+      
+      /* Sobrescribir estilos inline del announcement-bar-top */
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background-color"],
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background"] {
+        background-color: #000000 !important;
+        background: #000000 !important;
+      }
+      
+      .announcement-bar.announcement-bar-top[style*="color"] {
+        color: var(--color-announcement-bar-text, #fff) !important;
+      }
+      
+      @media (max-width: 768px) {
+        .announcement-bar.announcement-bar-top {
+          height: 46px;
+          min-height: 46px;
+          max-height: 46px;
+        }
+      }
+      
+      /* Eliminar todos los efectos hover del announcement-bar-top */
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style]:hover,
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top *:hover {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        cursor: default !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+        z-index: inherit !important;
+        position: inherit !important;
+        top: inherit !important;
+        left: inherit !important;
+        right: inherit !important;
+        bottom: inherit !important;
+        margin: inherit !important;
+        padding: inherit !important;
+      }
+      
+      /* Asegurar que no haya cambios de z-index o position en hover */
+      .announcement-bar.announcement-bar-top,
+      .announcement-bar.announcement-bar-top * {
+        position: relative !important;
+        z-index: auto !important;
+      }
+      
+      .announcement-bar.announcement-bar-top:hover,
+      .announcement-bar.announcement-bar-top *:hover {
+        position: relative !important;
+        z-index: auto !important;
+      }
+      
+      .announcement-bar-top-section {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+      }
+      
+      .announcement-bar-top-section:not(.sticky-enabled-section) {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
+      .announcement-bar-top-section .announcement-bar.announcement-bar-top {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      
       /* Desktop styles */
       @media (min-width: 769px) {
         .announcement-bar {
           background: var(--color-announcement-bar-bg, var(--color-accent));
           color: var(--color-announcement-bar-text, #fff);
           line-height: 1;
+        }
+        
+        #shopify-section-sections--20597477474550__announcement-bar .announcement-bar,
+        #shopify-section-sections--20597477474550__announcement-bar .announcement-bar * {
+          background: #000000 !important;
+          background-color: #000000 !important;
+        }
+        
+        .announcement-bar:not(.announcement-bar-top) {
           padding: 4px 0;
+        }
+        
+        .announcement-bar-top-section.sticky-enabled-section {
+          height: var(--announcement-top-height-desktop);
+          min-height: var(--announcement-top-height-desktop);
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) {
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar.announcement-bar-top {
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none;
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
+        }
+        
+        .announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar--inner {
+          margin-bottom: 0 !important;
+          padding-bottom: 0 !important;
         }
       }
       
@@ -133,12 +537,56 @@
         }
       }
       
-      .announcement-bar .announcement-bar--inner { display:flex; align-items:center; }
+      .announcement-bar .announcement-bar--inner { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        height: 100%;
+        margin: 0;
+        padding: 0 15px;
+      }
+      
+      .announcement-bar.announcement-bar-top .announcement-bar--inner {
+        height: 100%;
+        min-height: 42px;
+        max-height: 42px;
+      }
+      
+      @media (min-width: 769px) {
+        .announcement-bar.announcement-bar-top .announcement-bar--inner {
+          min-height: 42px;
+          max-height: 42px;
+          height: 42px;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .announcement-bar.announcement-bar-top .announcement-bar--inner {
+          min-height: 46px;
+          max-height: 46px;
+          height: 46px;
+        }
+      }
       
       /* Eliminar padding cuando es Stacked para que no se vea el fondo */
       .announcement-bar--stacked { padding: 0 !important; }
       .announcement-bar.announcement-bar--stacked-parent { padding: 0 !important; }
-      .announcement-bar a { color: inherit; text-decoration: none; }
+      .announcement-bar a { 
+        color: inherit; 
+        text-decoration: none; 
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .announcement-bar.announcement-bar-top a {
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       /* Eliminar padding cuando es layout Stacked */
       .announcement-bar--inner.announcement-bar--stacked { 
@@ -165,6 +613,13 @@
         padding: 0.6em 20px;
         white-space: normal !important;
         display: block !important;
+        margin: 0;
+      }
+      
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item {
+        height: auto;
+        min-height: auto;
+        max-height: none;
       }
 
       .announcement-bar--stacked .announcement-bar--item a {
@@ -172,24 +627,30 @@
         white-space: normal;
       }
 
-      /* Hover effect para items con link en layout Stacked */
-      .announcement-bar--stacked .announcement-bar--item a:hover {
-        background-color: var(--hover-bg) !important;
-        color: var(--hover-text) !important;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        cursor: pointer;
+      /* Eliminar hover effects para items en layout Stacked cuando están en announcement-bar-top */
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item a:hover,
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item:hover,
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item:hover a {
+        background-color: inherit !important;
+        color: inherit !important;
+        transform: none !important;
+        translate: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+        z-index: inherit !important;
+        position: inherit !important;
+        top: inherit !important;
+        left: inherit !important;
+        right: inherit !important;
+        bottom: inherit !important;
+        margin: inherit !important;
+        padding: inherit !important;
       }
-
-      .announcement-bar--stacked .announcement-bar--item:hover {
-        background-color: var(--hover-bg) !important;
-        color: var(--hover-text) !important;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        cursor: pointer;
-      }
-
-      .announcement-bar--stacked .announcement-bar--item:hover a {
-        color: var(--hover-text) !important;
-        text-decoration: none;
+      
+      /* Sobrescribir estilos inline para items stacked dentro de announcement-bar-top */
+      .announcement-bar.announcement-bar-top .announcement-bar--stacked .announcement-bar--item {
+        --hover-bg: transparent !important;
+        --hover-text: inherit !important;
       }
 
       /* Ocultar en desktop */
@@ -208,12 +669,231 @@
     </style>
 
     <script>
-      (function () {
-        var bar = document.querySelector('.announcement-bar--fixed');
-        if (!bar) return;
-
-        // NO aplicar padding-top al body ya que usamos sticky positioning
-        // El sticky positioning no requiere padding-top adicional
+      (function() {
+        // Función para verificar y aplicar/remover sticky basándose en data-sticky-enabled
+        function verifyAndUpdateSticky() {
+          const topBars = document.querySelectorAll('.announcement-bar-top');
+          topBars.forEach(function(topBar) {
+            const section = topBar.closest('.announcement-bar-top-section');
+            if (section) {
+              const dataStickyEnabled = topBar.getAttribute('data-sticky-enabled');
+              
+              // Si data-sticky-enabled es "false", remover clase y estilos
+              if (dataStickyEnabled === 'false') {
+                section.classList.remove('sticky-enabled-section');
+                section.style.removeProperty('position');
+                section.style.removeProperty('top');
+                section.style.removeProperty('z-index');
+                section.style.removeProperty('width');
+                section.style.removeProperty('left');
+                section.style.removeProperty('right');
+              } else if (dataStickyEnabled === 'true') {
+                // Si es "true", asegurar que tenga la clase (pero no aplicar estilos inline aquí, el header.js lo hará)
+                if (!section.classList.contains('sticky-enabled-section')) {
+                  section.classList.add('sticky-enabled-section');
+                }
+              }
+            }
+          });
+        }
+        
+        // Función para notificar cambios al sistema centralizado
+        function notifyStickyChange() {
+          verifyAndUpdateSticky();
+          window.dispatchEvent(new CustomEvent('sticky-element-changed'));
+          if (window.themeHeader && typeof window.themeHeader.updateAllStickyElements === 'function') {
+            window.themeHeader.updateAllStickyElements();
+          }
+        }
+        
+        // Función para aplicar clase sticky (legacy, mantener para compatibilidad)
+        function applyStickyClass() {
+          verifyAndUpdateSticky();
+        }
+        
+        // Verificar inmediatamente
+        verifyAndUpdateSticky();
+        
+        // Ejecutar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', notifyStickyChange);
+        } else {
+          notifyStickyChange();
+        }
+        
+        // Ejecutar después de un pequeño delay
+        setTimeout(notifyStickyChange, 50);
+        setTimeout(notifyStickyChange, 100);
+        setTimeout(notifyStickyChange, 200);
+        
+        // Ejecutar cuando la ventana se carga completamente
+        window.addEventListener('load', notifyStickyChange);
+        
+        // Escuchar eventos de Shopify
+        if (typeof Shopify !== 'undefined') {
+          document.addEventListener('shopify:section:load', function(event) {
+            setTimeout(notifyStickyChange, 100);
+          });
+          document.addEventListener('shopify:section:select', function(event) {
+            setTimeout(notifyStickyChange, 100);
+          });
+        }
+        
+        // Usar MutationObserver para detectar cambios
+        const observer = new MutationObserver(function(mutations) {
+          let shouldUpdate = false;
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+              mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) {
+                  const topBar = node.querySelector && node.querySelector('.announcement-bar-top');
+                  if (topBar || (node.classList && node.classList.contains('announcement-bar-top'))) {
+                    shouldUpdate = true;
+                  }
+                }
+              });
+            }
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+              const target = mutation.target;
+              if (target.classList && target.classList.contains('announcement-bar-top')) {
+                verifyAndUpdateSticky();
+                shouldUpdate = true;
+              }
+            }
+          });
+          if (shouldUpdate) {
+            setTimeout(notifyStickyChange, 50);
+          }
+        });
+        
+        // Observar cambios en el body
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['data-sticky-enabled']
+        });
+        
+        // Eliminar estilos inline del elemento específico sections--20691356287222
+        const specificSectionId = 'shopify-section-sections--20691356287222__announcement-bar';
+        const specificSection = document.getElementById(specificSectionId);
+        
+        if (specificSection) {
+          // Función para eliminar estilos inline de un elemento y sus hijos
+          const removeInlineStyles = function(element) {
+            if (!element) return;
+            
+            // Eliminar estilos inline del elemento mismo
+            if (element.hasAttribute('style')) {
+              element.removeAttribute('style');
+            }
+            
+            // Eliminar estilos inline de todos los hijos, especialmente announcement-bar-item-custom
+            const elementsWithStyle = element.querySelectorAll('[style]');
+            elementsWithStyle.forEach(function(el) {
+              // Eliminar estilos inline de elementos con data-no-inline-styles
+              if (el.hasAttribute('data-no-inline-styles') || el.classList.contains('announcement-bar-item-custom')) {
+                el.removeAttribute('style');
+              }
+            });
+            
+            // Específicamente eliminar estilos de announcement-bar-item-simple
+            const simpleItems = element.querySelectorAll('.announcement-bar-item-simple[data-no-inline-styles="true"]');
+            simpleItems.forEach(function(item) {
+              item.removeAttribute('style');
+              // También eliminar estilos de los enlaces dentro
+              const links = item.querySelectorAll('a[style]');
+              links.forEach(function(link) {
+                link.removeAttribute('style');
+              });
+            });
+            
+            // También eliminar estilos de announcement-bar-item-custom (legacy)
+            const customItems = element.querySelectorAll('.announcement-bar-item-custom[data-no-inline-styles="true"]');
+            customItems.forEach(function(item) {
+              item.removeAttribute('style');
+              const links = item.querySelectorAll('a[style]');
+              links.forEach(function(link) {
+                link.removeAttribute('style');
+              });
+            });
+          };
+          
+          // Función para ejecutar la limpieza
+          const cleanInlineStyles = function() {
+            removeInlineStyles(specificSection);
+          };
+          
+          // Ejecutar inmediatamente
+          cleanInlineStyles();
+          
+          // Usar MutationObserver para eliminar estilos inline que se agreguen después
+          const observer = new MutationObserver(function(mutations) {
+            let shouldClean = false;
+            mutations.forEach(function(mutation) {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                const target = mutation.target;
+                if (specificSection.contains(target) || target === specificSection) {
+                  shouldClean = true;
+                }
+              }
+              if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(function(node) {
+                  if (node.nodeType === 1 && (specificSection.contains(node) || node === specificSection)) {
+                    shouldClean = true;
+                  }
+                });
+              }
+            });
+            if (shouldClean) {
+              cleanInlineStyles();
+            }
+          });
+          
+          // Observar cambios en el elemento y sus hijos
+          observer.observe(specificSection, {
+            attributes: true,
+            attributeFilter: ['style'],
+            childList: true,
+            subtree: true
+          });
+          
+          // Ejecutar en múltiples momentos para asegurar que se eliminen los estilos
+          setTimeout(cleanInlineStyles, 50);
+          setTimeout(cleanInlineStyles, 100);
+          setTimeout(cleanInlineStyles, 200);
+          setTimeout(cleanInlineStyles, 500);
+          
+          // Ejecutar cuando el DOM esté completamente cargado
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', cleanInlineStyles);
+          }
+          
+          // Ejecutar cuando la ventana se carga completamente
+          window.addEventListener('load', cleanInlineStyles);
+          
+          // Ejecutar cuando se detecta que Shopify ha terminado de procesar (si está disponible)
+          if (typeof Shopify !== 'undefined') {
+            if (Shopify.designMode) {
+              document.addEventListener('shopify:section:load', function(event) {
+                if (event.detail && event.detail.sectionId && event.detail.sectionId.includes('20691356287222')) {
+                  setTimeout(cleanInlineStyles, 100);
+                }
+              });
+              document.addEventListener('shopify:section:select', function(event) {
+                if (event.detail && event.detail.sectionId && event.detail.sectionId.includes('20691356287222')) {
+                  setTimeout(cleanInlineStyles, 100);
+                }
+              });
+            }
+          }
+          
+          // También escuchar eventos de recarga de sección (para compatibilidad con diferentes versiones de Shopify)
+          document.addEventListener('shopify:section:reorder', cleanInlineStyles);
+          document.addEventListener('shopify:section:unload', function() {
+            setTimeout(cleanInlineStyles, 100);
+          });
+        }
       })();
     </script>
 
@@ -240,15 +920,85 @@
     stroke: currentColor !important;
     color: inherit !important;
   }
-
-  .announcement-bar--item {
-    line-height: 1.1;
-    padding: 0.1em 0; /* Ajuste de espacio vertical */
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item svg {
+    margin: 0 8px 0 0;
+    flex-shrink: 0;
+    height: auto;
+    width: auto;
+    max-height: 18px;
+    max-width: 18px;
   }
   
-  .announcement-bar {
+  .announcement-bar.announcement-bar-top .announcement-bar--item {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .announcement-bar--item {
+    line-height: 1.2;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item {
+    height: 100%;
+    min-height: 42px;
+    max-height: 42px;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      min-height: 42px;
+      max-height: 42px;
+      height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      min-height: 46px;
+      max-height: 46px;
+      height: 46px;
+    }
+  }
+  
+  .announcement-bar:not(.announcement-bar-top) {
     padding-top: 0.6em;
     padding-bottom: 0.6em;
+  }
+  
+  .announcement-bar.announcement-bar-top {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top {
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+    }
   }
   
   .announcement-bar .flickity-nav {
@@ -278,9 +1028,109 @@
     --hover-text: #ffffff !important;
   }
 
-  .announcement-bar--item:hover {
-    background-color: var(--hover-bg) !important;
-    color: var(--hover-text) !important;
+  /* Sobrescribir estilos inline para items dentro de announcement-bar-top */
+  .announcement-bar.announcement-bar-top .announcement-bar--item,
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style] {
+    background-color: inherit !important;
+    color: inherit !important;
+    --hover-bg: transparent !important;
+    --hover-text: inherit !important;
+  }
+  
+  /* Sobrescribir estilos inline específicamente usando selector de atributo */
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="background-color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-bg"] {
+    background-color: inherit !important;
+    --hover-bg: transparent !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-text"] {
+    color: inherit !important;
+    --hover-text: inherit !important;
+  }
+  
+  /* Sobrescribir estilos inline en enlaces dentro de items */
+  .announcement-bar.announcement-bar-top .announcement-bar--item a,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style] {
+    color: inherit !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style*="color"] {
+    color: inherit !important;
+  }
+
+  /* Eliminar hover effects para items dentro de announcement-bar-top */
+  .announcement-bar.announcement-bar-top .announcement-bar--item:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style]:hover,
+  .announcement-bar.announcement-bar-top .announcement-bar--item a[style]:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    translate: none !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    z-index: inherit !important;
+    position: inherit !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    bottom: inherit !important;
+    margin: inherit !important;
+    padding: inherit !important;
+  }
+  
+  /* Eliminar cualquier uso de variables CSS de hover */
+  .announcement-bar.announcement-bar-top .announcement-bar--item:hover {
+    background: inherit !important;
+    background-color: inherit !important;
+  }
+  
+  /* Prevenir hover y efectos de botón en el contenedor principal */
+  .announcement-bar.announcement-bar-top,
+  .announcement-bar-top-section {
+    pointer-events: none;
+    cursor: default !important;
+  }
+  
+  /* Eliminar todos los efectos hover del announcement-bar-top y sus hijos */
+  .announcement-bar.announcement-bar-top:hover,
+  .announcement-bar.announcement-bar-top *:hover {
+    background: inherit !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    cursor: default !important;
+    transform: none !important;
+    translate: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+    z-index: inherit !important;
+    position: inherit !important;
+    top: inherit !important;
+    left: inherit !important;
+    right: inherit !important;
+    bottom: inherit !important;
+    margin: inherit !important;
+    padding: inherit !important;
+  }
+  
+  /* Asegurar que no haya cambios de z-index o position en hover */
+  .announcement-bar.announcement-bar-top,
+  .announcement-bar.announcement-bar-top * {
+    position: relative !important;
+    z-index: auto !important;
+  }
+  
+  .announcement-bar.announcement-bar-top:hover,
+  .announcement-bar.announcement-bar-top *:hover {
+    position: relative !important;
+    z-index: auto !important;
+  }
+  
+  .announcement-bar.announcement-bar-top * {
+    pointer-events: auto;
   }
 </style>
 
@@ -292,10 +1142,47 @@
 	"max_blocks": 5,
 	"settings": [
 		{
+			"type": "header",
+			"content": "Sticky Settings"
+		},
+		{
 			"type": "checkbox",
-			"id": "sticky_announcement-bar",
-			"label": "Mantiene fijo announcement-bar",
-			"default": true
+			"id": "enable_sticky",
+			"label": "Enable sticky",
+			"default": true,
+			"info": "When enabled, this bar will stay fixed at the top when scrolling"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_home",
+			"label": "Apply sticky on home page",
+			"default": true,
+			"info": "Apply sticky behavior on home page"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_collection",
+			"label": "Apply sticky on collection pages",
+			"default": true,
+			"info": "Apply sticky behavior on collection pages"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_product",
+			"label": "Apply sticky on product pages",
+			"default": true,
+			"info": "Apply sticky behavior on product pages"
+		},
+		{
+			"type": "checkbox",
+			"id": "sticky_on_blog",
+			"label": "Apply sticky on blog pages",
+			"default": true,
+			"info": "Apply sticky behavior on blog pages"
+		},
+		{
+			"type": "header",
+			"content": "Visibility Settings"
 		},
 		{
 			"type": "checkbox",
@@ -307,7 +1194,32 @@
 			"type": "checkbox",
 			"id": "announcement_bar_homepage_only",
 			"label": "Show on home page only",
-			"default": false
+			"default": false,
+			"info": "Legacy setting - has priority over new visibility controls"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_home",
+			"label": "Show on home page",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_collection",
+			"label": "Show on collection pages",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_product",
+			"label": "Show on product pages",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "show_on_blog",
+			"label": "Show on blog pages",
+			"default": true
 		},
 		{
 			"type": "select",

@@ -1,5 +1,224 @@
 
+/* Estilos específicos para el elemento con ID shopify-section-sections--20597477474550__announcement-bar */
+#shopify-section-sections--20597477474550__announcement-bar,
+#shopify-section-sections--20597477474550__announcement-bar.announcement-bar-top-custom,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-custom,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 
+#shopify-section-sections--20597477474550__announcement-bar * {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-inner-custom,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar--inner,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar--stacked {
+  --marquee-speed: 20s;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  --hover-bg: transparent !important;
+  --hover-text: inherit !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a {
+  color: #ffffff !important;
+}
+
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom:hover,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-item-custom a:hover {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  transform: none !important;
+  translate: none !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
+/* Asegurar fondo negro en todos los estados y elementos hijos */
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section:hover,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section *,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar-top-section *:hover {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Estilos específicos para el elemento con ID shopify-section-sections--20691356287222__announcement-bar */
+#shopify-section-sections--20691356287222__announcement-bar,
+#shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar.announcement-bar-top {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Solo aplicar a contenedores, no a elementos de texto */
+#shopify-section-sections--20691356287222__announcement-bar > *,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section > *,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+}
+
+/* Aplicar fondo negro solo a contenedores principales */
+#shopify-section-sections--20691356287222__announcement-bar > *,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-inner-custom,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked {
+  --marquee-speed: 20s;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Estilos para announcement-bar-item-simple - solo los estilos esenciales */
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a {
+  color: inherit !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"]:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple a:hover,
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-simple[data-no-inline-styles="true"] a:hover {
+  transform: none !important;
+  translate: none !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
+/* Forzar eliminación de estilos inline usando selectores de atributo */
+#shopify-section-sections--20691356287222__announcement-bar[style],
+#shopify-section-sections--20691356287222__announcement-bar [style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-custom[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar.announcement-bar-top[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item a[style],
+#shopify-section-sections--20691356287222__announcement-bar [data-no-inline-styles="true"][style] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Reglas adicionales para sobrescribir cualquier estilo inline que Shopify pueda agregar - solo en contenedores */
+#shopify-section-sections--20691356287222__announcement-bar > *[style*="background-color"],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-section[style*="background-color"],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar[style*="background-color"],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--inner[style*="background-color"],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item[style*="background-color"],
+#shopify-section-sections--20691356287222__announcement-bar [data-no-inline-styles="true"][style] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* Reglas específicas para sobrescribir estilos inline en elementos con atributos style */
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-top-custom[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-inner-custom[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar-item-custom[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--item[style],
+#shopify-section-sections--20691356287222__announcement-bar .announcement-bar--stacked[style] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  --hover-bg: transparent !important;
+  --hover-text: inherit !important;
+}
 
 .announcement-bar--inner {
   padding: 0 15px;
@@ -8,7 +227,143 @@
   margin-right: auto; }
   @media only screen and (min-width: 768px) {
     .announcement-bar--inner {
-      padding: 0px; } }
+      padding: 0px; }
+    
+    .announcement-bar-top-section.sticky-enabled-section {
+      height: var(--announcement-top-height-desktop);
+      min-height: var(--announcement-top-height-desktop);
+    }
+    
+    .announcement-bar-top-section:not(.sticky-enabled-section) {
+      height: auto;
+      min-height: auto;
+    } }
+
+.announcement-bar-top-section {
+  /* Valores fijos de altura para evitar cálculos dinámicos cuando está sticky */
+  --announcement-top-height-desktop: 42px;
+  --announcement-top-height-mobile: 46px;
+}
+
+.announcement-bar-top-section.sticky-enabled-section {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 51 !important;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Asegurar sticky para el ID específico del announcement-bar */
+#shopify-section-sections--20691356287222__announcement-bar.announcement-bar-top-section.sticky-enabled-section {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 51 !important;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Asegurar que el z-index no cambie en hover */
+.announcement-bar-top-section.sticky-enabled-section:hover {
+  z-index: 51 !important;
+}
+
+.announcement-bar-top-section.sticky-enabled-section *:hover {
+  z-index: auto !important;
+  position: relative !important;
+}
+
+.announcement-bar-top-section:not(.sticky-enabled-section) {
+  position: static;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar.announcement-bar-top {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.announcement-bar-top-section:not(.sticky-enabled-section) .announcement-bar--inner {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.announcement-bar-countdown-section {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.announcement-bar-countdown-section.sticky-enabled-section {
+  position: sticky !important;
+  top: var(--announcement-top-height, 0) !important;
+  z-index: 51 !important;
+  width: 100% !important;
+  max-height: 42.3px;
+  margin: 0 !important;
+  padding: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Asegurar sticky para el ID específico del countdown */
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section {
+  position: sticky !important;
+  top: var(--announcement-top-height, 0) !important;
+  z-index: 51 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+@media (min-width: 769px) {
+  .announcement-bar-countdown-section.sticky-enabled-section {
+    max-height: 42.3px;
+  }
+}
+
+.announcement-bar-countdown-section:not(.sticky-enabled-section) {
+  position: static !important;
+}
+
+/* Asegurar que el sticky funcione para el ID específico incluso con estilos inline */
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section,
+#shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section[style],
+.shopify-section-group-header-group #shopify-section-sections--20691356287222__announcement-bar-countdown.announcement-bar-countdown-section.sticky-enabled-section {
+  position: sticky !important;
+  top: var(--announcement-top-height, 0) !important;
+  z-index: 51 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Asegurar que el contenedor padre no bloquee el sticky */
+.shopify-section-group-header-group {
+  overflow: visible !important;
+}
+
+/* Solo aplicar sticky si tiene la clase sticky-enabled-section */
+.shopify-section-group-header-group > #shopify-section-sections--20691356287222__announcement-bar-countdown.sticky-enabled-section {
+  position: sticky !important;
+}
+
+/* Asegurar que NO sea sticky si no tiene la clase */
+.shopify-section-group-header-group > #shopify-section-sections--20691356287222__announcement-bar-countdown:not(.sticky-enabled-section) {
+  position: static !important;
+}
 
 .announcement-bar-section {
   position: relative;
@@ -22,6 +377,74 @@
   color: var(--color-announcement-bar-text, #fff);
   line-height: 1;
   padding: 14px 0; }
+  
+.announcement-bar.announcement-bar-top,
+.announcement-bar.announcement-bar-top[style] {
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: default !important;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Sobrescribir estilos inline del announcement-bar-top */
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background-color"],
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style*="background"] {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+.announcement-bar.announcement-bar-top[style*="color"] {
+  color: var(--color-announcement-bar-text, #fff) !important;
+}
+
+@media (max-width: 768px) {
+  .announcement-bar.announcement-bar-top {
+    height: 46px;
+    min-height: 46px;
+    max-height: 46px;
+  }
+}
+
+/* Eliminar todos los efectos hover del announcement-bar-top y sus hijos */
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top:hover,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top[style]:hover,
+#shopify-section-sections--20597477474550__announcement-bar .announcement-bar.announcement-bar-top *:hover {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  cursor: default !important;
+  transform: none !important;
+  translate: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+  z-index: inherit !important;
+  position: inherit !important;
+  top: inherit !important;
+  left: inherit !important;
+  right: inherit !important;
+  bottom: inherit !important;
+  margin: inherit !important;
+  padding: inherit !important;
+}
+
+/* Asegurar que no haya cambios de z-index o position en hover */
+.announcement-bar.announcement-bar-top,
+.announcement-bar.announcement-bar-top * {
+  position: relative !important;
+  z-index: auto !important;
+}
+
+.announcement-bar.announcement-bar-top:hover,
+.announcement-bar.announcement-bar-top *:hover {
+  position: relative !important;
+  z-index: auto !important;
+}
   .announcement-bar--inner {
     height: 100%;
     display: flex;
@@ -31,6 +454,30 @@
     font-size: calc(var(--font-announcement-scale, 1) * 14px);
     font-weight: 400;
     overflow: hidden; }
+    
+  .announcement-bar.announcement-bar-top .announcement-bar--inner {
+    height: 100%;
+    min-height: 42px;
+    max-height: 42px;
+    padding: 0 15px;
+    margin: 0;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--inner {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--inner {
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+    }
+  }
   .announcement-bar--marquee.direction-left > div {
     animation: marquee-left var(--marquee-speed) linear infinite; }
   .announcement-bar--marquee.direction-right > div {
@@ -68,6 +515,9 @@
         z-index: 30;
         pointer-events: none;
         background: linear-gradient(to left, rgba(0, 0, 0, 0) 0, var(--color-announcement-bar-bg, var(--color-accent)) 50px, var(--color-announcement-bar-bg, var(--color-accent)) 100%); }
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--carousel .carousel .flickity-viewport:before {
+        background: linear-gradient(to left, rgba(0, 0, 0, 0) 0, #000000 50px, #000000 100%) !important;
+      }
       .announcement-bar--carousel .carousel .flickity-viewport:after {
         content: "";
         display: block;
@@ -79,6 +529,9 @@
         z-index: 30;
         pointer-events: none;
         background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, var(--color-announcement-bar-bg, var(--color-accent)) 50px, var(--color-announcement-bar-bg, var(--color-accent)) 100%); }
+      #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--carousel .carousel .flickity-viewport:after {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, #000000 50px, #000000 100%) !important;
+      }
       .announcement-bar--carousel .carousel .flickity-viewport .carousel__slide {
         display: block;
         overflow: hidden; }
@@ -93,6 +546,9 @@
       opacity: 1;
       background: var(--color-announcement-bar-bg, var(--color-accent));
       box-shadow: none; }
+    #shopify-section-sections--20597477474550__announcement-bar .announcement-bar--carousel .flickity-nav {
+      background: #000000 !important;
+    }
       .announcement-bar--carousel .flickity-nav svg path {
         stroke: var(--color-announcement-bar-text, #fff); }
   .announcement-bar--item {
@@ -106,6 +562,71 @@
       fill: var(--color-announcement-bar-text, #fff); }
     .announcement-bar--item a {
       color: var(--color-announcement-bar-text, #fff); }
+      
+  .announcement-bar.announcement-bar-top .announcement-bar--item,
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style] {
+    padding: 0 20px;
+    margin: 0;
+    height: 100%;
+    line-height: 1.2;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: inherit !important;
+    color: inherit !important;
+    --hover-bg: transparent !important;
+    --hover-text: inherit !important;
+  }
+  
+  /* Sobrescribir estilos inline específicamente usando selector de atributo */
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="background-color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-bg"] {
+    background-color: inherit !important;
+    --hover-bg: transparent !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="color"],
+  .announcement-bar.announcement-bar-top .announcement-bar--item[style*="--hover-text"] {
+    color: inherit !important;
+    --hover-text: inherit !important;
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    translate: none !important;
+    box-shadow: none !important;
+    cursor: default !important;
+    z-index: inherit !important;
+    position: inherit !important;
+  }
+  
+  @media (min-width: 769px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .announcement-bar.announcement-bar-top .announcement-bar--item {
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+    }
+  }
+  
+  .announcement-bar.announcement-bar-top .announcement-bar--item svg {
+    margin-right: 8px;
+    flex-shrink: 0;
+    height: auto;
+    width: auto;
+    max-height: 18px;
+    max-width: 18px;
+  }
 
 @keyframes marquee-left {
   0% {
