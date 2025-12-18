@@ -355,8 +355,14 @@
   overflow: visible !important;
 }
 
-.shopify-section-group-header-group > #shopify-section-sections--20691356287222__announcement-bar-countdown {
+/* Solo aplicar sticky si tiene la clase sticky-enabled-section */
+.shopify-section-group-header-group > #shopify-section-sections--20691356287222__announcement-bar-countdown.sticky-enabled-section {
   position: sticky !important;
+}
+
+/* Asegurar que NO sea sticky si no tiene la clase */
+.shopify-section-group-header-group > #shopify-section-sections--20691356287222__announcement-bar-countdown:not(.sticky-enabled-section) {
+  position: static !important;
 }
 
 .announcement-bar-section {

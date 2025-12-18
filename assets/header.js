@@ -176,16 +176,10 @@ if (!customElements.get('theme-header')) {
         // Esto es necesario porque algunos scripts pueden aplicar estilos después de nuestro observer
         const checkInterval = setInterval(() => {
           if (header && header.classList.contains('header-section')) {
-            // Remover cualquier top inline
+            // Remover cualquier top inline - el CSS ya tiene top: var(--announcement-height, 0px)
+            // No necesitamos aplicar top inline, solo confiar en el CSS
             if (header.style.top) {
               header.style.removeProperty('top');
-            }
-            // Asegurar que use la variable CSS
-            const computedTop = window.getComputedStyle(header).top;
-            const announcementHeight = getComputedStyle(document.documentElement).getPropertyValue('--announcement-height');
-            // Si el top calculado no coincide con la variable, forzar la actualización
-            if (computedTop && announcementHeight && computedTop !== announcementHeight) {
-              header.style.setProperty('top', 'var(--announcement-height, 0px)', 'important');
             }
           }
         }, 50);
@@ -338,89 +332,115 @@ if (!customElements.get('theme-header')) {
 
     /**
      * Calcular y establecer altura de elementos sticky
+     * IMPORTANTE: Procesa TODOS los elementos individualmente, no solo el primero
      */
     setAnnouncementHeight() {
       // Usar selectores de clase en lugar de IDs específicos para mayor compatibilidad
-      // Buscar el primer elemento con la clase correspondiente que tenga data-sticky-enabled="true"
-      const simpleItem = Array.from(document.querySelectorAll('.simple-announcement-item-section')).find(section => {
-        const innerItem = section.querySelector('.simple-announcement-item');
-        return innerItem && innerItem.getAttribute('data-sticky-enabled') === 'true';
-      });
-      
-      const countdown = Array.from(document.querySelectorAll('.announcement-bar-countdown-section')).find(section => {
-        const innerCountdown = section.querySelector('.announcement-bar-countdown');
-        return innerCountdown && innerCountdown.getAttribute('data-sticky-enabled') === 'true';
-      });
+      // Obtener TODOS los elementos, no solo el primero
+      const simpleItemSections = Array.from(document.querySelectorAll('.simple-announcement-item-section'));
+      const countdownSections = Array.from(document.querySelectorAll('.announcement-bar-countdown-section'));
       
       let totalHeight = 0;
       const isMobile = window.matchMedia('(max-width: 767px)').matches;
       
       // Calcular altura del simple-item si está sticky
+      // IMPORTANTE: Procesar TODOS los elementos simple-item individualmente
       let simpleItemHeight = 0;
-      if (simpleItem) {
-        // Verificar clase sticky-enabled-section o data-sticky-enabled del elemento interno
-        const hasStickyClass = simpleItem.classList.contains('sticky-enabled-section');
+      simpleItemSections.forEach(simpleItem => {
+        // SOLO usar data-sticky-enabled como fuente de verdad (no la clase)
         const innerSimpleItem = simpleItem.querySelector('.simple-announcement-item');
         const dataStickyEnabled = innerSimpleItem && innerSimpleItem.getAttribute('data-sticky-enabled') === 'true';
-        const isSticky = hasStickyClass || dataStickyEnabled;
         
         const computedStyle = window.getComputedStyle(simpleItem);
         
-        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+        // SOLO aplicar sticky si data-sticky-enabled es explícitamente "true"
+        if (dataStickyEnabled && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
           // Asegurar que tenga la clase sticky-enabled-section
-          if (!hasStickyClass) {
+          if (!simpleItem.classList.contains('sticky-enabled-section')) {
             simpleItem.classList.add('sticky-enabled-section');
           }
           
           // Usar altura real o valor fijo
-          simpleItemHeight = simpleItem.clientHeight || simpleItem.offsetHeight || (isMobile ? 46 : 42);
-          totalHeight += simpleItemHeight;
+          const itemHeight = simpleItem.clientHeight || simpleItem.offsetHeight || (isMobile ? 46 : 42);
+          // IMPORTANTE: Si hay múltiples simpleItem sticky, solo usar la altura máxima
+          // porque todos están en top: 0px (se superponen)
+          if (itemHeight > simpleItemHeight) {
+            simpleItemHeight = itemHeight;
+          }
           
           // Aplicar sticky al simple-item
           simpleItem.style.setProperty('position', 'sticky', 'important');
           simpleItem.style.setProperty('top', '0px', 'important');
           simpleItem.style.setProperty('z-index', '52', 'important');
         } else {
-          // Remover sticky si no debería serlo
+          // Remover sticky si data-sticky-enabled es "false" o no está presente
+          // IMPORTANTE: Remover clase y estilos con !important usando setProperty
           simpleItem.classList.remove('sticky-enabled-section');
-          simpleItem.style.removeProperty('position');
+          simpleItem.style.setProperty('position', 'static', 'important');
           simpleItem.style.removeProperty('top');
           simpleItem.style.removeProperty('z-index');
         }
-      }
+      });
       
       // Calcular altura del countdown si está sticky
+      // IMPORTANTE: Procesar TODOS los elementos countdown individualmente
+      // Filtrar solo los que están realmente visibles y sticky
       let countdownHeight = 0;
-      if (countdown) {
-        // Verificar clase sticky-enabled-section o data-sticky-enabled del elemento interno
-        const hasStickyClass = countdown.classList.contains('sticky-enabled-section');
+      let accumulatedHeight = simpleItemHeight; // Altura acumulada para posicionar countdowns en cascada
+      
+      // Filtrar solo los countdowns que están sticky y visibles
+      const stickyCountdowns = countdownSections.filter(countdown => {
         const innerCountdown = countdown.querySelector('.announcement-bar-countdown');
         const dataStickyEnabled = innerCountdown && innerCountdown.getAttribute('data-sticky-enabled') === 'true';
-        const isSticky = hasStickyClass || dataStickyEnabled;
+        const computedStyle = window.getComputedStyle(countdown);
+        return dataStickyEnabled && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
+      });
+      
+      // Si hay múltiples countdowns sticky, solo usar el PRIMERO para el cálculo de totalHeight
+      // porque los demás están en cascada y no afectan la posición inicial del header
+      if (stickyCountdowns.length > 0) {
+        const firstStickyCountdown = stickyCountdowns[0];
+        countdownHeight = firstStickyCountdown.clientHeight || firstStickyCountdown.offsetHeight || 42.3;
+      }
+      
+      // Procesar todos los countdowns para aplicar estilos
+      countdownSections.forEach(countdown => {
+        // SOLO usar data-sticky-enabled como fuente de verdad (no la clase)
+        const innerCountdown = countdown.querySelector('.announcement-bar-countdown');
+        const dataStickyEnabled = innerCountdown && innerCountdown.getAttribute('data-sticky-enabled') === 'true';
         
         const computedStyle = window.getComputedStyle(countdown);
         
-        if (isSticky && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
+        // SOLO aplicar sticky si data-sticky-enabled es explícitamente "true"
+        if (dataStickyEnabled && computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden') {
           // Asegurar que tenga la clase sticky-enabled-section
-          if (!hasStickyClass) {
+          if (!countdown.classList.contains('sticky-enabled-section')) {
             countdown.classList.add('sticky-enabled-section');
           }
           // Usar altura real o valor fijo
-          countdownHeight = countdown.clientHeight || countdown.offsetHeight || 42.3;
-          totalHeight += countdownHeight;
+          const itemHeight = countdown.clientHeight || countdown.offsetHeight || 42.3;
           
-          // Aplicar sticky al countdown con top basado en simple-item
+          // Aplicar sticky al countdown con top basado en altura acumulada
           countdown.style.setProperty('position', 'sticky', 'important');
-          countdown.style.setProperty('top', simpleItemHeight + 'px', 'important');
+          countdown.style.setProperty('top', accumulatedHeight + 'px', 'important');
           countdown.style.setProperty('z-index', '51', 'important');
+          
+          // Actualizar altura acumulada para el siguiente countdown
+          accumulatedHeight += itemHeight;
         } else {
-          // Remover sticky si no debería serlo
+          // Remover sticky si data-sticky-enabled es "false" o no está presente
+          // IMPORTANTE: Remover clase y estilos con !important usando setProperty
           countdown.classList.remove('sticky-enabled-section');
-          countdown.style.removeProperty('position');
+          countdown.style.setProperty('position', 'static', 'important');
           countdown.style.removeProperty('top');
           countdown.style.removeProperty('z-index');
         }
-      }
+      });
+      
+      // IMPORTANTE: totalHeight debe ser la suma de:
+      // - simpleItemHeight (altura máxima si hay múltiples, porque todos están en top: 0px)
+      // - countdownHeight (suma de todas las alturas, porque están en cascada)
+      totalHeight = simpleItemHeight + countdownHeight;
       
       // Establecer --announcement-height para el header
       // El header usa esta variable en CSS: top: var(--announcement-height, 0px)
@@ -443,6 +463,8 @@ if (!customElements.get('theme-header')) {
       console.log('[Header.js] Variable CSS establecida:', computedValue);
       
       // Manejar sticky del header - usar selector de clase
+      // IMPORTANTE: NO aplicar top inline - el CSS ya tiene top: var(--announcement-height, 0px)
+      // Solo actualizar la variable CSS --announcement-height y el CSS se encargará del resto
       const header = document.querySelector('.header-section');
       
       if (header) {
@@ -457,9 +479,9 @@ if (!customElements.get('theme-header')) {
             header.style.setProperty('position', 'sticky', 'important');
           }
           
-          // IMPORTANTE: NO aplicar top inline, dejar que CSS use --announcement-height
-          // La variable CSS --announcement-height ya contiene la suma de las alturas
-          // Asegurar que no haya top inline que sobrescriba la variable CSS
+          // NO aplicar top inline - el CSS ya tiene top: var(--announcement-height, 0px)
+          // La variable CSS --announcement-height ya está establecida arriba y el CSS la usará automáticamente
+          // Remover cualquier top inline que pueda estar aplicado
           header.style.removeProperty('top');
           
           // Solo asegurar z-index
