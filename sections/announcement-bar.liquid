@@ -42,6 +42,28 @@
     assign sticky_on_product = section.settings.sticky_on_product
     assign sticky_on_blog = section.settings.sticky_on_blog
     
+    # Si enable_sticky es false explícitamente, mantenerlo como false
+    # Si es blank, usar true por defecto
+    if enable_sticky == blank
+      assign enable_sticky = true
+    elsif enable_sticky == false
+      assign enable_sticky = false
+    endif
+    
+    if sticky_on_home == blank
+      assign sticky_on_home = true
+    endif
+    if sticky_on_collection == blank
+      assign sticky_on_collection = true
+    endif
+    if sticky_on_product == blank
+      assign sticky_on_product = true
+    endif
+    if sticky_on_blog == blank
+      assign sticky_on_blog = true
+    endif
+    
+    # Solo verificar controles por página si enable_sticky está activado
     if enable_sticky
       if template == 'index'
         if sticky_on_home == false
@@ -82,9 +104,9 @@
       endif
     -%}
 
-    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if is_specific_section %}announcement-bar-top-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% endif %}>
+    <div id="shopify-section-{{ section.id }}" class="announcement-bar-top-section {% if enable_sticky %}sticky-enabled-section{% endif %} {% if is_specific_section %}announcement-bar-top-custom{% endif %}" {% if is_specific_section %}data-no-inline-styles="true"{% endif %}>
     <div class="announcement-bar announcement-bar-top {% if is_specific_section %}announcement-bar-top-custom{% endif %}" 
-         data-sticky-enabled="{{ enable_sticky }}"
+         data-sticky-enabled="{% if enable_sticky %}true{% else %}false{% endif %}"
          role="region"
          aria-label="Announcement bar"
          {% if is_specific_section %}data-no-inline-styles="true"{% else %}style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text }};"{% endif %}>
@@ -648,62 +670,85 @@
 
     <script>
       (function() {
-        // Función para aplicar clase sticky y forzar position sticky
-        function applyStickyClass() {
-          const topBars = document.querySelectorAll('.announcement-bar-top[data-sticky-enabled="true"]');
+        // Función para verificar y aplicar/remover sticky basándose en data-sticky-enabled
+        function verifyAndUpdateSticky() {
+          const topBars = document.querySelectorAll('.announcement-bar-top');
           topBars.forEach(function(topBar) {
             const section = topBar.closest('.announcement-bar-top-section');
-            if (section && topBar.getAttribute('data-sticky-enabled') === 'true') {
-              section.classList.add('sticky-enabled-section');
+            if (section) {
+              const dataStickyEnabled = topBar.getAttribute('data-sticky-enabled');
               
-              // Forzar position sticky directamente en el elemento
-              const computedStyle = window.getComputedStyle(section);
-              if (computedStyle.position !== 'sticky') {
-                section.style.setProperty('position', 'sticky', 'important');
-                section.style.setProperty('top', '0', 'important');
-                section.style.setProperty('z-index', '52', 'important');
-                section.style.setProperty('width', '100%', 'important');
-                section.style.setProperty('left', '0', 'important');
-                section.style.setProperty('right', '0', 'important');
+              // Si data-sticky-enabled es "false", remover clase y estilos
+              if (dataStickyEnabled === 'false') {
+                section.classList.remove('sticky-enabled-section');
+                section.style.removeProperty('position');
+                section.style.removeProperty('top');
+                section.style.removeProperty('z-index');
+                section.style.removeProperty('width');
+                section.style.removeProperty('left');
+                section.style.removeProperty('right');
+              } else if (dataStickyEnabled === 'true') {
+                // Si es "true", asegurar que tenga la clase (pero no aplicar estilos inline aquí, el header.js lo hará)
+                if (!section.classList.contains('sticky-enabled-section')) {
+                  section.classList.add('sticky-enabled-section');
+                }
               }
             }
           });
         }
         
-        // Ejecutar inmediatamente
-        applyStickyClass();
+        // Función para notificar cambios al sistema centralizado
+        function notifyStickyChange() {
+          verifyAndUpdateSticky();
+          window.dispatchEvent(new CustomEvent('sticky-element-changed'));
+          if (window.themeHeader && typeof window.themeHeader.updateAllStickyElements === 'function') {
+            window.themeHeader.updateAllStickyElements();
+          }
+        }
+        
+        // Función para aplicar clase sticky (legacy, mantener para compatibilidad)
+        function applyStickyClass() {
+          verifyAndUpdateSticky();
+        }
+        
+        // Verificar inmediatamente
+        verifyAndUpdateSticky();
         
         // Ejecutar cuando el DOM esté listo
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', applyStickyClass);
+          document.addEventListener('DOMContentLoaded', notifyStickyChange);
+        } else {
+          notifyStickyChange();
         }
         
         // Ejecutar después de un pequeño delay
-        setTimeout(applyStickyClass, 50);
-        setTimeout(applyStickyClass, 100);
+        setTimeout(notifyStickyChange, 50);
+        setTimeout(notifyStickyChange, 100);
+        setTimeout(notifyStickyChange, 200);
         
         // Ejecutar cuando la ventana se carga completamente
-        window.addEventListener('load', applyStickyClass);
+        window.addEventListener('load', notifyStickyChange);
         
         // Escuchar eventos de Shopify
         if (typeof Shopify !== 'undefined') {
           document.addEventListener('shopify:section:load', function(event) {
-            setTimeout(applyStickyClass, 50);
+            setTimeout(notifyStickyChange, 100);
           });
           document.addEventListener('shopify:section:select', function(event) {
-            setTimeout(applyStickyClass, 50);
+            setTimeout(notifyStickyChange, 100);
           });
         }
         
         // Usar MutationObserver para detectar cambios
         const observer = new MutationObserver(function(mutations) {
+          let shouldUpdate = false;
           mutations.forEach(function(mutation) {
             if (mutation.type === 'childList') {
               mutation.addedNodes.forEach(function(node) {
                 if (node.nodeType === 1) {
-                  const topBar = node.querySelector && node.querySelector('.announcement-bar-top[data-sticky-enabled="true"]');
-                  if (topBar || (node.classList && node.classList.contains('announcement-bar-top') && node.getAttribute('data-sticky-enabled') === 'true')) {
-                    setTimeout(applyStickyClass, 50);
+                  const topBar = node.querySelector && node.querySelector('.announcement-bar-top');
+                  if (topBar || (node.classList && node.classList.contains('announcement-bar-top'))) {
+                    shouldUpdate = true;
                   }
                 }
               });
@@ -711,10 +756,14 @@
             if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
               const target = mutation.target;
               if (target.classList && target.classList.contains('announcement-bar-top')) {
-                setTimeout(applyStickyClass, 50);
+                verifyAndUpdateSticky();
+                shouldUpdate = true;
               }
             }
           });
+          if (shouldUpdate) {
+            setTimeout(notifyStickyChange, 50);
+          }
         });
         
         // Observar cambios en el body

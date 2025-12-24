@@ -301,6 +301,16 @@
         "type": "shopify://apps/vex-auto-add-to-cart/blocks/vex-theme-extension/4050c1c7-5b58-4120-af12-e290cb2b28f0",
         "disabled": false,
         "settings": {}
+      },
+      "456413700349599700": {
+        "type": "shopify://apps/venon/blocks/tracking_code/3afef5af-993e-4831-a817-9a72867877c8",
+        "disabled": false,
+        "settings": {}
+      },
+      "735721325670868888": {
+        "type": "shopify://apps/checkmate/blocks/checked_network/697a3444-1374-4f13-ba8c-ec03db25ebf0",
+        "disabled": false,
+        "settings": {}
       }
     }
   },

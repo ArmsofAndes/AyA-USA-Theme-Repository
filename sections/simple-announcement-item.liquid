@@ -51,8 +51,12 @@
   assign sticky_on_product = section.settings.sticky_on_product
   assign sticky_on_blog = section.settings.sticky_on_blog
   
+  # Si enable_sticky es false explícitamente, mantenerlo como false
+  # Si es blank, usar true por defecto
   if enable_sticky == blank
     assign enable_sticky = true
+  elsif enable_sticky == false
+    assign enable_sticky = false
   endif
   
   if sticky_on_home == blank
@@ -68,6 +72,7 @@
     assign sticky_on_blog = true
   endif
   
+  # Solo verificar controles por página si enable_sticky está activado
   if enable_sticky
     if template == 'index'
       if sticky_on_home == false
@@ -264,8 +269,36 @@
       const section = document.getElementById(sectionId);
       
       if (section) {
+        // Función para verificar y aplicar/remover sticky basándose en data-sticky-enabled
+        const verifyAndUpdateSticky = () => {
+          const item = section.querySelector('.simple-announcement-item');
+          if (item) {
+            const dataStickyEnabled = item.getAttribute('data-sticky-enabled');
+            
+            // Si data-sticky-enabled es "false", remover clase y estilos del elemento padre (la sección)
+            if (dataStickyEnabled === 'false') {
+              section.classList.remove('sticky-enabled-section');
+              // Remover estilos inline con !important usando setProperty
+              section.style.setProperty('position', 'static', 'important');
+              section.style.removeProperty('top');
+              section.style.removeProperty('z-index');
+              // También remover cualquier estilo inline que pueda estar aplicado
+              const currentPosition = section.style.getPropertyValue('position');
+              if (currentPosition && currentPosition.includes('sticky')) {
+                section.style.setProperty('position', 'static', 'important');
+              }
+            } else if (dataStickyEnabled === 'true') {
+              // Si es "true", asegurar que tenga la clase (pero no aplicar estilos inline aquí, el header.js lo hará)
+              if (!section.classList.contains('sticky-enabled-section')) {
+                section.classList.add('sticky-enabled-section');
+              }
+            }
+          }
+        };
+        
         // Función para notificar cambios
         const notifyStickyChange = () => {
+          verifyAndUpdateSticky();
           window.dispatchEvent(new CustomEvent('sticky-element-changed', {
             detail: { element: section }
           }));
@@ -274,6 +307,18 @@
           }
         };
         
+        // Verificar inmediatamente y forzar remoción de estilos si es necesario
+        verifyAndUpdateSticky();
+        
+        // Forzar remoción de estilos inline con !important si data-sticky-enabled es "false"
+        const item = section.querySelector('.simple-announcement-item');
+        if (item && item.getAttribute('data-sticky-enabled') === 'false') {
+          // Remover estilos inline del elemento padre con máxima prioridad
+          section.style.setProperty('position', 'static', 'important');
+          section.style.setProperty('top', '', 'important');
+          section.style.setProperty('z-index', '', 'important');
+        }
+        
         // Notificar cuando el DOM esté listo
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', notifyStickyChange);
@@ -281,10 +326,12 @@
           notifyStickyChange();
         }
         
-        // Notificar después de delays
+        // Notificar después de delays para asegurar que se ejecute después de header.js
+        setTimeout(notifyStickyChange, 10);
         setTimeout(notifyStickyChange, 50);
         setTimeout(notifyStickyChange, 100);
         setTimeout(notifyStickyChange, 200);
+        setTimeout(notifyStickyChange, 300);
         
         // Notificar cuando la ventana se carga completamente
         window.addEventListener('load', notifyStickyChange);
@@ -293,6 +340,7 @@
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'data-sticky-enabled') {
+              verifyAndUpdateSticky();
               notifyStickyChange();
             }
           });
