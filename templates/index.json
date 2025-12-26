@@ -39,7 +39,7 @@
         "heading_cFFyje": {
           "type": "heading",
           "settings": {
-            "text": "Holiday Sale",
+            "text": "Boxing Day",
             "is_holiday_sale_heading": true,
             "holiday_sale_color_desktop": "#ffffff",
             "holiday_sale_font_size_desktop": 62,
@@ -187,7 +187,6 @@
         "button_x4wRrp",
         "button_jxkKx4"
       ],
-      "disabled": true,
       "name": "Overlay Holiday 2025",
       "settings": {
         "use_global_font": false,
@@ -349,6 +348,7 @@
         "button_YcfMAD",
         "button_HTPByX"
       ],
+      "disabled": true,
       "name": "HY Overlay2 2025",
       "settings": {
         "use_global_font": false,
