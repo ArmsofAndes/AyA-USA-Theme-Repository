@@ -282,13 +282,34 @@
             "hover_background_color": "#ffffff",
             "hover_border_color": "#000000"
           }
+        },
+        "button_UKrPYe": {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop Men",
+            "button_link": "shopify://collections/all-mens",
+            "button_font_size": 16,
+            "button_font_size_mobile": 15,
+            "button_font_weight": "400",
+            "button_color": "#ffffff",
+            "button_background_color": "#000000",
+            "button_border_color": "#ffffff",
+            "button_border_width": 2,
+            "button_border_radius": 32,
+            "button_border_style": "solid",
+            "button_outline": true,
+            "hover_text_color": "#000000",
+            "hover_background_color": "#ffffff",
+            "hover_border_color": "#000000"
+          }
         }
       },
       "block_order": [
         "subheading_ydCrxC",
         "heading_DhcmhC",
         "text_4CCfE4",
-        "button_XRCwkR"
+        "button_XRCwkR",
+        "button_UKrPYe"
       ],
       "name": "Image with text overlay new",
       "settings": {
