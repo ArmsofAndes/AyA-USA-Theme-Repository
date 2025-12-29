@@ -306,7 +306,7 @@
         "image": "shopify://shop_images/7c9fd686feb0f547c22b6b94456491131544def6_1.jpg",
         "mobile_image": "shopify://shop_images/FOTO_MOBILE.webp",
         "image_parallax": false,
-        "desktop_vh_height": 80,
+        "desktop_vh_height": 70,
         "desktop_height": "desktop-height-650",
         "mobile_height": "mobile-height-500",
         "content_width": "medium",
