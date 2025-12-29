@@ -9,8 +9,7 @@
     assign section_width = section.settings.section_width
     assign image = section.settings.image
     assign image_parallax = section.settings.image_parallax
-    assign desktop_height = section.settings.desktop_height
-    assign mobile_height = section.settings.mobile_height
+    assign mobile_px_height = section.settings.mobile_px_height
     assign content_width = section.settings.content_width
     assign content_position = section.settings.content_position
     assign text_alignment = section.settings.text_alignment
@@ -19,18 +18,7 @@
     assign disable_top_spacing = section.settings.disable_top_spacing
     assign disable_bottom_spacing = section.settings.disable_bottom_spacing
 
-    case mobile_height
-        when 'mobile-height-350'
-            assign mobile_image_height = 350
-        when 'mobile-height-400'
-            assign mobile_image_height = 400
-        when 'mobile-height-450'
-            assign mobile_image_height = 450
-        when 'mobile-height-500'
-            assign mobile_image_height = 620
-        else
-            assign mobile_image_height = 620
-    endcase
+    assign mobile_image_height = mobile_px_height
 
     assign priority = false
     assign heading_tag = 'h3'
@@ -49,7 +37,7 @@
      style="--section-font-family: {{ section_font }};">
 
     <div class="small-12 columns">
-        <image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} {{ mobile_height }} {{ desktop_height }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
+        <image-with-text-overlay class="image-with-text-overlay text-{{ text_alignment }} section-spacing{% if disable_top_spacing %} section-spacing--disable-top{% endif %}{% if disable_bottom_spacing %} section-spacing--disable-bottom{% endif %}"
           style="--color-overlay-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};--overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};">
             
             <div class="image-with-text-overlay--bg parallax--{{ image_parallax }}">
@@ -198,6 +186,7 @@
 
 #shopify-section-{{ section.id }} {
   --section-desktop-height: {{ section.settings.desktop_vh_height }}vh;
+  --section-mobile-height: {{ section.settings.mobile_px_height }}px;
 }
 
 /* Block-specific CSS custom properties */
@@ -431,66 +420,15 @@
   "step": 5,
   "default": 80
 },
-
             {
-                "type": "select",
-                "id": "desktop_height",
-                "label": "Desktop height",
-                "options": [
-                    {
-                        "value": "desktop-height-450",
-                        "label": "450px"
-                    },
-                    {
-                        "value": "desktop-height-550",
-                        "label": "550px"
-                    },
-                    {
-                        "value": "desktop-height-650",
-                        "label": "650px"
-                    },
-                    {
-                        "value": "desktop-height-750",
-                        "label": "750px"
-                    },
-                    {
-                        "value": "desktop-height-full",
-                        "label": "Full screen"
-                    }
-                ],
-                "default": "desktop-height-650"
-            },
-            {
-                "type": "select",
-                "id": "mobile_height",
-                "label": "Mobile height",
-                "options": [
-                    {
-                        "value": "mobile-height-auto",
-                        "label": "Adapt to content"
-                    },
-                    {
-                        "value": "mobile-height-350",
-                        "label": "350px"
-                    },
-                    {
-                        "value": "mobile-height-400",
-                        "label": "400px"
-                    },
-                    {
-                        "value": "mobile-height-450",
-                        "label": "450px"
-                    },
-                    {
-                        "value": "mobile-height-500",
-                        "label": "620px"
-                    },
-                    {
-                        "value": "mobile-height-full",
-                        "label": "Full screen"
-                    }
-                ],
-                "default": "mobile-height-500"
+                "type": "range",
+                "id": "mobile_px_height",
+                "label": "Alto en móvil (px)",
+                "min": 300,
+                "max": 1000,
+                "step": 10,
+                "unit": "px",
+                "default": 620
             },
             {
                 "type": "select",
