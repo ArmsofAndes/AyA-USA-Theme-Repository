@@ -20,6 +20,19 @@ endif
 	if section.settings.image and collection.handle == 'all'
 		assign image = section.settings.image
 	endif
+
+	assign is_holiday_sale = false
+	if template.name == 'collection' and template.suffix == 'holiday-sale-2025'
+		assign is_holiday_sale = true
+		assign holiday_sale_desktop_image = section.settings.holiday_sale_desktop_image
+		assign holiday_sale_mobile_image = section.settings.holiday_sale_mobile_image
+		assign holiday_sale_margin_right = section.settings.holiday_sale_margin_right
+		assign holiday_sale_margin_left = section.settings.holiday_sale_margin_left
+		assign holiday_sale_max_width = section.settings.holiday_sale_max_width
+		assign holiday_sale_padding_top_bottom = section.settings.holiday_sale_padding_top_bottom
+		assign holiday_sale_padding_left_right = section.settings.holiday_sale_padding_left_right
+		assign holiday_sale_mobile_margin_top = section.settings.holiday_sale_mobile_margin_top
+	endif
 -%}
 {%- if template == 'search' -%}
 	{%- liquid
@@ -36,7 +49,7 @@ endif
 {%- endif -%}
 {{ 'collection-banner.css' | asset_url | stylesheet_tag }}
 
-<div class="collection-banner collection-banner--heading-uppercase-{{ make_heading_uppercase }}{% if show_collection_image and image %} collection-banner--has-bg{% endif %}{% if template.name == 'collection' and template.suffix == 'holiday-sale-2025' %} collection-banner--holiday-sale-2025{% endif %}" style="--overlay-color-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }}; --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }}">
+<div class="collection-banner collection-banner--heading-uppercase-{{ make_heading_uppercase }}{% if show_collection_image and image %} collection-banner--has-bg{% endif %}{% if is_holiday_sale %} collection-banner--holiday-sale-2025{% if holiday_sale_desktop_image or holiday_sale_mobile_image %} collection-banner--holiday-sale-has-bg{% endif %}{% endif %}" style="--overlay-color-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }}; --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }}{% if is_holiday_sale and holiday_sale_desktop_image %} --holiday-sale-desktop-bg: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');{% endif %}{% if is_holiday_sale and holiday_sale_mobile_image %} --holiday-sale-mobile-bg: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');{% endif %}{% if is_holiday_sale %} --holiday-sale-margin-right: {{ holiday_sale_margin_right }}%; --holiday-sale-margin-left: {{ holiday_sale_margin_left }}%; --holiday-sale-max-width: {{ holiday_sale_max_width }}rem; --holiday-sale-padding-top-bottom: {{ holiday_sale_padding_top_bottom }}rem; --holiday-sale-padding-left-right: {{ holiday_sale_padding_left_right }}rem; --holiday-sale-mobile-margin-top: {{ holiday_sale_mobile_margin_top }}%;{% endif %}">
 	<div class="collection-banner--breadcrumbs">
 		{%- render 'breadcrumbs' -%}
 	</div>
@@ -171,12 +184,42 @@ endif
 }
 
 /* Estilos específicos solo para holiday-sale-2025 */
+.collection-banner--holiday-sale-2025 {
+  position: relative;
+}
+
 @media only screen and (min-width: 768px) {
+  .collection-banner--holiday-sale-2025 {
+    background-image: var(--holiday-sale-desktop-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
   .collection-banner--holiday-sale-2025 .collection-banner--content.text-left {
-    margin-right: 0;
-    margin-left: 0;
-    max-width: 81.25rem;
-    padding: 5rem 5rem;
+    margin-right: var(--holiday-sale-margin-right, 25%);
+    margin-left: var(--holiday-sale-margin-left, 0);
+    max-width: var(--holiday-sale-max-width, 55rem);
+    padding: var(--holiday-sale-padding-top-bottom, 5rem) var(--holiday-sale-padding-left-right, 5rem);
+  }
+
+  /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
+  .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .collection-banner--holiday-sale-2025 {
+    background-image: var(--holiday-sale-mobile-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
+  .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
+    display: none;
   }
 }
 
@@ -307,7 +350,7 @@ endif
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
-  .holiday-sale-2025-content {
+  .collection-banner--holiday-sale-2025 .holiday-sale-2025-content {
     display: flex;
     flex-direction: row;
     gap: 0.25rem;
@@ -315,7 +358,7 @@ endif
     justify-content: center;
     width: 100%;
     margin: 0 auto;
-    margin-top: 2rem;
+    margin-top: var(--holiday-sale-mobile-margin-top, 50%);
   }
 
   .holiday-sale-2025-discount {
@@ -508,7 +551,89 @@ endif
     { "value": "600", "label": "Semibold (600)" },
     { "value": "700", "label": "Bold (700)" }
   ]
-}
+},
+    {
+      "type": "header",
+      "content": "Holiday Sale 2025"
+    },
+    {
+      "type": "image_picker",
+      "id": "holiday_sale_desktop_image",
+      "label": "Desktop Background Image",
+      "info": "Background image for Holiday Sale collection on desktop (min-width: 768px)"
+    },
+    {
+      "type": "image_picker",
+      "id": "holiday_sale_mobile_image",
+      "label": "Mobile Background Image",
+      "info": "Background image for Holiday Sale collection on mobile (max-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_margin_right",
+      "label": "Margin Right (Desktop)",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "default": 25,
+      "info": "Margin right for content on desktop (min-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_margin_left",
+      "label": "Margin Left (Desktop)",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "default": 0,
+      "info": "Margin left for content on desktop (min-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_max_width",
+      "label": "Max Width (Desktop)",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "unit": "rem",
+      "default": 55,
+      "info": "Maximum width for content on desktop (min-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_padding_top_bottom",
+      "label": "Padding Top/Bottom (Desktop)",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 5,
+      "info": "Padding top and bottom for content on desktop (min-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_padding_left_right",
+      "label": "Padding Left/Right (Desktop)",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "default": 5,
+      "info": "Padding left and right for content on desktop (min-width: 768px)"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_mobile_margin_top",
+      "label": "Margin Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "info": "Margin top for content on mobile (max-width: 768px)"
+    }
   ]
 }
 {% endschema %}
