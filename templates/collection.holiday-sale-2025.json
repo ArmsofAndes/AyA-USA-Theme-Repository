@@ -42,7 +42,12 @@
         "holiday_sale_max_width": 55,
         "holiday_sale_padding_top_bottom": 6.5,
         "holiday_sale_padding_left_right": 5,
-        "holiday_sale_mobile_margin_top": 70
+        "holiday_sale_mobile_margin_top": 65,
+        "holiday_sale_discount_up_to": "UP TO",
+        "holiday_sale_discount_number": "20",
+        "holiday_sale_discount_percent": "%",
+        "holiday_sale_discount_off": "OFF",
+        "holiday_sale_section_margin_bottom": 1
       }
     },
     "product-grid": {
