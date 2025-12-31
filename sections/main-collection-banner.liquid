@@ -36,6 +36,7 @@ endif
 		assign holiday_sale_discount_number = section.settings.holiday_sale_discount_number
 		assign holiday_sale_discount_percent = section.settings.holiday_sale_discount_percent
 		assign holiday_sale_discount_off = section.settings.holiday_sale_discount_off
+		assign holiday_sale_section_margin_bottom = section.settings.holiday_sale_section_margin_bottom
 	endif
 -%}
 {%- if template == 'search' -%}
@@ -243,13 +244,16 @@ endif
   }
 {% endif %}
 
-  #shopify-section-template--20771015688438__main-collection-banner.shopify-section {
-    background-image: url(/cdn/shop/files/AYA_banner_sale_page.webp?v=1767192641&width=1920);
+{% if holiday_sale_desktop_image %}
+  #shopify-section-template--20771015688438__main-collection-banner.shopify-section,
+  #shopify-section-template--20694423634166__main-collection-banner.shopify-section {
+    background-image: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: 1rem;
+    margin-bottom: {{ holiday_sale_section_margin_bottom }}rem;
   }
+{% endif %}
 
   .collection-banner--holiday-sale-2025 .holiday-sale-2025-content::before {
     content: '';
@@ -285,13 +289,16 @@ endif
   }
 {% endif %}
 
-  #shopify-section-template--20771015688438__main-collection-banner.shopify-section {
-    background-image: url(/cdn/shop/files/AYA_banner_sale_page_4d0d8fd5-339a-4d02-84b5-d527be9ce0aa.png?v=1767192983&width=768);
+{% if holiday_sale_mobile_image %}
+  #shopify-section-template--20771015688438__main-collection-banner.shopify-section,
+  #shopify-section-template--20694423634166__main-collection-banner.shopify-section {
+    background-image: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: 1rem;
+    margin-bottom: {{ holiday_sale_section_margin_bottom }}rem;
   }
+{% endif %}
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
   .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
@@ -884,6 +891,17 @@ endif
       "id": "holiday_sale_discount_off",
       "label": "Off Text",
       "default": "OFF"
+    },
+    {
+      "type": "range",
+      "id": "holiday_sale_section_margin_bottom",
+      "label": "Section Margin Bottom",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "info": "Bottom margin for the section wrapper on both desktop and mobile"
     }
   ]
 }
