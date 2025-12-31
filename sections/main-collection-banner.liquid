@@ -32,6 +32,10 @@ endif
 		assign holiday_sale_padding_top_bottom = section.settings.holiday_sale_padding_top_bottom
 		assign holiday_sale_padding_left_right = section.settings.holiday_sale_padding_left_right
 		assign holiday_sale_mobile_margin_top = section.settings.holiday_sale_mobile_margin_top
+		assign holiday_sale_discount_up_to = section.settings.holiday_sale_discount_up_to
+		assign holiday_sale_discount_number = section.settings.holiday_sale_discount_number
+		assign holiday_sale_discount_percent = section.settings.holiday_sale_discount_percent
+		assign holiday_sale_discount_off = section.settings.holiday_sale_discount_off
 	endif
 -%}
 {%- if template == 'search' -%}
@@ -80,11 +84,18 @@ endif
 					{%- comment -%} Layout especial para holiday-sale-2025 {%- endcomment -%}
 					<div class="holiday-sale-2025-content">
 						<div class="holiday-sale-2025-column holiday-sale-2025-column--discount">
-							{%- if collection.metafields.custom.discount != blank -%}
-								<div class="holiday-sale-2025-discount">
-									{{ collection.metafields.custom.discount }}
+							<div class="holiday-sale-2025-discount-container">
+								<div class="holiday-sale-2025-discount-col holiday-sale-2025-discount-col--up-to">
+									<div class="holiday-sale-2025-discount-up-to">{{ holiday_sale_discount_up_to }}</div>
 								</div>
-							{%- endif -%}
+								<div class="holiday-sale-2025-discount-col holiday-sale-2025-discount-col--number">
+									<div class="holiday-sale-2025-discount-number">{{ holiday_sale_discount_number }}</div>
+								</div>
+								<div class="holiday-sale-2025-discount-col holiday-sale-2025-discount-col--percent-off">
+									<div class="holiday-sale-2025-discount-percent">{{ holiday_sale_discount_percent }}</div>
+									<div class="holiday-sale-2025-discount-off">{{ holiday_sale_discount_off }}</div>
+								</div>
+							</div>
 						</div>
 						<div class="holiday-sale-2025-column holiday-sale-2025-column--text">
 							{%- if collection.metafields.custom.subtitle_collection != blank -%}
@@ -201,7 +212,6 @@ endif
 .collection-banner--holiday-sale-2025 .collection-banner--breadcrumbs a,
 .collection-banner--holiday-sale-2025 .holiday-sale-2025-content,
 .collection-banner--holiday-sale-2025 .holiday-sale-2025-content *,
-.collection-banner--holiday-sale-2025 .holiday-sale-2025-discount,
 .collection-banner--holiday-sale-2025 .holiday-sale-2025-subtitle,
 .collection-banner--holiday-sale-2025 .holiday-sale-2025-description {
   color: #ffffff !important;
@@ -233,6 +243,25 @@ endif
   }
 {% endif %}
 
+  #shopify-section-template--20771015688438__main-collection-banner.shopify-section {
+    background-image: url(/cdn/shop/files/AYA_banner_sale_page.webp?v=1767192641&width=1920);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 1rem;
+  }
+
+  .collection-banner--holiday-sale-2025 .holiday-sale-2025-content::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -7.0%;
+    right: -7.0%;
+    bottom: -10%;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+  }
+
   .collection-banner--holiday-sale-2025 .collection-banner--content.text-left {
     margin-right: {{ holiday_sale_margin_right }}%;
     margin-left: {{ holiday_sale_margin_left }}%;
@@ -255,6 +284,14 @@ endif
     background-repeat: no-repeat;
   }
 {% endif %}
+
+  #shopify-section-template--20771015688438__main-collection-banner.shopify-section {
+    background-image: url(/cdn/shop/files/AYA_banner_sale_page_4d0d8fd5-339a-4d02-84b5-d527be9ce0aa.png?v=1767192983&width=768);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 1rem;
+  }
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
   .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
@@ -339,7 +376,7 @@ endif
 .holiday-sale-2025-column--text {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0rem;
   text-align: left;
 }
 
@@ -354,31 +391,98 @@ endif
     margin: 0 auto;
   }
 
-  .holiday-sale-2025-discount {
-    color: #B30101;
-    font-family: "Open Sans", sans-serif;
-    font-size: 4.0625rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.2;
-    max-width: 10rem;
-  }
-
   .holiday-sale-2025-column--discount {
     flex: 0 0 auto;
   }
 
+  /* Discount container structure */
+  .holiday-sale-2025-discount-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .holiday-sale-2025-discount-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .holiday-sale-2025-discount-col--up-to {
+    align-items: center;
+    justify-content: center;
+    max-width: 2rem;
+  }
+
+  .holiday-sale-2025-discount-col--percent-off {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* UP TO text - Desktop */
+  .holiday-sale-2025-discount-up-to {
+    color: #FFF;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+  }
+
+  /* Number text - Desktop */
+  .holiday-sale-2025-discount-number {
+    color: #FFF;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 150px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -7.5px;
+    line-height: 1;
+  }
+
+  /* Percent symbol - Desktop */
+  .holiday-sale-2025-discount-percent {
+    color: #FFF;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 75px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* OFF text - Desktop */
+  .holiday-sale-2025-discount-off {
+    color: #FFF;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+  }
+
   .holiday-sale-2025-column--text {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    text-align: left;
     flex: 1;
   }
 
   .holiday-sale-2025-subtitle {
-    color: #151515;
-    font-family: var(--font-family-Font-1, Baskervville), serif;
-    font-size: 2.2rem;
+    color: #FFF;
+    /* -webkit-text-stroke-width: 0.25px; */
+    /* -webkit-text-stroke-color: #000; */
+    font-family: Montserrat;
+    font-size: 30px;
     font-style: normal;
-    font-weight: var(--font-weight-400, 400);
-    line-height: 1.3;
+    font-weight: 700;
   }
 
   .holiday-sale-2025-description {
@@ -405,16 +509,88 @@ endif
     margin: 0 auto;
     margin-top: {{ holiday_sale_mobile_margin_top }}%;
   }
+
+  .collection-banner--holiday-sale-2025 .holiday-sale-2025-content::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -15%;
+    right: -15%;
+    bottom: -10%;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: -1;
+  }
 {% endif %}
 
-  .holiday-sale-2025-discount {
-    color: #B30101;
-    font-family: "Open Sans", sans-serif;
-    font-size: 3rem;
+  /* Discount container structure - Mobile */
+  .holiday-sale-2025-discount-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .holiday-sale-2025-discount-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .holiday-sale-2025-discount-col--up-to {
+    align-items: center;
+    justify-content: center;
+    max-width: 1.5rem;
+  }
+
+  .holiday-sale-2025-discount-col--percent-off {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* UP TO text - Mobile */
+  .holiday-sale-2025-discount-up-to {
+    color: #FFF;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 28px;
     font-style: normal;
     font-weight: 700;
-    line-height: 1.2;
-    max-width: 7.5rem;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+  }
+
+  /* Number text - Mobile */
+  .holiday-sale-2025-discount-number {
+    color: #FFF;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 125px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -6.25px;
+    line-height: 1;
+  }
+
+  /* Percent symbol - Mobile */
+  .holiday-sale-2025-discount-percent {
+    color: #FFF;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 75px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* OFF text - Mobile */
+  .holiday-sale-2025-discount-off {
+    color: #FFF;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.67);
+    font-family: Montserrat;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
   }
 
   .holiday-sale-2025-column--discount {
@@ -424,18 +600,18 @@ endif
   .holiday-sale-2025-column--text {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0rem;
     text-align: left;
     flex: 1;
   }
 
   .holiday-sale-2025-subtitle {
-    color: #151515;
-    font-family: Baskervville, serif;
-    font-size: 1rem;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 400;
-    line-height: 1.3;
+    font-weight: 700;
   }
 
   .holiday-sale-2025-description {
@@ -446,6 +622,7 @@ endif
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: normal;
+    text-align: center;
   }
 }
 </style>
@@ -622,7 +799,7 @@ endif
       "max": 50,
       "step": 0.5,
       "unit": "%",
-      "default": 25,
+      "default": 30,
       "info": "Margin right for content on desktop (min-width: 768px)"
     },
     {
@@ -644,7 +821,7 @@ endif
       "max": 100,
       "step": 1,
       "unit": "rem",
-      "default": 55,
+      "default": 60,
       "info": "Maximum width for content on desktop (min-width: 768px)"
     },
     {
@@ -655,7 +832,7 @@ endif
       "max": 10,
       "step": 0.5,
       "unit": "rem",
-      "default": 5,
+      "default": 6.5,
       "info": "Padding top and bottom for content on desktop (min-width: 768px)"
     },
     {
@@ -679,6 +856,34 @@ endif
       "unit": "%",
       "default": 70,
       "info": "Margin top for content on mobile (max-width: 768px)"
+    },
+    {
+      "type": "header",
+      "content": "Discount Text"
+    },
+    {
+      "type": "text",
+      "id": "holiday_sale_discount_up_to",
+      "label": "Up To Text",
+      "default": "UP TO"
+    },
+    {
+      "type": "text",
+      "id": "holiday_sale_discount_number",
+      "label": "Discount Number",
+      "default": "20"
+    },
+    {
+      "type": "text",
+      "id": "holiday_sale_discount_percent",
+      "label": "Percent Symbol",
+      "default": "%"
+    },
+    {
+      "type": "text",
+      "id": "holiday_sale_discount_off",
+      "label": "Off Text",
+      "default": "OFF"
     }
   ]
 }
