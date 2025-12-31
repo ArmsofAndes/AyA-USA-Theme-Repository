@@ -36,13 +36,13 @@
         "subtitle_font_size": 1.3,
         "subtitle_font_weight": "300",
         "holiday_sale_desktop_image": "shopify://shop_images/AYA_banner_sale_page.webp",
-        "holiday_sale_mobile_image": "shopify://shop_images/AYA_banner_sale_page_85517bcf-5b70-464b-b57a-2f079a497997.png",
+        "holiday_sale_mobile_image": "shopify://shop_images/AYA_banner_sale_page_4d0d8fd5-339a-4d02-84b5-d527be9ce0aa.png",
         "holiday_sale_margin_right": 25,
         "holiday_sale_margin_left": 0,
         "holiday_sale_max_width": 55,
         "holiday_sale_padding_top_bottom": 5,
         "holiday_sale_padding_left_right": 5,
-        "holiday_sale_mobile_margin_top": 72
+        "holiday_sale_mobile_margin_top": 75
       }
     },
     "product-grid": {
