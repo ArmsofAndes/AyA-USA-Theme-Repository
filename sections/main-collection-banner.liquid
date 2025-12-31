@@ -184,23 +184,32 @@ endif
 }
 
 /* Estilos específicos solo para holiday-sale-2025 */
-.collection-banner--holiday-sale-2025 {
+{% if is_holiday_sale %}
+#shopify-section-{{ section.id }}.shopify-section {
   position: relative;
+{% if holiday_sale_desktop_image %}
+  --holiday-sale-desktop-bg: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');
+{% endif %}
+{% if holiday_sale_mobile_image %}
+  --holiday-sale-mobile-bg: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');
+{% endif %}
 }
 
 @media only screen and (min-width: 768px) {
-  .collection-banner--holiday-sale-2025 {
-    background-image: var(--holiday-sale-desktop-bg);
+{% if holiday_sale_desktop_image %}
+  #shopify-section-{{ section.id }}.shopify-section {
+    background-image: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
+{% endif %}
 
   .collection-banner--holiday-sale-2025 .collection-banner--content.text-left {
-    margin-right: var(--holiday-sale-margin-right, 25%);
-    margin-left: var(--holiday-sale-margin-left, 0);
-    max-width: var(--holiday-sale-max-width, 55rem);
-    padding: var(--holiday-sale-padding-top-bottom, 5rem) var(--holiday-sale-padding-left-right, 5rem);
+    margin-right: {{ holiday_sale_margin_right }}%;
+    margin-left: {{ holiday_sale_margin_left }}%;
+    max-width: {{ holiday_sale_max_width }}rem;
+    padding: {{ holiday_sale_padding_top_bottom }}rem {{ holiday_sale_padding_left_right }}rem;
   }
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
@@ -210,17 +219,24 @@ endif
 }
 
 @media screen and (max-width: 768px) {
-  .collection-banner--holiday-sale-2025 {
-    background-image: var(--holiday-sale-mobile-bg);
+{% if holiday_sale_mobile_image %}
+  #shopify-section-{{ section.id }}.shopify-section {
+    background-image: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
+{% endif %}
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
   .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
     display: none;
   }
+}
+{% endif %}
+
+.collection-banner--holiday-sale-2025 {
+  position: relative;
 }
 
 .collection-banner--image-wrapper img {
@@ -350,6 +366,7 @@ endif
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
+{% if is_holiday_sale %}
   .collection-banner--holiday-sale-2025 .holiday-sale-2025-content {
     display: flex;
     flex-direction: row;
@@ -358,8 +375,9 @@ endif
     justify-content: center;
     width: 100%;
     margin: 0 auto;
-    margin-top: var(--holiday-sale-mobile-margin-top, 50%);
+    margin-top: {{ holiday_sale_mobile_margin_top }}%;
   }
+{% endif %}
 
   .holiday-sale-2025-discount {
     color: #B30101;
