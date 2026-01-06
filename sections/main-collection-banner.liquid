@@ -54,7 +54,7 @@ endif
 {%- endif -%}
 {{ 'collection-banner.css' | asset_url | stylesheet_tag }}
 
-<div class="collection-banner collection-banner--heading-uppercase-{{ make_heading_uppercase }}{% if show_collection_image and image %} collection-banner--has-bg{% endif %}{% if is_holiday_sale %} collection-banner--holiday-sale-2025{% if holiday_sale_desktop_image or holiday_sale_mobile_image %} collection-banner--holiday-sale-has-bg{% endif %}{% endif %}" style="--overlay-color-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }}; --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }}{% if is_holiday_sale and holiday_sale_desktop_image %} --holiday-sale-desktop-bg: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');{% endif %}{% if is_holiday_sale and holiday_sale_mobile_image %} --holiday-sale-mobile-bg: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');{% endif %}{% if is_holiday_sale %} --holiday-sale-margin-right: {{ holiday_sale_margin_right }}%; --holiday-sale-margin-left: {{ holiday_sale_margin_left }}%; --holiday-sale-max-width: {{ holiday_sale_max_width }}rem; --holiday-sale-padding-top-bottom: {{ holiday_sale_padding_top_bottom }}rem; --holiday-sale-padding-left-right: {{ holiday_sale_padding_left_right }}rem; --holiday-sale-mobile-margin-top: {{ holiday_sale_mobile_margin_top }}%;{% endif %}">
+<div class="collection-banner collection-banner--heading-uppercase-{{ make_heading_uppercase }}{% if show_collection_image and image %} collection-banner--has-bg{% endif %}{% if is_holiday_sale %} collection-banner--holiday-sale-2025{% if holiday_sale_desktop_image or holiday_sale_mobile_image %} collection-banner--holiday-sale-has-bg{% endif %}{% endif %}">
 	<div class="collection-banner--breadcrumbs">
 		{%- render 'breadcrumbs' -%}
 	</div>
@@ -197,14 +197,26 @@ endif
 
 /* Estilos específicos solo para holiday-sale-2025 */
 {% if is_holiday_sale %}
-#shopify-section-{{ section.id }}.shopify-section {
-  position: relative;
+/* Variables CSS dinámicas para Holiday Sale */
+.collection-banner--holiday-sale-2025 {
+  --overlay-color-rgb: {{ overlay_color.rgb | replace: ' ' , ',' }};
+  --overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }};
 {% if holiday_sale_desktop_image %}
   --holiday-sale-desktop-bg: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');
 {% endif %}
 {% if holiday_sale_mobile_image %}
   --holiday-sale-mobile-bg: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');
 {% endif %}
+  --holiday-sale-margin-right: {{ holiday_sale_margin_right | default: 30 }}%;
+  --holiday-sale-margin-left: {{ holiday_sale_margin_left | default: 0 }}%;
+  --holiday-sale-max-width: {{ holiday_sale_max_width | default: 60 }}rem;
+  --holiday-sale-padding-top-bottom: {{ holiday_sale_padding_top_bottom | default: 6.5 }}rem;
+  --holiday-sale-padding-left-right: {{ holiday_sale_padding_left_right | default: 5 }}rem;
+  --holiday-sale-mobile-margin-top: {{ holiday_sale_mobile_margin_top | default: 70 }}%;
+}
+
+#shopify-section-{{ section.id }}.shopify-section {
+  position: relative;
 }
 
 /* Color blanco para breadcrumbs y holiday-sale-2025-content */
@@ -244,16 +256,17 @@ endif
   }
 {% endif %}
 
-{% if holiday_sale_desktop_image %}
+  #shopify-section-{{ section.id }}.shopify-section,
   #shopify-section-template--20771015688438__main-collection-banner.shopify-section,
   #shopify-section-template--20694423634166__main-collection-banner.shopify-section {
+{% if holiday_sale_desktop_image %}
     background-image: url('{{ holiday_sale_desktop_image | image_url: width: 1920 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: {{ holiday_sale_section_margin_bottom }}rem;
-  }
 {% endif %}
+    margin-bottom: {{ holiday_sale_section_margin_bottom | default: 1 }}rem;
+  }
 
   .collection-banner--holiday-sale-2025 .holiday-sale-2025-content::before {
     content: '';
@@ -267,10 +280,10 @@ endif
   }
 
   .collection-banner--holiday-sale-2025 .collection-banner--content.text-left {
-    margin-right: {{ holiday_sale_margin_right }}%;
-    margin-left: {{ holiday_sale_margin_left }}%;
-    max-width: {{ holiday_sale_max_width }}rem;
-    padding: {{ holiday_sale_padding_top_bottom }}rem {{ holiday_sale_padding_left_right }}rem;
+    margin-right: var(--holiday-sale-margin-right, 30%);
+    margin-left: var(--holiday-sale-margin-left, 0%);
+    max-width: var(--holiday-sale-max-width, 60rem);
+    padding: var(--holiday-sale-padding-top-bottom, 6.5rem) var(--holiday-sale-padding-left-right, 5rem);
   }
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
@@ -289,16 +302,17 @@ endif
   }
 {% endif %}
 
-{% if holiday_sale_mobile_image %}
+  #shopify-section-{{ section.id }}.shopify-section,
   #shopify-section-template--20771015688438__main-collection-banner.shopify-section,
   #shopify-section-template--20694423634166__main-collection-banner.shopify-section {
+{% if holiday_sale_mobile_image %}
     background-image: url('{{ holiday_sale_mobile_image | image_url: width: 768 }}');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: {{ holiday_sale_section_margin_bottom }}rem;
-  }
 {% endif %}
+    margin-bottom: {{ holiday_sale_section_margin_bottom | default: 1 }}rem;
+  }
 
   /* Ocultar imágenes regulares cuando se usa imagen de fondo del schema */
   .collection-banner--holiday-sale-has-bg .collection-banner--image-wrapper {
@@ -514,7 +528,7 @@ endif
     justify-content: center;
     width: 70%;
     margin: 0 auto;
-    margin-top: {{ holiday_sale_mobile_margin_top }}%;
+    margin-top: var(--holiday-sale-mobile-margin-top, 70%);
   }
 
   .collection-banner--holiday-sale-2025 .holiday-sale-2025-content::before {
