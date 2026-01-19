@@ -92,27 +92,31 @@
 								{%- endfor -%}
 							</ul>
 							{%- endif -%}
-							<quantity-selector class="quantity cart-update small-qty" data-id="{{ item.key | escape }}">
-							 <button class="minus" type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">{% render 'svg-icons' with 'minus' %}</button>
-								<input
-								type="number"
-								name="updates[]"
-								id="updates_{{ item.key }}"
-								value="{{ item.quantity }}"
-								min="{{ item.variant.quantity_rule.min }}"
-								{% if item.variant.quantity_rule.max != null %}
-			          	max="{{ item.variant.quantity_rule.max }}"
-								{% elsif item.variant.inventory_management != null and item.variant.inventory_quantity > 0 %}
-									max="{{ item.variant.inventory_quantity }}"
-			          {% endif %}
-								step="{{ item.variant.quantity_rule.increment }}"
-								class="qty"
-								data-index="{{ item.index | plus: 1 }}"
-								aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
-								>
-							 <button class="plus" type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">{% render 'svg-icons' with 'plus' %}</button>
-							</quantity-selector>
-							<a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="remove" data-index="{{ item.index | plus: 1 }}">{% render 'svg-icons' with 'trash' %}</a>
+						<quantity-selector class="quantity cart-update small-qty" data-id="{{ item.key | escape }}">
+						 <button class="minus" type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">{% render 'svg-icons' with 'minus' %}</button>
+							<input
+							type="number"
+							name="updates[]"
+							id="updates_{{ item.key }}"
+							value="{{ item.quantity }}"
+							min="{{ item.variant.quantity_rule.min }}"
+							{% if item.variant.quantity_rule.max != null %}
+		          	max="{{ item.variant.quantity_rule.max }}"
+							{% elsif item.variant.inventory_management != null and item.variant.inventory_quantity > 0 %}
+								max="{{ item.variant.inventory_quantity }}"
+		          {% endif %}
+							step="{{ item.variant.quantity_rule.increment }}"
+							class="qty"
+							data-index="{{ item.index | plus: 1 }}"
+							aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+							>
+						 <button class="plus" type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">{% render 'svg-icons' with 'plus' %}</button>
+						</quantity-selector>
+						<a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="remove" data-index="{{ item.index | plus: 1 }}">{% render 'svg-icons' with 'trash' %}</a>
+						<div class="cart-item__error form-notification error" id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" role="alert" hidden>
+							{% render 'svg-icons' with 'thb-error' %}
+							<small class="cart-item__error-text"></small>
+						</div>
 						</div>
 						<div class="product-cart-item-price">
 							<span class="price">

@@ -350,8 +350,16 @@
           const id = slot.dataset.variantId;
           const { qty } = this.getSelections(slot);
           if (!id) return null;
+          
+          // Validate variant ID is a valid number
+          const variantId = parseInt(id, 10);
+          if (isNaN(variantId) || variantId <= 0) {
+            console.warn(`Invalid variant ID for slot ${idx + 1}:`, id);
+            return null;
+          }
+          
           return {
-            id,
+            id: variantId,
             quantity: qty,
             properties: {
               _bundle: this.getAttribute("data-bundle-title") || "",
@@ -362,7 +370,13 @@
         })
         .filter(Boolean);
 
-      if (!items.length) return;
+      if (!items.length) {
+        if (this.errorEl) {
+          this.errorEl.textContent = "Please select valid options for all products.";
+          this.errorEl.hidden = false;
+        }
+        return;
+      }
 
       if (this.addAllBtn) this.addAllBtn.disabled = true;
 
@@ -376,7 +390,26 @@
           },
           body: JSON.stringify({ items }),
         });
-        if (!addRes.ok) throw new Error("Add failed");
+        
+        const responseData = await addRes.json();
+        
+        // Handle Shopify API errors (422 for inventory issues, 404 for invalid variants)
+        if (!addRes.ok || responseData.status) {
+          let errorMessage = "Couldn't add items. Please try again.";
+          
+          // Parse specific Shopify error responses
+          if (responseData.description) {
+            errorMessage = responseData.description;
+          } else if (responseData.message) {
+            errorMessage = responseData.message;
+          } else if (addRes.status === 422) {
+            errorMessage = "Some items are out of stock or have insufficient inventory.";
+          } else if (addRes.status === 404) {
+            errorMessage = "One or more products are no longer available.";
+          }
+          
+          throw new Error(errorMessage);
+        }
 
         // Let any theme listeners react
         document.dispatchEvent(
@@ -388,13 +421,24 @@
           new CustomEvent("cart:refresh", { bubbles: true })
         );
         document.body.classList.add("open-cc");
-        document.querySelector("cart-drawer").classList.add("active");
+        document.querySelector("cart-drawer")?.classList.add("active");
       } catch (e) {
         if (this.errorEl) {
-          this.errorEl.textContent = "Couldn’t add items. Please try again.";
+          this.errorEl.textContent = e.message || "Couldn't add items. Please try again.";
           this.errorEl.hidden = false;
         }
-        console.error(e);
+        console.error("Bundle add to cart error:", e);
+        
+        // Dispatch error event for third-party apps
+        document.dispatchEvent(
+          new CustomEvent("cart:error", { 
+            detail: { 
+              items, 
+              error: e.message,
+              type: 'bundle_add_failed'
+            } 
+          })
+        );
       } finally {
         if (this.addAllBtn) this.addAllBtn.disabled = false;
       }
