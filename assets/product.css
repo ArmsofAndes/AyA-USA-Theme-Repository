@@ -1241,6 +1241,7 @@
     content: "★★★★★";
     background: linear-gradient(90deg, var(--color-star) var(--star-percent), #e1e1e1 var(--star-percent));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent; }
 
 .rating {
@@ -1268,6 +1269,7 @@
   content: "\2605\2605\2605\2605\2605";
   background: linear-gradient(90deg, var(--color-reviews) var(--percent), rgba(var(--color-foreground), 0.15) var(--percent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent; }
 
 .rating-text {

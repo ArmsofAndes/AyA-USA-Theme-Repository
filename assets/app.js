@@ -770,6 +770,13 @@ if (!customElements.get('cart-drawer')) {
         .then((state) => {
           const parsedState = JSON.parse(state);
 
+          // Handle inventory errors - display error message to user
+          if (parsedState.errors) {
+            this.displayErrors(line, parsedState.errors);
+            this.querySelector(`#CartDrawerItem-${line}`)?.classList.remove('thb-loading');
+            return;
+          }
+
           this.getSectionsToRender().forEach((section => {
             const elementToReplace = document.getElementById(section.id).querySelector(section.selector) || document.getElementById(section.id);
 
@@ -786,7 +793,29 @@ if (!customElements.get('cart-drawer')) {
           });
 
           this.querySelector(`#CartDrawerItem-${line}`)?.classList.remove('thb-loading');
+        })
+        .catch((error) => {
+          console.error('Cart update error:', error);
+          this.querySelector(`#CartDrawerItem-${line}`)?.classList.remove('thb-loading');
         });
+    }
+    
+    displayErrors(line, message) {
+      const lineItemError = document.getElementById(`CartDrawer-LineItemError-${line}`);
+      if (lineItemError) {
+        lineItemError.removeAttribute('hidden');
+        const errorText = lineItemError.querySelector('.cart-item__error-text');
+        if (errorText) {
+          errorText.innerHTML = message;
+        }
+      } else {
+        // Fallback: show error via custom event for apps/third-party integrations
+        dispatchCustomEvent('cart:error', {
+          line: line,
+          message: message,
+          type: 'inventory'
+        });
+      }
     }
     refresh() {
       this.querySelector('.product-recommendations--full')?.classList.remove('active');
