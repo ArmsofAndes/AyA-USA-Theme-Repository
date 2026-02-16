@@ -146,7 +146,7 @@
 {%- if section.settings.use_global_font and section.settings.custom_anchor_id != blank -%}
   <style>
     #{{ section.settings.custom_anchor_id }} * {
-      font-family: {{ settings.font_body | default: 'inherit' }} !important;
+      font-family: var(--font-body-family, inherit) !important;
     }
   </style>
 {%- endif -%}

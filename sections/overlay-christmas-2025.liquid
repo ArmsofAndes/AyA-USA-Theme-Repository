@@ -376,7 +376,7 @@
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .button[class*="custom-btn"],
 #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] a.button {
-  font-family: Baskervville, serif !important;
+  font-family: var(--font-heading-family, inherit) !important;
   font-weight: 400 !important;
 }
 {%- endif -%}
@@ -611,7 +611,7 @@
   {%- if section.settings.use_theme_font_buttons -%}
   #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
   #shopify-section-{{ section.id }} .bottom-group-wrapper .buttons-grid-wrapper .button[class*="custom-btn"] {
-    font-family: Baskervville, serif !important;
+    font-family: var(--font-heading-family, inherit) !important;
     font-weight: 400 !important;
   }
   {%- else -%}
@@ -685,7 +685,7 @@
   {%- if section.settings.use_theme_font_buttons -%}
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .block-wrapper[data-block-type="button"] .button,
   #shopify-section-{{ section.id }} .buttons-grid-wrapper .button[class*="custom-btn"] {
-    font-family: Baskervville, serif !important;
+    font-family: var(--font-heading-family, inherit) !important;
     font-weight: 400 !important;
   }
   {%- else -%}
@@ -717,7 +717,7 @@
           font-size: {{ mobile_font_size }}px !important;
           font-weight: 400 !important;
           {%- if section.settings.use_theme_font_buttons -%}
-          font-family: Baskervville, serif !important;
+          font-family: var(--font-heading-family, inherit) !important;
           {%- else -%}
           font-family: var(--section-font-family, inherit) !important;
           {%- endif -%}
@@ -731,7 +731,7 @@
           font-size: 15px !important;
           font-weight: 400 !important;
           {%- if section.settings.use_theme_font_buttons -%}
-          font-family: Baskervville, serif !important;
+          font-family: var(--font-heading-family, inherit) !important;
           {%- else -%}
           font-family: var(--section-font-family, inherit) !important;
           {%- endif -%}
@@ -885,7 +885,7 @@
       text-shadow: {{ block.settings.holiday_sale_text_shadow_x_desktop | default: 0 }}rem {{ block.settings.holiday_sale_text_shadow_y_desktop | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_blur_desktop | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_color_desktop | default: 'rgba(0, 0, 0, 0.25)' }} !important;
       -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_desktop | default: 0.5 }}px !important;
       -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_desktop | default: '#FFFFFF' }} !important;
-      font-family: Baskervville, serif !important;
+      font-family: var(--font-heading-family, inherit) !important;
       font-size: {{ font_size }}rem !important;
       font-style: normal !important;
       font-weight: {{ block.settings.holiday_sale_font_weight_desktop | default: 400 }} !important;
@@ -925,7 +925,7 @@
         text-shadow: {{ block.settings.holiday_sale_text_shadow_x_mobile | default: 0 }}rem {{ block.settings.holiday_sale_text_shadow_y_mobile | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_blur_mobile | default: 0.25 }}rem {{ block.settings.holiday_sale_text_shadow_color_mobile | default: 'rgba(0, 0, 0, 0.25)' }} !important;
         -webkit-text-stroke-width: {{ block.settings.holiday_sale_stroke_width_mobile | default: 0.5 }}px !important;
         -webkit-text-stroke-color: {{ block.settings.holiday_sale_stroke_color_mobile | default: '#FFFFFF' }} !important;
-        font-family: Baskervville, serif !important;
+        font-family: var(--font-heading-family, inherit) !important;
         font-size: {{ font_size_mobile }}rem !important;
         font-style: normal !important;
         font-weight: {{ block.settings.holiday_sale_font_weight_mobile | default: 400 }} !important;
@@ -1345,9 +1345,9 @@
     {
       "type": "checkbox",
       "id": "use_theme_font_buttons",
-      "label": "Usar tipografía del tema (Baskervville) en botones",
+      "label": "Usar tipografía del tema en botones",
       "default": true,
-      "info": "Si está activado, los botones usarán Baskervville con peso 400"
+      "info": "Si está activado, los botones usarán la fuente de Heading del tema con peso 400"
     },
     {
       "type": "select",
