@@ -496,7 +496,7 @@
       "custom_css": [
         ".row {max-width: 100%;}",
         ".rte {padding: 0rem; text-align: right;}",
-        ".rte p {margin-bottom: 5px; font-family: \"Baskervville\", serif;}",
+        ".rte p {margin-bottom: 5px; font-family: \"Raleway\", serif;}",
         ".custom-heading {margin-top: 8px;}",
         ".rich-text__inner {margin: auto; max-width: 1000px; padding-top: 28px;}",
         "@media (max-width: 768px) {.rte {padding: 0 !important; } h3 {font-size: 1.4rem !important; margin-bottom: 1rem; } p {font-size: 1rem; margin-bottom: 0px !important; } .rich-text__inner {padding: 20px 20px 0px 20px; }}"
