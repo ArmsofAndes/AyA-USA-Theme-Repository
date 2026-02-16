@@ -432,7 +432,7 @@
       "name": "Rich text",
       "settings": {
         "use_global_font": true,
-        "font_family": "baskerville",
+        "font_family": "Raleway",
         "custom_anchor_id": "",
         "background_image": "shopify://shop_images/Fondo_Texturizado_2_Textura_aumentada_3.webp",
         "section_width": "grid",
