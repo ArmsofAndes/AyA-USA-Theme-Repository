@@ -10,7 +10,7 @@
 {
   "current": {
     "heading_font": "raleway_n4",
-    "body_font": "baskervville_n4",
+    "body_font": "inter_n4",
     "body_font_line_height_scale": 100,
     "navigation_item_spacing": 30,
     "navigation_uppercase": false,
