@@ -119,7 +119,7 @@
 
 <div class="custom-image-grid font-{{ section.settings.font_family }}" 
   {% if section.settings.use_global_font %} 
-    style="font-family: {{ settings.font_body | default: 'inherit' }} !important; background-color: {{ section.settings.background_color }};"
+    style="font-family: var(--font-body-family, inherit) !important; background-color: {{ section.settings.background_color }};"
   {% else %}
     style="background-color: {{ section.settings.background_color }};"
   {% endif %}
@@ -136,7 +136,7 @@
              style="color: {{ block.settings.title_color }};
                     font-size: {{ block.settings.title_font_size }}px;
                     font-weight: {{ block.settings.title_font_weight }};
-                    {% if section.settings.use_global_font %} font-family: {{ settings.font_body | default: 'inherit' }} !important; {% endif %}">
+                    {% if section.settings.use_global_font %} font-family: var(--font-body-family, inherit) !important; {% endif %}">
             {{ block.settings.title }}
           </h3>
         {% endif %}
@@ -147,7 +147,7 @@
                style="color: {{ block.settings.text_color }};
                       font-size: {{ block.settings.font_size }}px;
                       font-weight: {{ block.settings.font_weight }};
-                      {% if section.settings.use_global_font %} font-family: {{ settings.font_body | default: 'inherit' }} !important; {% endif %}">
+                      {% if section.settings.use_global_font %} font-family: var(--font-body-family, inherit) !important; {% endif %}">
               {{ block.settings.text }}
             </div>
             <button class="read-more-btn" type="button">Read more</button>

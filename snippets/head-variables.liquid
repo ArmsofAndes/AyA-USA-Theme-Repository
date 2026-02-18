@@ -98,17 +98,19 @@
 	.customer-addresses .my-address .address-index {
 		font-style: {{ heading_font.style }};
 		font-weight: {{ heading_font.weight }};
-		font-family: "Baskervville", serif!important;
+		font-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
 	}
 	body,
 	.body-font,
 	.thb-product-detail .product-title {
 		font-style: {{ body_font.style }};
 		font-weight: {{ body_font.weight }};
-		font-family: "Baskervville", serif!important;
+		font-family: {{ body_font.family }}, {{ body_font.fallback_families }};
 	}
 	:root {
 		--mobile-swipe-width: calc(90vw - 30px);
+		--font-heading-family: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+		--font-body-family: {{ body_font.family }}, {{ body_font.fallback_families }};
 		--font-body-scale: {{ settings.body_font_scale | divided_by: 100.0 }};
 		--font-body-line-height-scale: {{ settings.body_font_line_height_scale | divided_by: 100.0 }};
 		--font-body-letter-spacing: {{ settings.body_font_letter_spacing | divided_by: 1000.0 }}em;
