@@ -22,6 +22,9 @@
     "easter-collection-banner": {
       "type": "easter-collection-banner",
       "settings": {
+        "desktop_image_left": "shopify://shop_images/Right.jpg",
+        "desktop_image_right": "shopify://shop_images/Left.jpg",
+        "mobile_image": "shopify://shop_images/DSC4463.png",
         "heading_text": "15% Off\nSitewide",
         "description_text": "Treat yourself this Easter. Go plastic-free.",
         "promo_label": "Use the code:",
