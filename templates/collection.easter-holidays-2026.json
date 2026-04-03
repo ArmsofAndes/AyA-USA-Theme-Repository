@@ -19,27 +19,19 @@
       "disabled": true,
       "settings": {}
     },
-    "main-collection-banner": {
-      "type": "main-collection-banner",
-      "custom_css": [
-        ".collection-banner {padding-left: 7%; padding-right: 7%; min-height: 200px; background-color: white;}",
-        ".collection-banner--content {padding: 80px 0 80px 40px !important; margin-top: 20px; max-width: 100%;}",
-        "@media (max-width: 767px) {.collection-banner--content {padding: 0 !important; } .collection-banner .full-width-row {padding-left: 0rem; padding-right: 0rem; }}"
-      ],
+    "easter-collection-banner": {
+      "type": "easter-collection-banner",
       "settings": {
-        "show_collection_image": false,
-        "show_collection_description": false,
-        "show_subcollections": false,
-        "make_heading_uppercase": false,
-        "text_alignment": "left",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0,
-        "title_color": "#2b3638",
-        "title_font_size": 2.2,
-        "title_font_weight": "500",
-        "subtitle_color": "#515c61",
-        "subtitle_font_size": 1,
-        "subtitle_font_weight": "400"
+        "desktop_image_left": "shopify://shop_images/Right.jpg",
+        "desktop_image_right": "shopify://shop_images/Left.jpg",
+        "mobile_image": "shopify://shop_images/DSC4463.png",
+        "heading_text": "15% Off\nSitewide",
+        "description_text": "Treat yourself this Easter. Go plastic-free.",
+        "promo_label": "Use the code:",
+        "promo_code": "EGGHUNT15",
+        "background_color": "#f5f0eb",
+        "heading_color": "#1a1a1a",
+        "description_color": "#3d3d3d"
       }
     },
     "166367228131c52c01": {
@@ -82,7 +74,7 @@
   "order": [
     "shogun-helper",
     "shogun-above",
-    "main-collection-banner",
+    "easter-collection-banner",
     "166367228131c52c01",
     "product-grid",
     "shogun-below",

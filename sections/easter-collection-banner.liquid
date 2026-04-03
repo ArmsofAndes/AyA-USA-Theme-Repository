@@ -1,0 +1,186 @@
+{{ 'easter-collection-banner.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="easter-collection-banner"
+  style="--easter-bg: {{ section.settings.background_color }};"
+>
+  <div class="easter-collection-banner__breadcrumbs">
+    {%- render 'breadcrumbs' -%}
+  </div>
+
+  {%- comment -%} Mobile image — visible only on small screens {%- endcomment -%}
+  {%- if section.settings.mobile_image != blank -%}
+    <div class="easter-collection-banner__mobile-media">
+      <img
+        src="{{ section.settings.mobile_image | image_url: width: 900 }}"
+        srcset="
+          {{ section.settings.mobile_image | image_url: width: 450 }} 450w,
+          {{ section.settings.mobile_image | image_url: width: 700 }} 700w,
+          {{ section.settings.mobile_image | image_url: width: 900 }} 900w
+        "
+        sizes="100vw"
+        width="{{ section.settings.mobile_image.width }}"
+        height="{{ section.settings.mobile_image.height }}"
+        alt="{{ section.settings.mobile_image.alt | default: section.settings.heading_text | escape }}"
+        loading="eager"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="easter-collection-banner__grid">
+    {%- comment -%} Left image — desktop only {%- endcomment -%}
+    <div class="easter-collection-banner__media easter-collection-banner__media--left">
+      {%- if section.settings.desktop_image_left != blank -%}
+        <img
+          src="{{ section.settings.desktop_image_left | image_url: width: 800 }}"
+          srcset="
+            {{ section.settings.desktop_image_left | image_url: width: 400 }} 400w,
+            {{ section.settings.desktop_image_left | image_url: width: 600 }} 600w,
+            {{ section.settings.desktop_image_left | image_url: width: 800 }} 800w
+          "
+          sizes="33vw"
+          width="{{ section.settings.desktop_image_left.width }}"
+          height="{{ section.settings.desktop_image_left.height }}"
+          alt="{{ section.settings.desktop_image_left.alt | default: section.settings.heading_text | escape }}"
+          loading="eager"
+        >
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Centre text body {%- endcomment -%}
+    <div class="easter-collection-banner__body">
+      {%- if section.settings.heading_text != blank -%}
+        <h1
+          class="easter-collection-banner__heading"
+          style="color: {{ section.settings.heading_color }};"
+        >
+          {{ section.settings.heading_text | newline_to_br }}
+        </h1>
+      {%- endif -%}
+
+      {%- if section.settings.description_text != blank -%}
+        <p
+          class="easter-collection-banner__description"
+          style="color: {{ section.settings.description_color }};"
+        >
+          {{ section.settings.description_text }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.promo_code != blank -%}
+        <p class="easter-collection-banner__promo" style="color: {{ section.settings.description_color }};">
+          {{ section.settings.promo_label }}
+          <strong>{{ section.settings.promo_code }}</strong>
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right image — desktop only {%- endcomment -%}
+    <div class="easter-collection-banner__media easter-collection-banner__media--right">
+      {%- if section.settings.desktop_image_right != blank -%}
+        <img
+          src="{{ section.settings.desktop_image_right | image_url: width: 800 }}"
+          srcset="
+            {{ section.settings.desktop_image_right | image_url: width: 400 }} 400w,
+            {{ section.settings.desktop_image_right | image_url: width: 600 }} 600w,
+            {{ section.settings.desktop_image_right | image_url: width: 800 }} 800w
+          "
+          sizes="33vw"
+          width="{{ section.settings.desktop_image_right.width }}"
+          height="{{ section.settings.desktop_image_right.height }}"
+          alt="{{ section.settings.desktop_image_right.alt | default: section.settings.heading_text | escape }}"
+          loading="eager"
+        >
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Easter collection banner",
+  "tag": "section",
+  "class": "section-easter-collection-banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload images that already include their background colour/space. They will display at full size without cropping."
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image_left",
+      "label": "Desktop image (left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image_right",
+      "label": "Desktop image (right)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Shown above the text on screens smaller than 768 px."
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_text",
+      "label": "Heading",
+      "default": "15% Off\nSitewide"
+    },
+    {
+      "type": "textarea",
+      "id": "description_text",
+      "label": "Description",
+      "default": "Treat yourself this Easter. Go plastic-free."
+    },
+    {
+      "type": "text",
+      "id": "promo_label",
+      "label": "Promo label",
+      "default": "Use the code:"
+    },
+    {
+      "type": "text",
+      "id": "promo_code",
+      "label": "Promo code",
+      "default": "EGGHUNT15"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background colour",
+      "default": "#f5f0eb"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description / promo colour",
+      "default": "#3d3d3d"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Easter collection banner"
+    }
+  ]
+}
+{% endschema %}

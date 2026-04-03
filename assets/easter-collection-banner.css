@@ -1,0 +1,214 @@
+/* ===================================================================
+   Easter Collection Banner
+   Scoped under .easter-collection-banner — safe from global styles.
+   =================================================================== */
+
+/* ---- Root container ---- */
+.easter-collection-banner {
+  position: relative;
+  background-color: var(--easter-bg, #f5f0eb);
+  overflow: hidden;
+}
+
+/* ---- Breadcrumbs ---- */
+.easter-collection-banner__breadcrumbs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 0.75rem 1.25rem;
+  text-align: left;
+}
+
+/* White breadcrumb text — scoped to Easter banner only (this template’s section) */
+.easter-collection-banner__breadcrumbs .breadcrumbs,
+.easter-collection-banner__breadcrumbs .breadcrumbs a,
+.easter-collection-banner__breadcrumbs .breadcrumbs i {
+  color: #fff;
+}
+
+/* ---- Mobile image (hidden on desktop) ---- */
+.easter-collection-banner__mobile-media {
+  display: none;
+}
+
+/* ---- Grid: 3-column layout ---- */
+.easter-collection-banner__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+/* ---- Media columns (images) ---- */
+.easter-collection-banner__media {
+  overflow: hidden;
+  line-height: 0;
+}
+
+.easter-collection-banner__media--right {
+  justify-self: end;
+}
+
+.easter-collection-banner__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Centre text body ---- */
+.easter-collection-banner__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 3.5rem;
+  min-width: 320px;
+  max-width: 480px;
+}
+
+/* Heading */
+.easter-collection-banner__heading {
+  font-family: Montserrat, sans-serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+/* Description */
+.easter-collection-banner__description {
+  font-family: var(--font-body-family, "Open Sans", sans-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+/* Promo code line */
+.easter-collection-banner__promo {
+  font-family: var(--font-body-family, "Open Sans", sans-serif);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.easter-collection-banner__promo strong {
+  font-weight: 700;
+}
+
+/* ==========================
+   Desktop (768 px and up)
+   ========================== */
+@media only screen and (min-width: 768px) {
+  .easter-collection-banner__breadcrumbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    padding: 0;
+    text-align: left;
+  }
+
+  .easter-collection-banner__grid {
+    max-height: 20rem;
+  }
+
+  .easter-collection-banner__media {
+    overflow: hidden;
+    line-height: 0;
+    width: 25rem;
+  }
+}
+
+/* ==========================
+   Tablet (768 – 1024 px)
+   ========================== */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .easter-collection-banner__body {
+    padding: 2.5rem 2rem;
+    min-width: 260px;
+  }
+
+  .easter-collection-banner__heading {
+    font-size: 2.8rem;
+  }
+}
+
+/* ==========================
+   Mobile (< 768 px)
+   ========================== */
+@media only screen and (max-width: 767px) {
+  .easter-collection-banner__breadcrumbs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    padding: 0;
+    text-align: left;
+  }
+
+  /* Show the mobile image */
+  .easter-collection-banner__mobile-media {
+    display: block;
+    line-height: 0;
+  }
+
+  .easter-collection-banner__mobile-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* Hide the desktop 3-column grid images, keep body */
+  .easter-collection-banner__media {
+    display: none;
+  }
+
+  .easter-collection-banner__grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    min-height: unset;
+  }
+
+  /* Body fills width and centres text (spans grid when side media are hidden) */
+  .easter-collection-banner__body {
+    grid-column: 1 / -1;
+    padding: 2rem 1.5rem 2.5rem;
+    min-width: unset;
+    max-width: 100%;
+  }
+
+  .easter-collection-banner__heading {
+    font-family: Montserrat, sans-serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .easter-collection-banner__description {
+    font-size: 1rem;
+    max-width: 12rem;
+  }
+
+  .easter-collection-banner__promo {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==========================
+   Small phones (< 400 px)
+   ========================== */
+@media only screen and (max-width: 399px) {
+  .easter-collection-banner__body {
+    padding: 1.5rem 1rem 2rem;
+  }
+}
