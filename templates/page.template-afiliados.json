@@ -12,7 +12,8 @@
     "main": {
       "type": "main-page",
       "custom_css": [
-        "section {padding: 0rem 0rem;}"
+        "section {padding: 0rem 0rem;}",
+        ".page-content-width {margin: 0 auto;}"
       ],
       "settings": {
         "show_page_title": false,
