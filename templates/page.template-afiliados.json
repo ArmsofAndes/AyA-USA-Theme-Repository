@@ -12,7 +12,7 @@
     "main": {
       "type": "main-page",
       "custom_css": [
-        "section {padding: 0rem 0rem;}",
+        ". {padding: 0rem 0rem;}",
         ".page-content-width {margin: 0 auto;}"
       ],
       "settings": {
